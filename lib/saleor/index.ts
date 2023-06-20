@@ -59,7 +59,6 @@ export async function saleorFetch<Result, Variables>({
   });
 
   const body = (await result.json()) as GraphQlErrorRespone<Result>;
-
   if ('errors' in body) {
     throw body.errors[0];
   }
@@ -276,21 +275,23 @@ function flattenMenuItems(menuItems: null | undefined | MenuItemWithChildren[]):
 export async function getProducts({
   query,
   reverse,
-  sortKey
+  sortKey,
+  first
 }: {
   query?: string;
   reverse?: boolean;
   sortKey?: ProductOrderField;
+  first?: number;
 }): Promise<Product[]> {
   const saleorProducts = await saleorFetch({
     query: SearchProductsDocument,
     variables: {
       search: query || '',
       sortBy: sortKey || (query ? ProductOrderField.Rank : ProductOrderField.Rating),
-      sortDirection: reverse ? OrderDirection.Desc : OrderDirection.Asc
+      sortDirection: reverse ? OrderDirection.Desc : OrderDirection.Asc,
+      first: first ? first : 100
     }
   });
-
   return (
     saleorProducts.products?.edges.map((product) => saleorProductToVercelProduct(product.node)) ||
     []

@@ -8,6 +8,7 @@ module.exports = {
     appDir: true
   },
   images: {
+    domains: ['localhost'],
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
       {

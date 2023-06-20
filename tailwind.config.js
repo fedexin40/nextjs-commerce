@@ -12,7 +12,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['var(--font-inter)']
+        sans: ['Josefin Sans', 'sans-serif']
       },
       colors: {
         gray: colors.neutral,

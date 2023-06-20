@@ -1,53 +1,65 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Suspense } from 'react';
+
+import { MdOutlineExplore } from 'react-icons/md';
+import { BsBookmarkHeart } from 'react-icons/bs';
+import { HiOutlineShoppingBag } from 'react-icons/hi';
+import { RxHamburgerMenu } from 'react-icons/rx';
 
 import Cart from 'components/cart';
 import CartIcon from 'components/icons/cart';
 import LogoIcon from 'components/icons/logo';
 import { getMenu } from 'lib/saleor';
-import { Menu } from 'lib/types';
-import MobileMenu from './mobile-menu';
 import Search from './search';
 
 export default async function Navbar() {
   const menu = await getMenu('next-js-frontend-header-menu');
 
   return (
-    <nav className="relative flex items-center justify-between bg-white p-4 dark:bg-black lg:px-6">
-      <div className="block w-1/3 md:hidden">
-        <MobileMenu menu={menu} />
-      </div>
-      <div className="flex justify-self-center md:w-1/3 md:justify-self-start">
-        <div className="md:mr-4">
+    <nav className="max-w-screen fixed left-0 right-0 z-10 mb-3 flex flex-col bg-[--theme-color] px-[4%] py-3 transition delay-75 ease-in-out sm:flex-row md:px-[10%]">
+      <div className="flex w-full items-center justify-between">
+        <section className="relative flex items-center">
           <Link href="/" aria-label="Go back home">
-            <LogoIcon className="h-8 transition-transform hover:scale-110" />
+            <Image
+              className="me-3 cursor-pointer  rounded-full border-2 bg-yellow-300 hover:bg-yellow-500"
+              src="/defaultUser.png"
+              alt="userProfileImage"
+              width="40"
+              height="40"
+            />
           </Link>
+          <LogoIcon className="h-8 transition-transform hover:scale-110" />
+        </section>
+        <div className="relative  hidden sm:block sm:w-1/3">
+          <Search />
         </div>
-        {menu.length ? (
-          <ul className="hidden md:flex">
-            {menu.map((item: Menu) => (
-              <li key={item.title}>
-                <Link
-                  href={item.path}
-                  className="rounded-lg px-2 py-1 text-gray-800 hover:text-gray-500 dark:text-gray-200 dark:hover:text-gray-400"
-                >
-                  {item.title}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        ) : null}
-      </div>
-      <div className="hidden w-1/3 md:block">
-        <Search />
-      </div>
 
-      <div className="flex w-1/3 justify-end">
-        <Suspense fallback={<CartIcon className="h-6" />}>
-          {/* @ts-expect-error Server Component */}
-          <Cart />
-        </Suspense>
+        <section className="flex items-center">
+          <Link
+            href="/products"
+            className="mx-2 rounded-md bg-yellow-700 px-3 py-1 text-sm text-white shadow-sm transition hover:bg-yellow-800"
+          >
+            <span className="hidden md:block">Explore</span>{' '}
+            <MdOutlineExplore className="md:hidden" />
+          </Link>
+
+          <ul className=" hidden justify-between ps-1 text-2xl md:flex">
+            <li className="relative mx-2  cursor-pointer rounded-full bg-gray-200 p-2 shadow-sm transition hover:bg-yellow-800 hover:text-white">
+              <BsBookmarkHeart />
+            </li>
+            <li className="relative mx-2 cursor-pointer rounded-full bg-yellow-500 p-2 text-white shadow-sm transition hover:bg-yellow-800">
+              <HiOutlineShoppingBag />
+            </li>
+          </ul>
+          <section className="relative cursor-pointer md:hidden">
+            <RxHamburgerMenu className="text-lg" />
+          </section>
+        </section>
       </div>
+      <section className="relative mt-4 sm:hidden">
+        <Search />
+      </section>
     </nav>
   );
 }

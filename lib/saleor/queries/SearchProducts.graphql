@@ -1,10 +1,11 @@
 query SearchProducts(
+  $first: Int!
   $search: String!
   $sortBy: ProductOrderField!
   $sortDirection: OrderDirection!
 ) {
   products(
-    first: 100
+    first: $first
     channel: "default-channel"
     sortBy: { field: $sortBy, direction: $sortDirection }
     filter: { search: $search }
@@ -40,6 +41,9 @@ query SearchProducts(
           alt
         }
         collections {
+          name
+        }
+        category {
           name
         }
         updatedAt

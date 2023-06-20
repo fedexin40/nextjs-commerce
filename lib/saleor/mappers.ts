@@ -43,7 +43,8 @@ export function saleorProductToVercelProduct(
       description: product.seoDescription || ''
     },
     tags: product.collections?.map((c) => c.name) || [],
-    updatedAt: product.updatedAt
+    updatedAt: product.updatedAt,
+    category: product.category?.name || ''
   };
 }
 

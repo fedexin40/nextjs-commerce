@@ -5,6 +5,7 @@ import LogoIcon from 'components/icons/logo';
 import VercelIcon from 'components/icons/vercel';
 import { getMenu } from 'lib/saleor';
 import { Menu } from 'lib/types';
+import { AiFillFacebook, AiFillInstagram, AiFillGithub, AiOutlineTwitter } from 'react-icons/ai';
 
 const { SITE_NAME } = process.env;
 
@@ -41,27 +42,27 @@ export default async function Footer() {
               </ul>
             </nav>
           ) : null}
-          <div className="col-span-1 text-black dark:text-white lg:col-span-2">
-            <a aria-label="Github Repository" href="https://github.com/vercel/commerce">
-              <GitHubIcon className="h-6" />
-            </a>
-          </div>
-        </div>
-        <div className="flex flex-col items-center justify-between space-y-4 pb-10 pt-6 text-sm md:flex-row">
-          <p>
-            &copy; {copyrightDate} {SITE_NAME}. All rights reserved.
-          </p>
-          <div className="flex items-center text-sm text-white dark:text-black">
-            <span className="text-black dark:text-white">Created by</span>
-            <a
-              rel="noopener noreferrer"
-              href="https://vercel.com"
-              aria-label="Vercel.com Link"
-              target="_blank"
-              className="text-black dark:text-white"
-            >
-              <VercelIcon className="ml-3 inline-block h-6" />
-            </a>
+          <div className="grid grid-cols-4 grid-rows-1 gap-10">
+            <div className="transition hover:scale-110">
+              <Link aria-label="Github Repository" href="_blank">
+                <AiFillGithub className="text-3xl text-gray-800" />
+              </Link>
+            </div>
+            <div className="transition hover:scale-110">
+              <Link aria-label="Facebook page" href="_blank">
+                <AiFillFacebook className="text-3xl text-gray-800" />
+              </Link>
+            </div>
+            <div className="transition hover:scale-110">
+              <Link aria-label="Twitter page" href="_blank">
+                <AiOutlineTwitter className="text-3xl text-gray-800" />
+              </Link>
+            </div>
+            <div className="transition hover:scale-110">
+              <Link aria-label="Instagram page" href="_blank">
+                <AiFillInstagram className="text-3xl text-gray-800" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

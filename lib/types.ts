@@ -126,6 +126,7 @@ export type VercelCommerceProduct = {
   seo: SEO;
   tags: string[];
   updatedAt: string;
+  category: string;
 };
 
 export type VercelCommerceCartOperation = {

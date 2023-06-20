@@ -1,7 +1,7 @@
-import { Carousel } from 'components/carousel';
-import { ThreeItemGrid } from 'components/grid/three-items';
-import Footer from 'components/layout/footer';
 import { Suspense } from 'react';
+import Banner from '../components/banner';
+import TrendingList from '../components/trending';
+import NewProducts from '../components/new';
 
 export const runtime = 'edge';
 
@@ -22,14 +22,19 @@ export const metadata = {
 export default async function HomePage() {
   return (
     <>
-      {/* @ts-expect-error Server Component */}
-      <ThreeItemGrid />
       <Suspense>
-        {/* @ts-expect-error Server Component */}
-        <Carousel />
         <Suspense>
-          {/* @ts-expect-error Server Component */}
-          <Footer />
+          <Banner />
+        </Suspense>
+        <Suspense>
+          <Suspense>
+            {/* @ts-expect-error Server Component */}
+            <TrendingList />
+          </Suspense>
+          <Suspense>
+            {/* @ts-expect-error Server Component */}
+            <NewProducts className="" />
+          </Suspense>
         </Suspense>
       </Suspense>
     </>

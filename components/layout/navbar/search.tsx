@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
+import { CiSearch } from 'react-icons/ci';
 
 import SearchIcon from 'components/icons/search';
 
@@ -24,7 +25,7 @@ export default function Search() {
   return (
     <form
       onSubmit={onSubmit}
-      className="relative m-0 flex w-full items-center border border-gray-200 bg-transparent p-0 dark:border-gray-500"
+      className="flex items-center rounded-full bg-black/[0.075] px-3 text-sm transition"
     >
       <input
         type="text"
@@ -32,11 +33,9 @@ export default function Search() {
         placeholder="Search for products..."
         autoComplete="off"
         defaultValue={searchParams?.get('q') || ''}
-        className="w-full px-4 py-2 text-black dark:bg-black dark:text-gray-100"
+        className="w-full bg-transparent px-3 py-2 focus:outline-none"
       />
-      <div className="absolute right-0 top-0 mr-3 flex h-full items-center">
-        <SearchIcon className="h-5" />
-      </div>
+      <CiSearch />
     </form>
   );
 }
