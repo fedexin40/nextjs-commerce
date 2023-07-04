@@ -32,11 +32,12 @@ export async function PUT(req: NextRequest): Promise<Response> {
   const cartId = cookies().get('cartId')?.value;
   const { variantId, quantity, lineId } = await req.json();
 
-  if (!cartId || !variantId || !quantity || !lineId) {
-    return NextResponse.json(
-      { error: 'Missing cartId, variantId, lineId, or quantity' },
-      { status: 400 }
-    );
+  if (quantity === 0) {
+    return remove(cartId, lineId);
+  }
+
+  if (!cartId || !variantId || !lineId) {
+    return NextResponse.json({ error: 'Missing cartId, variantId, lineId' }, { status: 400 });
   }
   try {
     await updateCart(cartId, [
@@ -56,15 +57,13 @@ export async function PUT(req: NextRequest): Promise<Response> {
   }
 }
 
-export async function DELETE(req: NextRequest): Promise<Response> {
-  const cartId = cookies().get('cartId')?.value;
-  const { lineId } = await req.json();
-
+async function remove(cartId, lineId) {
   if (!cartId || !lineId) {
     return NextResponse.json({ error: 'Missing cartId or lineId' }, { status: 400 });
   }
   try {
     await removeFromCart(cartId, [lineId]);
+    console.log('204');
     return NextResponse.json({ status: 204 });
   } catch (e) {
     if (isVercelCommerceError(e)) {

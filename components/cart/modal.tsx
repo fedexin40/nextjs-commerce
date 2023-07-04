@@ -150,7 +150,7 @@ export default function CartModal({
                       />
                     </div>
                     <div className="mb-2 flex items-center justify-between">
-                      <p>Taxes</p>
+                      <p>Impuestos</p>
                       <Price
                         className="text-right"
                         amount={cart.cost.totalTaxAmount.amount}
@@ -158,8 +158,8 @@ export default function CartModal({
                       />
                     </div>
                     <div className="mb-2 flex items-center justify-between border-b border-gray-200 pb-2">
-                      <p>Shipping</p>
-                      <p className="text-right">Calculated at checkout</p>
+                      <p>Envio</p>
+                      <p className="text-right">Calculado al momento de pagar</p>
                     </div>
                     <div className="mb-2 flex items-center justify-between font-bold">
                       <p>Total</p>
@@ -174,7 +174,7 @@ export default function CartModal({
                     href={cart.checkoutUrl}
                     className="flex w-full items-center justify-center bg-black p-3 text-sm font-medium uppercase text-white opacity-90 hover:opacity-100 dark:bg-white dark:text-black"
                   >
-                    <span>Proceed to Checkout</span>
+                    <span>Pasar a pagar</span>
                   </a>
                 </div>
               ) : null}

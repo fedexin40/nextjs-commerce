@@ -3,6 +3,7 @@
 import clsx from 'clsx';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState, useTransition } from 'react';
+import { HiOutlineShoppingBag } from 'react-icons/hi';
 
 import LoadingDots from 'components/loading-dots';
 import { ProductVariant } from 'lib/types';
@@ -66,14 +67,23 @@ export function AddToCart({
       disabled={isMutating}
       onClick={handleAdd}
       className={clsx(
-        'flex w-full items-center justify-center bg-black p-4 text-sm uppercase tracking-wide text-white opacity-90 hover:opacity-100 dark:bg-white dark:text-black',
+        'flex w-full items-center justify-center rounded-2xl bg-black p-4 text-sm uppercase tracking-wide text-white opacity-90 hover:opacity-50 dark:bg-white dark:text-black',
         {
           'cursor-not-allowed opacity-60': !availableForSale,
           'cursor-not-allowed': isMutating
         }
       )}
     >
-      <span>{availableForSale ? 'Add To Cart' : 'Out Of Stock'}</span>
+      <span>
+        {availableForSale ? (
+          <div className="flex flex-row	space-x-5">
+            <div>Agregar al carrito</div>
+            <HiOutlineShoppingBag />
+          </div>
+        ) : (
+          'No disponible'
+        )}
+      </span>
       {isMutating ? <LoadingDots className="bg-white dark:bg-black" /> : null}
     </button>
   );

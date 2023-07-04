@@ -1,14 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Suspense } from 'react';
 
 import { MdOutlineExplore } from 'react-icons/md';
 import { BsBookmarkHeart } from 'react-icons/bs';
-import { HiOutlineShoppingBag } from 'react-icons/hi';
 import { RxHamburgerMenu } from 'react-icons/rx';
 
 import Cart from 'components/cart';
-import CartIcon from 'components/icons/cart';
 import LogoIcon from 'components/icons/logo';
 import { getMenu } from 'lib/saleor';
 import Search from './search';
@@ -17,7 +14,7 @@ export default async function Navbar() {
   const menu = await getMenu('next-js-frontend-header-menu');
 
   return (
-    <nav className="max-w-screen fixed left-0 right-0 z-10 mb-3 flex flex-col bg-[--theme-color] px-[4%] py-3 transition delay-75 ease-in-out sm:flex-row md:px-[10%]">
+    <nav className="max-w-screen fixed left-0 right-0 z-40 mb-3 flex flex-col bg-[--theme-color] px-[4%] py-3 transition delay-75 ease-in-out sm:flex-row md:px-[10%]">
       <div className="flex w-full items-center justify-between">
         <section className="relative flex items-center">
           <Link href="/" aria-label="Go back home">
@@ -40,16 +37,17 @@ export default async function Navbar() {
             href="/products"
             className="mx-2 rounded-md bg-yellow-700 px-3 py-1 text-sm text-white shadow-sm transition hover:bg-yellow-800"
           >
-            <span className="hidden md:block">Explore</span>{' '}
+            <span className="hidden md:block">Explorar</span>{' '}
             <MdOutlineExplore className="md:hidden" />
           </Link>
 
           <ul className=" hidden justify-between ps-1 text-2xl md:flex">
-            <li className="relative mx-2  cursor-pointer rounded-full bg-gray-200 p-2 shadow-sm transition hover:bg-yellow-800 hover:text-white">
+            <li className="mx-2  cursor-pointer rounded-full bg-gray-200 p-2 shadow-sm transition hover:bg-yellow-800 hover:text-white">
               <BsBookmarkHeart />
             </li>
-            <li className="relative mx-2 cursor-pointer rounded-full bg-yellow-500 p-2 text-white shadow-sm transition hover:bg-yellow-800">
-              <HiOutlineShoppingBag />
+            <li>
+              {/* @ts-expect-error Server Component */}
+              <Cart />
             </li>
           </ul>
           <section className="relative cursor-pointer md:hidden">

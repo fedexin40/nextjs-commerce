@@ -1,14 +1,15 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import { Product } from 'lib/types';
 import { AiOutlinePlus, AiOutlineCheck } from 'react-icons/ai';
 
-const Grid = ({ product }) => {
+const Grid = ({ product }: { product: Product }) => {
   return (
     <Link
       href={`/product/${product.handle}`}
-      className="flex cursor-pointer    flex-col gap-3 rounded-xl  bg-black/[.06] px-4 py-2 "
+      className="flex cursor-pointer flex-col gap-3 rounded-3xl bg-white px-4 shadow-2xl shadow-black"
     >
-      <div className="xs:flex-wrap xs:justify-center flex justify-between gap-3 sm:flex-nowrap sm:justify-between">
+      <div className="xs:flex-wrap xs:justify-center flex justify-between gap-3 pt-5 sm:flex-nowrap sm:justify-between">
         <div>
           <h1 className="xs:text-base text-xl font-bold sm:text-xl">{product.title}</h1>
         </div>
@@ -36,7 +37,7 @@ const Grid = ({ product }) => {
           alt={product.title}
           width={300}
           height={300}
-          className="xs:w-28 xs:h-16 h-20 w-32 object-cover py-2 transition hover:scale-110 sm:h-20 sm:w-32"
+          className="h-50 object-cover py-2 transition hover:scale-125"
         />
       </div>
     </Link>

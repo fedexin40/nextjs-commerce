@@ -50,11 +50,11 @@ export default function CartButton({
       <CartModal isOpen={cartIsOpen} onClose={() => setCartIsOpen(false)} cart={cart} />
 
       <button
+        className="mx-2 cursor-pointer rounded-full bg-yellow-500 p-2 text-white shadow-sm transition hover:bg-yellow-800"
         aria-label="Open cart"
         onClick={() => {
           setCartIsOpen(true);
         }}
-        className="relative right-0 top-0"
         data-testid="open-cart"
       >
         <CartIcon quantity={cart.totalQuantity} />

@@ -25473,6 +25473,7 @@ export type CheckoutFragment = {
         } | null;
         media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
         collections?: Array<{ name: string }> | null;
+        category?: { name: string; slug: string } | null;
         variants?: Array<{
           id: string;
           name: string;
@@ -25541,6 +25542,7 @@ export type ProductDetailsFragment = {
   } | null;
   media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
   collections?: Array<{ name: string }> | null;
+  category?: { name: string; slug: string } | null;
   variants?: Array<{
     id: string;
     name: string;
@@ -25609,6 +25611,7 @@ export type CheckoutAddLineMutation = {
             } | null;
             media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
             collections?: Array<{ name: string }> | null;
+            category?: { name: string; slug: string } | null;
             variants?: Array<{
               id: string;
               name: string;
@@ -25677,6 +25680,7 @@ export type CheckoutDeleteLineMutation = {
             } | null;
             media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
             collections?: Array<{ name: string }> | null;
+            category?: { name: string; slug: string } | null;
             variants?: Array<{
               id: string;
               name: string;
@@ -25745,6 +25749,7 @@ export type CheckoutUpdateLineMutation = {
             } | null;
             media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
             collections?: Array<{ name: string }> | null;
+            category?: { name: string; slug: string } | null;
             variants?: Array<{
               id: string;
               name: string;
@@ -25812,6 +25817,7 @@ export type CreateCheckoutMutation = {
             } | null;
             media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
             collections?: Array<{ name: string }> | null;
+            category?: { name: string; slug: string } | null;
             variants?: Array<{
               id: string;
               name: string;
@@ -25838,6 +25844,22 @@ export type CreateCheckoutMutation = {
         };
       }>;
     } | null;
+  } | null;
+};
+
+export type GetCategoryQueryVariables = Exact<{
+  first: Scalars['Int'];
+}>;
+
+export type GetCategoryQuery = {
+  categories?: {
+    edges: Array<{
+      node: {
+        id: string;
+        name: string;
+        backgroundImage?: { url: string; altText?: string | null } | null;
+      };
+    }>;
   } | null;
 };
 
@@ -25937,6 +25959,7 @@ export type GetCheckoutByIdQuery = {
           } | null;
           media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
           collections?: Array<{ name: string }> | null;
+          category?: { name: string; slug: string } | null;
           variants?: Array<{
             id: string;
             name: string;
@@ -26186,6 +26209,7 @@ export type GetProductBySlugQuery = {
     } | null;
     media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
     collections?: Array<{ name: string }> | null;
+    category?: { name: string; slug: string } | null;
     variants?: Array<{
       id: string;
       name: string;
@@ -26203,6 +26227,7 @@ export type GetProductBySlugQuery = {
 };
 
 export type SearchProductsQueryVariables = Exact<{
+  first: Scalars['Int'];
   search: Scalars['String'];
   sortBy: ProductOrderField;
   sortDirection: OrderDirection;
@@ -26328,6 +26353,10 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(`
   collections {
     name
   }
+  category {
+    name
+    slug
+  }
   updatedAt
   variants {
     ...Variant
@@ -26423,6 +26452,10 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
   }
   collections {
     name
+  }
+  category {
+    name
+    slug
   }
   updatedAt
   variants {
@@ -26602,6 +26635,10 @@ fragment ProductDetails on Product {
   collections {
     name
   }
+  category {
+    name
+    slug
+  }
   updatedAt
   variants {
     ...Variant
@@ -26709,6 +26746,10 @@ fragment ProductDetails on Product {
   }
   collections {
     name
+  }
+  category {
+    name
+    slug
   }
   updatedAt
   variants {
@@ -26821,6 +26862,10 @@ fragment ProductDetails on Product {
   collections {
     name
   }
+  category {
+    name
+    slug
+  }
   updatedAt
   variants {
     ...Variant
@@ -26932,6 +26977,10 @@ fragment ProductDetails on Product {
   collections {
     name
   }
+  category {
+    name
+    slug
+  }
   updatedAt
   variants {
     ...Variant
@@ -26965,6 +27014,22 @@ fragment Variant on ProductVariant {
     }
   }
 }`) as unknown as TypedDocumentString<CreateCheckoutMutation, CreateCheckoutMutationVariables>;
+export const GetCategoryDocument = new TypedDocumentString(`
+    query GetCategory($first: Int!) {
+  categories(first: $first) {
+    edges {
+      node {
+        id
+        name
+        backgroundImage {
+          url
+          altText: alt
+        }
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetCategoryQuery, GetCategoryQueryVariables>;
 export const GetCategoryBySlugDocument = new TypedDocumentString(`
     query GetCategoryBySlug($slug: String!) {
   category(slug: $slug) {
@@ -27132,6 +27197,10 @@ fragment ProductDetails on Product {
   }
   collections {
     name
+  }
+  category {
+    name
+    slug
   }
   updatedAt
   variants {
@@ -27451,6 +27520,10 @@ export const GetProductBySlugDocument = new TypedDocumentString(`
   }
   collections {
     name
+  }
+  category {
+    name
+    slug
   }
   updatedAt
   variants {

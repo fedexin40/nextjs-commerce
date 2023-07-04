@@ -21,7 +21,7 @@ export default function EditItemQuantityButton({
     setEditing(true);
 
     const response = await fetch(`/api/cart`, {
-      method: type === 'minus' && item.quantity - 1 === 0 ? 'DELETE' : 'PUT',
+      method: 'PUT',
       body: JSON.stringify({
         lineId: item.id,
         variantId: item.merchandise.id,

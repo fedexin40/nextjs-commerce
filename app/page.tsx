@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import Banner from '../components/banner';
 import TrendingList from '../components/trending';
 import NewProducts from '../components/new';
+import CategoryList from '../components/categories';
 
 export const runtime = 'edge';
 
@@ -33,7 +34,11 @@ export default async function HomePage() {
           </Suspense>
           <Suspense>
             {/* @ts-expect-error Server Component */}
-            <NewProducts className="" />
+            <NewProducts />
+          </Suspense>
+          <Suspense>
+            {/* @ts-expect-error Server Component */}
+            <CategoryList />
           </Suspense>
         </Suspense>
       </Suspense>

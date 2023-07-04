@@ -1,4 +1,4 @@
-import { Cart, Collection, Menu, Page, Product } from 'lib/types';
+import { Cart, Collection, Menu, Page, Product, Category } from 'lib/types';
 import {
   CheckoutAddLineDocument,
   CheckoutDeleteLineDocument,
@@ -18,7 +18,8 @@ import {
   OrderDirection,
   ProductOrderField,
   SearchProductsDocument,
-  TypedDocumentString
+  TypedDocumentString,
+  GetCategoryDocument
 } from './generated/graphql';
 import { saleorCheckoutToVercelCart, saleorProductToVercelProduct } from './mappers';
 import { invariant } from './utils';
@@ -170,6 +171,16 @@ export async function getCollection(handle: string): Promise<Collection | undefi
     updatedAt: saleorCollection.products?.edges?.[0]?.node.updatedAt || '',
     path: `/search/${saleorCollection.slug}`
   };
+}
+
+export async function GetCategories({ first }: { first?: number }): Promise<any[]> {
+  const saleorCategories = await saleorFetch({
+    query: GetCategoryDocument,
+    variables: {
+      first: first ? first : 100
+    }
+  });
+  return saleorCategories.categories?.edges.map((category) => category.node) || [];
 }
 
 const _getCollectionProducts = async (handle: string) =>

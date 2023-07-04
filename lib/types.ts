@@ -33,11 +33,17 @@ export type Collection = VercelCommerceCollection & {
   path: string;
 };
 
+export type Category = {
+  id: string;
+  name: string;
+  backgroundImage: Image;
+};
+
 export type Image = {
   url: string;
   altText: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
 };
 
 export type Menu = {
@@ -64,6 +70,7 @@ export type Page = {
 export type Product = Omit<VercelCommerceProduct, 'variants' | 'images'> & {
   variants: ProductVariant[];
   images: Image[];
+  category: string;
 };
 
 export type ProductOption = {
@@ -127,6 +134,7 @@ export type VercelCommerceProduct = {
   tags: string[];
   updatedAt: string;
   category: string;
+  categorySlug: string;
 };
 
 export type VercelCommerceCartOperation = {

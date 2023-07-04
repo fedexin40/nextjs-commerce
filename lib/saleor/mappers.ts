@@ -44,7 +44,8 @@ export function saleorProductToVercelProduct(
     },
     tags: product.collections?.map((c) => c.name) || [],
     updatedAt: product.updatedAt,
-    category: product.category?.name || ''
+    category: product.category?.name || '',
+    categorySlug: product.category?.slug || ''
   };
 }
 
