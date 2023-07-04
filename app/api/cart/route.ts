@@ -63,7 +63,6 @@ async function remove(cartId, lineId) {
   }
   try {
     await removeFromCart(cartId, [lineId]);
-    console.log('204');
     return NextResponse.json({ status: 204 });
   } catch (e) {
     if (isVercelCommerceError(e)) {

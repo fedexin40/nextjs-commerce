@@ -76,8 +76,8 @@ export function AddToCart({
     >
       <span>
         {availableForSale ? (
-          <div className="flex flex-row	space-x-5">
-            <div>Agregar al carrito</div>
+          <div className="flex flex-row	items-center text-lg lg:text-sm xl:space-x-5">
+            <div className="hidden xl:block">Agregar al carrito</div>
             <HiOutlineShoppingBag />
           </div>
         ) : (

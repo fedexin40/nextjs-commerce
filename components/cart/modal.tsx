@@ -59,7 +59,7 @@ export default function CartModal({
               className="flex w-full flex-col bg-white p-8 text-black dark:bg-black dark:text-white md:w-3/5 lg:w-2/5"
             >
               <div className="flex items-center justify-between">
-                <p className="text-lg font-bold">My Cart</p>
+                <p className="text-lg font-bold">Mi carrito</p>
                 <button
                   aria-label="Close cart"
                   onClick={onClose}
@@ -73,7 +73,7 @@ export default function CartModal({
               {cart.lines.length === 0 ? (
                 <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
                   <ShoppingBagIcon className="h-16" />
-                  <p className="mt-6 text-center text-2xl font-bold">Your cart is empty.</p>
+                  <p className="mt-6 text-center text-2xl font-bold">Tu carrito esta vacio.</p>
                 </div>
               ) : null}
               {cart.lines.length !== 0 ? (
@@ -174,7 +174,7 @@ export default function CartModal({
                     href={cart.checkoutUrl}
                     className="flex w-full items-center justify-center bg-black p-3 text-sm font-medium uppercase text-white opacity-90 hover:opacity-100 dark:bg-white dark:text-black"
                   >
-                    <span>Pasar a pagar</span>
+                    <span>Siguiente Paso</span>
                   </a>
                 </div>
               ) : null}

@@ -9,6 +9,7 @@ import Prose from 'components/prose';
 import Rating from '@mui/material/Rating';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
+import Carousel from 'better-react-carousel';
 
 function currencyFormat(num: number) {
   return '$ ' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -39,14 +40,12 @@ export function Gallery({ product }: { product: Product }) {
   const [currentImage, setCurrentImage] = useState(0);
   const [value, setValue] = useState(2);
   let amount = parseFloat(product.priceRange.maxVariantPrice.amount);
-  let visible = true ? product.images.length : false;
 
   return (
-    <div className="md:grid md:grid-cols-11">
+    <div className="grid-cols md:grid md:grid-cols-11">
       {product.images.length > 1 ? (
-        <div className="md:col-span-1">
+        <div className="hidden md:col-span-1 md:block">
           {product.images.map((image, index) => {
-            const isActive = index === currentImage;
             return (
               <div
                 aria-label="Enlarge product image"
@@ -62,7 +61,15 @@ export function Gallery({ product }: { product: Product }) {
         <div className="md:col-span-1" />
       )}
 
-      <div className="md:col-span-7">
+      <div className="hidden md:col-span-7 md:block">
+        <div className="hidden pl-20 md:block lg:hidden">
+          <div className="text-3xl font-bold">
+            {product.title}
+            <div className="flex-cols flex gap-1 pt-3 text-base lg:text-xl">
+              {currencyFormat(amount)}
+            </div>
+          </div>
+        </div>
         {product.images[currentImage] && (
           <GridTileImage
             src={product.images[currentImage]?.url as string}
@@ -76,10 +83,26 @@ export function Gallery({ product }: { product: Product }) {
         )}
       </div>
 
+      <div className="md:hidden">
+        <div className="text-3xl font-bold">
+          {product.title}
+          <div className="flex-cols flex gap-1 pt-3 text-base lg:text-xl">
+            {currencyFormat(amount)}
+          </div>
+        </div>
+        <Carousel cols={1} rows={1} loop={true}>
+          {product?.images.map((image) => (
+            <Carousel.Item key={image.url}>
+              <GridTileImage alt={'image'} src={image?.url} width={600} height={600} />
+            </Carousel.Item>
+          ))}
+        </Carousel>
+      </div>
+
       <div className="pr-3 md:col-span-3">
-        <div className="z-10 mt-2 flex flex-col justify-between gap-2 pb-3 pr-3 ">
+        <div className="z-10 mt-2 flex flex-col justify-between gap-2 pb-3 md:pr-3 ">
           <div className="z-10 flex flex-col justify-between rounded-3xl bg-white p-3 pb-8 pt-8 shadow-2xl shadow-black drop-shadow-xl">
-            <div className="text-left text-lg font-medium lg:text-4xl">
+            <div className="hidden text-left text-lg font-medium lg:block lg:text-4xl">
               {product.title}
               <div className="flex-cols flex gap-1 pt-3 text-base lg:text-xl">
                 {currencyFormat(amount)}
