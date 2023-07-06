@@ -71,12 +71,19 @@ export type Product = Omit<VercelCommerceProduct, 'variants' | 'images'> & {
   variants: ProductVariant[];
   images: Image[];
   category: string;
+  attributes?: ProductAttribute[];
 };
 
 export type ProductOption = {
   id: string;
   name: string;
   values: string[];
+};
+
+export type ProductAttribute = {
+  name: string;
+  unit: string;
+  values?: any[];
 };
 
 export type ProductVariant = {

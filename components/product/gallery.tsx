@@ -126,10 +126,19 @@ export function Gallery({ product }: { product: Product }) {
             <div className="pt-3">
               Caracteristicas
               <ul className="pt-2 text-sm">
-                <li>Tal cosa</li>
-                <li>Siguiente cosa</li>
-                <li>Otra cosa mas</li>
-                <li>La ultima cosa</li>
+                {product.attributes
+                  ? product.attributes.map((attribute) => (
+                      <li className="space-x-4">
+                        <span>{attribute.name}:</span>
+                        <span className="space-x-1">
+                          {attribute.values
+                            ? attribute.values.map((value) => <span>{value.value}</span>)
+                            : null}
+                          <span>{attribute.unit.toLowerCase()}</span>
+                        </span>
+                      </li>
+                    ))
+                  : null}
               </ul>
             </div>
             <div className="flex flex-col pt-5">

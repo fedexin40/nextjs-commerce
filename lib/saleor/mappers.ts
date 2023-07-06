@@ -1,6 +1,11 @@
 import { Cart, Product } from 'lib/types';
 import { parseEditorJsToHtml } from './editorjs';
-import { CheckoutFragment, GetProductBySlugQuery, VariantFragment } from './generated/graphql';
+import {
+  CheckoutFragment,
+  GetProductBySlugQuery,
+  VariantFragment,
+  ProductAttributeFragment
+} from './generated/graphql';
 
 export function saleorProductToVercelProduct(
   product: Exclude<GetProductBySlugQuery['product'], null | undefined>
@@ -45,7 +50,8 @@ export function saleorProductToVercelProduct(
     tags: product.collections?.map((c) => c.name) || [],
     updatedAt: product.updatedAt,
     category: product.category?.name || '',
-    categorySlug: product.category?.slug || ''
+    categorySlug: product.category?.slug || '',
+    attributes: saleorAttributesToVercelAttributes(product.attributes)
   };
 }
 
@@ -91,6 +97,24 @@ export function saleorVariantsToVercelVariants(
           amount: variant.pricing?.price?.gross.amount.toString() || '0',
           currencyCode: variant.pricing?.price?.gross.currency || ''
         }
+      };
+    }) || []
+  );
+}
+
+export function saleorAttributesToVercelAttributes(
+  attributes: null | undefined | ProductAttributeFragment[]
+) {
+  return (
+    attributes?.map((attribute) => {
+      return {
+        name: attribute.attribute.name || '',
+        unit: attribute.attribute.unit || '',
+        values: attribute.values.map((value) => {
+          return {
+            value: value.name
+          };
+        })
       };
     }) || []
   );

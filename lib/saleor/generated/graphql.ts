@@ -25487,6 +25487,10 @@ export type CheckoutFragment = {
           }>;
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         }> | null;
+        attributes: Array<{
+          attribute: { name?: string | null; unit?: MeasurementUnitsEnum | null };
+          values: Array<{ name?: string | null; value?: string | null }>;
+        }>;
       };
       attributes: Array<{
         attribute: {
@@ -25525,6 +25529,11 @@ export type FeaturedProductFragment = {
   }> | null;
 };
 
+export type ProductAttributeFragment = {
+  attribute: { name?: string | null; unit?: MeasurementUnitsEnum | null };
+  values: Array<{ name?: string | null; value?: string | null }>;
+};
+
 export type ProductDetailsFragment = {
   id: string;
   slug: string;
@@ -25556,6 +25565,10 @@ export type ProductDetailsFragment = {
     }>;
     pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
   }> | null;
+  attributes: Array<{
+    attribute: { name?: string | null; unit?: MeasurementUnitsEnum | null };
+    values: Array<{ name?: string | null; value?: string | null }>;
+  }>;
 };
 
 export type VariantFragment = {
@@ -25625,6 +25638,10 @@ export type CheckoutAddLineMutation = {
               }>;
               pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
             }> | null;
+            attributes: Array<{
+              attribute: { name?: string | null; unit?: MeasurementUnitsEnum | null };
+              values: Array<{ name?: string | null; value?: string | null }>;
+            }>;
           };
           attributes: Array<{
             attribute: {
@@ -25694,6 +25711,10 @@ export type CheckoutDeleteLineMutation = {
               }>;
               pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
             }> | null;
+            attributes: Array<{
+              attribute: { name?: string | null; unit?: MeasurementUnitsEnum | null };
+              values: Array<{ name?: string | null; value?: string | null }>;
+            }>;
           };
           attributes: Array<{
             attribute: {
@@ -25763,6 +25784,10 @@ export type CheckoutUpdateLineMutation = {
               }>;
               pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
             }> | null;
+            attributes: Array<{
+              attribute: { name?: string | null; unit?: MeasurementUnitsEnum | null };
+              values: Array<{ name?: string | null; value?: string | null }>;
+            }>;
           };
           attributes: Array<{
             attribute: {
@@ -25831,6 +25856,10 @@ export type CreateCheckoutMutation = {
               }>;
               pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
             }> | null;
+            attributes: Array<{
+              attribute: { name?: string | null; unit?: MeasurementUnitsEnum | null };
+              values: Array<{ name?: string | null; value?: string | null }>;
+            }>;
           };
           attributes: Array<{
             attribute: {
@@ -25973,6 +26002,10 @@ export type GetCheckoutByIdQuery = {
             }>;
             pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
           }> | null;
+          attributes: Array<{
+            attribute: { name?: string | null; unit?: MeasurementUnitsEnum | null };
+            values: Array<{ name?: string | null; value?: string | null }>;
+          }>;
         };
         attributes: Array<{
           attribute: {
@@ -26223,6 +26256,10 @@ export type GetProductBySlugQuery = {
       }>;
       pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
     }> | null;
+    attributes: Array<{
+      attribute: { name?: string | null; unit?: MeasurementUnitsEnum | null };
+      values: Array<{ name?: string | null; value?: string | null }>;
+    }>;
   } | null;
 };
 
@@ -26320,6 +26357,18 @@ export const VariantFragmentDoc = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<VariantFragment, unknown>;
+export const ProductAttributeFragmentDoc = new TypedDocumentString(`
+    fragment ProductAttribute on SelectedAttribute {
+  attribute {
+    name
+    unit
+  }
+  values {
+    name
+    value
+  }
+}
+    `) as unknown as TypedDocumentString<ProductAttributeFragment, unknown>;
 export const ProductDetailsFragmentDoc = new TypedDocumentString(`
     fragment ProductDetails on Product {
   id
@@ -26361,8 +26410,21 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(`
   variants {
     ...Variant
   }
+  attributes {
+    ...ProductAttribute
+  }
 }
-    fragment Variant on ProductVariant {
+    fragment ProductAttribute on SelectedAttribute {
+  attribute {
+    name
+    unit
+  }
+  values {
+    name
+    value
+  }
+}
+fragment Variant on ProductVariant {
   id
   name
   attributes {
@@ -26460,6 +26522,9 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
   updatedAt
   variants {
     ...Variant
+  }
+  attributes {
+    ...ProductAttribute
   }
 }
 fragment Variant on ProductVariant {
@@ -26603,6 +26668,16 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
     }
   }
 }
+fragment ProductAttribute on SelectedAttribute {
+  attribute {
+    name
+    unit
+  }
+  values {
+    name
+    value
+  }
+}
 fragment ProductDetails on Product {
   id
   slug
@@ -26642,6 +26717,9 @@ fragment ProductDetails on Product {
   updatedAt
   variants {
     ...Variant
+  }
+  attributes {
+    ...ProductAttribute
   }
 }
 fragment Variant on ProductVariant {
@@ -26715,6 +26793,16 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
     }
   }
 }
+fragment ProductAttribute on SelectedAttribute {
+  attribute {
+    name
+    unit
+  }
+  values {
+    name
+    value
+  }
+}
 fragment ProductDetails on Product {
   id
   slug
@@ -26754,6 +26842,9 @@ fragment ProductDetails on Product {
   updatedAt
   variants {
     ...Variant
+  }
+  attributes {
+    ...ProductAttribute
   }
 }
 fragment Variant on ProductVariant {
@@ -26830,6 +26921,16 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
     }
   }
 }
+fragment ProductAttribute on SelectedAttribute {
+  attribute {
+    name
+    unit
+  }
+  values {
+    name
+    value
+  }
+}
 fragment ProductDetails on Product {
   id
   slug
@@ -26869,6 +26970,9 @@ fragment ProductDetails on Product {
   updatedAt
   variants {
     ...Variant
+  }
+  attributes {
+    ...ProductAttribute
   }
 }
 fragment Variant on ProductVariant {
@@ -26945,6 +27049,16 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
     }
   }
 }
+fragment ProductAttribute on SelectedAttribute {
+  attribute {
+    name
+    unit
+  }
+  values {
+    name
+    value
+  }
+}
 fragment ProductDetails on Product {
   id
   slug
@@ -26984,6 +27098,9 @@ fragment ProductDetails on Product {
   updatedAt
   variants {
     ...Variant
+  }
+  attributes {
+    ...ProductAttribute
   }
 }
 fragment Variant on ProductVariant {
@@ -27166,6 +27283,16 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
     }
   }
 }
+fragment ProductAttribute on SelectedAttribute {
+  attribute {
+    name
+    unit
+  }
+  values {
+    name
+    value
+  }
+}
 fragment ProductDetails on Product {
   id
   slug
@@ -27205,6 +27332,9 @@ fragment ProductDetails on Product {
   updatedAt
   variants {
     ...Variant
+  }
+  attributes {
+    ...ProductAttribute
   }
 }
 fragment Variant on ProductVariant {
@@ -27489,7 +27619,17 @@ export const GetProductBySlugDocument = new TypedDocumentString(`
     ...ProductDetails
   }
 }
-    fragment ProductDetails on Product {
+    fragment ProductAttribute on SelectedAttribute {
+  attribute {
+    name
+    unit
+  }
+  values {
+    name
+    value
+  }
+}
+fragment ProductDetails on Product {
   id
   slug
   name
@@ -27528,6 +27668,9 @@ export const GetProductBySlugDocument = new TypedDocumentString(`
   updatedAt
   variants {
     ...Variant
+  }
+  attributes {
+    ...ProductAttribute
   }
 }
 fragment Variant on ProductVariant {
