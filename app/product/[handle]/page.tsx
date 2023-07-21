@@ -7,6 +7,7 @@ import CarouselProduct from 'components/product/carousel';
 import { Gallery } from 'components/product/gallery';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
 import { getProduct, getCollectionProducts } from 'lib/saleor';
+import ScrollToTop from 'components/scrollup';
 
 export const runtime = 'edge';
 
@@ -50,20 +51,22 @@ export async function generateMetadata({
 
 export default async function ProductPage({ params }: { params: { handle: string } }) {
   const product = await getProduct(params.handle);
-  console.log(product);
 
   if (!product) return notFound();
 
   return (
-    <div className="mb-5 grid rounded-3xl pt-32 sm:pt-20 sm:shadow-2xl">
-      <div className="flex w-full">
-        <Gallery product={product} />
+    <>
+      <ScrollToTop />
+      <div className="mb-5 grid rounded-3xl pt-32 sm:pt-20 sm:shadow-2xl">
+        <div className="flex w-full">
+          <Gallery product={product} />
+        </div>
+        <Suspense>
+          {/* @ts-expect-error Server Component */}
+          <RelatedProducts handle={product.categorySlug} />
+        </Suspense>
       </div>
-      <Suspense>
-        {/* @ts-expect-error Server Component */}
-        <RelatedProducts handle={product.categorySlug} />
-      </Suspense>
-    </div>
+    </>
   );
 }
 

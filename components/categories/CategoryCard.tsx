@@ -9,8 +9,8 @@ export default function CategoryCard({ category }: { category: Category }) {
       className="relative h-44 max-w-xs overflow-hidden bg-cover bg-no-repeat shadow-2xl"
     >
       <Image
-        src={category.backgroundImage?.url}
-        alt={category.backgroundImage?.altText}
+        src={category.backgroundImage?.url || '/bannerImg.png'}
+        alt={category.backgroundImage?.altText || ''}
         width={500}
         height={500}
         className="h-full w-full rounded-xl object-cover transition-all delay-75 ease-out hover:scale-125"

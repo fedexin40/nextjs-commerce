@@ -7,6 +7,9 @@ module.exports = {
   experimental: {
     appDir: true
   },
+  env: {
+    SALEOR_INSTANCE_URL: 'http://localhost:8000/graphql/'
+  },
   images: {
     domains: ['localhost'],
     formats: ['image/avif', 'image/webp'],

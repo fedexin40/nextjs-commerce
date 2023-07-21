@@ -21,7 +21,7 @@ export default function Banner() {
           >
             Empezar a comprar
           </Link>
-          <Link href="/products" className="flex items-center p-3">
+          <Link href="#categories_section" scroll={false} className="flex items-center p-3">
             <span className="mx-2 text-sm md:text-base">Explorar Mas</span>{' '}
             <BsArrowDownRightCircle className="text-lg" />
           </Link>

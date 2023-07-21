@@ -123,9 +123,9 @@ export function Gallery({ product }: { product: Product }) {
                 }}
               />
             </div>
-            <div className="pt-3">
+            <div className="pt-3 font-bold text-slate-900">
               Caracteristicas
-              <ul className="pt-2 text-sm">
+              <ul className="pt-2 text-sm font-semibold">
                 {product.attributes
                   ? product.attributes.map((attribute) => (
                       <li className="space-x-4">

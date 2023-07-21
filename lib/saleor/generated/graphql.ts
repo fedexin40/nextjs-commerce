@@ -25804,6 +25804,17 @@ export type CheckoutUpdateLineMutation = {
   } | null;
 };
 
+export type ConfirmAccountMutationVariables = Exact<{
+  email: Scalars['String'];
+  token: Scalars['String'];
+}>;
+
+export type ConfirmAccountMutation = {
+  confirmAccount?: {
+    errors: Array<{ code: AccountErrorCode; field?: string | null; message?: string | null }>;
+  } | null;
+};
+
 export type CreateCheckoutMutationVariables = Exact<{
   input: CheckoutCreateInput;
 }>;
@@ -25873,6 +25884,19 @@ export type CreateCheckoutMutation = {
         };
       }>;
     } | null;
+  } | null;
+};
+
+export type AccountRegisterMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+  redirectUrl: Scalars['String'];
+}>;
+
+export type AccountRegisterMutation = {
+  accountRegister?: {
+    requiresConfirmation?: boolean | null;
+    errors: Array<{ code: AccountErrorCode; field?: string | null; message?: string | null }>;
   } | null;
 };
 
@@ -26308,10 +26332,6 @@ export type SearchProductsQuery = {
     }>;
   } | null;
 };
-
-export type GetProductsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetProductsQuery = { products?: { edges: Array<{ node: { name: string } }> } | null };
 
 export class TypedDocumentString<TResult, TVariables>
   extends String
@@ -27006,6 +27026,17 @@ fragment Variant on ProductVariant {
   CheckoutUpdateLineMutation,
   CheckoutUpdateLineMutationVariables
 >;
+export const ConfirmAccountDocument = new TypedDocumentString(`
+    mutation ConfirmAccount($email: String!, $token: String!) {
+  confirmAccount(email: $email, token: $token) {
+    errors {
+      code
+      field
+      message
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ConfirmAccountMutation, ConfirmAccountMutationVariables>;
 export const CreateCheckoutDocument = new TypedDocumentString(`
     mutation CreateCheckout($input: CheckoutCreateInput!) {
   checkoutCreate(input: $input) {
@@ -27131,6 +27162,20 @@ fragment Variant on ProductVariant {
     }
   }
 }`) as unknown as TypedDocumentString<CreateCheckoutMutation, CreateCheckoutMutationVariables>;
+export const AccountRegisterDocument = new TypedDocumentString(`
+    mutation AccountRegister($email: String!, $password: String!, $redirectUrl: String!) {
+  accountRegister(
+    input: {email: $email, channel: "default-channel", password: $password, redirectUrl: $redirectUrl}
+  ) {
+    requiresConfirmation
+    errors {
+      code
+      field
+      message
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<AccountRegisterMutation, AccountRegisterMutationVariables>;
 export const GetCategoryDocument = new TypedDocumentString(`
     query GetCategory($first: Int!) {
   categories(first: $first) {
@@ -27781,14 +27826,3 @@ export const SearchProductsDocument = new TypedDocumentString(`
     }
   }
 }`) as unknown as TypedDocumentString<SearchProductsQuery, SearchProductsQueryVariables>;
-export const GetProductsDocument = new TypedDocumentString(`
-    query GetProducts {
-  products(first: 10, channel: "default-channel") {
-    edges {
-      node {
-        name
-      }
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<GetProductsQuery, GetProductsQueryVariables>;

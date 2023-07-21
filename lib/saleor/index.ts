@@ -19,7 +19,9 @@ import {
   ProductOrderField,
   SearchProductsDocument,
   TypedDocumentString,
-  GetCategoryDocument
+  GetCategoryDocument,
+  AccountRegisterDocument,
+  ConfirmAccountDocument
 } from './generated/graphql';
 import { saleorCheckoutToVercelCart, saleorProductToVercelProduct } from './mappers';
 import { invariant } from './utils';
@@ -43,7 +45,7 @@ export async function saleorFetch<Result, Variables>({
   headers?: HeadersInit;
   cache?: RequestCache;
 }): Promise<Result> {
-  invariant(endpoint, `Missing SALEOR_INSTANCE_URL!`);
+  invariant(endpoint, `Missing SALEOR_INSTANCE_URL apesatas!`);
 
   const result = await fetch(endpoint, {
     method: 'POST',
@@ -65,6 +67,39 @@ export async function saleorFetch<Result, Variables>({
   }
 
   return body.data;
+}
+
+export async function registeraccount(
+  email: string,
+  password: string,
+  redirectUrl: string
+): Promise<any> {
+  const saleorAccount = await saleorFetch({
+    query: AccountRegisterDocument,
+    variables: {
+      email: email,
+      password: password,
+      redirectUrl: redirectUrl
+    }
+  });
+
+  if (saleorAccount.accountRegister?.errors[0]) {
+    throw saleorAccount.accountRegister.errors[0]?.message;
+  }
+}
+
+export async function confirmaccount(email: string, token: string): Promise<any> {
+  const confirmAccount = await saleorFetch({
+    query: ConfirmAccountDocument,
+    variables: {
+      email: email,
+      token: token
+    }
+  });
+
+  if (confirmAccount.confirmAccount?.errors) {
+    throw confirmAccount.confirmAccount.errors[0]?.message;
+  }
 }
 
 export async function getCollections(): Promise<Collection[]> {

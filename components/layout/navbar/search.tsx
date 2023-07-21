@@ -25,12 +25,12 @@ export default function Search() {
   return (
     <form
       onSubmit={onSubmit}
-      className="flex items-center rounded-full bg-black/[0.075] px-3 text-sm transition"
+      className="flex items-center rounded-full bg-black bg-white px-3 text-sm transition"
     >
       <input
         type="text"
         name="search"
-        placeholder="Search for products..."
+        placeholder="Buscar..."
         autoComplete="off"
         defaultValue={searchParams?.get('q') || ''}
         className="w-full bg-transparent px-3 py-2 focus:outline-none"
