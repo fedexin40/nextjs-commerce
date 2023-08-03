@@ -1,11 +1,9 @@
-import Link from 'next/link';
-
-import { MdOutlineExplore } from 'react-icons/md';
-import { BsBookmarkHeart } from 'react-icons/bs';
-
 import Cart from 'components/cart';
-import LogoIcon from 'components/icons/logo';
-import Login from './login';
+import Login from 'components/login';
+import Image from 'next/image';
+import Link from 'next/link';
+import { BsBookmarkHeart } from 'react-icons/bs';
+import { MdOutlineExplore } from 'react-icons/md';
 import Search from './search';
 
 export default async function Navbar() {
@@ -15,7 +13,13 @@ export default async function Navbar() {
         <section className="relative flex items-center">
           <Login />
           <Link href="/" aria-label="Go back home">
-            <LogoIcon className="h-8 transition-transform hover:scale-110" />
+            <Image
+              className="cursor-pointer hover:scale-110"
+              src="/picture.png"
+              alt="userProfileImage"
+              width="40"
+              height="40"
+            />
           </Link>
         </section>
         <div className="relative  hidden sm:block sm:w-1/3">

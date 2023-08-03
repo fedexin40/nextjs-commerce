@@ -1,10 +1,13 @@
-import { Cart, Collection, Menu, Page, Product, Category } from 'lib/types';
+import { Cart, Collection, Menu, Page, Product, Token } from 'lib/types';
 import {
+  AccountRegisterDocument,
   CheckoutAddLineDocument,
   CheckoutDeleteLineDocument,
   CheckoutUpdateLineDocument,
+  ConfirmAccountDocument,
   CreateCheckoutDocument,
   GetCategoryBySlugDocument,
+  GetCategoryDocument,
   GetCategoryProductsBySlugDocument,
   GetCheckoutByIdDocument,
   GetCollectionBySlugDocument,
@@ -18,10 +21,8 @@ import {
   OrderDirection,
   ProductOrderField,
   SearchProductsDocument,
-  TypedDocumentString,
-  GetCategoryDocument,
-  AccountRegisterDocument,
-  ConfirmAccountDocument
+  TokenCreateDocument,
+  TypedDocumentString
 } from './generated/graphql';
 import { saleorCheckoutToVercelCart, saleorProductToVercelProduct } from './mappers';
 import { invariant } from './utils';
@@ -45,7 +46,7 @@ export async function saleorFetch<Result, Variables>({
   headers?: HeadersInit;
   cache?: RequestCache;
 }): Promise<Result> {
-  invariant(endpoint, `Missing SALEOR_INSTANCE_URL apesatas!`);
+  invariant(endpoint, `Missing SALEOR_INSTANCE_URL!`);
 
   const result = await fetch(endpoint, {
     method: 'POST',
@@ -57,8 +58,7 @@ export async function saleorFetch<Result, Variables>({
       query: query.toString(),
       ...(variables && { variables })
     }),
-    cache,
-    next: { revalidate: 900 } // 15 minutes
+    cache: cache
   });
 
   const body = (await result.json()) as GraphQlErrorRespone<Result>;
@@ -67,6 +67,26 @@ export async function saleorFetch<Result, Variables>({
   }
 
   return body.data;
+}
+
+export async function tokencreate(email: string, password: string): Promise<Token> {
+  const token = await saleorFetch({
+    query: TokenCreateDocument,
+    variables: {
+      email: email,
+      password: password
+    }
+  });
+  if (token.tokenCreate?.errors[0]) {
+    throw token.tokenCreate.errors[0]?.message;
+  }
+  const accessToken = token.tokenCreate?.token;
+  const refreshToken = token.tokenCreate?.refreshToken;
+
+  return {
+    token: accessToken || '',
+    refreshToken: refreshToken || ''
+  };
 }
 
 export async function registeraccount(

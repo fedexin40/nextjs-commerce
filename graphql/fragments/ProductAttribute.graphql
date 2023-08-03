@@ -1,0 +1,10 @@
+fragment ProductAttribute on SelectedAttribute {
+  attribute {
+    name
+    unit
+  }
+  values {
+    name
+    value
+  }
+}

@@ -1,5 +1,5 @@
-import Navbar from 'components/layout/navbar';
 import Footer from 'components/layout/footer';
+import Navbar from 'components/layout/navbar';
 import { Inter } from 'next/font/google';
 import { ReactNode, Suspense } from 'react';
 import './globals.css';

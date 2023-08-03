@@ -3,8 +3,6 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CiSearch } from 'react-icons/ci';
 
-import SearchIcon from 'components/icons/search';
-
 export default function Search() {
   const router = useRouter();
   const searchParams = useSearchParams();

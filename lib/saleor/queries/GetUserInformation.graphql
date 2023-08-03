@@ -1,0 +1,9 @@
+query GetUserInformation {
+  me {
+    email
+    id
+    lastLogin
+    lastName
+    firstName
+  }
+}

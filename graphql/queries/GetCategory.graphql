@@ -1,0 +1,14 @@
+query GetCategory($first: Int!) {
+  categories(first: $first) {
+    edges {
+      node {
+        id
+        name
+        backgroundImage {
+          url
+          altText: alt
+        }
+      }
+    }
+  }
+}

@@ -5,9 +5,9 @@ import { Suspense } from 'react';
 import Grid from 'components/grid';
 import CarouselProduct from 'components/product/carousel';
 import { Gallery } from 'components/product/gallery';
-import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
-import { getProduct, getCollectionProducts } from 'lib/saleor';
 import ScrollToTop from 'components/scrollup';
+import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
+import { getCollectionProducts, getProduct } from 'lib/saleor';
 
 export const runtime = 'edge';
 
@@ -56,6 +56,7 @@ export default async function ProductPage({ params }: { params: { handle: string
 
   return (
     <>
+      {/* @ts-expect-error Server Component */}
       <ScrollToTop />
       <div className="mb-5 grid rounded-3xl pt-32 sm:pt-20 sm:shadow-2xl">
         <div className="flex w-full">

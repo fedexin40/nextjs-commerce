@@ -67,6 +67,17 @@ export type Page = {
   updatedAt: string;
 };
 
+export type Token = {
+  token: string;
+  refreshToken: string;
+};
+
+export type User = {
+  email?: string;
+  lastName?: string;
+  firstName?: string;
+};
+
 export type Product = Omit<VercelCommerceProduct, 'variants' | 'images'> & {
   variants: ProductVariant[];
   images: Image[];

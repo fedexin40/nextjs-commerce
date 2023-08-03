@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import Image from 'next/image';
 import { Product } from 'lib/types';
-import { AiOutlinePlus, AiOutlineCheck } from 'react-icons/ai';
+import Image from 'next/image';
+import Link from 'next/link';
+import { AiOutlineCheck, AiOutlinePlus } from 'react-icons/ai';
 
 const Grid = ({ product }: { product: Product }) => {
   return (

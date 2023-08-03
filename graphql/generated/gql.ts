@@ -34,8 +34,6 @@ const documents = {
     types.CreateCheckoutDocument,
   'mutation AccountRegister($email: String!, $password: String!, $redirectUrl: String!) {\n  accountRegister(\n    input: {email: $email, channel: "default-channel", password: $password, redirectUrl: $redirectUrl}\n  ) {\n    requiresConfirmation\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
     types.AccountRegisterDocument,
-  'mutation TokenCreate($email: String!, $password: String!) {\n  tokenCreate(email: $email, password: $password) {\n    token\n    refreshToken\n    csrfToken\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
-    types.TokenCreateDocument,
   'query GetCategory($first: Int!) {\n  categories(first: $first) {\n    edges {\n      node {\n        id\n        name\n        backgroundImage {\n          url\n          altText: alt\n        }\n      }\n    }\n  }\n}':
     types.GetCategoryDocument,
   'query GetCategoryBySlug($slug: String!) {\n  category(slug: $slug) {\n    id\n    name\n    slug\n    description\n    seoTitle\n    seoDescription\n    products(\n      channel: "default-channel"\n      first: 1\n      sortBy: {field: LAST_MODIFIED_AT, direction: DESC}\n    ) {\n      edges {\n        node {\n          updatedAt\n        }\n      }\n    }\n  }\n}':
@@ -132,12 +130,6 @@ export function graphql(
 export function graphql(
   source: 'mutation AccountRegister($email: String!, $password: String!, $redirectUrl: String!) {\n  accountRegister(\n    input: {email: $email, channel: "default-channel", password: $password, redirectUrl: $redirectUrl}\n  ) {\n    requiresConfirmation\n    errors {\n      code\n      field\n      message\n    }\n  }\n}'
 ): typeof import('./graphql').AccountRegisterDocument;
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: 'mutation TokenCreate($email: String!, $password: String!) {\n  tokenCreate(email: $email, password: $password) {\n    token\n    refreshToken\n    csrfToken\n    errors {\n      code\n      field\n      message\n    }\n  }\n}'
-): typeof import('./graphql').TokenCreateDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -25900,20 +25900,6 @@ export type AccountRegisterMutation = {
   } | null;
 };
 
-export type TokenCreateMutationVariables = Exact<{
-  email: Scalars['String'];
-  password: Scalars['String'];
-}>;
-
-export type TokenCreateMutation = {
-  tokenCreate?: {
-    token?: string | null;
-    refreshToken?: string | null;
-    csrfToken?: string | null;
-    errors: Array<{ code: AccountErrorCode; field?: string | null; message?: string | null }>;
-  } | null;
-};
-
 export type GetCategoryQueryVariables = Exact<{
   first: Scalars['Int'];
 }>;
@@ -27202,20 +27188,6 @@ export const AccountRegisterDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<AccountRegisterMutation, AccountRegisterMutationVariables>;
-export const TokenCreateDocument = new TypedDocumentString(`
-    mutation TokenCreate($email: String!, $password: String!) {
-  tokenCreate(email: $email, password: $password) {
-    token
-    refreshToken
-    csrfToken
-    errors {
-      code
-      field
-      message
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<TokenCreateMutation, TokenCreateMutationVariables>;
 export const GetCategoryDocument = new TypedDocumentString(`
     query GetCategory($first: Int!) {
   categories(first: $first) {

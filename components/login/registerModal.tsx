@@ -1,28 +1,30 @@
 import { Dialog } from '@headlessui/react';
-import * as React from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import CloseIcon from 'components/icons/close';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useForm } from 'react-hook-form';
-import { registeraccount } from 'lib/saleor';
 import AlertMessage from 'components/common/alert';
+import CloseIcon from 'components/icons/close';
+import { AnimatePresence, motion } from 'framer-motion';
+import { registeraccount } from 'lib/saleor';
+import Link from 'next/link';
+import * as React from 'react';
+import { useForm } from 'react-hook-form';
 
 interface RegisterFormData {
   email: string;
   password: string;
+  passwordAgain: string;
 }
 
-export default function LoginModal({
+export default function RegisterModal({
   isOpen,
   onClose,
-  RegisterSuccess
+  DisplayMsgRegisterOk,
+  login
 }: {
   isOpen: boolean;
   onClose: () => void;
-  RegisterSuccess: () => void;
+  DisplayMsgRegisterOk: () => void;
+  login: () => void;
 }) {
   const { register: registerForm, handleSubmit: handleSubmitForm } = useForm<RegisterFormData>({});
 
@@ -35,20 +37,25 @@ export default function LoginModal({
 
   const handleRegister = handleSubmitForm(async (formData: RegisterFormData) => {
     let UserCreationError: any = '';
-    try {
-      await registeraccount(
-        formData.email,
-        formData.password,
-        'http://localhost:3000/account/confirm'
-      );
-    } catch (e) {
-      UserCreationError = e;
-      setErrorMessage(String(UserCreationError));
+    if (formData.password != formData.passwordAgain) {
+      setErrorMessage('Las contraseñas deben coincidir');
       setError(true);
-    }
-    if (!UserCreationError) {
-      onClose();
-      RegisterSuccess();
+    } else {
+      try {
+        await registeraccount(
+          formData.email,
+          formData.password,
+          'http://localhost:3000/account/confirm'
+        );
+      } catch (e) {
+        UserCreationError = e;
+        setErrorMessage(String(UserCreationError));
+        setError(true);
+      }
+      if (!UserCreationError) {
+        onClose();
+        DisplayMsgRegisterOk();
+      }
     }
   });
 
@@ -90,7 +97,7 @@ export default function LoginModal({
               className="flex w-full flex-col bg-white p-8 text-black md:w-3/5 lg:w-2/5"
             >
               <div className="flex items-center justify-between">
-                <p className="text-lg font-bold">Registrarse</p>
+                <p className="text-lg font-bold">Crear una cuenta</p>
                 <button
                   aria-label="Close login"
                   onClick={onClose}
@@ -99,7 +106,7 @@ export default function LoginModal({
                   <CloseIcon className="h-7" />
                 </button>
               </div>
-              <div className="md:p10 flex p-5 pt-10">
+              <div className="md:p10 flex p-5 pt-3">
                 <div className="flex flex-col	">
                   <Box
                     component="form"
@@ -125,29 +132,48 @@ export default function LoginModal({
                       })}
                       fullWidth
                     />
+                    <TextField
+                      required
+                      label="Vuelva a escribir la contraseña"
+                      type="password"
+                      {...registerForm('passwordAgain', {
+                        required: true
+                      })}
+                      fullWidth
+                    />
                     <div className="p-3 text-sm text-slate-700">
-                      Al continuar, usted acepta el Calendario Específico de Producto PSS de
-                      Autoservicio y la
+                      Al crear una cuenta, aceptas las
                       <Link
                         className="focus:text-primary-600 active:text-primary-700 text-blue-600 transition duration-150 ease-in-out hover:text-blue-400"
                         href="_blank"
                       >
-                        &nbsp;Política de Privacidad
+                        &nbsp;Condiciones de Uso&nbsp;
+                      </Link>
+                      y el
+                      <Link
+                        className="focus:text-primary-600 active:text-primary-700 text-blue-600 transition duration-150 ease-in-out hover:text-blue-400"
+                        href="_blank"
+                      >
+                        &nbsp;Aviso de Privacidad de Amazon
                       </Link>
                     </div>
+
                     <button
-                      className="h-10 min-w-full rounded-xl bg-blue-700 text-white hover:opacity-60"
+                      className="h-10 min-w-full rounded-xl bg-green-700 text-white hover:opacity-60"
                       onClick={handleRegister}
                       type="submit"
                     >
                       Registrarse
                     </button>
                   </Box>
-                  <Linethrough text={'o'} />
-                  <div className="grid grid-cols-1 gap-4 pt-5">
-                    <ButtonSocial text={'Continuar con Google'} image={'/google-avatar.png'} />
-                    <ButtonSocial text={'Continuar con Facebook'} image={'/facebook-avatar.png'} />
-                    <ButtonSocial text={'Continuar con Apple'} image={'/apple-avatar.png'} />
+                  <div className="p-3 text-sm text-slate-700">
+                    ¿Ya tienes una cuenta?
+                    <button
+                      onClick={login}
+                      className="focus:text-primary-600 active:text-primary-700 text-blue-600 transition duration-150 ease-in-out hover:text-blue-400"
+                    >
+                      &nbsp;Inicia Sesion&nbsp;
+                    </button>
                   </div>
                 </div>
               </div>
@@ -156,26 +182,5 @@ export default function LoginModal({
         </Dialog>
       )}
     </AnimatePresence>
-  );
-}
-
-function Linethrough({ text }: { text: string }) {
-  return (
-    <div className="grid grid-cols-3 grid-rows-2 pt-5">
-      <div className="border-b-2 border-black" />
-      <div className="row-span-2 text-center">{text}</div>
-      <div className="border-b-2 border-black" />
-    </div>
-  );
-}
-
-function ButtonSocial({ text, image }: { text: string; image: string }) {
-  return (
-    <button className="rounded-md border-2 border-blue-600 p-2 duration-300 ease-in-out hover:border-blue-400 hover:text-slate-400 hover:opacity-50">
-      <div className="grid grid-cols-5 grid-rows-1">
-        <Image className="justify-self-center" src={image} alt={text} width={25} height={25} />
-        <div className="col-span-4	text-left">{text}</div>
-      </div>
-    </button>
   );
 }
