@@ -5,7 +5,8 @@ module.exports = {
     ignoreDuringBuilds: true
   },
   experimental: {
-    appDir: true
+    appDir: true,
+    serverActions: true
   },
   env: {
     SALEOR_INSTANCE_URL: 'http://localhost:8000/graphql/'

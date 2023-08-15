@@ -36,6 +36,10 @@ const documents = {
     types.AccountRegisterDocument,
   'mutation TokenCreate($email: String!, $password: String!) {\n  tokenCreate(email: $email, password: $password) {\n    token\n    refreshToken\n    csrfToken\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
     types.TokenCreateDocument,
+  'mutation TokenVerify($token: String!) {\n  tokenVerify(token: $token) {\n    errors {\n      code\n      message\n    }\n    isValid\n  }\n}':
+    types.TokenVerifyDocument,
+  'mutation TokenRefresh($refreshToken: String!) {\n  tokenRefresh(refreshToken: $refreshToken) {\n    token\n    errors {\n      code\n      message\n    }\n  }\n}':
+    types.TokenRefreshDocument,
   'query GetCategory($first: Int!) {\n  categories(first: $first) {\n    edges {\n      node {\n        id\n        name\n        backgroundImage {\n          url\n          altText: alt\n        }\n      }\n    }\n  }\n}':
     types.GetCategoryDocument,
   'query GetCategoryBySlug($slug: String!) {\n  category(slug: $slug) {\n    id\n    name\n    slug\n    description\n    seoTitle\n    seoDescription\n    products(\n      channel: "default-channel"\n      first: 1\n      sortBy: {field: LAST_MODIFIED_AT, direction: DESC}\n    ) {\n      edges {\n        node {\n          updatedAt\n        }\n      }\n    }\n  }\n}':
@@ -60,6 +64,8 @@ const documents = {
     types.GetPagesDocument,
   'query GetProductBySlug($slug: String!) {\n  product(channel: "default-channel", slug: $slug) {\n    ...ProductDetails\n  }\n}':
     types.GetProductBySlugDocument,
+  'query GetUserCheckout {\n  me {\n    checkouts(channel: "default-channel", first: 1) {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n  }\n}':
+    types.GetUserCheckoutDocument,
   'query GetUserInformation {\n  me {\n    email\n    id\n    lastLogin\n    lastName\n    firstName\n  }\n}':
     types.GetUserInformationDocument,
   'query SearchProducts($first: Int!, $search: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {\n  products(\n    first: $first\n    channel: "default-channel"\n    sortBy: {field: $sortBy, direction: $sortDirection}\n    filter: {search: $search}\n  ) {\n    edges {\n      node {\n        id\n        slug\n        name\n        isAvailableForPurchase\n        description\n        seoTitle\n        seoDescription\n        pricing {\n          priceRange {\n            start {\n              gross {\n                currency\n                amount\n              }\n            }\n            stop {\n              gross {\n                currency\n                amount\n              }\n            }\n          }\n        }\n        media {\n          url(size: 2160)\n          type\n          alt\n        }\n        collections {\n          name\n        }\n        category {\n          name\n        }\n        updatedAt\n        variants {\n          ...Variant\n        }\n      }\n    }\n  }\n}':
@@ -142,6 +148,18 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: 'mutation TokenVerify($token: String!) {\n  tokenVerify(token: $token) {\n    errors {\n      code\n      message\n    }\n    isValid\n  }\n}'
+): typeof import('./graphql').TokenVerifyDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation TokenRefresh($refreshToken: String!) {\n  tokenRefresh(refreshToken: $refreshToken) {\n    token\n    errors {\n      code\n      message\n    }\n  }\n}'
+): typeof import('./graphql').TokenRefreshDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: 'query GetCategory($first: Int!) {\n  categories(first: $first) {\n    edges {\n      node {\n        id\n        name\n        backgroundImage {\n          url\n          altText: alt\n        }\n      }\n    }\n  }\n}'
 ): typeof import('./graphql').GetCategoryDocument;
 /**
@@ -210,6 +228,12 @@ export function graphql(
 export function graphql(
   source: 'query GetProductBySlug($slug: String!) {\n  product(channel: "default-channel", slug: $slug) {\n    ...ProductDetails\n  }\n}'
 ): typeof import('./graphql').GetProductBySlugDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'query GetUserCheckout {\n  me {\n    checkouts(channel: "default-channel", first: 1) {\n      edges {\n        node {\n          id\n        }\n      }\n    }\n  }\n}'
+): typeof import('./graphql').GetUserCheckoutDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -1,9 +1,9 @@
-import Cart from 'components/cart';
-import Login from 'components/login';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BsBookmarkHeart } from 'react-icons/bs';
 import { MdOutlineExplore } from 'react-icons/md';
+import Cart from './cart';
+import Login from './login';
 import Search from './search';
 
 export default async function Navbar() {
@@ -22,6 +22,7 @@ export default async function Navbar() {
             />
           </Link>
         </section>
+
         <div className="relative  hidden sm:block sm:w-1/3">
           <Search />
         </div>
@@ -40,7 +41,6 @@ export default async function Navbar() {
               <BsBookmarkHeart />
             </div>
             <div>
-              {/* @ts-expect-error Server Component */}
               <Cart />
             </div>
           </div>

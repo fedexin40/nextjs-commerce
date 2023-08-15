@@ -1,3 +1,27 @@
+'use client';
+
+import { Dispatch, createContext, useReducer } from 'react';
+
+const initialTasks = {
+  showLogin: false,
+  showRegister: false,
+  showRegisterMsg: false,
+  showUserLogged: false
+};
+
+export const TasksContext = createContext<Tasks>(initialTasks);
+export const TasksDispatchContext = createContext<Dispatch<actionState>>(() => null);
+
+export function TasksProvider({ children }: { children: React.ReactNode }) {
+  const [tasks, dispatch] = useReducer(tasksReducer, initialTasks);
+
+  return (
+    <TasksContext.Provider value={tasks}>
+      <TasksDispatchContext.Provider value={dispatch}>{children}</TasksDispatchContext.Provider>
+    </TasksContext.Provider>
+  );
+}
+
 export enum Action {
   showLogin = 'showLogin',
   showRegister = 'showRegister',
@@ -22,7 +46,7 @@ interface Tasks {
   showUserLogged: boolean;
 }
 
-export default function tasksReducer(tasks: Tasks, action: actionState) {
+function tasksReducer(tasks: Tasks, action: actionState) {
   switch (action.type) {
     case Action.showLogin: {
       return {
@@ -60,12 +84,13 @@ export default function tasksReducer(tasks: Tasks, action: actionState) {
         showUserLogged: false
       };
     }
-    default:
+    default: {
       return {
+        ...tasks,
         showLogin: false,
         showRegister: false,
-        showRegisterMsg: false,
-        showUserLogged: false
+        showRegisterMsg: false
       };
+    }
   }
 }

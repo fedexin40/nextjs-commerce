@@ -1,0 +1,11 @@
+query GetUserCheckout {
+  me {
+    checkouts(channel: "default-channel", first: 1) {
+      edges {
+        node {
+          id
+        }
+      }
+    }
+  }
+}

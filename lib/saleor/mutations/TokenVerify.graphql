@@ -1,0 +1,9 @@
+mutation TokenVerify($token: String!) {
+  tokenVerify(token: $token) {
+    errors {
+      code
+      message
+    }
+    isValid
+  }
+}

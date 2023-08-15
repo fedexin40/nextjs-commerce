@@ -2,16 +2,38 @@ import Fade from '@mui/material/Fade';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import * as React from 'react';
+import { useContext } from 'react';
+import { Action, TasksDispatchContext } from '../context';
 
 export default function UserMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const router = useRouter();
+  const dispatch = useContext(TasksDispatchContext);
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+
+  const closeSession = async () => {
+    console.log('cerrrar sesion');
+    await fetch('/api/login', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        operation: 'closeSession'
+      })
+    });
+    dispatch({ type: Action.hiddenUserLogged });
+    router.refresh();
+    router.push('/');
   };
 
   return (
@@ -43,7 +65,7 @@ export default function UserMenu() {
       >
         <MenuItem onClick={handleClose}>Perfil</MenuItem>
         <MenuItem onClick={handleClose}>Mis pedidos</MenuItem>
-        <MenuItem onClick={handleClose}>Cerrar sesion</MenuItem>
+        <MenuItem onClick={closeSession}>Cerrar sesion</MenuItem>
       </Menu>
     </>
   );

@@ -1,3 +1,5 @@
+import 'server-only';
+
 import { Cart, Collection, Menu, Page, Product, Token } from 'lib/types';
 import {
   AccountRegisterDocument,
@@ -17,11 +19,14 @@ import {
   GetPageBySlugDocument,
   GetPagesDocument,
   GetProductBySlugDocument,
+  GetUserCheckoutDocument,
   MenuItemFragment,
   OrderDirection,
   ProductOrderField,
   SearchProductsDocument,
   TokenCreateDocument,
+  TokenRefreshDocument,
+  TokenVerifyDocument,
   TypedDocumentString
 } from './generated/graphql';
 import { saleorCheckoutToVercelCart, saleorProductToVercelProduct } from './mappers';
@@ -67,6 +72,53 @@ export async function saleorFetch<Result, Variables>({
   }
 
   return body.data;
+}
+
+export async function tokenRefresh(refreshToken: string): Promise<any> {
+  const tokenrefresh = await saleorFetch({
+    query: TokenRefreshDocument,
+    variables: {
+      refreshToken: refreshToken
+    },
+    cache: 'no-store'
+  });
+  if (tokenrefresh.tokenRefresh?.errors[0]) {
+    throw tokenrefresh.tokenRefresh.errors[0]?.code;
+  }
+  return {
+    token: tokenrefresh.tokenRefresh?.token || ''
+  };
+}
+
+export async function tokenVerify(token: string): Promise<any> {
+  const tokenverify = await saleorFetch({
+    query: TokenVerifyDocument,
+    variables: {
+      token: token
+    },
+    cache: 'no-store'
+  });
+  if (tokenverify.tokenVerify?.errors[0]) {
+    throw tokenverify.tokenVerify.errors[0]?.code;
+  }
+  if (tokenverify.tokenVerify?.isValid) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export async function getUsercart(headers?: HeadersInit): Promise<any> {
+  const checkout = await saleorFetch({
+    query: GetUserCheckoutDocument,
+    variables: {},
+    headers: headers,
+    cache: 'no-store'
+  });
+  if (checkout.me?.checkouts?.edges[0]?.node?.id) {
+    return checkout.me?.checkouts?.edges[0]?.node?.id;
+  }
+  return false;
 }
 
 export async function tokencreate(email: string, password: string): Promise<Token> {
@@ -389,12 +441,13 @@ export async function getPages(): Promise<Page[]> {
   );
 }
 
-export async function getCart(cartId: string): Promise<Cart | null> {
+export async function getCart(cartId: string, headers?: HeadersInit): Promise<Cart | null> {
   const saleorCheckout = await saleorFetch({
     query: GetCheckoutByIdDocument,
     variables: {
       id: cartId
     },
+    headers: headers,
     cache: 'no-store'
   });
 
@@ -405,7 +458,7 @@ export async function getCart(cartId: string): Promise<Cart | null> {
   return saleorCheckoutToVercelCart(saleorCheckout.checkout);
 }
 
-export async function createCart(): Promise<Cart> {
+export async function createCart(headers?: HeadersInit): Promise<Cart> {
   const saleorCheckout = await saleorFetch({
     query: CreateCheckoutDocument,
     variables: {
@@ -414,6 +467,7 @@ export async function createCart(): Promise<Cart> {
         lines: []
       }
     },
+    headers: headers,
     cache: 'no-store'
   });
 

@@ -4,58 +4,45 @@ import TextField from '@mui/material/TextField';
 import AlertMessage from 'components/common/alert';
 import CloseIcon from 'components/icons/close';
 import { AnimatePresence, motion } from 'framer-motion';
-import { registeraccount } from 'lib/saleor';
+import Image from 'next/image';
 import Link from 'next/link';
 import * as React from 'react';
+import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { Action, TasksDispatchContext } from '../context';
 
 interface RegisterFormData {
   email: string;
   password: string;
-  passwordAgain: string;
 }
 
-export default function RegisterModal({
-  isOpen,
-  onClose,
-  DisplayMsgRegisterOk,
-  login
-}: {
-  isOpen: boolean;
-  onClose: () => void;
-  DisplayMsgRegisterOk: () => void;
-  login: () => void;
-}) {
+export default function LoginModal({ isOpen }: { isOpen: boolean }) {
   const { register: registerForm, handleSubmit: handleSubmitForm } = useForm<RegisterFormData>({});
-
-  function handleClose() {
-    setError(false);
-  }
-
   const [errorMessage, setErrorMessage] = React.useState('');
   const [error, setError] = React.useState(false);
+  const dispatch = useContext(TasksDispatchContext);
 
-  const handleRegister = handleSubmitForm(async (formData: RegisterFormData) => {
-    let UserCreationError: any = '';
-    if (formData.password != formData.passwordAgain) {
-      setErrorMessage('Las contraseñas deben coincidir');
-      setError(true);
+  const handleLogin = handleSubmitForm(async (formData: RegisterFormData) => {
+    let email = formData.email;
+    let password = formData.password;
+    let response = await fetch('/api/login', {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        operation: 'login',
+        email: email,
+        password: password
+      })
+    });
+    let data = await response.json();
+    if (data.status === 200) {
+      dispatch({ type: Action.showUserLogged });
+      dispatch({ type: Action.hiddenLogin });
     } else {
-      try {
-        await registeraccount(
-          formData.email,
-          formData.password,
-          'http://localhost:3000/account/confirm'
-        );
-      } catch (e) {
-        UserCreationError = e;
-        setErrorMessage(String(UserCreationError));
-        setError(true);
-      }
-      if (!UserCreationError) {
-        onClose();
-        DisplayMsgRegisterOk();
-      }
+      setErrorMessage('Creedenciales Invalidas');
+      setError(true);
     }
   });
 
@@ -69,7 +56,7 @@ export default function RegisterModal({
           exit="closed"
           key="dialog"
           open={isOpen}
-          onClose={onClose}
+          onClose={() => dispatch({ type: Action.hiddenLogin })}
           className="relative z-50"
         >
           <motion.div
@@ -84,7 +71,7 @@ export default function RegisterModal({
             severity="error"
             open={error}
             message={errorMessage}
-            handleClose={handleClose}
+            handleClose={() => setError(false)}
           />
           <div className="fixed inset-0 flex justify-end">
             <Dialog.Panel
@@ -97,10 +84,10 @@ export default function RegisterModal({
               className="flex w-full flex-col bg-white p-8 text-black md:w-3/5 lg:w-2/5"
             >
               <div className="flex items-center justify-between">
-                <p className="text-lg font-bold">Crear una cuenta</p>
+                <p className="text-lg font-bold">Iniciar sesion</p>
                 <button
                   aria-label="Close login"
-                  onClick={onClose}
+                  onClick={() => dispatch({ type: Action.hiddenLogin })}
                   className="text-black transition-colors"
                 >
                   <CloseIcon className="h-7" />
@@ -132,48 +119,36 @@ export default function RegisterModal({
                       })}
                       fullWidth
                     />
-                    <TextField
-                      required
-                      label="Vuelva a escribir la contraseña"
-                      type="password"
-                      {...registerForm('passwordAgain', {
-                        required: true
-                      })}
-                      fullWidth
-                    />
                     <div className="p-3 text-sm text-slate-700">
-                      Al crear una cuenta, aceptas las
+                      Al continuar, usted acepta el Calendario Específico de Producto PSS de
+                      Autoservicio y la
                       <Link
                         className="focus:text-primary-600 active:text-primary-700 text-blue-600 transition duration-150 ease-in-out hover:text-blue-400"
                         href="_blank"
                       >
-                        &nbsp;Condiciones de Uso&nbsp;
-                      </Link>
-                      y el
-                      <Link
-                        className="focus:text-primary-600 active:text-primary-700 text-blue-600 transition duration-150 ease-in-out hover:text-blue-400"
-                        href="_blank"
-                      >
-                        &nbsp;Aviso de Privacidad de Amazon
+                        &nbsp;Política de Privacidad
                       </Link>
                     </div>
-
                     <button
-                      className="h-10 min-w-full rounded-xl bg-green-700 text-white hover:opacity-60"
-                      onClick={handleRegister}
+                      className="h-10 min-w-full rounded-xl bg-blue-700 text-white hover:opacity-60"
+                      onClick={handleLogin}
                       type="submit"
                     >
-                      Registrarse
+                      Iniciar sesion
                     </button>
                   </Box>
-                  <div className="p-3 text-sm text-slate-700">
-                    ¿Ya tienes una cuenta?
-                    <button
-                      onClick={login}
-                      className="focus:text-primary-600 active:text-primary-700 text-blue-600 transition duration-150 ease-in-out hover:text-blue-400"
-                    >
-                      &nbsp;Inicia Sesion&nbsp;
-                    </button>
+                  <button
+                    className="mt-5 h-10 min-w-full rounded-xl bg-green-700 text-white hover:opacity-60"
+                    onClick={() => dispatch({ type: Action.showRegister })}
+                    type="submit"
+                  >
+                    Registrarse
+                  </button>
+                  <Linethrough text={'o'} />
+                  <div className="grid grid-cols-1 gap-4">
+                    <ButtonSocial text={'Continuar con Google'} image={'/google-avatar.png'} />
+                    <ButtonSocial text={'Continuar con Facebook'} image={'/facebook-avatar.png'} />
+                    <ButtonSocial text={'Continuar con Apple'} image={'/apple-avatar.png'} />
                   </div>
                 </div>
               </div>
@@ -182,5 +157,26 @@ export default function RegisterModal({
         </Dialog>
       )}
     </AnimatePresence>
+  );
+}
+
+function Linethrough({ text }: { text: string }) {
+  return (
+    <div className="grid grid-cols-3 grid-rows-2 p-3">
+      <div className="border-b-2 border-black" />
+      <div className="row-span-2 text-center">{text}</div>
+      <div className="border-b-2 border-black" />
+    </div>
+  );
+}
+
+function ButtonSocial({ text, image }: { text: string; image: string }) {
+  return (
+    <button className="rounded-md border-2 border-blue-600 p-2 duration-300 ease-in-out hover:border-blue-400 hover:text-slate-400 hover:opacity-50">
+      <div className="grid grid-cols-5 grid-rows-1">
+        <Image className="justify-self-center" src={image} alt={text} width={25} height={25} />
+        <div className="col-span-4	text-left">{text}</div>
+      </div>
+    </button>
   );
 }

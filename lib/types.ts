@@ -72,6 +72,10 @@ export type Token = {
   refreshToken: string;
 };
 
+export type Checkout = {
+  checkoutID?: string[];
+};
+
 export type User = {
   email?: string;
   lastName?: string;

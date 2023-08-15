@@ -25914,6 +25914,28 @@ export type TokenCreateMutation = {
   } | null;
 };
 
+export type TokenVerifyMutationVariables = Exact<{
+  token: Scalars['String'];
+}>;
+
+export type TokenVerifyMutation = {
+  tokenVerify?: {
+    isValid: boolean;
+    errors: Array<{ code: AccountErrorCode; message?: string | null }>;
+  } | null;
+};
+
+export type TokenRefreshMutationVariables = Exact<{
+  refreshToken: Scalars['String'];
+}>;
+
+export type TokenRefreshMutation = {
+  tokenRefresh?: {
+    token?: string | null;
+    errors: Array<{ code: AccountErrorCode; message?: string | null }>;
+  } | null;
+};
+
 export type GetCategoryQueryVariables = Exact<{
   first: Scalars['Int'];
 }>;
@@ -26299,6 +26321,12 @@ export type GetProductBySlugQuery = {
       values: Array<{ name?: string | null; value?: string | null }>;
     }>;
   } | null;
+};
+
+export type GetUserCheckoutQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetUserCheckoutQuery = {
+  me?: { checkouts?: { edges: Array<{ node: { id: string } }> } | null } | null;
 };
 
 export type GetUserInformationQueryVariables = Exact<{ [key: string]: never }>;
@@ -27216,6 +27244,28 @@ export const TokenCreateDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<TokenCreateMutation, TokenCreateMutationVariables>;
+export const TokenVerifyDocument = new TypedDocumentString(`
+    mutation TokenVerify($token: String!) {
+  tokenVerify(token: $token) {
+    errors {
+      code
+      message
+    }
+    isValid
+  }
+}
+    `) as unknown as TypedDocumentString<TokenVerifyMutation, TokenVerifyMutationVariables>;
+export const TokenRefreshDocument = new TypedDocumentString(`
+    mutation TokenRefresh($refreshToken: String!) {
+  tokenRefresh(refreshToken: $refreshToken) {
+    token
+    errors {
+      code
+      message
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<TokenRefreshMutation, TokenRefreshMutationVariables>;
 export const GetCategoryDocument = new TypedDocumentString(`
     query GetCategory($first: Int!) {
   categories(first: $first) {
@@ -27786,6 +27836,19 @@ fragment Variant on ProductVariant {
     }
   }
 }`) as unknown as TypedDocumentString<GetProductBySlugQuery, GetProductBySlugQueryVariables>;
+export const GetUserCheckoutDocument = new TypedDocumentString(`
+    query GetUserCheckout {
+  me {
+    checkouts(channel: "default-channel", first: 1) {
+      edges {
+        node {
+          id
+        }
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetUserCheckoutQuery, GetUserCheckoutQueryVariables>;
 export const GetUserInformationDocument = new TypedDocumentString(`
     query GetUserInformation {
   me {

@@ -4,8 +4,8 @@ import { startTransition, useState } from 'react';
 import clsx from 'clsx';
 import MinusIcon from 'components/icons/minus';
 import PlusIcon from 'components/icons/plus';
+import LoadingDots from 'components/loading-dots';
 import type { CartItem } from 'lib/types';
-import LoadingDots from '../loading-dots';
 
 export default function EditItemQuantityButton({
   item,
