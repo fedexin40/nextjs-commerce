@@ -5,11 +5,11 @@ module.exports = {
     ignoreDuringBuilds: true
   },
   experimental: {
-    appDir: true,
-    serverActions: true
+    appDir: true
   },
   env: {
-    SALEOR_INSTANCE_URL: 'http://localhost:8000/graphql/'
+    SALEOR_INSTANCE_URL: 'http://localhost:8000/graphql/',
+    SALEOR_FRONTEND_URL: 'http://localhost:3000/'
   },
   images: {
     domains: ['localhost'],

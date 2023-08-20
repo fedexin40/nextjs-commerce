@@ -1,0 +1,9 @@
+mutation externalAuthenticationUrl($input: JSONString!) {
+  externalAuthenticationUrl(pluginId: "mirumee.authentication.openidconnect", input: $input) {
+    errors {
+      code
+      message
+    }
+    authenticationData
+  }
+}

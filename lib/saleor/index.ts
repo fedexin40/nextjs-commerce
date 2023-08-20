@@ -8,6 +8,8 @@ import {
   CheckoutUpdateLineDocument,
   ConfirmAccountDocument,
   CreateCheckoutDocument,
+  ExternalAuthenticationUrlDocument,
+  ExternalObtainAccessTokensDocument,
   GetCategoryBySlugDocument,
   GetCategoryDocument,
   GetCategoryProductsBySlugDocument,
@@ -72,6 +74,41 @@ export async function saleorFetch<Result, Variables>({
   }
 
   return body.data;
+}
+
+export async function externalObtainAccessTokens(code: string, state: string): Promise<any> {
+  const input = `{"state": "${state}", "code": "${code}" }`;
+  const token = await saleorFetch({
+    query: ExternalObtainAccessTokensDocument,
+    variables: {
+      input: input
+    },
+    cache: 'no-store'
+  });
+  if (token.externalObtainAccessTokens?.errors[0]) {
+    throw token.externalObtainAccessTokens.errors[0]?.code;
+  }
+  return {
+    token: token.externalObtainAccessTokens?.token || '',
+    tokenRefresh: token.externalObtainAccessTokens?.refreshToken || ''
+  };
+}
+
+export async function externalAuthenticationUrl(callback: string): Promise<any> {
+  const input = `{"redirectUri": "${callback}" }`;
+  const url = await saleorFetch({
+    query: ExternalAuthenticationUrlDocument,
+    variables: {
+      input: input
+    },
+    cache: 'no-store'
+  });
+  if (url.externalAuthenticationUrl?.errors[0]) {
+    throw url.externalAuthenticationUrl.errors[0]?.code;
+  }
+  return {
+    url: url.externalAuthenticationUrl?.authenticationData || ''
+  };
 }
 
 export async function tokenRefresh(refreshToken: string): Promise<any> {

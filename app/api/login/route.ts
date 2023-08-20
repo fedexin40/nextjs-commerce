@@ -57,8 +57,9 @@ export async function POST(req: NextRequest) {
     case 'register':
       email = paramenters.email;
       password = paramenters.password;
+      let URL = `${process.env.SALEOR_FRONTEND_URL}/account/confirm`;
       try {
-        await registeraccount(email, password, 'http://localhost:3000/account/confirm');
+        await registeraccount(email, password, URL);
       } catch (error) {
         return NextResponse.json({ error: error }, { status: 500 });
       }

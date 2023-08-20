@@ -1,0 +1,10 @@
+mutation externalObtainAccessTokens($input: JSONString!) {
+  externalObtainAccessTokens(input: $input, pluginId: "mirumee.authentication.openidconnect") {
+    errors {
+      code
+      message
+    }
+    refreshToken
+    token
+  }
+}

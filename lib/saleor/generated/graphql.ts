@@ -25925,6 +25925,29 @@ export type TokenVerifyMutation = {
   } | null;
 };
 
+export type ExternalAuthenticationUrlMutationVariables = Exact<{
+  input: Scalars['JSONString'];
+}>;
+
+export type ExternalAuthenticationUrlMutation = {
+  externalAuthenticationUrl?: {
+    authenticationData?: string | null;
+    errors: Array<{ code: AccountErrorCode; message?: string | null }>;
+  } | null;
+};
+
+export type ExternalObtainAccessTokensMutationVariables = Exact<{
+  input: Scalars['JSONString'];
+}>;
+
+export type ExternalObtainAccessTokensMutation = {
+  externalObtainAccessTokens?: {
+    refreshToken?: string | null;
+    token?: string | null;
+    errors: Array<{ code: AccountErrorCode; message?: string | null }>;
+  } | null;
+};
+
 export type TokenRefreshMutationVariables = Exact<{
   refreshToken: Scalars['String'];
 }>;
@@ -27255,6 +27278,41 @@ export const TokenVerifyDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<TokenVerifyMutation, TokenVerifyMutationVariables>;
+export const ExternalAuthenticationUrlDocument = new TypedDocumentString(`
+    mutation externalAuthenticationUrl($input: JSONString!) {
+  externalAuthenticationUrl(
+    pluginId: "mirumee.authentication.openidconnect"
+    input: $input
+  ) {
+    errors {
+      code
+      message
+    }
+    authenticationData
+  }
+}
+    `) as unknown as TypedDocumentString<
+  ExternalAuthenticationUrlMutation,
+  ExternalAuthenticationUrlMutationVariables
+>;
+export const ExternalObtainAccessTokensDocument = new TypedDocumentString(`
+    mutation externalObtainAccessTokens($input: JSONString!) {
+  externalObtainAccessTokens(
+    input: $input
+    pluginId: "mirumee.authentication.openidconnect"
+  ) {
+    errors {
+      code
+      message
+    }
+    refreshToken
+    token
+  }
+}
+    `) as unknown as TypedDocumentString<
+  ExternalObtainAccessTokensMutation,
+  ExternalObtainAccessTokensMutationVariables
+>;
 export const TokenRefreshDocument = new TypedDocumentString(`
     mutation TokenRefresh($refreshToken: String!) {
   tokenRefresh(refreshToken: $refreshToken) {

@@ -4,12 +4,14 @@ import TextField from '@mui/material/TextField';
 import AlertMessage from 'components/common/alert';
 import CloseIcon from 'components/icons/close';
 import { AnimatePresence, motion } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
 import * as React from 'react';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Action, TasksDispatchContext } from '../context';
+import AppleLogin from './appleLogin';
+import FacebookLogin from './facebookLogin';
+import GoogleLogin from './googleLogin';
 
 interface RegisterFormData {
   email: string;
@@ -146,9 +148,9 @@ export default function LoginModal({ isOpen }: { isOpen: boolean }) {
                   </button>
                   <Linethrough text={'o'} />
                   <div className="grid grid-cols-1 gap-4">
-                    <ButtonSocial text={'Continuar con Google'} image={'/google-avatar.png'} />
-                    <ButtonSocial text={'Continuar con Facebook'} image={'/facebook-avatar.png'} />
-                    <ButtonSocial text={'Continuar con Apple'} image={'/apple-avatar.png'} />
+                    <GoogleLogin />
+                    <FacebookLogin />
+                    <AppleLogin />
                   </div>
                 </div>
               </div>
@@ -167,16 +169,5 @@ function Linethrough({ text }: { text: string }) {
       <div className="row-span-2 text-center">{text}</div>
       <div className="border-b-2 border-black" />
     </div>
-  );
-}
-
-function ButtonSocial({ text, image }: { text: string; image: string }) {
-  return (
-    <button className="rounded-md border-2 border-blue-600 p-2 duration-300 ease-in-out hover:border-blue-400 hover:text-slate-400 hover:opacity-50">
-      <div className="grid grid-cols-5 grid-rows-1">
-        <Image className="justify-self-center" src={image} alt={text} width={25} height={25} />
-        <div className="col-span-4	text-left">{text}</div>
-      </div>
-    </button>
   );
 }

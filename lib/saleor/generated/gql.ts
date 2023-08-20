@@ -38,6 +38,10 @@ const documents = {
     types.TokenCreateDocument,
   'mutation TokenVerify($token: String!) {\n  tokenVerify(token: $token) {\n    errors {\n      code\n      message\n    }\n    isValid\n  }\n}':
     types.TokenVerifyDocument,
+  'mutation externalAuthenticationUrl($input: JSONString!) {\n  externalAuthenticationUrl(\n    pluginId: "mirumee.authentication.openidconnect"\n    input: $input\n  ) {\n    errors {\n      code\n      message\n    }\n    authenticationData\n  }\n}':
+    types.ExternalAuthenticationUrlDocument,
+  'mutation externalObtainAccessTokens($input: JSONString!) {\n  externalObtainAccessTokens(\n    input: $input\n    pluginId: "mirumee.authentication.openidconnect"\n  ) {\n    errors {\n      code\n      message\n    }\n    refreshToken\n    token\n  }\n}':
+    types.ExternalObtainAccessTokensDocument,
   'mutation TokenRefresh($refreshToken: String!) {\n  tokenRefresh(refreshToken: $refreshToken) {\n    token\n    errors {\n      code\n      message\n    }\n  }\n}':
     types.TokenRefreshDocument,
   'query GetCategory($first: Int!) {\n  categories(first: $first) {\n    edges {\n      node {\n        id\n        name\n        backgroundImage {\n          url\n          altText: alt\n        }\n      }\n    }\n  }\n}':
@@ -150,6 +154,18 @@ export function graphql(
 export function graphql(
   source: 'mutation TokenVerify($token: String!) {\n  tokenVerify(token: $token) {\n    errors {\n      code\n      message\n    }\n    isValid\n  }\n}'
 ): typeof import('./graphql').TokenVerifyDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation externalAuthenticationUrl($input: JSONString!) {\n  externalAuthenticationUrl(\n    pluginId: "mirumee.authentication.openidconnect"\n    input: $input\n  ) {\n    errors {\n      code\n      message\n    }\n    authenticationData\n  }\n}'
+): typeof import('./graphql').ExternalAuthenticationUrlDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation externalObtainAccessTokens($input: JSONString!) {\n  externalObtainAccessTokens(\n    input: $input\n    pluginId: "mirumee.authentication.openidconnect"\n  ) {\n    errors {\n      code\n      message\n    }\n    refreshToken\n    token\n  }\n}'
+): typeof import('./graphql').ExternalObtainAccessTokensDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
