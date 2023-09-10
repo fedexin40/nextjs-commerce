@@ -33,10 +33,8 @@ export type Collection = VercelCommerceCollection & {
   path: string;
 };
 
-export type Category = {
-  id: string;
-  name: string;
-  backgroundImage: Image;
+export type Category = VercelCommerceCollection & {
+  path: string;
 };
 
 export type Image = {

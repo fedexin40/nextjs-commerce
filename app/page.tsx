@@ -1,8 +1,7 @@
 import { Suspense } from 'react';
 import Banner from '../components/banner';
-import TrendingList from '../components/trending';
 import NewProducts from '../components/new';
-import CategoryList from '../components/categories';
+import TrendingList from '../components/trending';
 
 export const runtime = 'edge';
 
@@ -29,16 +28,16 @@ export default async function HomePage() {
         </Suspense>
         <Suspense>
           <Suspense>
-            {/* @ts-expect-error Server Component */}
-            <TrendingList />
+            <div className="mt-5">
+              {/* @ts-expect-error Server Component */}
+              <NewProducts />
+            </div>
           </Suspense>
           <Suspense>
-            {/* @ts-expect-error Server Component */}
-            <NewProducts />
-          </Suspense>
-          <Suspense>
-            {/* @ts-expect-error Server Component */}
-            <CategoryList />
+            <div className="mt-10">
+              {/* @ts-expect-error Server Component */}
+              <TrendingList />
+            </div>
           </Suspense>
         </Suspense>
       </Suspense>

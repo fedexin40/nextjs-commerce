@@ -1,9 +1,15 @@
+import GridProducts from 'components/common/gridProducts';
+import CategoryMenu from 'components/layout/navbar/category';
+import FilterItemDropdown from 'components/layout/search/filter/dropdown';
+import { defaultSort, sorting } from 'lib/constants';
 import { getCollection, getCollectionProducts } from 'lib/saleor';
 import { Metadata } from 'next';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 
-import Grid from 'components/grid';
-import ProductGridItems from 'components/layout/product-grid-items';
+type Props = {
+  searchParams: { [key: string]: string | string[] | undefined };
+  params: { collection: string };
+};
 
 export const runtime = 'edge';
 
@@ -32,18 +38,25 @@ export async function generateMetadata({
   };
 }
 
-export default async function CategoryPage({ params }: { params: { collection: string } }) {
-  const products = await getCollectionProducts(params.collection);
+export default async function CategoryPage(props: Props) {
+  const { sort } = props.searchParams as { [key: string]: string };
+  const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
+
+  const products = await getCollectionProducts({ sortKey, reverse, slug: props.params.collection });
+
+  if (products.length === 0) {
+    redirect('/noProduct');
+  }
 
   return (
-    <section>
-      {products.length === 0 ? (
-        <p className="py-3 text-lg">{`No products found in this collection`}</p>
-      ) : (
-        <Grid className="grid-cols-2 lg:grid-cols-3">
-          <ProductGridItems products={products} />
-        </Grid>
-      )}
-    </section>
+    <>
+      <div className="tracking-widejustify-normal flex w-full flex-row place-content-around rounded-lg bg-blue-700 pb-3 pt-5 text-base text-white shadow-lg shadow-black">
+        <FilterItemDropdown list={sorting} />
+        <CategoryMenu />
+      </div>
+      <section>
+        <GridProducts products={products} />
+      </section>
+    </>
   );
 }

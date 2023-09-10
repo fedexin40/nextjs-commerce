@@ -25959,17 +25959,18 @@ export type TokenRefreshMutation = {
   } | null;
 };
 
-export type GetCategoryQueryVariables = Exact<{
-  first: Scalars['Int'];
-}>;
+export type GetCategoriesQueryVariables = Exact<{ [key: string]: never }>;
 
-export type GetCategoryQuery = {
+export type GetCategoriesQuery = {
   categories?: {
     edges: Array<{
       node: {
         id: string;
         name: string;
-        backgroundImage?: { url: string; altText?: string | null } | null;
+        slug: string;
+        description?: string | null;
+        seoTitle?: string | null;
+        seoDescription?: string | null;
       };
     }>;
   } | null;
@@ -25993,6 +25994,8 @@ export type GetCategoryBySlugQuery = {
 
 export type GetCategoryProductsBySlugQueryVariables = Exact<{
   slug: Scalars['String'];
+  sortBy: ProductOrderField;
+  sortDirection: OrderDirection;
 }>;
 
 export type GetCategoryProductsBySlugQuery = {
@@ -26122,6 +26125,8 @@ export type GetCollectionBySlugQuery = {
 
 export type GetCollectionProductsBySlugQueryVariables = Exact<{
   slug: Scalars['String'];
+  sortBy: ProductOrderField;
+  sortDirection: OrderDirection;
 }>;
 
 export type GetCollectionProductsBySlugQuery = {
@@ -27324,22 +27329,22 @@ export const TokenRefreshDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<TokenRefreshMutation, TokenRefreshMutationVariables>;
-export const GetCategoryDocument = new TypedDocumentString(`
-    query GetCategory($first: Int!) {
-  categories(first: $first) {
+export const GetCategoriesDocument = new TypedDocumentString(`
+    query GetCategories {
+  categories(first: 100) {
     edges {
       node {
         id
         name
-        backgroundImage {
-          url
-          altText: alt
-        }
+        slug
+        description
+        seoTitle
+        seoDescription
       }
     }
   }
 }
-    `) as unknown as TypedDocumentString<GetCategoryQuery, GetCategoryQueryVariables>;
+    `) as unknown as TypedDocumentString<GetCategoriesQuery, GetCategoriesQueryVariables>;
 export const GetCategoryBySlugDocument = new TypedDocumentString(`
     query GetCategoryBySlug($slug: String!) {
   category(slug: $slug) {
@@ -27364,9 +27369,13 @@ export const GetCategoryBySlugDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetCategoryBySlugQuery, GetCategoryBySlugQueryVariables>;
 export const GetCategoryProductsBySlugDocument = new TypedDocumentString(`
-    query GetCategoryProductsBySlug($slug: String!) {
+    query GetCategoryProductsBySlug($slug: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {
   category(slug: $slug) {
-    products(channel: "default-channel", first: 100) {
+    products(
+      channel: "default-channel"
+      first: 100
+      sortBy: {field: $sortBy, direction: $sortDirection}
+    ) {
       edges {
         node {
           id
@@ -27581,9 +27590,9 @@ export const GetCollectionBySlugDocument = new TypedDocumentString(`
   GetCollectionBySlugQueryVariables
 >;
 export const GetCollectionProductsBySlugDocument = new TypedDocumentString(`
-    query GetCollectionProductsBySlug($slug: String!) {
+    query GetCollectionProductsBySlug($slug: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {
   collection(channel: "default-channel", slug: $slug) {
-    products(first: 100) {
+    products(first: 100, sortBy: {field: $sortBy, direction: $sortDirection}) {
       edges {
         node {
           id

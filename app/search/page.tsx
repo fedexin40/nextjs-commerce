@@ -1,7 +1,9 @@
-import Grid from 'components/grid';
-import ProductGridItems from 'components/layout/product-grid-items';
+import GridProducts from 'components/common/gridProducts';
+import CategoryMenu from 'components/layout/navbar/category';
+import FilterItemDropdown from 'components/layout/search/filter/dropdown';
 import { defaultSort, sorting } from 'lib/constants';
 import { getProducts } from 'lib/saleor';
+import { redirect } from 'next/navigation';
 
 export const runtime = 'edge';
 
@@ -19,23 +21,18 @@ export default async function SearchPage({
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
 
   const products = await getProducts({ sortKey, reverse, query: searchValue });
-  const resultsText = products.length > 1 ? 'results' : 'result';
+
+  if (products.length === 0) {
+    redirect('/noProduct');
+  }
 
   return (
     <>
-      {searchValue ? (
-        <p>
-          {products.length === 0
-            ? 'There are no products that match '
-            : `Showing ${products.length} ${resultsText} for `}
-          <span className="font-bold">&quot;{searchValue}&quot;</span>
-        </p>
-      ) : null}
-      {products.length > 0 ? (
-        <Grid className="grid-cols-2 lg:grid-cols-3">
-          <ProductGridItems products={products} />
-        </Grid>
-      ) : null}
+      <div className="tracking-widejustify-normal grid w-full grid-cols-2 rounded-lg bg-blue-500 pb-1 pt-4 text-center text-base text-white shadow-md drop-shadow-md">
+        <FilterItemDropdown list={sorting} />
+        <CategoryMenu />
+      </div>
+      {products.length > 0 ? <GridProducts products={products} /> : null}
     </>
   );
 }

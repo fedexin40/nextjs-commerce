@@ -1,15 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import Rating from '@mui/material/Rating';
 import { GridTileImage } from 'components/grid/tile';
-import { Product } from 'lib/types';
 import { AddToCart } from 'components/product/add-to-cart';
 import { VariantSelector } from 'components/product/variant-selector';
 import Prose from 'components/prose';
-import Rating from '@mui/material/Rating';
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import Carousel from 'better-react-carousel';
+import { Product } from 'lib/types';
+import { useState } from 'react';
+// Import Swiper React components
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 function currencyFormat(num: number) {
   return '$ ' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
@@ -90,13 +94,22 @@ export function Gallery({ product }: { product: Product }) {
             {currencyFormat(amount)}
           </div>
         </div>
-        <Carousel cols={1} rows={1} loop={true}>
-          {product?.images.map((image) => (
-            <Carousel.Item key={image.url}>
-              <GridTileImage alt={'image'} src={image?.url} width={600} height={600} />
-            </Carousel.Item>
-          ))}
-        </Carousel>
+        <div className="grid grid-cols-1 grid-rows-1">
+          <Swiper
+            slidesPerView={'auto'}
+            centeredSlides={true}
+            pagination={{
+              clickable: true
+            }}
+            modules={[Pagination]}
+          >
+            {product?.images.map((image) => (
+              <SwiperSlide>
+                <GridTileImage alt={'image'} src={image?.url} width={600} height={600} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
 
       <div className="pr-3 md:col-span-3">

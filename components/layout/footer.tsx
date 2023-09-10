@@ -1,11 +1,9 @@
 import Link from 'next/link';
 
-import GitHubIcon from 'components/icons/github';
 import LogoIcon from 'components/icons/logo';
-import VercelIcon from 'components/icons/vercel';
 import { getMenu } from 'lib/saleor';
 import { Menu } from 'lib/types';
-import { AiFillFacebook, AiFillInstagram, AiFillGithub, AiOutlineTwitter } from 'react-icons/ai';
+import { AiFillFacebook, AiFillGithub, AiFillInstagram, AiOutlineTwitter } from 'react-icons/ai';
 
 const { SITE_NAME } = process.env;
 

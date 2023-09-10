@@ -42,8 +42,8 @@ export default function LoginMenu() {
         message="El usuario fue creado exitosamente, revisa tu correo para activar tu cuenta"
         handleClose={() => dispatch({ type: Action.hiddenRegisterMsg })}
       />
-      {tasks.showLogin ? <LoginModal isOpen={tasks.showLogin} /> : <div />}
-      {tasks.showRegister ? <RegisterModal isOpen={tasks.showRegister} /> : <div />}
+      <LoginModal isOpen={tasks.showLogin} />
+      {tasks.showRegister ? <RegisterModal isOpen={tasks.showRegister} /> : null}
       {tasks.showUserLogged ? (
         <UserMenu />
       ) : (

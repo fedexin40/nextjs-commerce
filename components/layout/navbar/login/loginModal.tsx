@@ -57,6 +57,7 @@ export default function LoginModal({ isOpen }: { isOpen: boolean }) {
           animate="open"
           exit="closed"
           key="dialog"
+          static
           open={isOpen}
           onClose={() => dispatch({ type: Action.hiddenLogin })}
           className="relative z-50"
@@ -69,21 +70,20 @@ export default function LoginModal({ isOpen }: { isOpen: boolean }) {
             className="fixed inset-0 bg-black/30"
             aria-hidden="true"
           />
-          <AlertMessage
-            severity="error"
-            open={error}
-            message={errorMessage}
-            handleClose={() => setError(false)}
-          />
           <div className="fixed inset-0 flex justify-end">
+            <AlertMessage
+              severity="error"
+              open={error}
+              message={errorMessage}
+              handleClose={() => setError(false)}
+            />
             <Dialog.Panel
               as={motion.div}
               variants={{
                 open: { translateX: 0 },
                 closed: { translateX: '100%' }
               }}
-              transition={{ type: 'spring', bounce: 0, duration: 0.3 }}
-              className="flex w-full flex-col bg-white p-8 text-black md:w-3/5 lg:w-2/5"
+              className="flex w-full flex-col overflow-y-auto bg-white p-8 text-black  md:w-3/5 lg:w-2/5"
             >
               <div className="flex items-center justify-between">
                 <p className="text-lg font-bold">Iniciar sesion</p>
@@ -121,16 +121,17 @@ export default function LoginModal({ isOpen }: { isOpen: boolean }) {
                       })}
                       fullWidth
                     />
-                    <div className="p-3 text-sm text-slate-700">
-                      Al continuar, usted acepta el Calendario Específico de Producto PSS de
-                      Autoservicio y la
-                      <Link
-                        className="focus:text-primary-600 active:text-primary-700 text-blue-600 transition duration-150 ease-in-out hover:text-blue-400"
-                        href="_blank"
-                      >
-                        &nbsp;Política de Privacidad
-                      </Link>
-                    </div>
+                    <span>
+                      <div className="p-3 text-sm text-slate-700">
+                        Al continuar, usted acepta la
+                        <Link
+                          className="focus:text-primary-600 active:text-primary-700 text-blue-600 transition duration-150 ease-in-out hover:text-blue-400"
+                          href="_blank"
+                        >
+                          &nbsp;Política de Privacidad
+                        </Link>
+                      </div>
+                    </span>
                     <button
                       className="h-10 min-w-full rounded-xl bg-blue-700 text-white hover:opacity-60"
                       onClick={handleLogin}

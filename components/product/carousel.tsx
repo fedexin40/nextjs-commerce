@@ -1,46 +1,43 @@
 'use client';
 
-import Grid from 'components/grid';
 import { GridTileImage } from 'components/grid/tile';
 import { Product } from 'lib/types';
+// Import Swiper React components
 import Link from 'next/link';
-import Carousel from 'better-react-carousel';
-import useScreenType from 'react-screentype-hook';
+import 'swiper/css';
+import 'swiper/css/pagination';
+import { Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 export default function CarouselProduct({ products }: { products: Product[] }) {
-  const screenType = useScreenType();
-  let rows;
-  if (screenType.isDesktop == true || screenType.isLargeDesktop == true) {
-    rows = 4;
-  } else if (screenType.isTablet == true) {
-    rows = 2;
-  } else {
-    rows = 1;
-  }
   return (
-    <div className="grid">
-      {/* @ts-expect-error Server Component */}
-      <Carousel cols={rows} rows={1} gap={1} scrollSnap={true} loop>
+    <div className="grid w-full grid-rows-1">
+      <Swiper
+        slidesPerView={'auto'}
+        centeredSlides={true}
+        pagination={{
+          clickable: true
+        }}
+        modules={[Pagination]}
+      >
         {products.map((product: Product) => (
-          <Carousel.Item key={product.handle}>
-            <Grid.Item key={product.handle} className="animate-fadeIn">
-              <Link className="h-full w-full" href={`/product/${product.handle}`}>
-                <GridTileImage
-                  alt={product.title}
-                  src={product.featuredImage?.url}
-                  width={600}
-                  height={600}
-                  labels={{
-                    title: product.title as string,
-                    amount: product.priceRange.maxVariantPrice.amount,
-                    currencyCode: product.priceRange.maxVariantPrice.currencyCode
-                  }}
-                />
-              </Link>
-            </Grid.Item>
-          </Carousel.Item>
+          <SwiperSlide>
+            <Link className="h-full w-full" href={`/product/${product.handle}`}>
+              <GridTileImage
+                alt={product.title}
+                src={product.featuredImage?.url}
+                width={600}
+                height={600}
+                labels={{
+                  title: product.title as string,
+                  amount: product.priceRange.maxVariantPrice.amount,
+                  currencyCode: product.priceRange.maxVariantPrice.currencyCode
+                }}
+              />
+            </Link>
+          </SwiperSlide>
         ))}
-      </Carousel>
+      </Swiper>
     </div>
   );
 }

@@ -10,8 +10,8 @@ import {
   CreateCheckoutDocument,
   ExternalAuthenticationUrlDocument,
   ExternalObtainAccessTokensDocument,
+  GetCategoriesDocument,
   GetCategoryBySlugDocument,
-  GetCategoryDocument,
   GetCategoryProductsBySlugDocument,
   GetCheckoutByIdDocument,
   GetCollectionBySlugDocument,
@@ -317,49 +317,69 @@ export async function getCollection(handle: string): Promise<Collection | undefi
   };
 }
 
-export async function GetCategories({ first }: { first?: number }): Promise<any[]> {
+export async function GetCategories(): Promise<any[]> {
   const saleorCategories = await saleorFetch({
-    query: GetCategoryDocument,
-    variables: {
-      first: first ? first : 100
-    }
+    query: GetCategoriesDocument,
+    variables: {}
   });
-  return saleorCategories.categories?.edges.map((category) => category.node) || [];
+
+  return (
+    saleorCategories.categories?.edges
+      .map((edge) => {
+        return {
+          handle: edge.node.slug,
+          title: edge.node.name,
+          description: edge.node.description as string,
+          seo: {
+            title: edge.node.seoTitle || edge.node.name,
+            description: edge.node.seoDescription || ''
+          },
+          path: `/search/${edge.node.slug}`
+        };
+      })
+      .filter((el) => !el.handle.startsWith(`hidden-`)) ?? []
+  );
 }
 
-const _getCollectionProducts = async (handle: string) =>
+const _getCollectionProducts = async ({
+  slug,
+  reverse,
+  sortKey
+}: {
+  slug: string;
+  reverse?: boolean;
+  sortKey?: ProductOrderField;
+}) =>
   (
     await saleorFetch({
       query: GetCollectionProductsBySlugDocument,
       variables: {
-        slug: handle
+        slug: slug,
+        sortBy: sortKey || ProductOrderField.Rank,
+        sortDirection: reverse ? OrderDirection.Desc : OrderDirection.Asc
       }
     })
   ).collection;
-const _getCategoryProducts = async (handle: string) =>
+
+const _getCategoryProducts = async ({
+  slug,
+  reverse,
+  sortKey
+}: {
+  slug: string;
+  reverse?: boolean;
+  sortKey?: ProductOrderField;
+}) =>
   (
     await saleorFetch({
       query: GetCategoryProductsBySlugDocument,
       variables: {
-        slug: handle
+        slug: slug,
+        sortBy: sortKey || ProductOrderField.Name,
+        sortDirection: reverse ? OrderDirection.Desc : OrderDirection.Asc
       }
     })
   ).category;
-
-export async function getCollectionProducts(handle: string): Promise<Product[]> {
-  const saleorCollectionProducts =
-    (await _getCollectionProducts(handle)) || (await _getCategoryProducts(handle));
-
-  if (!saleorCollectionProducts) {
-    throw new Error(`Collection not found: ${handle}`);
-  }
-
-  return (
-    saleorCollectionProducts.products?.edges.map((product) =>
-      saleorProductToVercelProduct(product.node)
-    ) || []
-  );
-}
 
 export async function getMenu(handle: string): Promise<Menu[]> {
   const handleToSlug: Record<string, string> = {
@@ -424,6 +444,30 @@ function flattenMenuItems(menuItems: null | undefined | MenuItemWithChildren[]):
         ...flattenMenuItems(item.children)
       ];
     }) || []
+  );
+}
+
+export async function getCollectionProducts({
+  slug,
+  reverse,
+  sortKey
+}: {
+  slug: string;
+  reverse?: boolean;
+  sortKey?: ProductOrderField;
+}): Promise<Product[]> {
+  const saleorCollectionProducts =
+    (await _getCollectionProducts({ slug, reverse, sortKey })) ||
+    (await _getCategoryProducts({ slug, reverse, sortKey }));
+
+  if (!saleorCollectionProducts) {
+    throw new Error(`Collection not found: ${slug}`);
+  }
+
+  return (
+    saleorCollectionProducts.products?.edges.map((product) =>
+      saleorProductToVercelProduct(product.node)
+    ) || []
   );
 }
 

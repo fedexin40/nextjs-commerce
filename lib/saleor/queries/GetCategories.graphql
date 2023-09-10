@@ -1,0 +1,14 @@
+query GetCategories {
+  categories(first: 100) {
+    edges {
+      node {
+        id
+        name
+        slug
+        description
+        seoTitle
+        seoDescription
+      }
+    }
+  }
+}

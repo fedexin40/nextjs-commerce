@@ -96,7 +96,7 @@ export default function RegisterModal({ isOpen }: { isOpen: boolean }) {
                 <p className="text-lg font-bold">Crear una cuenta</p>
                 <button
                   aria-label="Close login"
-                  onClick={() => dispatch({ type: Action.showRegisterMsg })}
+                  onClick={() => dispatch({ type: Action.hidddenRegister })}
                   className="text-black transition-colors"
                 >
                   <CloseIcon className="h-7" />

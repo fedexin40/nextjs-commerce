@@ -1,64 +1,70 @@
 'use client';
 
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
-
-import Caret from 'components/icons/caret-right';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import { MenuItem } from '@mui/material';
+import Fade from '@mui/material/Fade';
+import Menu from '@mui/material/Menu';
+import { createUrl } from 'lib/utils';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useState } from 'react';
 import type { ListItem } from '.';
-import { FilterItem } from './item';
 
 export default function FilterItemDropdown({ list }: { list: ListItem[] }) {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [active, setActive] = useState('');
-  const [openSelect, setOpenSelect] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
+  const open = Boolean(anchorEl);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        setOpenSelect(false);
-      }
-    };
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    event.preventDefault();
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-    window.addEventListener('click', handleClickOutside);
-    return () => window.removeEventListener('click', handleClickOutside);
-  }, []);
-
-  useEffect(() => {
-    list.forEach((listItem: ListItem) => {
-      if (
-        ('path' in listItem && pathname === listItem.path) ||
-        ('slug' in listItem && searchParams.get('sort') === listItem.slug)
-      ) {
-        setActive(listItem.title);
-      }
-    });
-  }, [pathname, list, searchParams]);
+  function generateLink(item: any) {
+    const href =
+      item.slug && item.slug.length
+        ? createUrl(pathname, new URLSearchParams({ sort: item.slug }))
+        : pathname;
+    return href;
+  }
 
   return (
-    <div className="relative" ref={ref}>
-      <div
-        onClick={() => {
-          setOpenSelect(!openSelect);
-        }}
-        className="flex w-full items-center justify-between rounded border border-black/30 px-4 py-2 text-sm dark:border-white/30"
+    <div>
+      <button
+        id="fade-button"
+        aria-controls={open ? 'fade-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
       >
-        <div>{active}</div>
-        <Caret className="h-4 rotate-90" />
-      </div>
-      {openSelect && (
-        <div
-          onClick={() => {
-            setOpenSelect(false);
-          }}
-          className="absolute z-40 w-full rounded-b-md bg-white p-4 shadow-md dark:bg-black"
-        >
-          {list.map((item: ListItem, i) => (
-            <FilterItem key={i} item={item} />
-          ))}
+        <div className="flex-cols flex space-x-2">
+          <FilterListIcon />
+          <div>Ordernar</div>
         </div>
-      )}
+      </button>
+      <Menu
+        id="fade-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        TransitionComponent={Fade}
+        className="border-double border-pink-400"
+      >
+        {list.map((item) => (
+          <MenuItem
+            dense
+            component={Link}
+            onClick={handleClose}
+            href={generateLink(item)}
+            className="flex w-full items-center rounded-md px-2 py-2 text-left font-sans text-sm font-medium tracking-wide text-gray-900 hover:bg-violet-500 hover:text-white"
+          >
+            {item.title}
+          </MenuItem>
+        ))}
+      </Menu>
     </div>
   );
 }

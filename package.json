@@ -30,7 +30,8 @@
     "@graphql-codegen/typescript-apollo-client-helpers": "^2.2.6",
     "@graphql-codegen/typescript-react-apollo": "^3.3.7",
     "@graphql-typed-document-node/core": "3.2.0",
-    "@headlessui/react": "^1.7.10",
+    "@headlessui/react": "^1.7.17",
+    "@heroicons/react": "^2.0.18",
     "@mui/icons-material": "^5.11.16",
     "@mui/joy": "5.0.0-alpha.87",
     "@mui/material": "^5.13.6",
@@ -40,6 +41,7 @@
     "clsx": "^1.2.1",
     "framer-motion": "^8.4.0",
     "graphql": "^16.7.1",
+    "html-react-parser": "^4.2.2",
     "is-empty-iterable": "^3.0.0",
     "next": "13.4.4",
     "react": "18.2.0",
@@ -51,6 +53,7 @@
     "react-image-zooom": "^1.1.0",
     "react-screentype-hook": "^1.0.18",
     "server-only": "^0.0.1",
+    "swiper": "^10.2.0",
     "use-immer": "^0.9.0"
   },
   "devDependencies": {

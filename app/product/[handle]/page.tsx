@@ -58,7 +58,7 @@ export default async function ProductPage({ params }: { params: { handle: string
     <>
       {/* @ts-expect-error Server Component */}
       <ScrollToTop />
-      <div className="mb-5 grid rounded-3xl pt-32 sm:pt-20 sm:shadow-2xl">
+      <div className="mb-5 grid rounded-3xl pt-40 md:pt-32">
         <div className="flex w-full">
           <Gallery product={product} />
         </div>
@@ -72,7 +72,7 @@ export default async function ProductPage({ params }: { params: { handle: string
 }
 
 async function RelatedProducts({ handle }: { handle: string }) {
-  const relatedProducts = await getCollectionProducts(handle);
+  const relatedProducts = await getCollectionProducts({ slug: handle });
   if (!relatedProducts.length) return null;
 
   return (

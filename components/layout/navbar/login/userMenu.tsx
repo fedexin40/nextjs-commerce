@@ -1,4 +1,8 @@
+import Logout from '@mui/icons-material/Logout';
+import SentimentSatisfiedAltOutlinedIcon from '@mui/icons-material/SentimentSatisfiedAltOutlined';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import Fade from '@mui/material/Fade';
+import ListItemIcon from '@mui/material/ListItemIcon';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Image from 'next/image';
@@ -21,7 +25,6 @@ export default function UserMenu() {
   };
 
   const closeSession = async () => {
-    console.log('cerrrar sesion');
     await fetch('/api/login', {
       method: 'post',
       headers: {
@@ -63,9 +66,24 @@ export default function UserMenu() {
         onClose={handleClose}
         TransitionComponent={Fade}
       >
-        <MenuItem onClick={handleClose}>Perfil</MenuItem>
-        <MenuItem onClick={handleClose}>Mis pedidos</MenuItem>
-        <MenuItem onClick={closeSession}>Cerrar sesion</MenuItem>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <SentimentSatisfiedAltOutlinedIcon fontSize="small" />
+          </ListItemIcon>
+          Perfil
+        </MenuItem>
+        <MenuItem onClick={handleClose}>
+          <ListItemIcon>
+            <ShoppingCartOutlinedIcon fontSize="small" />
+          </ListItemIcon>
+          Mis pedidos
+        </MenuItem>
+        <MenuItem onClick={closeSession}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Cerrar sesion
+        </MenuItem>
       </Menu>
     </>
   );
