@@ -1,5 +1,5 @@
 query GetProducts {
-  products(first: 10, channel: "default-channel") {
+  products(first: 10, channel: "proyecto705") {
     edges {
       node {
         name

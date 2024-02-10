@@ -7,7 +7,7 @@ query GetCategoryBySlug($slug: String!) {
     seoTitle
     seoDescription
     products(
-      channel: "default-channel"
+      channel: "proyecto705"
       first: 1
       sortBy: { field: LAST_MODIFIED_AT, direction: DESC }
     ) {

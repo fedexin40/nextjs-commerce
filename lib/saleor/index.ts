@@ -417,7 +417,7 @@ export async function createCart(): Promise<Cart> {
     query: CreateCheckoutDocument,
     variables: {
       input: {
-        channel: 'default-channel',
+        channel: 'proyecto705',
         lines: [],
       },
     },

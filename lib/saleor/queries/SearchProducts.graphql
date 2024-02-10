@@ -5,7 +5,7 @@ query SearchProducts(
 ) {
   products(
     first: 100
-    channel: "default-channel"
+    channel: "proyecto705"
     sortBy: { field: $sortBy, direction: $sortDirection }
     filter: { search: $search }
   ) {

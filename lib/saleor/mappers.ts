@@ -100,7 +100,7 @@ export function saleorCheckoutToVercelCart(checkout: CheckoutFragment): Cart {
   const checkoutUrl = new URL(`https://demo.saleor.io/checkout/`);
   checkoutUrl.searchParams.append('checkout', checkout.id);
   checkoutUrl.searchParams.append('locale', `en-US`);
-  checkoutUrl.searchParams.append('channel', `default-channel`);
+  checkoutUrl.searchParams.append('channel', `proyecto705`);
   checkoutUrl.searchParams.append('saleorApiUrl', process.env.SALEOR_INSTANCE_URL!);
   checkoutUrl.searchParams.append('domain', domain);
 

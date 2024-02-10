@@ -3,7 +3,7 @@ query GetCollectionProductsBySlug(
   $sortBy: ProductOrderField!
   $sortDirection: OrderDirection!
 ) {
-  collection(channel: "default-channel", slug: $slug) {
+  collection(channel: "proyecto705", slug: $slug) {
     products(first: 100, sortBy: { field: $sortBy, direction: $sortDirection }) {
       edges {
         node {
