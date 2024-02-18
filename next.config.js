@@ -12,11 +12,7 @@ module.exports = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'vercel.saleor.cloud',
-      },
-      {
-        protocol: 'https',
-        hostname: 'storefront1.saleor.cloud',
+        hostname: 'api.proyecto705.com',
       },
     ],
   },

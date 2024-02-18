@@ -1,67 +1,80 @@
-import Link from 'next/link';
-
 import FooterMenu from 'components/layout/footer-menu';
-import LogoSquare from 'components/logo-square';
 import { getMenu } from 'lib/saleor';
+import Image from 'next/image';
+import Link from 'next/link';
 import { Suspense } from 'react';
 
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
-  const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '');
+  const copyrightDate = currentYear;
   const skeleton = 'w-full h-6 animate-pulse rounded bg-neutral-200 dark:bg-neutral-700';
   const menu = await getMenu('next-js-frontend-footer-menu');
   const copyrightName = COMPANY_NAME || SITE_NAME || '';
 
   return (
-    <footer className="text-sm text-neutral-500 dark:text-neutral-400">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 border-t border-neutral-200 px-6 py-12 text-sm dark:border-neutral-700 md:flex-row md:gap-12 md:px-4 xl:px-0">
-        <div>
-          <Link className="flex items-center gap-2 text-black dark:text-white md:pt-1" href="/">
-            <LogoSquare size="sm" />
-            <span className="uppercase">{SITE_NAME}</span>
-          </Link>
-        </div>
-        <Suspense
-          fallback={
-            <div className="flex h-[188px] w-[200px] flex-col gap-2">
-              <div className={skeleton} />
-              <div className={skeleton} />
-              <div className={skeleton} />
-              <div className={skeleton} />
-              <div className={skeleton} />
-              <div className={skeleton} />
-            </div>
-          }
-        >
-          <FooterMenu menu={menu} />
-        </Suspense>
-        <div className="md:ml-auto">
-          <a
-            className="flex h-8 flex-none items-center justify-center rounded-md border border-neutral-200 bg-white text-xs text-black dark:border-neutral-700 dark:bg-black dark:text-white"
-            aria-label="Deploy on Vercel"
-            href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fsaleor%2Fnextjs-commerce&env=COMPANY_NAME,TWITTER_CREATOR,TWITTER_SITE,SITE_NAME,SALEOR_INSTANCE_URL&project-name=saleor-nextjs-commerce&repository-name=saleor-nextjs-commerce&demo-title=Saleor%20Next.js%20Commerce&demo-description=Saleor%20%2B%20Next.js%2013%20%2B%20App%20Router-ready%20e-commerce%20template&demo-url=https%3A%2F%2Fsaleor-commerce.vercel.app%2F&demo-image=https%3A%2F%2Fsaleor-commerce.vercel.app%2Fscreenshot.png"
+    <footer className="bg-[#f1f1f1] text-sm text-black">
+      <div className="mx-auto w-full gap-6 px-6 py-12 text-sm md:gap-12 md:px-4 xl:px-10">
+        <div className="grid grid-cols-1 justify-around gap-10 md:grid-cols-3 md:grid-rows-2">
+          <Suspense
+            fallback={
+              <div className="flex h-[188px] w-[200px] flex-col gap-2">
+                <div className={skeleton} />
+                <div className={skeleton} />
+                <div className={skeleton} />
+                <div className={skeleton} />
+                <div className={skeleton} />
+                <div className={skeleton} />
+              </div>
+            }
           >
-            <span className="px-3">▲</span>
-            <hr className="h-full border-r border-neutral-200 dark:border-neutral-700" />
-            <span className="px-3">Deploy</span>
-          </a>
+            <FooterMenu menu={menu} />
+          </Suspense>
+          <div className="hidden md:block" />
+          <div className="flex flex-col gap-y-5">
+            <div className="uppercase">Contacto</div>
+            <div className="flex flex-row items-center gap-x-3">
+              <div>
+                <Image src={'/mail.png'} alt="" width="20" height="10" />
+              </div>
+              <span>contacto@proyecto705.com</span>
+            </div>
+            <div className="flex flex-row items-center gap-x-3">
+              <div>
+                <Image src={'/whats.png'} alt="" width="20" height="10" />
+              </div>
+              <span>22 11 66 44 77</span>
+            </div>
+          </div>
+          <div className="grid grid-cols-3 items-center justify-items-center gap-y-3 md:h-fit">
+            <span className="flex flex-row gap-x-5 self-end">
+              <Link className="hover:cursor-pointer" href="">
+                <Image src={'/facebook.png'} alt="" width="30" height="30" />
+              </Link>
+              <Link className="hover:cursor-pointer" href="">
+                <Image src={'/instagram.png'} alt="" width="30" height="30" />
+              </Link>
+            </span>
+            <div />
+            <div />
+            <div>
+              <Image src={'/americanexpress.png'} alt="" width="100" height="100" />
+            </div>
+            <div>
+              <Image src={'/visa.png'} alt="" width="64" height="64" />
+            </div>
+            <div>
+              <Image src={'/mastercard.png'} alt="" width="64" height="64" />
+            </div>
+          </div>
         </div>
       </div>
-      <div className="border-t border-neutral-200 py-6 text-sm dark:border-neutral-700">
-        <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-1 px-4 md:flex-row md:gap-0 md:px-4 xl:px-0">
+      <div className="mx-10 border-t-2 border-t-gray-500 py-6 text-sm md:-mt-28">
+        <div className="flex w-full flex-row justify-center md:justify-start md:pl-10">
           <p>
             &copy; {copyrightDate} {copyrightName}
             {copyrightName.length && !copyrightName.endsWith('.') ? '.' : ''} All rights reserved.
-          </p>
-          <hr className="mx-4 hidden h-4 w-[1px] border-l border-neutral-400 md:inline-block" />
-          <p>Designed in California</p>
-          <p className="md:ml-auto">
-            Crafted by{' '}
-            <a href="https://vercel.com" className="text-black dark:text-white">
-              ▲ Vercel
-            </a>
           </p>
         </div>
       </div>

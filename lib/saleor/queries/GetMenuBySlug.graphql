@@ -16,6 +16,7 @@ fragment MenuItem on MenuItem {
   }
   page {
     slug
+    content
   }
 }
 

@@ -31775,7 +31775,7 @@ export type MenuItemFragment = {
   url?: string | null;
   collection?: { slug: string; products?: { totalCount?: number | null } | null } | null;
   category?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-  page?: { slug: string } | null;
+  page?: { slug: string; content?: string | null } | null;
 };
 
 export type GetMenuBySlugQueryVariables = Exact<{
@@ -31805,19 +31805,19 @@ export type GetMenuBySlugQuery = {
             url?: string | null;
             collection?: { slug: string; products?: { totalCount?: number | null } | null } | null;
             category?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-            page?: { slug: string } | null;
+            page?: { slug: string; content?: string | null } | null;
           }> | null;
           collection?: { slug: string; products?: { totalCount?: number | null } | null } | null;
           category?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-          page?: { slug: string } | null;
+          page?: { slug: string; content?: string | null } | null;
         }> | null;
         collection?: { slug: string; products?: { totalCount?: number | null } | null } | null;
         category?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-        page?: { slug: string } | null;
+        page?: { slug: string; content?: string | null } | null;
       }> | null;
       collection?: { slug: string; products?: { totalCount?: number | null } | null } | null;
       category?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-      page?: { slug: string } | null;
+      page?: { slug: string; content?: string | null } | null;
     }> | null;
   } | null;
 };
@@ -32247,6 +32247,7 @@ export const MenuItemFragmentDoc = new TypedDocumentString(`
   }
   page {
     slug
+    content
   }
 }
     `) as unknown as TypedDocumentString<MenuItemFragment, unknown>;
@@ -33109,6 +33110,7 @@ export const GetMenuBySlugDocument = new TypedDocumentString(`
   }
   page {
     slug
+    content
   }
 }`) as unknown as TypedDocumentString<GetMenuBySlugQuery, GetMenuBySlugQueryVariables>;
 export const GetPageBySlugDocument = new TypedDocumentString(`

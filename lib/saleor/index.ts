@@ -50,7 +50,7 @@ export async function saleorFetch<Result, Variables>({
 }): Promise<Result> {
   invariant(endpoint, `Missing SALEOR_INSTANCE_URL!`);
 
-  const options = cache ? { cache, next: { tags } } : { next: { revalidate: 900, tags } };
+  const options = cache ? { cache, next: { tags } } : { next: { revalidate: 0, tags } };
 
   const result = await fetch(endpoint, {
     method: 'POST',
@@ -288,15 +288,10 @@ export async function getMenu(handle: string): Promise<Menu[]> {
   const saleorUrl = new URL(endpoint!);
   saleorUrl.pathname = '';
 
-  const result = flattenMenuItems(saleorMenu.menu.items)
-    .filter(
-      // unique by path
-      (item1, idx, arr) => arr.findIndex((item2) => item2.path === item1.path) === idx,
-    )
-    .map((item) => ({
-      ...item,
-      path: item.path.replace('http://localhost:8000', saleorUrl.toString().slice(0, -1)),
-    }));
+  const result = flattenMenuItems(saleorMenu.menu.items).map((item) => ({
+    ...item,
+    path: item.path.replace('http://localhost:8000', saleorUrl.toString().slice(0, -1)),
+  }));
 
   if (handle === 'next-js-frontend-header-menu') {
     // limit number of items in header to 3
@@ -311,14 +306,6 @@ type MenuItemWithChildren = MenuItemFragment & {
 function flattenMenuItems(menuItems: null | undefined | MenuItemWithChildren[]): Menu[] {
   return (
     menuItems?.flatMap((item) => {
-      // Remove empty categories and collections from menu
-      if (item.category && !item.category.products?.totalCount) {
-        return [];
-      }
-      if (item.collection && !item.collection.products?.totalCount) {
-        return [];
-      }
-
       const path =
         item.url ||
         (item.collection
@@ -327,15 +314,22 @@ function flattenMenuItems(menuItems: null | undefined | MenuItemWithChildren[]):
           ? `/search/${item.category.slug}`
           : '');
 
+      // TODO: Is if this the correct way to get the content?
+      let data;
+      try {
+        const content = JSON.parse(item.page?.content || '');
+        data = content['blocks'][0]['data']['items'][0];
+      } catch {
+        data = '';
+      }
       return [
-        ...(path
-          ? [
-              {
-                path: path,
-                title: item.name,
-              },
-            ]
-          : []),
+        ...[
+          {
+            path: path,
+            title: item.name,
+            data: data,
+          },
+        ],
         ...flattenMenuItems(item.children),
       ];
     }) || []
