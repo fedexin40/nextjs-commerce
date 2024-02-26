@@ -31564,6 +31564,7 @@ export type GetCategoryProductsBySlugQuery = {
           seoTitle?: string | null;
           seoDescription?: string | null;
           updatedAt: string;
+          category?: { name: string } | null;
           pricing?: {
             priceRange?: {
               start?: { gross: { currency: string; amount: number } } | null;
@@ -31690,6 +31691,7 @@ export type GetCollectionProductsBySlugQuery = {
           seoTitle?: string | null;
           seoDescription?: string | null;
           updatedAt: string;
+          category?: { name: string } | null;
           pricing?: {
             priceRange?: {
               start?: { gross: { currency: string; amount: number } } | null;
@@ -31870,6 +31872,12 @@ export type GetProductBySlugQuery = {
     seoTitle?: string | null;
     seoDescription?: string | null;
     updatedAt: string;
+    category?:
+      | {
+          name: string;
+        }
+      | null
+      | undefined;
     pricing?: {
       priceRange?: {
         start?: { gross: { currency: string; amount: number } } | null;
@@ -32729,6 +32737,9 @@ export const GetCategoryProductsBySlugDocument = new TypedDocumentString(`
           description
           seoTitle
           seoDescription
+          category {
+            name
+          }
           pricing {
             priceRange {
               start {
@@ -32929,6 +32940,9 @@ export const GetCollectionProductsBySlugDocument = new TypedDocumentString(`
           description
           seoTitle
           seoDescription
+          category {
+            name
+          }
           pricing {
             priceRange {
               start {

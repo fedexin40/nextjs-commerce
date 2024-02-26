@@ -18,6 +18,9 @@ query GetCategoryProductsBySlug(
           description
           seoTitle
           seoDescription
+          category {
+            name
+          }
           pricing {
             priceRange {
               start {

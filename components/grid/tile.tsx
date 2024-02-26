@@ -12,21 +12,16 @@ export function GridTileImage({
   active?: boolean;
   label?: {
     title: string;
+    category?: string;
     amount: string;
     currencyCode: string;
-    position?: 'bottom' | 'center';
   };
 } & React.ComponentProps<typeof Image>) {
   return (
     <div
-      className={clsx(
-        'flex h-full w-full items-center justify-center overflow-hidden rounded-lg border bg-white hover:border-blue-600 dark:bg-black',
-        {
-          relative: label,
-          'border-2 border-blue-600': active,
-          'border-neutral-200 dark:border-neutral-800': !active,
-        },
-      )}
+      className={clsx('flex h-full w-full items-center justify-center rounded-lg bg-white', {
+        relative: label,
+      })}
     >
       {props.src ? (
         // eslint-disable-next-line jsx-a11y/alt-text -- `alt` is inherited from `props`, which is being enforced with TypeScript
@@ -37,14 +32,11 @@ export function GridTileImage({
           {...props}
         />
       ) : null}
-      {label ? (
-        <Label
-          title={label.title}
-          amount={label.amount}
-          currencyCode={label.currencyCode}
-          position={label.position}
-        />
-      ) : null}
+      {label ? <Label amount={label.amount} currencyCode={label.currencyCode} /> : null}
+      <div className="absolute bottom-0 left-4 -mb-16 flex flex-col p-2 text-xs font-semibold md:-mb-20">
+        <div className="uppercase">{label?.title}</div>
+        <div className="pt-2 md:pt-4">{label?.category}</div>
+      </div>
     </div>
   );
 }

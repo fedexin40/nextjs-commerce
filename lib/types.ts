@@ -117,6 +117,7 @@ export type VercelCommerceProduct = {
   description: string;
   descriptionHtml: string;
   options: ProductOption[];
+  category: string | undefined;
   priceRange: {
     maxVariantPrice: Money;
     minVariantPrice: Money;
