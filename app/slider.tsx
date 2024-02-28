@@ -26,7 +26,20 @@ const responsive = {
 
 export default function Slider() {
   return (
-    <div>
+    <>
+      <div className="hidden md:block">
+        <DesktopSlider />
+      </div>
+      <div className="block md:hidden">
+        <MobileSlider />
+      </div>
+    </>
+  );
+}
+
+export function DesktopSlider() {
+  return (
+    <>
       <Carousel
         showDots={true}
         responsive={responsive}
@@ -36,13 +49,36 @@ export default function Slider() {
         ssr={true}
         autoPlay={true}
       >
-        <div className="h-28 lg:h-96">
+        <div className="md:h-96">
           <Image src={'/banner.png'} alt="" fill={true} />
         </div>
-        <div className="h-28 lg:h-96">
+        <div className="md:h-96">
           <Image src={'/envioGratis.png'} alt="" fill={true} />
         </div>
       </Carousel>
-    </div>
+    </>
+  );
+}
+
+export function MobileSlider() {
+  return (
+    <>
+      <Carousel
+        showDots={true}
+        responsive={responsive}
+        infinite={true}
+        removeArrowOnDeviceType={['tablet', 'mobile']}
+        transitionDuration={2000}
+        ssr={true}
+        autoPlay={true}
+      >
+        <div className="h-36">
+          <Image src={'/envioGratisMobile.png'} alt="" fill={true} />
+        </div>
+        <div className="h-36">
+          <Image src={'/bannerMobile.png'} alt="" fill={true} />
+        </div>
+      </Carousel>
+    </>
   );
 }
