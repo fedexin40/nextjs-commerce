@@ -15,8 +15,8 @@ export default async function Footer() {
 
   return (
     <footer className="bg-[#f1f1f1] text-sm text-black">
-      <div className="mx-auto w-full gap-6 px-6 py-12 text-sm md:gap-12 md:px-4 xl:px-10">
-        <div className="grid grid-cols-1 justify-around gap-10 md:grid-cols-3 md:grid-rows-2">
+      <div className="flex w-full flex-col gap-6 px-6 py-12 text-sm md:gap-12 md:px-4 xl:px-10">
+        <div className="grid grid-cols-1 justify-around gap-10 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
           <Suspense
             fallback={
               <div className="flex h-[188px] w-[200px] flex-col gap-2">
@@ -31,53 +31,72 @@ export default async function Footer() {
           >
             <FooterMenu menu={menu} />
           </Suspense>
-          <div className="hidden md:block" />
-          <div className="flex flex-col gap-y-5">
-            <div className="uppercase">Contacto</div>
-            <div className="flex flex-row items-center gap-x-3">
-              <div>
-                <Image src={'/mail.png'} alt="" width="20" height="10" />
-              </div>
-              <span>contacto@proyecto705.com</span>
-            </div>
-            <div className="flex flex-row items-center gap-x-3">
-              <div>
-                <Image src={'/whats.png'} alt="" width="20" height="10" />
-              </div>
-              <span>22 11 66 44 77</span>
+
+          <div className="flex flex-col gap-y-5 lg:col-start-2 lg:col-end-3">
+            <Contacto />
+            <div className="hidden md:mt-3 md:block lg:hidden">
+              <Pagos />
             </div>
           </div>
-          <div className="grid grid-cols-3 items-center justify-items-center gap-y-3 md:h-fit">
-            <span className="flex flex-row gap-x-5 self-end">
-              <Link className="hover:cursor-pointer" href="">
-                <Image src={'/facebook.png'} alt="" width="30" height="30" />
-              </Link>
-              <Link className="hover:cursor-pointer" href="">
-                <Image src={'/instagram.png'} alt="" width="30" height="30" />
-              </Link>
-            </span>
-            <div />
-            <div />
-            <div>
-              <Image src={'/americanexpress.png'} alt="" width="100" height="100" />
-            </div>
-            <div>
-              <Image src={'/visa.png'} alt="" width="64" height="64" />
-            </div>
-            <div>
-              <Image src={'/mastercard.png'} alt="" width="64" height="64" />
-            </div>
+          <div className="md:hidden lg:block">
+            <Pagos />
           </div>
         </div>
-      </div>
-      <div className="mx-10 border-t-2 border-t-gray-500 py-6 text-sm md:-mt-28">
-        <div className="flex w-full flex-row justify-center md:justify-start md:pl-10">
-          <p>
-            &copy; {copyrightDate} {copyrightName}
-            {copyrightName.length && !copyrightName.endsWith('.') ? '.' : ''} All rights reserved.
-          </p>
+        <div className="mx-10 border-t-2 border-t-gray-500 py-6 text-sm lg:-mt-28">
+          <div className="flex w-full flex-row justify-center md:pl-10 lg:justify-start">
+            <p>
+              &copy; {copyrightDate} {copyrightName}
+              {copyrightName.length && !copyrightName.endsWith('.') ? '.' : ''} All rights reserved.
+            </p>
+          </div>
         </div>
       </div>
     </footer>
+  );
+}
+
+export function Contacto() {
+  return (
+    <>
+      <div className="uppercase">Contacto</div>
+      <div className="flex flex-row items-center gap-x-3">
+        <div>
+          <Image src={'/mail.png'} alt="" width="20" height="10" />
+        </div>
+        <span>contacto@proyecto705.com</span>
+      </div>
+      <div className="-mt-3 flex flex-row items-center gap-x-3">
+        <div>
+          <Image src={'/whats.png'} alt="" width="20" height="10" />
+        </div>
+        <span>22 11 66 44 77</span>
+      </div>
+    </>
+  );
+}
+
+export function Pagos() {
+  return (
+    <>
+      <div className="grid grid-cols-3 items-center gap-y-3 md:h-fit">
+        <div className="flex flex-row gap-x-5 self-end">
+          <Link className="hover:cursor-pointer" href="">
+            <Image src={'/facebook.png'} alt="" width="30" height="30" />
+          </Link>
+          <Link className="hover:cursor-pointer" href="">
+            <Image src={'/instagram.png'} alt="" width="30" height="30" />
+          </Link>
+        </div>
+        <div className="row-start-2 -mt-3">
+          <Image src={'/americanexpress.png'} alt="" width="100" height="100" />
+        </div>
+        <div className="row-start-2">
+          <Image src={'/visa.png'} alt="" width="64" height="64" />
+        </div>
+        <div className="row-start-2">
+          <Image src={'/mastercard.png'} alt="" width="64" height="64" />
+        </div>
+      </div>
+    </>
   );
 }

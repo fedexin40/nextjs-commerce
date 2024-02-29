@@ -27,11 +27,14 @@ const responsive = {
 export default function Slider() {
   return (
     <>
-      <div className="hidden md:block">
+      <div className="hidden lg:block">
         <DesktopSlider />
       </div>
-      <div className="block md:hidden">
+      <div className="md:hidden">
         <MobileSlider />
+      </div>
+      <div className="hidden md:block lg:hidden">
+        <TabletSlider />
       </div>
     </>
   );
@@ -49,10 +52,10 @@ export function DesktopSlider() {
         ssr={true}
         autoPlay={true}
       >
-        <div className="md:h-96">
+        <div className="h-96">
           <Image src={'/banner.png'} alt="" fill={true} />
         </div>
-        <div className="md:h-96">
+        <div className="h-96">
           <Image src={'/envioGratis.png'} alt="" fill={true} />
         </div>
       </Carousel>
@@ -73,10 +76,33 @@ export function MobileSlider() {
         autoPlay={true}
       >
         <div className="h-36">
-          <Image src={'/envioGratisMobile.png'} alt="" fill={true} />
+          <Image src={'/banner.png'} alt="" fill={true} />
         </div>
         <div className="h-36">
-          <Image src={'/bannerMobile.png'} alt="" fill={true} />
+          <Image src={'/envioGratis.png'} alt="" fill={true} />
+        </div>
+      </Carousel>
+    </>
+  );
+}
+
+export function TabletSlider() {
+  return (
+    <>
+      <Carousel
+        showDots={true}
+        responsive={responsive}
+        infinite={true}
+        removeArrowOnDeviceType={['tablet', 'mobile']}
+        transitionDuration={2000}
+        ssr={true}
+        autoPlay={true}
+      >
+        <div className="h-64">
+          <Image src={'/banner.png'} alt="" fill={true} />
+        </div>
+        <div className="h-64">
+          <Image src={'/envioGratis.png'} alt="" fill={true} />
         </div>
       </Carousel>
     </>
