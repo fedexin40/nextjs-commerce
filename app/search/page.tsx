@@ -1,5 +1,6 @@
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
+import FilterList from 'components/layout/search/filter';
 import { defaultSort, sorting } from 'lib/constants';
 import { getProducts } from 'lib/saleor';
 
@@ -23,6 +24,11 @@ export default async function SearchPage({
   return (
     <>
       <div className="mx-10 mb-24 lg:mx-32 lg:mb-40">
+        <div className="flex w-full flex-row-reverse pb-12 pt-12">
+          <div>
+            <FilterList list={sorting} />
+          </div>
+        </div>
         {products.length > 0 ? (
           <Grid className="grid-cols-1 gap-y-24 md:grid-cols-3 lg:grid-cols-4 xl:gap-y-40">
             <ProductGridItems products={products} />
