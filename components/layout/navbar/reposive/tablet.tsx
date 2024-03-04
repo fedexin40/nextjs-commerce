@@ -52,6 +52,20 @@ export default function TabletNavbar({ menu }: { menu: Menu[] }) {
               </div>
             </div>
           </div>
+          <div className="fixed bottom-10 right-20 z-50 rounded-md">
+            <div className="grid grid-rows-1 rounded-md bg-[#f7e7da]">
+              <div className="border-b-2 border-white p-4">
+                <div className="flex justify-center">
+                  <Image src="/registro.png" alt="" width="25" height="25" />
+                </div>
+              </div>
+              <div className="p-4">
+                <div className="flex justify-center">
+                  <Image src="/carrito.png" alt="" width="20" height="20" />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </nav>
     </>

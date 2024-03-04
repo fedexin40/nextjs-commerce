@@ -31153,6 +31153,7 @@ export type CheckoutFragment = {
         seoTitle?: string | null;
         seoDescription?: string | null;
         updatedAt: string;
+        category?: { name: string } | null;
         pricing?: {
           priceRange?: {
             start?: { gross: { currency: string; amount: number } } | null;
@@ -31221,6 +31222,7 @@ export type ProductDetailsFragment = {
   seoTitle?: string | null;
   seoDescription?: string | null;
   updatedAt: string;
+  category?: { name: string } | null;
   pricing?: {
     priceRange?: {
       start?: { gross: { currency: string; amount: number } } | null;
@@ -31289,6 +31291,7 @@ export type CheckoutAddLineMutation = {
             seoTitle?: string | null;
             seoDescription?: string | null;
             updatedAt: string;
+            category?: { name: string } | null;
             pricing?: {
               priceRange?: {
                 start?: { gross: { currency: string; amount: number } } | null;
@@ -31357,6 +31360,7 @@ export type CheckoutDeleteLineMutation = {
             seoTitle?: string | null;
             seoDescription?: string | null;
             updatedAt: string;
+            category?: { name: string } | null;
             pricing?: {
               priceRange?: {
                 start?: { gross: { currency: string; amount: number } } | null;
@@ -31425,6 +31429,7 @@ export type CheckoutUpdateLineMutation = {
             seoTitle?: string | null;
             seoDescription?: string | null;
             updatedAt: string;
+            category?: { name: string } | null;
             pricing?: {
               priceRange?: {
                 start?: { gross: { currency: string; amount: number } } | null;
@@ -31492,6 +31497,7 @@ export type CreateCheckoutMutation = {
             seoTitle?: string | null;
             seoDescription?: string | null;
             updatedAt: string;
+            category?: { name: string } | null;
             pricing?: {
               priceRange?: {
                 start?: { gross: { currency: string; amount: number } } | null;
@@ -31620,6 +31626,7 @@ export type GetCheckoutByIdQuery = {
           seoTitle?: string | null;
           seoDescription?: string | null;
           updatedAt: string;
+          category?: { name: string } | null;
           pricing?: {
             priceRange?: {
               start?: { gross: { currency: string; amount: number } } | null;
@@ -31872,12 +31879,7 @@ export type GetProductBySlugQuery = {
     seoTitle?: string | null;
     seoDescription?: string | null;
     updatedAt: string;
-    category?:
-      | {
-          name: string;
-        }
-      | null
-      | undefined;
+    category?: { name: string } | null;
     pricing?: {
       priceRange?: {
         start?: { gross: { currency: string; amount: number } } | null;
@@ -31920,6 +31922,7 @@ export type SearchProductsQuery = {
         seoTitle?: string | null;
         seoDescription?: string | null;
         updatedAt: string;
+        category?: { name: string } | null;
         pricing?: {
           priceRange?: {
             start?: { gross: { currency: string; amount: number } } | null;
@@ -32035,6 +32038,9 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(`
   description
   seoTitle
   seoDescription
+  category {
+    name
+  }
   pricing {
     priceRange {
       start {
@@ -32131,6 +32137,9 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
   description
   seoTitle
   seoDescription
+  category {
+    name
+  }
   pricing {
     priceRange {
       start {
@@ -32310,6 +32319,9 @@ fragment ProductDetails on Product {
   description
   seoTitle
   seoDescription
+  category {
+    name
+  }
   pricing {
     priceRange {
       start {
@@ -32418,6 +32430,9 @@ fragment ProductDetails on Product {
   description
   seoTitle
   seoDescription
+  category {
+    name
+  }
   pricing {
     priceRange {
       start {
@@ -32529,6 +32544,9 @@ fragment ProductDetails on Product {
   description
   seoTitle
   seoDescription
+  category {
+    name
+  }
   pricing {
     priceRange {
       start {
@@ -32640,6 +32658,9 @@ fragment ProductDetails on Product {
   description
   seoTitle
   seoDescription
+  category {
+    name
+  }
   pricing {
     priceRange {
       start {
@@ -32848,6 +32869,9 @@ fragment ProductDetails on Product {
   description
   seoTitle
   seoDescription
+  category {
+    name
+  }
   pricing {
     priceRange {
       start {
@@ -33171,6 +33195,9 @@ export const GetProductBySlugDocument = new TypedDocumentString(`
   description
   seoTitle
   seoDescription
+  category {
+    name
+  }
   pricing {
     priceRange {
       start {
@@ -33245,6 +33272,9 @@ export const SearchProductsDocument = new TypedDocumentString(`
         description
         seoTitle
         seoDescription
+        category {
+          name
+        }
         pricing {
           priceRange {
             start {

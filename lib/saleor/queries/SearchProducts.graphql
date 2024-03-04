@@ -18,6 +18,9 @@ query SearchProducts(
         description
         seoTitle
         seoDescription
+        category {
+          name
+        }
         pricing {
           priceRange {
             start {

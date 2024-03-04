@@ -6,6 +6,9 @@ fragment ProductDetails on Product {
   description
   seoTitle
   seoDescription
+  category {
+    name
+  }
   pricing {
     priceRange {
       start {
