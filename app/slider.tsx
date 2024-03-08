@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { Suspense } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
@@ -27,84 +28,24 @@ const responsive = {
 export default function Slider() {
   return (
     <>
-      <div className="hidden lg:block">
-        <DesktopSlider />
-      </div>
-      <div className="md:hidden">
-        <MobileSlider />
-      </div>
-      <div className="hidden md:block lg:hidden">
-        <TabletSlider />
-      </div>
-    </>
-  );
-}
-
-export function DesktopSlider() {
-  return (
-    <>
-      <Carousel
-        showDots={true}
-        responsive={responsive}
-        infinite={true}
-        removeArrowOnDeviceType={['tablet', 'mobile']}
-        transitionDuration={2000}
-        ssr={true}
-        autoPlay={true}
-      >
-        <div className="h-96">
-          <Image src={'/banner.png'} alt="" fill={true} />
-        </div>
-        <div className="h-96">
-          <Image src={'/envioGratis.png'} alt="" fill={true} />
-        </div>
-      </Carousel>
-    </>
-  );
-}
-
-export function MobileSlider() {
-  return (
-    <>
-      <Carousel
-        showDots={true}
-        responsive={responsive}
-        infinite={true}
-        removeArrowOnDeviceType={['tablet', 'mobile']}
-        transitionDuration={2000}
-        ssr={true}
-        autoPlay={true}
-      >
-        <div className="h-36">
-          <Image src={'/banner.png'} alt="" fill={true} />
-        </div>
-        <div className="h-36">
-          <Image src={'/envioGratis.png'} alt="" fill={true} />
-        </div>
-      </Carousel>
-    </>
-  );
-}
-
-export function TabletSlider() {
-  return (
-    <>
-      <Carousel
-        showDots={true}
-        responsive={responsive}
-        infinite={true}
-        removeArrowOnDeviceType={['tablet', 'mobile']}
-        transitionDuration={2000}
-        ssr={true}
-        autoPlay={true}
-      >
-        <div className="h-64">
-          <Image src={'/banner.png'} alt="" fill={true} />
-        </div>
-        <div className="h-64">
-          <Image src={'/envioGratis.png'} alt="" fill={true} />
-        </div>
-      </Carousel>
+      <Suspense fallback={<div className="flex h-36 w-full md:h-64 lg:h-96" />}>
+        <Carousel
+          showDots={true}
+          responsive={responsive}
+          infinite={true}
+          removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
+          transitionDuration={2000}
+          ssr={true}
+          autoPlay={true}
+        >
+          <div className="h-36 md:h-64 lg:h-96">
+            <Image src={'/banner.png'} alt="" fill={true} />
+          </div>
+          <div className="h-36 md:h-64 lg:h-96">
+            <Image src={'/envioGratis.png'} alt="" fill={true} />
+          </div>
+        </Carousel>
+      </Suspense>
     </>
   );
 }

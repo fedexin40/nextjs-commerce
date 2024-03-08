@@ -19,9 +19,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Suspense>
-        <Slider />
-      </Suspense>
+      <Slider />
       <div className="m-10 grid justify-items-center text-base font-medium tracking-wide text-[#a8a8a8] xl:text-3xl">
         Encuentra el arete perfecto para ti
       </div>

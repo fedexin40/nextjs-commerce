@@ -1,6 +1,10 @@
+import Cart from 'components/cart';
+import OpenCart from 'components/cart/open-cart';
+import Login from 'components/login';
 import { Menu } from 'lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 export default function MobileNavbar({ menu }: { menu: Menu[] }) {
   return (
@@ -52,12 +56,16 @@ export default function MobileNavbar({ menu }: { menu: Menu[] }) {
           </div>
           <div className="w-full border-x-2 border-white p-2">
             <div className="flex justify-center">
-              <Image src="/registro.png" alt="" width="25" height="25" />
+              <Suspense>
+                <Login />
+              </Suspense>
             </div>
           </div>
           <div className="w-full border-l-2 border-white p-2">
-            <div className="flex justify-center">
-              <Image src="/carrito.png" alt="" width="20" height="20" />
+            <div className="flex justify-center hover:cursor-pointer">
+              <Suspense fallback={<OpenCart />}>
+                <Cart />
+              </Suspense>
             </div>
           </div>
         </div>

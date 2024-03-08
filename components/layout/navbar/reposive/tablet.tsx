@@ -1,6 +1,10 @@
+import Cart from 'components/cart';
+import OpenCart from 'components/cart/open-cart';
+import Login from 'components/login';
 import { Menu } from 'lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
 import Search from '../search';
 
 export default function TabletNavbar({ menu }: { menu: Menu[] }) {
@@ -56,12 +60,16 @@ export default function TabletNavbar({ menu }: { menu: Menu[] }) {
             <div className="grid grid-rows-1 rounded-md bg-[#f7e7da]">
               <div className="border-b-2 border-white p-4">
                 <div className="flex justify-center">
-                  <Image src="/registro.png" alt="" width="25" height="25" />
+                  <Suspense>
+                    <Login />
+                  </Suspense>
                 </div>
               </div>
               <div className="p-4">
                 <div className="flex justify-center">
-                  <Image src="/carrito.png" alt="" width="20" height="20" />
+                  <Suspense fallback={<OpenCart />}>
+                    <Cart />
+                  </Suspense>
                 </div>
               </div>
             </div>
