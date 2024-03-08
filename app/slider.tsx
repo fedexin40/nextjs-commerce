@@ -38,10 +38,10 @@ export default function Slider() {
           ssr={true}
           autoPlay={true}
         >
-          <div className="h-36 md:h-64 lg:h-96">
+          <div className="h-28 md:h-64 lg:h-96">
             <Image src={'/banner.png'} alt="" fill={true} />
           </div>
-          <div className="h-36 md:h-64 lg:h-96">
+          <div className="h-28 md:h-64 lg:h-96">
             <Image src={'/envioGratis.png'} alt="" fill={true} />
           </div>
         </Carousel>

@@ -38,8 +38,8 @@ export default function LoginModal() {
             leaveFrom="-translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <Dialog.Panel className="fixed bottom-0 left-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 px-6 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white md:w-[390px]">
-              <div className="flex h-full flex-col">
+            <Dialog.Panel className="fixed bottom-0 left-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white md:w-[390px]">
+              <div className="flex h-full flex-col overflow-y-auto overflow-x-hidden">
                 <div className="relative">
                   <button
                     className="absolute right-3 top-3 md:hidden"
@@ -51,13 +51,13 @@ export default function LoginModal() {
                     </div>
                   </button>
                 </div>
-                <div className="mt-20 w-full text-center text-base font-medium tracking-wide lg:mt-8">
+                <div className="mt-14 w-full text-center text-base font-medium tracking-wide md:mt-20 lg:mt-8">
                   <div className="flex justify-center">
                     <Image src={'/session.png'} alt="" width={60} height={60} />
                   </div>
                   <div className="mt-4 text-[#a8a8a8]">Iniciar Sesion</div>
                 </div>
-                <div className="mx-5 my-20 flex flex-col lg:mb-5 lg:mt-10">
+                <div className="mx-10 mb-10 mt-10 flex flex-col md:my-20 lg:mb-7 lg:mt-7">
                   <div>
                     <form>
                       <div className="mb-4 flex flex-row gap-x-2 border-b-2 border-[#d2b6ab]">
@@ -74,7 +74,7 @@ export default function LoginModal() {
                         </div>
                         <input
                           className="w-full bg-transparent p-1 focus:ring-0 focus:ring-offset-0"
-                          type="text"
+                          type="email"
                           name="UserName"
                           placeholder="Email..."
                         />
@@ -87,7 +87,7 @@ export default function LoginModal() {
                         </div>
                         <input
                           className="w-full bg-transparent p-1 focus:ring-0 focus:ring-offset-0"
-                          type="text"
+                          type="password"
                           name="Password"
                           placeholder="Contraseña..."
                         />
@@ -108,23 +108,49 @@ export default function LoginModal() {
                     </div>
                   </div>
                   <div>
-                    <div className="mb-3 flex h-fit w-full flex-row gap-5 bg-[#316FF6] px-5 py-2 hover:cursor-pointer hover:opacity-60 hover:ease-in">
-                      <div className="content-center">
-                        <Image src={'/facebookLogin.png'} alt="" width={30} height={30} />
+                    <div className="mb-3 flex h-fit w-full flex-row gap-5 bg-[#316FF6] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
+                      <div className="rounded-full bg-[#316FF6]">
+                        <Image
+                          className="hidden rounded-full bg-[#316FF6] md:flex"
+                          src={'/facebookLogin.png'}
+                          alt=""
+                          width={30}
+                          height={30}
+                        />
+                        <Image
+                          className="flex rounded-full bg-[#316FF6] md:hidden"
+                          src={'/facebookLogin.png'}
+                          alt=""
+                          width={25}
+                          height={25}
+                        />
                       </div>
                       <div className="content-center text-white">Inciar sesion con Facebook</div>
                     </div>
-                    <div className="flex h-fit w-full flex-row gap-5 border-2 border-[#a8a8a8] px-5 py-2 hover:cursor-pointer hover:opacity-60 hover:ease-in">
+                    <div className="flex h-fit w-full flex-row gap-5 border-2 border-[#a8a8a8] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
                       <div className="content-center">
-                        <Image src={'/googleLogin.png'} alt="" width={30} height={30} />
+                        <Image
+                          className="hidden md:flex"
+                          src={'/googleLogin.png'}
+                          alt=""
+                          width={30}
+                          height={30}
+                        />
+                        <Image
+                          className="flex md:hidden"
+                          src={'/googleLogin.png'}
+                          alt=""
+                          width={25}
+                          height={25}
+                        />
                       </div>
                       <div className="content-center text-[#a8a8a8]">Inciar sesion con Google</div>
                     </div>
                   </div>
                 </div>
-                <div className="-mx-6 flex h-full justify-center bg-[#d2b6ab]">
+                <div className="flex h-full justify-center bg-[#d2b6ab] pb-10">
                   <div>
-                    <div className="top-5 mt-5 flex flex-row gap-2 border-2 border-white p-3 hover:cursor-pointer hover:opacity-60 hover:ease-in">
+                    <div className=" top-5 mt-5 flex flex-row gap-2 border-2 border-white p-3 hover:cursor-pointer hover:opacity-60 hover:ease-in">
                       <div className="text-white">¿No tienes una cuenta?</div>
                       <div className="text-black">Registrate</div>
                     </div>
