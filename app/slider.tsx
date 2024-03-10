@@ -28,7 +28,11 @@ const responsive = {
 export default function Slider() {
   return (
     <>
-      <Suspense fallback={<div className="flex h-36 w-full md:h-64 lg:h-96" />}>
+      <Suspense
+        fallback={
+          <div className="flex h-36 w-full animate-pulse bg-gray-200 md:h-64 lg:h-96"></div>
+        }
+      >
         <Carousel
           showDots={true}
           responsive={responsive}
