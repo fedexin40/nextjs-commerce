@@ -28,28 +28,54 @@ const responsive = {
 export default function Slider() {
   return (
     <>
-      <Suspense
-        fallback={
-          <div className="flex h-36 w-full animate-pulse bg-gray-200 md:h-64 lg:h-96"></div>
-        }
-      >
-        <Carousel
-          showDots={true}
-          responsive={responsive}
-          infinite={true}
-          removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
-          transitionDuration={2000}
-          ssr={true}
-          autoPlay={true}
+      <div className="hidden md:flex">
+        <Suspense
+          fallback={
+            <div className="flex h-36 w-full animate-pulse bg-gray-200 md:h-64 lg:h-96"></div>
+          }
         >
-          <div className="h-28 md:h-64 lg:h-96">
-            <Image src={'/banner.png'} alt="" fill={true} />
-          </div>
-          <div className="h-28 md:h-64 lg:h-96">
-            <Image src={'/envioGratis.png'} alt="" fill={true} />
-          </div>
-        </Carousel>
-      </Suspense>
+          <Carousel
+            showDots={true}
+            responsive={responsive}
+            infinite={true}
+            removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
+            transitionDuration={2000}
+            ssr={true}
+            autoPlay={true}
+          >
+            <div className="md:h-64 lg:h-96">
+              <Image src={'/banner.png'} alt="" fill={true} />
+            </div>
+            <div className="md:h-64 lg:h-96">
+              <Image src={'/envioGratis.png'} alt="" fill={true} />
+            </div>
+          </Carousel>
+        </Suspense>
+      </div>
+      <div className="md:hidden">
+        <Suspense
+          fallback={
+            <div className="flex h-36 w-full animate-pulse bg-gray-200 md:h-64 lg:h-96"></div>
+          }
+        >
+          <Carousel
+            showDots={true}
+            responsive={responsive}
+            infinite={true}
+            removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
+            transitionDuration={2000}
+            ssr={true}
+            autoPlay={true}
+          >
+            <div className="h-40 md:hidden">
+              <Image src={'/bannerMovil.png'} alt="" fill={true} />
+            </div>
+            <div className="h-40 md:hidden">
+              <Image src={'/envioGratisMovil.png'} alt="" fill={true} />
+            </div>
+          </Carousel>
+        </Suspense>
+      </div>
     </>
   );
 }
