@@ -68,7 +68,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
               <div className="flex items-center justify-between">
                 <p className="text-lg font-semibold">Mi Carrito</p>
 
-                <button aria-label="Cerrar carrito" onClick={closeCart}>
+                <button className="md:hidden" aria-label="Cerrar carrito" onClick={closeCart}>
                   <CloseCart />
                 </button>
               </div>
