@@ -28,7 +28,7 @@ const responsive = {
 export default function Slider() {
   return (
     <>
-      <div className="hidden md:flex">
+      <div className="hidden md:block">
         <Suspense
           fallback={
             <div className="flex h-36 w-full animate-pulse bg-gray-200 md:h-64 lg:h-96"></div>
