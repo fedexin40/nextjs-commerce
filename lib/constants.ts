@@ -8,29 +8,28 @@ export type SortFilterItem = {
 };
 
 export const defaultSort: SortFilterItem = {
-  title: 'Relevance',
-  slug: null,
-  sortKey: ProductOrderField.Rank,
+  title: 'Mas vendidos',
+  slug: 'trending-desc',
+  sortKey: ProductOrderField.Rating,
   reverse: false,
 };
 
 export const sorting: SortFilterItem[] = [
   defaultSort,
-  { title: 'Trending', slug: 'trending-desc', sortKey: ProductOrderField.Rating, reverse: false }, // asc
   {
-    title: 'Latest arrivals',
+    title: 'Mas nuevos',
     slug: 'latest-desc',
     sortKey: ProductOrderField.PublishedAt,
     reverse: true,
   },
   {
-    title: 'Price: Low to high',
+    title: 'Mas baratos primero',
     slug: 'price-asc',
     sortKey: ProductOrderField.MinimalPrice,
     reverse: false,
   }, // asc
   {
-    title: 'Price: High to low',
+    title: 'Mas caros primero',
     slug: 'price-desc',
     sortKey: ProductOrderField.MinimalPrice,
     reverse: true,
