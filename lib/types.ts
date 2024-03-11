@@ -265,3 +265,12 @@ export type VercelCommerceProductsOperation = {
     sortKey?: string;
   };
 };
+
+export type Category = {
+  name: string;
+  slug: string;
+  parent: {
+    level?: number;
+  };
+  url: string;
+};

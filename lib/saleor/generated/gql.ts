@@ -28,6 +28,8 @@ const documents = {
     types.CheckoutUpdateLineDocument,
   'mutation CreateCheckout($input: CheckoutCreateInput!) {\n  checkoutCreate(input: $input) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
     types.CreateCheckoutDocument,
+  'query GetCategories {\n  categories(first: 100) {\n    edges {\n      node {\n        slug\n        name\n        parent {\n          level\n        }\n      }\n    }\n  }\n}':
+    types.GetCategoriesDocument,
   'query GetCategoryBySlug($slug: String!) {\n  category(slug: $slug) {\n    id\n    name\n    slug\n    description\n    seoTitle\n    seoDescription\n    products(\n      channel: "proyecto705"\n      first: 1\n      sortBy: {field: LAST_MODIFIED_AT, direction: DESC}\n    ) {\n      edges {\n        node {\n          updatedAt\n        }\n      }\n    }\n  }\n}':
     types.GetCategoryBySlugDocument,
   'query GetCategoryProductsBySlug($slug: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {\n  category(slug: $slug) {\n    products(\n      channel: "proyecto705"\n      first: 100\n      sortBy: {field: $sortBy, direction: $sortDirection}\n    ) {\n      edges {\n        node {\n          id\n          slug\n          name\n          isAvailableForPurchase\n          description\n          seoTitle\n          seoDescription\n          category {\n            name\n          }\n          pricing {\n            priceRange {\n              start {\n                gross {\n                  currency\n                  amount\n                }\n              }\n              stop {\n                gross {\n                  currency\n                  amount\n                }\n              }\n            }\n          }\n          media {\n            url(size: 2160)\n            type\n            alt\n          }\n          collections {\n            name\n          }\n          updatedAt\n          variants {\n            ...Variant\n          }\n        }\n      }\n    }\n  }\n}':
@@ -52,8 +54,6 @@ const documents = {
     types.GetProductBySlugDocument,
   'query SearchProducts($search: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {\n  products(\n    first: 100\n    channel: "proyecto705"\n    sortBy: {field: $sortBy, direction: $sortDirection}\n    filter: {search: $search}\n  ) {\n    edges {\n      node {\n        id\n        slug\n        name\n        isAvailableForPurchase\n        description\n        seoTitle\n        seoDescription\n        category {\n          name\n        }\n        pricing {\n          priceRange {\n            start {\n              gross {\n                currency\n                amount\n              }\n            }\n            stop {\n              gross {\n                currency\n                amount\n              }\n            }\n          }\n        }\n        media {\n          url(size: 2160)\n          type\n          alt\n        }\n        collections {\n          name\n        }\n        updatedAt\n        variants {\n          ...Variant\n        }\n      }\n    }\n  }\n}':
     types.SearchProductsDocument,
-  'query GetProducts {\n  products(first: 10, channel: "proyecto705") {\n    edges {\n      node {\n        name\n      }\n    }\n  }\n}':
-    types.GetProductsDocument,
   'subscription WebhookSubscription {\n  event {\n    ... on CategoryCreated {\n      __typename\n      category {\n        id\n        slug\n      }\n    }\n    ... on CategoryDeleted {\n      __typename\n      category {\n        id\n        slug\n      }\n    }\n    ... on CategoryUpdated {\n      __typename\n      category {\n        id\n        slug\n      }\n    }\n    ... on CollectionUpdated {\n      __typename\n      collection {\n        id\n        slug\n      }\n    }\n    ... on CollectionDeleted {\n      __typename\n      collection {\n        id\n        slug\n      }\n    }\n    ... on CollectionCreated {\n      __typename\n      collection {\n        id\n        slug\n      }\n    }\n    ... on ProductCreated {\n      __typename\n      product {\n        id\n        slug\n      }\n    }\n    ... on ProductDeleted {\n      __typename\n      product {\n        id\n        slug\n      }\n    }\n    ... on ProductUpdated {\n      __typename\n      product {\n        id\n        slug\n      }\n    }\n    ... on ProductVariantCreated {\n      __typename\n      productVariant {\n        product {\n          id\n          slug\n        }\n      }\n    }\n    ... on ProductVariantDeleted {\n      __typename\n      productVariant {\n        product {\n          id\n          slug\n        }\n      }\n    }\n    ... on ProductVariantUpdated {\n      __typename\n      productVariant {\n        product {\n          id\n          slug\n        }\n      }\n    }\n  }\n}':
     types.WebhookSubscriptionDocument,
 };
@@ -106,6 +106,12 @@ export function graphql(
 export function graphql(
   source: 'mutation CreateCheckout($input: CheckoutCreateInput!) {\n  checkoutCreate(input: $input) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}',
 ): typeof import('./graphql').CreateCheckoutDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'query GetCategories {\n  categories(first: 100) {\n    edges {\n      node {\n        slug\n        name\n        parent {\n          level\n        }\n      }\n    }\n  }\n}',
+): typeof import('./graphql').GetCategoriesDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -178,12 +184,6 @@ export function graphql(
 export function graphql(
   source: 'query SearchProducts($search: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {\n  products(\n    first: 100\n    channel: "proyecto705"\n    sortBy: {field: $sortBy, direction: $sortDirection}\n    filter: {search: $search}\n  ) {\n    edges {\n      node {\n        id\n        slug\n        name\n        isAvailableForPurchase\n        description\n        seoTitle\n        seoDescription\n        category {\n          name\n        }\n        pricing {\n          priceRange {\n            start {\n              gross {\n                currency\n                amount\n              }\n            }\n            stop {\n              gross {\n                currency\n                amount\n              }\n            }\n          }\n        }\n        media {\n          url(size: 2160)\n          type\n          alt\n        }\n        collections {\n          name\n        }\n        updatedAt\n        variants {\n          ...Variant\n        }\n      }\n    }\n  }\n}',
 ): typeof import('./graphql').SearchProductsDocument;
-/**
- * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function graphql(
-  source: 'query GetProducts {\n  products(first: 10, channel: "proyecto705") {\n    edges {\n      node {\n        name\n      }\n    }\n  }\n}',
-): typeof import('./graphql').GetProductsDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

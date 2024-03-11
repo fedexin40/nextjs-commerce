@@ -1,48 +1,36 @@
 import Cart from 'components/cart';
 import OpenCart from 'components/cart/open-cart';
+import Menu from 'components/layout/navigation';
 import Login from 'components/login';
-import { Menu } from 'lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
 import Search from '../search';
 
-export default function TabletNavbar({ menu }: { menu: Menu[] }) {
+export default function TabletNavbar() {
   return (
     <>
-      <nav className="bg-[#f7e7da]">
+      <nav className="bg-[#f7e7da] pb-3">
         <div className="grid grid-cols-5 content-center items-center pb-3 uppercase">
-          <div className="col-span-2">
-            <div className="flex flex-row justify-around">
-              {menu.length ? (
-                <ul className="flex items-center gap-8 text-sm">
-                  {menu.map((item: Menu) => (
-                    <li key={item.title}>
-                      <Link
-                        href={item.path}
-                        className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-neutral-400 dark:hover:text-neutral-300"
-                      >
-                        {item.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
+          <div className="col-span-2 self-end">
+            <div className="flex flex-row justify-end gap-x-10">
+              <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-neutral-400 dark:hover:text-neutral-300">
+                Nosotros
+              </div>
+              <div className="relative">
+                <Menu />
+              </div>
             </div>
           </div>
-          <div>
-            <Link
-              href="/"
-              aria-label="Go back home"
-              className="mr-2 flex w-auto items-center justify-center lg:mr-6"
-            >
-              <div>
-                <Image src={'/logoNegro.png'} alt="" width="150" height="150" />
-              </div>
-            </Link>
+          <div className="m-x-10 flex w-auto items-center justify-center">
+            <div className="relative top-5">
+              <Link href="/" aria-label="Go back home">
+                <Image src={'/logoNegro.png'} alt="" width="140" height="140" />
+              </Link>
+            </div>
           </div>
-          <div className="md:col-span-2">
-            <div className="flex flex-row items-center justify-around">
+          <div className="col-span-2 self-end">
+            <div className="-mb-2 flex flex-row items-center justify-around">
               <div>
                 <Search />
               </div>

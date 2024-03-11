@@ -31535,6 +31535,14 @@ export type CreateCheckoutMutation = {
   } | null;
 };
 
+export type GetCategoriesQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetCategoriesQuery = {
+  categories?: {
+    edges: Array<{ node: { slug: string; name: string; parent?: { level: number } | null } }>;
+  } | null;
+};
+
 export type GetCategoryBySlugQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
@@ -31948,10 +31956,6 @@ export type SearchProductsQuery = {
     }>;
   } | null;
 };
-
-export type GetProductsQueryVariables = Exact<{ [key: string]: never }>;
-
-export type GetProductsQuery = { products?: { edges: Array<{ node: { name: string } }> } | null };
 
 export type WebhookSubscriptionSubscriptionVariables = Exact<{ [key: string]: never }>;
 
@@ -32718,6 +32722,21 @@ fragment Variant on ProductVariant {
     }
   }
 }`) as unknown as TypedDocumentString<CreateCheckoutMutation, CreateCheckoutMutationVariables>;
+export const GetCategoriesDocument = new TypedDocumentString(`
+    query GetCategories {
+  categories(first: 100) {
+    edges {
+      node {
+        slug
+        name
+        parent {
+          level
+        }
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetCategoriesQuery, GetCategoriesQueryVariables>;
 export const GetCategoryBySlugDocument = new TypedDocumentString(`
     query GetCategoryBySlug($slug: String!) {
   category(slug: $slug) {
@@ -33335,17 +33354,6 @@ export const SearchProductsDocument = new TypedDocumentString(`
     }
   }
 }`) as unknown as TypedDocumentString<SearchProductsQuery, SearchProductsQueryVariables>;
-export const GetProductsDocument = new TypedDocumentString(`
-    query GetProducts {
-  products(first: 10, channel: "proyecto705") {
-    edges {
-      node {
-        name
-      }
-    }
-  }
-}
-    `) as unknown as TypedDocumentString<GetProductsQuery, GetProductsQueryVariables>;
 export const WebhookSubscriptionDocument = new TypedDocumentString(`
     subscription WebhookSubscription {
   event {

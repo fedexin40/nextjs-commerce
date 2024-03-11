@@ -1,5 +1,5 @@
 import { TAGS } from 'lib/constants';
-import { Cart, Collection, Menu, Page, Product } from 'lib/types';
+import { Cart, Category, Collection, Menu, Page, Product } from 'lib/types';
 import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import {
@@ -7,6 +7,7 @@ import {
   CheckoutDeleteLineDocument,
   CheckoutUpdateLineDocument,
   CreateCheckoutDocument,
+  GetCategoriesDocument,
   GetCategoryBySlugDocument,
   GetCategoryProductsBySlugDocument,
   GetCheckoutByIdDocument,
@@ -29,6 +30,10 @@ import { invariant } from './utils';
 
 const endpoint = process.env.SALEOR_INSTANCE_URL;
 invariant(endpoint, `Missing SALEOR_INSTANCE_URL!`);
+
+const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+  : 'http://localhost:3000';
 
 type GraphQlError = {
   message: string;
@@ -484,6 +489,29 @@ export async function removeFromCart(cartId: string, lineIds: string[]): Promise
   }
 
   return saleorCheckoutToVercelCart(saleorCheckout.checkoutLinesDelete.checkout);
+}
+
+export async function getCategories(): Promise<Category[]> {
+  const SaleorCategories = await saleorFetch({
+    query: GetCategoriesDocument,
+    variables: {},
+    cache: 'no-store',
+  });
+
+  return (
+    SaleorCategories.categories?.edges.map((category) => {
+      const saleorUrl = new URL(baseUrl!);
+      saleorUrl.pathname = '/search' + '/' + category.node.slug;
+      return {
+        slug: category.node.slug,
+        name: category.node.name,
+        parent: {
+          level: category.node.parent?.level,
+        },
+        url: saleorUrl.toString(),
+      };
+    }) || []
+  );
 }
 
 // eslint-disable-next-line no-unused-vars

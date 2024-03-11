@@ -1,0 +1,13 @@
+query GetCategories {
+  categories(first: 100) {
+    edges {
+      node {
+        slug
+        name
+        parent {
+          level
+        }
+      }
+    }
+  }
+}
