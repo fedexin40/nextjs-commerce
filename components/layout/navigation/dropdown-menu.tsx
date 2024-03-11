@@ -42,7 +42,7 @@ export default function MenuDropdown({ categories }: { categories: Category[] })
           onClick={() => {
             setOpenSelect(false);
           }}
-          className="absolute right-2 top-8 z-50 w-[23rem] shadow-md shadow-gray-400 md:-right-28 md:top-8 md:w-[26rem] lg:right-4 lg:top-8"
+          className="absolute -right-2 top-8 z-50 w-[23rem] shadow-md shadow-gray-400 md:-right-28 md:top-8 md:w-[26rem] lg:right-4 lg:top-8"
         >
           <div className="grid grid-cols-4 place-content-center bg-white uppercase text-black md:gap-x-3">
             {categories.map((category: Category, key: number) => (
