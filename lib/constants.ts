@@ -29,13 +29,13 @@ export const sorting: SortFilterItem[] = [
     reverse: true,
   },
   {
-    title: 'Mas caros primero',
+    title: 'Mayor precio primero',
     slug: 'price-asc',
     sortKey: ProductOrderField.MinimalPrice,
     reverse: false,
   }, // asc
   {
-    title: 'Mas baratos primero',
+    title: 'Menor precio primero',
     slug: 'price-desc',
     sortKey: ProductOrderField.MinimalPrice,
     reverse: true,

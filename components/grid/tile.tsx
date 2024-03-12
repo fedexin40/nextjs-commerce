@@ -25,12 +25,7 @@ export function GridTileImage({
     >
       {props.src ? (
         // eslint-disable-next-line jsx-a11y/alt-text -- `alt` is inherited from `props`, which is being enforced with TypeScript
-        <Image
-          className={clsx('relative h-full w-full object-contain', {
-            'transition duration-300 ease-in-out hover:scale-105': isInteractive,
-          })}
-          {...props}
-        />
+        <Image className="relative h-full w-full object-contain" {...props} />
       ) : null}
       {label ? <Label amount={label.amount} currencyCode={label.currencyCode} /> : null}
       <div className="absolute bottom-0 left-4 -mb-16 flex flex-col p-2 text-xs font-semibold md:-mb-20">
