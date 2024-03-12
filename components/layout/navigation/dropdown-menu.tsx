@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 
 export function MenuItemDropdown({ item }: { item: Category }) {
   return (
-    <div className="p-2 text-center text-[9px] font-semibold text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-neutral-400 dark:hover:text-neutral-300 md:text-[10px]">
+    <div className="mx-6	mr-14 mt-2 flex w-full whitespace-nowrap text-sm text-black underline-offset-4 hover:underline dark:text-white dark:hover:text-neutral-100">
       <Link href={item.url}>{item.name}</Link>
     </div>
   );
@@ -42,9 +42,9 @@ export default function MenuDropdown({ categories }: { categories: Category[] })
           onClick={() => {
             setOpenSelect(false);
           }}
-          className="absolute -right-2 top-8 z-50 w-[23rem] shadow-md shadow-gray-400 md:-right-28 md:top-8 md:w-[26rem] lg:right-4 lg:top-8"
+          className="absolute right-0 top-10 z-50 w-fit rounded-b-md bg-white pb-4 shadow-md md:-right-28 md:top-8 lg:right-4 lg:top-8"
         >
-          <div className="grid grid-cols-4 place-content-center bg-white uppercase text-black md:gap-x-3">
+          <div className="grid grid-rows-4 place-content-center capitalize text-black md:gap-x-3">
             {categories.map((category: Category, key: number) => (
               <MenuItemDropdown item={category} key={key} />
             ))}
