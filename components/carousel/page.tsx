@@ -1,9 +1,9 @@
 'use client';
 
-import Image from 'next/image';
 import { Suspense } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import Principal, { EnvioGratis, EnvioGratisMobil, PrincipalMobil } from './carousel';
 
 const responsive = {
   superLargeDesktop: {
@@ -25,7 +25,7 @@ const responsive = {
   },
 };
 
-export default function Slider() {
+export default function CarouselComponent() {
   return (
     <>
       <div className="hidden md:block">
@@ -35,7 +35,7 @@ export default function Slider() {
           }
         >
           <Carousel
-            showDots={true}
+            showDots={false}
             responsive={responsive}
             infinite={true}
             removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
@@ -43,11 +43,11 @@ export default function Slider() {
             ssr={true}
             autoPlay={true}
           >
-            <div className="md:h-64 lg:h-96">
-              <Image src={'/banner.png'} alt="" fill={true} />
+            <div className="h-40 md:h-64 lg:h-96 lg:w-96">
+              <Principal />
             </div>
-            <div className="md:h-64 lg:h-96">
-              <Image src={'/envioGratis.png'} alt="" fill={true} />
+            <div className="h-40 md:h-64 lg:h-96 lg:w-96">
+              <EnvioGratis />
             </div>
           </Carousel>
         </Suspense>
@@ -59,19 +59,18 @@ export default function Slider() {
           }
         >
           <Carousel
-            showDots={true}
+            showDots={false}
             responsive={responsive}
             infinite={true}
             removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
             transitionDuration={2000}
-            ssr={true}
             autoPlay={true}
           >
-            <div className="h-40 md:hidden">
-              <Image src={'/bannerMovil.png'} alt="" fill={true} />
+            <div className="h-40 md:h-64 lg:h-96 lg:w-96">
+              <PrincipalMobil />
             </div>
-            <div className="h-40 md:hidden">
-              <Image src={'/envioGratisMovil.png'} alt="" fill={true} />
+            <div className="h-40 md:h-64 lg:h-96 lg:w-96">
+              <EnvioGratisMobil />
             </div>
           </Carousel>
         </Suspense>

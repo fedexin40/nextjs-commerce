@@ -1,9 +1,9 @@
+import CarouselComponent from 'components/carousel/page';
 import Grid from 'components/grid';
 import Footer from 'components/layout/footer';
 import ProductGridItems from 'components/layout/product-grid-items';
 import { getCollectionProducts } from 'lib/saleor';
 import { Suspense } from 'react';
-import Slider from './slider';
 
 export const runtime = 'edge';
 
@@ -19,7 +19,7 @@ export default async function HomePage() {
 
   return (
     <>
-      <Slider />
+      <CarouselComponent />
       <div className="m-10 grid justify-items-center text-base font-medium tracking-wide text-[#a8a8a8] xl:text-3xl">
         Encuentra el arete perfecto para ti
       </div>
