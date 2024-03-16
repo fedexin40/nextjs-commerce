@@ -19,7 +19,22 @@ export default async function HomePage() {
 
   return (
     <>
-      <CarouselComponent />
+      <div className="hidden md:block">
+        <CarouselComponent
+          images={['/envioGratis.png', '/banner.png']}
+          className="md:h-64 lg:h-96 lg:w-96"
+          autoPlay={true}
+          removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
+        />
+      </div>
+      <div className="block md:hidden">
+        <CarouselComponent
+          images={['/envioGratisMobile.png', '/bannerMobile.png']}
+          className="h-40"
+          autoPlay={true}
+          removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
+        />
+      </div>
       <div className="m-10 grid justify-items-center text-base font-medium tracking-wide text-[#a8a8a8] xl:text-3xl">
         Encuentra el arete perfecto para ti
       </div>

@@ -3,7 +3,7 @@
 import { Suspense } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import Principal, { EnvioGratis, EnvioGratisMobil, PrincipalMobil } from './carousel';
+import { CarouselImage } from './carousel';
 
 const responsive = {
   superLargeDesktop: {
@@ -25,10 +25,20 @@ const responsive = {
   },
 };
 
-export default function CarouselComponent() {
+export default function CarouselComponent({
+  images,
+  className,
+  autoPlay,
+  removeArrowOnDeviceType,
+}: {
+  images: string[];
+  className: string;
+  autoPlay: boolean;
+  removeArrowOnDeviceType?: string[];
+}) {
   return (
     <>
-      <div className="hidden md:block">
+      <div>
         <Suspense
           fallback={
             <div className="flex h-36 w-full animate-pulse bg-gray-200 md:h-64 lg:h-96"></div>
@@ -38,40 +48,18 @@ export default function CarouselComponent() {
             showDots={false}
             responsive={responsive}
             infinite={true}
-            removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
+            removeArrowOnDeviceType={removeArrowOnDeviceType}
             transitionDuration={2000}
             ssr={true}
-            autoPlay={true}
+            autoPlay={autoPlay}
           >
-            <div className="h-40 md:h-64 lg:h-96 lg:w-96">
-              <Principal />
-            </div>
-            <div className="h-40 md:h-64 lg:h-96 lg:w-96">
-              <EnvioGratis />
-            </div>
-          </Carousel>
-        </Suspense>
-      </div>
-      <div className="md:hidden">
-        <Suspense
-          fallback={
-            <div className="flex h-36 w-full animate-pulse bg-gray-200 md:h-64 lg:h-96"></div>
-          }
-        >
-          <Carousel
-            showDots={false}
-            responsive={responsive}
-            infinite={true}
-            removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
-            transitionDuration={2000}
-            autoPlay={true}
-          >
-            <div className="h-40 md:h-64 lg:h-96 lg:w-96">
-              <PrincipalMobil />
-            </div>
-            <div className="h-40 md:h-64 lg:h-96 lg:w-96">
-              <EnvioGratisMobil />
-            </div>
+            {images.map((image) => {
+              return (
+                <div className={className} key={image}>
+                  <CarouselImage image={image} />
+                </div>
+              );
+            })}
           </Carousel>
         </Suspense>
       </div>
