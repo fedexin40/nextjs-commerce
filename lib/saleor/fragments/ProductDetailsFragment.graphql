@@ -8,6 +8,7 @@ fragment ProductDetails on Product {
   seoDescription
   category {
     name
+    slug
   }
   pricing {
     priceRange {

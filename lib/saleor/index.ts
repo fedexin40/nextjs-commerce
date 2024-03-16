@@ -515,7 +515,7 @@ export async function getCategories(): Promise<Category[]> {
 }
 
 // eslint-disable-next-line no-unused-vars
-export async function getProductRecommendations(productId: string): Promise<Product[]> {
+export async function getProductRecommendations(productId: Product): Promise<Product[]> {
   // @todo
   // tags: [TAGS.products],
   return [];

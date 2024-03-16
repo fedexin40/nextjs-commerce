@@ -38,7 +38,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
   }, [isOpen, cart?.totalQuantity, quantityRef]);
 
   return (
-    <>
+    <div className="z-50">
       <div aria-label="Open cart" onClick={openCart}>
         <OpenCart quantity={cart?.totalQuantity} />
       </div>
@@ -186,6 +186,6 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
           </Transition.Child>
         </Dialog>
       </Transition>
-    </>
+    </div>
   );
 }

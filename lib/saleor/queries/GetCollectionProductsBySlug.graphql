@@ -16,6 +16,7 @@ query GetCollectionProductsBySlug(
           seoDescription
           category {
             name
+            slug
           }
           pricing {
             priceRange {

@@ -12,7 +12,7 @@ export default function LoginModal() {
   const closeLogin = () => setIsOpen(false);
 
   return (
-    <>
+    <div className="z-50">
       <div aria-label="Open cart" onClick={openLogin}>
         <OpenLogin />
       </div>
@@ -161,6 +161,6 @@ export default function LoginModal() {
           </Transition.Child>
         </Dialog>
       </Transition>
-    </>
+    </div>
   );
 }

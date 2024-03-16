@@ -31,8 +31,9 @@ export function ProductDescription({ product }: { product: Product }) {
         </div>
         <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
       </div>
-      <div className="pt-6 text-justify text-xs leading-tight text-gray-800">
+      <div className="inline pt-6 text-xs leading-tight text-gray-800">
         <div className="pb-3">Tiempo de entrega de 2 a 7 dias habiles</div>
+        <div className="pb-3">Envio gratis a la ciudad de Puebla</div>
         <div className="flex flex-row gap-x-4">
           <div>Compartir con</div>
           <Image src={'/facebook.png'} alt="" height={10} width={15} />

@@ -30,10 +30,12 @@ export default function CarouselComponent({
   className,
   autoPlay,
   removeArrowOnDeviceType,
+  infinite,
 }: {
   images: string[];
   className: string;
   autoPlay: boolean;
+  infinite?: boolean;
   removeArrowOnDeviceType?: string[];
 }) {
   return (
@@ -47,7 +49,7 @@ export default function CarouselComponent({
           <Carousel
             showDots={false}
             responsive={responsive}
-            infinite={true}
+            infinite={infinite || true}
             removeArrowOnDeviceType={removeArrowOnDeviceType}
             transitionDuration={2000}
             ssr={true}

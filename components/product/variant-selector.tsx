@@ -60,7 +60,12 @@ function VariantSelectorDropdown({
         <ChevronDownIcon className="h-4 self-center" />
       </div>
       {openSelect && (
-        <div className="absolute z-50 rounded bg-white px-4 py-2 text-sm shadow-md dark:bg-black">
+        <div
+          onClick={() => {
+            setOpenSelect(false);
+          }}
+          className="absolute z-50 rounded bg-white px-4 py-2 text-sm shadow-md dark:bg-black"
+        >
           {option.values.map((value) => {
             const optionNameLowerCase = option.name.toLowerCase();
 

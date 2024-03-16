@@ -25,7 +25,10 @@ export function saleorProductToVercelProduct(
     description: product.description || '',
     descriptionHtml: product.description ? parseEditorJsToHtml(product.description) : '',
     options: saleorVariantsToVercelOptions(product.variants),
-    category: product.category?.name,
+    category: {
+      name: product.category?.name,
+      slug: product.category?.slug,
+    },
     priceRange: {
       maxVariantPrice: {
         amount: product.pricing?.priceRange?.stop?.gross.amount.toString() || '0',

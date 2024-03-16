@@ -31153,7 +31153,7 @@ export type CheckoutFragment = {
         seoTitle?: string | null;
         seoDescription?: string | null;
         updatedAt: string;
-        category?: { name: string } | null;
+        category?: { name: string; slug: string } | null;
         pricing?: {
           priceRange?: {
             start?: { gross: { currency: string; amount: number } } | null;
@@ -31222,7 +31222,7 @@ export type ProductDetailsFragment = {
   seoTitle?: string | null;
   seoDescription?: string | null;
   updatedAt: string;
-  category?: { name: string } | null;
+  category?: { name: string; slug: string } | null;
   pricing?: {
     priceRange?: {
       start?: { gross: { currency: string; amount: number } } | null;
@@ -31291,7 +31291,7 @@ export type CheckoutAddLineMutation = {
             seoTitle?: string | null;
             seoDescription?: string | null;
             updatedAt: string;
-            category?: { name: string } | null;
+            category?: { name: string; slug: string } | null;
             pricing?: {
               priceRange?: {
                 start?: { gross: { currency: string; amount: number } } | null;
@@ -31360,7 +31360,7 @@ export type CheckoutDeleteLineMutation = {
             seoTitle?: string | null;
             seoDescription?: string | null;
             updatedAt: string;
-            category?: { name: string } | null;
+            category?: { name: string; slug: string } | null;
             pricing?: {
               priceRange?: {
                 start?: { gross: { currency: string; amount: number } } | null;
@@ -31429,7 +31429,7 @@ export type CheckoutUpdateLineMutation = {
             seoTitle?: string | null;
             seoDescription?: string | null;
             updatedAt: string;
-            category?: { name: string } | null;
+            category?: { name: string; slug: string } | null;
             pricing?: {
               priceRange?: {
                 start?: { gross: { currency: string; amount: number } } | null;
@@ -31497,7 +31497,7 @@ export type CreateCheckoutMutation = {
             seoTitle?: string | null;
             seoDescription?: string | null;
             updatedAt: string;
-            category?: { name: string } | null;
+            category?: { name: string; slug: string } | null;
             pricing?: {
               priceRange?: {
                 start?: { gross: { currency: string; amount: number } } | null;
@@ -31578,7 +31578,7 @@ export type GetCategoryProductsBySlugQuery = {
           seoTitle?: string | null;
           seoDescription?: string | null;
           updatedAt: string;
-          category?: { name: string } | null;
+          category?: { name: string; slug: string } | null;
           pricing?: {
             priceRange?: {
               start?: { gross: { currency: string; amount: number } } | null;
@@ -31634,7 +31634,7 @@ export type GetCheckoutByIdQuery = {
           seoTitle?: string | null;
           seoDescription?: string | null;
           updatedAt: string;
-          category?: { name: string } | null;
+          category?: { name: string; slug: string } | null;
           pricing?: {
             priceRange?: {
               start?: { gross: { currency: string; amount: number } } | null;
@@ -31706,7 +31706,7 @@ export type GetCollectionProductsBySlugQuery = {
           seoTitle?: string | null;
           seoDescription?: string | null;
           updatedAt: string;
-          category?: { name: string } | null;
+          category?: { name: string; slug: string } | null;
           pricing?: {
             priceRange?: {
               start?: { gross: { currency: string; amount: number } } | null;
@@ -31887,7 +31887,7 @@ export type GetProductBySlugQuery = {
     seoTitle?: string | null;
     seoDescription?: string | null;
     updatedAt: string;
-    category?: { name: string } | null;
+    category?: { name: string; slug: string } | null;
     pricing?: {
       priceRange?: {
         start?: { gross: { currency: string; amount: number } } | null;
@@ -31930,7 +31930,7 @@ export type SearchProductsQuery = {
         seoTitle?: string | null;
         seoDescription?: string | null;
         updatedAt: string;
-        category?: { name: string } | null;
+        category?: { name: string; slug: string } | null;
         pricing?: {
           priceRange?: {
             start?: { gross: { currency: string; amount: number } } | null;
@@ -32044,6 +32044,7 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(`
   seoDescription
   category {
     name
+    slug
   }
   pricing {
     priceRange {
@@ -32143,6 +32144,7 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
   seoDescription
   category {
     name
+    slug
   }
   pricing {
     priceRange {
@@ -32325,6 +32327,7 @@ fragment ProductDetails on Product {
   seoDescription
   category {
     name
+    slug
   }
   pricing {
     priceRange {
@@ -32436,6 +32439,7 @@ fragment ProductDetails on Product {
   seoDescription
   category {
     name
+    slug
   }
   pricing {
     priceRange {
@@ -32550,6 +32554,7 @@ fragment ProductDetails on Product {
   seoDescription
   category {
     name
+    slug
   }
   pricing {
     priceRange {
@@ -32664,6 +32669,7 @@ fragment ProductDetails on Product {
   seoDescription
   category {
     name
+    slug
   }
   pricing {
     priceRange {
@@ -32779,6 +32785,7 @@ export const GetCategoryProductsBySlugDocument = new TypedDocumentString(`
           seoDescription
           category {
             name
+            slug
           }
           pricing {
             priceRange {
@@ -32890,6 +32897,7 @@ fragment ProductDetails on Product {
   seoDescription
   category {
     name
+    slug
   }
   pricing {
     priceRange {
@@ -32985,6 +32993,7 @@ export const GetCollectionProductsBySlugDocument = new TypedDocumentString(`
           seoDescription
           category {
             name
+            slug
           }
           pricing {
             priceRange {
@@ -33216,6 +33225,7 @@ export const GetProductBySlugDocument = new TypedDocumentString(`
   seoDescription
   category {
     name
+    slug
   }
   pricing {
     priceRange {
@@ -33293,6 +33303,7 @@ export const SearchProductsDocument = new TypedDocumentString(`
         seoDescription
         category {
           name
+          slug
         }
         pricing {
           priceRange {
