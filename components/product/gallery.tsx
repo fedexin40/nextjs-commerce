@@ -1,14 +1,14 @@
 'use client';
 import Image from 'next/image';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
 export function Gallery({ images }: { images: { src: string; altText: string }[] }) {
-  const [src, setSrc] = useState(images[0]?.src);
+  const [src, setSrc] = useState(0);
 
   return (
     <>
       <div className="py-10 md:hidden">
-        <div className="">
+        <div>
           <ul className="flex w-full gap-4 overflow-x-auto overflow-y-hidden pt-1">
             {images.map((image) => (
               <li key={image.src} className="aspect-square w-[250px] flex-none">
@@ -25,33 +25,38 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
         </div>
       </div>
       <div className="hidden md:grid md:grid-rows-4 lg:grid-cols-4 lg:grid-rows-1">
-        <div className="hidden gap-y-3 lg:flex lg:flex-col">
-          {images.map((image: { src: string; altText: string }) => (
-            <div key={image.src}>
-              <Image
-                className="object-cover"
-                src={image.src}
-                alt=""
-                width={120}
-                height={120}
-                onClick={() => setSrc(image.src)}
-              />
+        <div className="hidden gap-y-3 pl-10 lg:flex lg:h-[500px] lg:w-[500px] lg:flex-col">
+          {images.map((image: { src: string; altText: string }, index) => (
+            <div className="relative h-24 w-24" key={image.src}>
+              <Suspense>
+                <Image
+                  className="relative object-contain"
+                  src={image.src}
+                  alt=""
+                  fill
+                  onClick={() => setSrc(index)}
+                />
+              </Suspense>
             </div>
           ))}
         </div>
         <div className="relative pr-10 md:row-span-3 md:h-[410px] md:w-[410px] lg:col-span-3 lg:h-[500px] lg:w-[500px]">
-          <Image className="rounded-b-lg object-cover" src={src || ''} alt="" fill />
+          <Image
+            className="rounded-b-lg object-cover"
+            src={images[src]?.src as string}
+            alt=""
+            fill
+          />
         </div>
-        <div className="mt-3 hidden flex-row gap-x-3 pr-[45px] md:flex lg:hidden">
-          {images.map((image: { src: string; altText: string }) => (
-            <div key={image.src}>
+        <div className=" mt-3 hidden flex-row gap-x-3 md:flex md:w-[410px] lg:hidden lg:w-[500px]">
+          {images.map((image: { src: string; altText: string }, index) => (
+            <div className="relative h-20 w-20" key={image.src}>
               <Image
-                className="object-cover"
+                className="object-contain"
                 src={image.src}
                 alt=""
-                width={80}
-                height={80}
-                onClick={() => setSrc(image.src)}
+                fill
+                onClick={() => setSrc(index)}
               />
             </div>
           ))}
