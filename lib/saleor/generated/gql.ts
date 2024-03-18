@@ -28,6 +28,8 @@ const documents = {
     types.CheckoutUpdateLineDocument,
   'mutation CreateCheckout($input: CheckoutCreateInput!) {\n  checkoutCreate(input: $input) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
     types.CreateCheckoutDocument,
+  'mutation externalAuthenticationUrl($pluginId: String!, $input: JSONString!) {\n  externalAuthenticationUrl(pluginId: $pluginId, input: $input) {\n    errors {\n      code\n      message\n    }\n    authenticationData\n  }\n}':
+    types.ExternalAuthenticationUrlDocument,
   'query GetCategories {\n  categories(first: 100) {\n    edges {\n      node {\n        slug\n        name\n        parent {\n          level\n        }\n      }\n    }\n  }\n}':
     types.GetCategoriesDocument,
   'query GetCategoryBySlug($slug: String!) {\n  category(slug: $slug) {\n    id\n    name\n    slug\n    description\n    seoTitle\n    seoDescription\n    products(\n      channel: "proyecto705"\n      first: 1\n      sortBy: {field: LAST_MODIFIED_AT, direction: DESC}\n    ) {\n      edges {\n        node {\n          updatedAt\n        }\n      }\n    }\n  }\n}':
@@ -106,6 +108,12 @@ export function graphql(
 export function graphql(
   source: 'mutation CreateCheckout($input: CheckoutCreateInput!) {\n  checkoutCreate(input: $input) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}',
 ): typeof import('./graphql').CreateCheckoutDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation externalAuthenticationUrl($pluginId: String!, $input: JSONString!) {\n  externalAuthenticationUrl(pluginId: $pluginId, input: $input) {\n    errors {\n      code\n      message\n    }\n    authenticationData\n  }\n}',
+): typeof import('./graphql').ExternalAuthenticationUrlDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

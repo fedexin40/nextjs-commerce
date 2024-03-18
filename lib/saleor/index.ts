@@ -1,5 +1,5 @@
 import { TAGS } from 'lib/constants';
-import { Cart, Category, Collection, Menu, Page, Product } from 'lib/types';
+import { Cart, Category, Collection, Menu, Page, Product, authenticationUrl } from 'lib/types';
 import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import {
@@ -7,6 +7,7 @@ import {
   CheckoutDeleteLineDocument,
   CheckoutUpdateLineDocument,
   CreateCheckoutDocument,
+  ExternalAuthenticationUrlDocument,
   GetCategoriesDocument,
   GetCategoryBySlugDocument,
   GetCategoryProductsBySlugDocument,
@@ -512,6 +513,27 @@ export async function getCategories(): Promise<Category[]> {
       };
     }) || []
   );
+}
+
+export async function externalAuthenticationUrl(
+  callback: string,
+  plugin: string,
+): Promise<authenticationUrl> {
+  const input = `{"redirectUri": "${callback}" }`;
+  const url = await saleorFetch({
+    query: ExternalAuthenticationUrlDocument,
+    variables: {
+      input: input,
+      pluginId: plugin,
+    },
+    cache: 'no-store',
+  });
+  if (url.externalAuthenticationUrl?.errors[0]) {
+    throw url.externalAuthenticationUrl.errors[0]?.code;
+  }
+  return {
+    url: url.externalAuthenticationUrl?.authenticationData || '',
+  };
 }
 
 // eslint-disable-next-line no-unused-vars

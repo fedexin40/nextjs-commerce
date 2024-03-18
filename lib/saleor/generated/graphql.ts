@@ -31535,6 +31535,18 @@ export type CreateCheckoutMutation = {
   } | null;
 };
 
+export type ExternalAuthenticationUrlMutationVariables = Exact<{
+  pluginId: Scalars['String'];
+  input: Scalars['JSONString'];
+}>;
+
+export type ExternalAuthenticationUrlMutation = {
+  externalAuthenticationUrl?: {
+    authenticationData?: string | null;
+    errors: Array<{ code: AccountErrorCode; message?: string | null }>;
+  } | null;
+};
+
 export type GetCategoriesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetCategoriesQuery = {
@@ -32728,6 +32740,20 @@ fragment Variant on ProductVariant {
     }
   }
 }`) as unknown as TypedDocumentString<CreateCheckoutMutation, CreateCheckoutMutationVariables>;
+export const ExternalAuthenticationUrlDocument = new TypedDocumentString(`
+    mutation externalAuthenticationUrl($pluginId: String!, $input: JSONString!) {
+  externalAuthenticationUrl(pluginId: $pluginId, input: $input) {
+    errors {
+      code
+      message
+    }
+    authenticationData
+  }
+}
+    `) as unknown as TypedDocumentString<
+  ExternalAuthenticationUrlMutation,
+  ExternalAuthenticationUrlMutationVariables
+>;
 export const GetCategoriesDocument = new TypedDocumentString(`
     query GetCategories {
   categories(first: 100) {

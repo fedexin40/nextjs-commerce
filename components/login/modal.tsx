@@ -3,6 +3,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import { Fragment, Suspense, useState } from 'react';
+import { externalAuthentication } from './actions';
 import CloseLogin from './close-login';
 import OpenLogin from './open-login';
 
@@ -61,14 +62,13 @@ export default function LoginModal() {
                   <div>
                     <form>
                       <div className="mb-4 flex flex-row gap-x-2 border-b-2 border-[#d2b6ab]">
-                        <div className="grid place-content-center">
+                        <div className="w-18 relative grid h-5 place-content-center">
                           <Suspense>
                             <Image
-                              className="text-center"
+                              className="object-cover text-center"
                               src="/email.png"
                               alt=""
-                              width={18}
-                              height={5}
+                              fill
                             />
                           </Suspense>
                         </div>
@@ -144,7 +144,18 @@ export default function LoginModal() {
                           height={25}
                         />
                       </div>
-                      <div className="content-center text-[#a8a8a8]">Inciar sesion con Google</div>
+                      <div
+                        className="content-center text-[#a8a8a8]"
+                        onClick={async () => {
+                          const result = await externalAuthentication(
+                            'mirumee.authentication.openidconnect.google',
+                            'https://shop.proyecto705.com/api/login/external/callback',
+                          );
+                          console.log(result);
+                        }}
+                      >
+                        Inciar sesion con Google
+                      </div>
                     </div>
                   </div>
                 </div>

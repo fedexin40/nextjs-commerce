@@ -277,3 +277,7 @@ export type Category = {
   };
   url: string;
 };
+
+export type authenticationUrl = {
+  url: string;
+};
