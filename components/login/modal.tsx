@@ -3,7 +3,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import { Fragment, Suspense, useState } from 'react';
-import { externalAuthentication } from './actions';
+import { externalAuthenticationFacebook, externalAuthenticationGoogle } from './actions';
 import CloseLogin from './close-login';
 import OpenLogin from './open-login';
 
@@ -43,13 +43,11 @@ export default function LoginModal() {
               <div className="flex h-full flex-col overflow-y-auto overflow-x-hidden">
                 <div className="relative">
                   <button
-                    className="absolute right-3 top-3 md:hidden"
-                    aria-label="Cerrar Incio de"
+                    className="absolute right-5 top-5 md:hidden"
+                    aria-label="Cerrar Incio de sesion"
                     onClick={closeLogin}
                   >
-                    <div className="flex justify-between">
-                      <CloseLogin />
-                    </div>
+                    <CloseLogin />
                   </button>
                 </div>
                 <div className="mt-14 w-full text-center text-base font-medium tracking-wide md:mt-20 lg:mt-8">
@@ -61,11 +59,11 @@ export default function LoginModal() {
                 <div className="mx-10 mb-10 mt-10 flex flex-col md:my-20 lg:mb-7 lg:mt-7">
                   <div>
                     <form>
-                      <div className="mb-4 flex flex-row gap-x-2 border-b-2 border-[#d2b6ab]">
-                        <div className="w-18 relative grid h-5 place-content-center">
+                      <div className="mb-4 flex flex-row gap-x-2 border-b-2 border-[#d2b6ab] p-1">
+                        <div className="relative grid h-5 w-5 place-content-center">
                           <Suspense>
                             <Image
-                              className="object-cover text-center"
+                              className="object-contain text-center"
                               src="/email.png"
                               alt=""
                               fill
@@ -73,20 +71,20 @@ export default function LoginModal() {
                           </Suspense>
                         </div>
                         <input
-                          className="w-full bg-transparent p-1 focus:ring-0 focus:ring-offset-0"
+                          className="w-full bg-transparent pl-1 focus:ring-0 focus:ring-offset-0"
                           type="email"
                           name="UserName"
                           placeholder="Email..."
                         />
                       </div>
-                      <div className="flex flex-row gap-x-2 border-b-2 border-[#d2b6ab]">
-                        <div className="place-content-center">
+                      <div className="flex flex-row gap-x-2 border-b-2 border-[#d2b6ab] p-1">
+                        <div className="relative h-5 w-5 place-content-center">
                           <Suspense>
-                            <Image src="/contrasena.png" alt="" width={18} height={5} />
+                            <Image className="object-cover" src="/contrasena.png" alt="" fill />
                           </Suspense>
                         </div>
                         <input
-                          className="w-full bg-transparent p-1 focus:ring-0 focus:ring-offset-0"
+                          className="w-full bg-transparent pl-1 focus:ring-0 focus:ring-offset-0"
                           type="password"
                           name="Password"
                           placeholder="Contraseña..."
@@ -108,50 +106,32 @@ export default function LoginModal() {
                     </div>
                   </div>
                   <div>
-                    <div className="mb-3 flex h-fit w-full flex-row gap-5 bg-[#316FF6] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
-                      <div className="rounded-full bg-[#316FF6]">
+                    <div className="mb-3 flex w-full flex-row gap-5 bg-[#316FF6] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
+                      <div className="relative h-5 w-5">
                         <Image
-                          className="hidden rounded-full bg-[#316FF6] md:flex"
+                          className="h-10 w-10 rounded-full bg-[#316FF6] object-cover"
                           src={'/facebookLogin.png'}
                           alt=""
-                          width={30}
-                          height={30}
-                        />
-                        <Image
-                          className="flex rounded-full bg-[#316FF6] md:hidden"
-                          src={'/facebookLogin.png'}
-                          alt=""
-                          width={25}
-                          height={25}
-                        />
-                      </div>
-                      <div className="content-center text-white">Inciar sesion con Facebook</div>
-                    </div>
-                    <div className="flex h-fit w-full flex-row gap-5 border-2 border-[#a8a8a8] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
-                      <div className="content-center">
-                        <Image
-                          className="hidden md:flex"
-                          src={'/googleLogin.png'}
-                          alt=""
-                          width={30}
-                          height={30}
-                        />
-                        <Image
-                          className="flex md:hidden"
-                          src={'/googleLogin.png'}
-                          alt=""
-                          width={25}
-                          height={25}
+                          fill
                         />
                       </div>
                       <div
-                        className="content-center text-[#a8a8a8]"
+                        className="whitespace-nowrap text-white"
                         onClick={async () => {
-                          const result = await externalAuthentication(
-                            'mirumee.authentication.openidconnect.google',
-                            'https://shop.proyecto705.com/api/login/external/callback',
-                          );
-                          console.log(result);
+                          await externalAuthenticationFacebook();
+                        }}
+                      >
+                        Inciar sesion con Facebook
+                      </div>
+                    </div>
+                    <div className="flex flex-row gap-5 border-2 border-[#a8a8a8] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
+                      <div className="relative h-5 w-5">
+                        <Image className="object-cover" src={'/googleLogin.png'} alt="" fill />
+                      </div>
+                      <div
+                        className="content-center whitespace-nowrap text-[#a8a8a8]"
+                        onClick={async () => {
+                          await externalAuthenticationGoogle();
                         }}
                       >
                         Inciar sesion con Google

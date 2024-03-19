@@ -31547,6 +31547,19 @@ export type ExternalAuthenticationUrlMutation = {
   } | null;
 };
 
+export type ExternalObtainAccessTokensMutationVariables = Exact<{
+  pluginId: Scalars['String'];
+  input: Scalars['JSONString'];
+}>;
+
+export type ExternalObtainAccessTokensMutation = {
+  externalObtainAccessTokens?: {
+    refreshToken?: string | null;
+    token?: string | null;
+    errors: Array<{ code: AccountErrorCode; message?: string | null }>;
+  } | null;
+};
+
 export type GetCategoriesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetCategoriesQuery = {
@@ -32753,6 +32766,21 @@ export const ExternalAuthenticationUrlDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   ExternalAuthenticationUrlMutation,
   ExternalAuthenticationUrlMutationVariables
+>;
+export const ExternalObtainAccessTokensDocument = new TypedDocumentString(`
+    mutation externalObtainAccessTokens($pluginId: String!, $input: JSONString!) {
+  externalObtainAccessTokens(input: $input, pluginId: $pluginId) {
+    errors {
+      code
+      message
+    }
+    refreshToken
+    token
+  }
+}
+    `) as unknown as TypedDocumentString<
+  ExternalObtainAccessTokensMutation,
+  ExternalObtainAccessTokensMutationVariables
 >;
 export const GetCategoriesDocument = new TypedDocumentString(`
     query GetCategories {

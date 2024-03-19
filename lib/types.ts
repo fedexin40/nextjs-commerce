@@ -281,3 +281,8 @@ export type Category = {
 export type authenticationUrl = {
   url: string;
 };
+
+export type Token = {
+  token: string;
+  tokenRefresh?: string;
+};

@@ -1,5 +1,14 @@
 import { TAGS } from 'lib/constants';
-import { Cart, Category, Collection, Menu, Page, Product, authenticationUrl } from 'lib/types';
+import {
+  Cart,
+  Category,
+  Collection,
+  Menu,
+  Page,
+  Product,
+  Token,
+  authenticationUrl,
+} from 'lib/types';
 import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import {
@@ -8,6 +17,7 @@ import {
   CheckoutUpdateLineDocument,
   CreateCheckoutDocument,
   ExternalAuthenticationUrlDocument,
+  ExternalObtainAccessTokensDocument,
   GetCategoriesDocument,
   GetCategoryBySlugDocument,
   GetCategoryProductsBySlugDocument,
@@ -533,6 +543,29 @@ export async function externalAuthenticationUrl(
   }
   return {
     url: url.externalAuthenticationUrl?.authenticationData || '',
+  };
+}
+
+export async function externalObtainAccessTokens(
+  code: string,
+  state: string,
+  pluginId: string,
+): Promise<Token> {
+  const input = `{"state": "${state}", "code": "${code}" }`;
+  const token = await saleorFetch({
+    query: ExternalObtainAccessTokensDocument,
+    variables: {
+      pluginId: pluginId,
+      input: input,
+    },
+    cache: 'no-store',
+  });
+  if (token.externalObtainAccessTokens?.errors[0]) {
+    throw token.externalObtainAccessTokens.errors[0]?.code;
+  }
+  return {
+    token: token.externalObtainAccessTokens?.token || '',
+    tokenRefresh: token.externalObtainAccessTokens?.refreshToken || '',
   };
 }
 
