@@ -93,11 +93,11 @@ export default function LoginModal() {
                       <div className="flex flex-col-reverse place-content-end	 py-5	hover:cursor-pointer hover:opacity-25">
                         <div className="text-xs">¿Olvidaste tu contrasena?</div>
                       </div>
-                      <button className="w-full bg-[#d2b6ab] p-2 text-white hover:opacity-60">
+                      <button className="h-10 w-full bg-[#d2b6ab] p-2 text-white hover:opacity-60">
                         Entrar
                       </button>
                     </form>
-                    <div className="grid grid-cols-3 grid-rows-2 py-5 opacity-40">
+                    <div className="grid grid-cols-3 grid-rows-2 py-5">
                       <div className="col-start-1 col-end-2 border-b-2 border-black	" />
                       <div className="max-w-3 col-start-2	col-end-3 row-span-2 place-self-center">
                         o
@@ -106,17 +106,12 @@ export default function LoginModal() {
                     </div>
                   </div>
                   <div>
-                    <div className="mb-3 flex w-full flex-row gap-5 bg-[#316FF6] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
+                    <div className="mb-3 flex h-10 flex-row gap-5 border-2 border-[#1877F2] bg-[#1877F2] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
                       <div className="relative h-5 w-5">
-                        <Image
-                          className="h-10 w-10 rounded-full bg-[#316FF6] object-cover"
-                          src={'/facebookLogin.png'}
-                          alt=""
-                          fill
-                        />
+                        <Image className="object-cover" src={'/facebookLogin.png'} alt="" fill />
                       </div>
                       <div
-                        className="whitespace-nowrap text-white"
+                        className="content-center whitespace-nowrap text-white"
                         onClick={async () => {
                           await externalAuthenticationFacebook();
                         }}
@@ -124,7 +119,7 @@ export default function LoginModal() {
                         Inciar sesion con Facebook
                       </div>
                     </div>
-                    <div className="flex flex-row gap-5 border-2 border-[#a8a8a8] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
+                    <div className="flex h-10 flex-row gap-5 border-2 border-[#a8a8a8] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
                       <div className="relative h-5 w-5">
                         <Image className="object-cover" src={'/googleLogin.png'} alt="" fill />
                       </div>
