@@ -3,6 +3,7 @@ import {
   Cart,
   Category,
   Collection,
+  CurrentPerson,
   Menu,
   Page,
   Product,
@@ -10,6 +11,7 @@ import {
   authenticationUrl,
 } from 'lib/types';
 import { revalidateTag } from 'next/cache';
+import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import {
   CheckoutAddLineDocument,
@@ -25,6 +27,7 @@ import {
   GetCollectionBySlugDocument,
   GetCollectionProductsBySlugDocument,
   GetCollectionsDocument,
+  GetMeDocument,
   GetMenuBySlugDocument,
   GetPageBySlugDocument,
   GetPagesDocument,
@@ -50,6 +53,36 @@ type GraphQlError = {
   message: string;
 };
 type GraphQlErrorRespone<T> = { data: T } | { errors: readonly GraphQlError[] };
+
+export async function currentPerson(): Promise<CurrentPerson> {
+  const cookieStore = cookies();
+  const accessToken = cookieStore.get('accessToken');
+  let headers = new Headers({});
+
+  if (accessToken) {
+    // Template Strings
+    const token = `Bearer ${accessToken}`;
+    const headerDict = { Authorization: token };
+    headers = new Headers(headerDict);
+  }
+
+  const CurrentPerson = await saleorFetch({
+    query: GetMeDocument,
+    variables: {},
+    headers: headers,
+  });
+
+  return {
+    id: CurrentPerson.me?.id || '',
+    email: CurrentPerson.me?.email || '',
+    firstName: CurrentPerson.me?.firstName || '',
+    lastName: CurrentPerson.me?.lastName || '',
+    avatar: {
+      alt: CurrentPerson.me?.avatar?.alt,
+      url: CurrentPerson.me?.avatar?.url,
+    },
+  };
+}
 
 export async function saleorFetch<Result, Variables>({
   query,

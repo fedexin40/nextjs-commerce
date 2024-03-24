@@ -2,23 +2,24 @@
 
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
-import { Fragment, Suspense, useState } from 'react';
-import { externalAuthenticationFacebook, externalAuthenticationGoogle } from './actions';
+import { Fragment, Suspense } from 'react';
+import SocialNetwork from '../network-social';
+import { usePersonStore } from '../store';
 import CloseLogin from './close-login';
-import OpenLogin from './open-login';
 
 export default function LoginModal() {
-  const [isOpen, setIsOpen] = useState(false);
-  const openLogin = () => setIsOpen(true);
-  const closeLogin = () => setIsOpen(false);
+  const isOpen = usePersonStore((state) => state.Login);
+  const openLogin = usePersonStore((state) => state.openLogin);
+  const openRegister = usePersonStore((state) => state.openRegister);
+  const closeLogin = usePersonStore((state) => state.closeLogin);
 
   return (
     <div className="z-50">
-      <div aria-label="Open cart" onClick={openLogin}>
-        <OpenLogin />
+      <div onClick={openLogin}>
+        <Image src={'/registro.png'} alt="" width="27" height="27" />
       </div>
       <Transition show={isOpen}>
-        <Dialog onClose={closeLogin} className="relative z-50">
+        <Dialog onClose={() => {}} className="relative z-50">
           <Transition.Child
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
@@ -43,7 +44,7 @@ export default function LoginModal() {
               <div className="flex h-full flex-col overflow-y-auto overflow-x-hidden">
                 <div className="relative">
                   <button
-                    className="absolute right-5 top-5 md:hidden"
+                    className="absolute right-5 top-5"
                     aria-label="Cerrar Incio de sesion"
                     onClick={closeLogin}
                   >
@@ -105,38 +106,14 @@ export default function LoginModal() {
                       <div className="col-start-3 border-b-2 border-black	" />
                     </div>
                   </div>
-                  <div>
-                    <div className="mb-3 flex h-10 flex-row gap-5 border-2 border-[#1877F2] bg-[#1877F2] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
-                      <div className="relative h-5 w-5">
-                        <Image className="object-cover" src={'/facebookLogin.png'} alt="" fill />
-                      </div>
-                      <div
-                        className="content-center whitespace-nowrap text-white"
-                        onClick={async () => {
-                          await externalAuthenticationFacebook();
-                        }}
-                      >
-                        Inciar sesion con Facebook
-                      </div>
-                    </div>
-                    <div className="flex h-10 flex-row gap-5 border-2 border-[#a8a8a8] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
-                      <div className="relative h-5 w-5">
-                        <Image className="object-cover" src={'/googleLogin.png'} alt="" fill />
-                      </div>
-                      <div
-                        className="content-center whitespace-nowrap text-[#a8a8a8]"
-                        onClick={async () => {
-                          await externalAuthenticationGoogle();
-                        }}
-                      >
-                        Inciar sesion con Google
-                      </div>
-                    </div>
-                  </div>
+                  <SocialNetwork />
                 </div>
-                <div className="flex h-full justify-center bg-[#d2b6ab] pb-10">
-                  <div>
-                    <div className=" top-5 mt-5 flex flex-row gap-2 border-2 border-white p-3 hover:cursor-pointer hover:opacity-60 hover:ease-in">
+                <div className="flex h-full place-content-center justify-center bg-[#d2b6ab] pb-10">
+                  <div className="mx-10 w-full">
+                    <div
+                      className="top-5 mt-5 flex flex-row gap-2 border-2 border-white p-3 hover:cursor-pointer hover:opacity-60 hover:ease-in"
+                      onClick={openRegister}
+                    >
                       <div className="text-white">¿No tienes una cuenta?</div>
                       <div className="text-black">Registrate</div>
                     </div>

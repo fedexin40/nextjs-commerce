@@ -286,3 +286,14 @@ export type Token = {
   token: string;
   tokenRefresh?: string;
 };
+
+export type CurrentPerson = {
+  id: string;
+  email: string;
+  firstName: string;
+  lastName?: string;
+  avatar?: {
+    alt: string | undefined | null;
+    url: string | undefined | null;
+  };
+};

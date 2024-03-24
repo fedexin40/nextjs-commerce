@@ -37,7 +37,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-html-parser": "^2.0.2",
-    "react-multi-carousel": "^2.8.4"
+    "react-multi-carousel": "^2.8.4",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "3.3.1",

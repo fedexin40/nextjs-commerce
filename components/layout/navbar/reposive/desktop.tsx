@@ -1,7 +1,7 @@
 import Cart from 'components/cart';
 import OpenCart from 'components/cart/open-cart';
 import Menu from 'components/layout/navigation';
-import Login from 'components/login';
+import User from 'components/user';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
@@ -40,7 +40,7 @@ export default function DesktopNavbar() {
               </div>
               <div className="hover:cursor-pointer">
                 <Suspense>
-                  <Login />
+                  <User />
                 </Suspense>
               </div>
               <div className="hover:cursor-pointer">

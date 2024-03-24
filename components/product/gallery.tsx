@@ -35,6 +35,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
                   alt=""
                   fill
                   onClick={() => setSrc(index)}
+                  priority={true}
                 />
               </Suspense>
             </div>
@@ -42,6 +43,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
         </div>
         <div className="relative pr-10 md:row-span-3 md:h-[410px] md:w-[410px] lg:col-span-3 lg:h-[500px] lg:w-[500px]">
           <Image
+            priority={true}
             className="rounded-b-lg object-cover"
             src={images[src]?.src as string}
             alt=""
@@ -57,6 +59,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
                 alt=""
                 fill
                 onClick={() => setSrc(index)}
+                priority={true}
               />
             </div>
           ))}

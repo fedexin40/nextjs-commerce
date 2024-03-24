@@ -31811,6 +31811,18 @@ export type GetFeaturedProductsQuery = {
   } | null;
 };
 
+export type GetMeQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetMeQuery = {
+  me?: {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    avatar?: { url: string; alt?: string | null } | null;
+  } | null;
+};
+
 export type MenuItemFragment = {
   id: string;
   name: string;
@@ -33192,6 +33204,20 @@ export const GetFeaturedProductsDocument = new TypedDocumentString(`
     }
   }
 }`) as unknown as TypedDocumentString<GetFeaturedProductsQuery, GetFeaturedProductsQueryVariables>;
+export const GetMeDocument = new TypedDocumentString(`
+    query GetMe {
+  me {
+    id
+    email
+    firstName
+    lastName
+    avatar {
+      url
+      alt
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetMeQuery, GetMeQueryVariables>;
 export const GetMenuBySlugDocument = new TypedDocumentString(`
     query GetMenuBySlug($slug: String!) {
   menu(slug: $slug, channel: "proyecto705") {
