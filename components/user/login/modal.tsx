@@ -111,7 +111,7 @@ export default function LoginModal() {
                 <div className="flex h-full place-content-center justify-center bg-[#d2b6ab] pb-10">
                   <div className="mx-10 w-full">
                     <div
-                      className="top-5 mt-5 flex flex-row gap-2 border-2 border-white p-3 hover:cursor-pointer hover:opacity-60 hover:ease-in"
+                      className="top-5 mt-5 flex flex-row gap-2 whitespace-nowrap border-2 border-white p-3 hover:cursor-pointer hover:opacity-60 hover:ease-in"
                       onClick={openRegister}
                     >
                       <div className="text-white">¿No tienes una cuenta?</div>
