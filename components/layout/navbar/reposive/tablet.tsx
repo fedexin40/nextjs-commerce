@@ -32,7 +32,9 @@ export default function TabletNavbar() {
           <div className="col-span-2 self-end">
             <div className="-mb-2 flex flex-row items-center justify-around">
               <div>
-                <Search />
+                <Suspense>
+                  <Search />
+                </Suspense>
               </div>
               <div className="flex w-2/4 justify-end gap-6 pr-10">
                 <Link href="">

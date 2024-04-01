@@ -36,7 +36,9 @@ export default function DesktopNavbar() {
           <div className="md:col-span-2">
             <div className="flex flex-row items-center space-x-3">
               <div>
-                <Search />
+                <Suspense>
+                  <Search />
+                </Suspense>
               </div>
               <div className="hover:cursor-pointer">
                 <Suspense>

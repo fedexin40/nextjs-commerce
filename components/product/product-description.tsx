@@ -2,6 +2,7 @@ import { AddToCart } from 'components/cart/add-to-cart';
 import Price from 'components/price';
 import { Product } from 'lib/types';
 import Image from 'next/image';
+import { Suspense } from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import { VariantSelector } from './variant-selector';
 
@@ -29,7 +30,9 @@ export function ProductDescription({ product }: { product: Product }) {
         <div className="flex w-full items-center justify-center bg-[#c9aa9e] p-4 tracking-wider text-black hover:opacity-90">
           Comprar ahora
         </div>
-        <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
+        <Suspense>
+          <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
+        </Suspense>
       </div>
       <div className="inline pt-6 text-xs leading-tight text-gray-800">
         <div className="pb-3">Tiempo de entrega de 2 a 7 dias habiles</div>

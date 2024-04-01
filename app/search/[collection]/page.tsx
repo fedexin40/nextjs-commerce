@@ -5,7 +5,6 @@ import { notFound } from 'next/navigation';
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import FilterList from 'components/layout/search/filter';
-import NotFound from 'components/product/not-found';
 import { defaultSort, sorting } from 'lib/constants';
 
 export const runtime = 'edge';
@@ -51,7 +50,7 @@ export default async function CategoryPage({
           </Grid>
         </div>
       ) : (
-        <NotFound query="searchValue" />
+        <></>
       )}
     </>
   );

@@ -6,7 +6,7 @@ import { ProductOption, ProductVariant } from 'lib/types';
 import { createUrl } from 'lib/utils';
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 
 type Combination = {
   id: string;
@@ -159,7 +159,13 @@ export function VariantSelector({
           {option.name}
         </div>
         <div className="col-span-2">
-          <VariantSelectorDropdown option={option} options={options} combinations={combinations} />
+          <Suspense>
+            <VariantSelectorDropdown
+              option={option}
+              options={options}
+              combinations={combinations}
+            />
+          </Suspense>
         </div>
       </div>
     </div>
