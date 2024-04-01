@@ -1,6 +1,5 @@
 'use client';
 
-import { Suspense } from 'react';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import { CarouselImage } from './carousel';
@@ -41,29 +40,23 @@ export default function CarouselComponent({
   return (
     <>
       <div>
-        <Suspense
-          fallback={
-            <div className="flex h-36 w-full animate-pulse bg-gray-200 md:h-64 lg:h-96"></div>
-          }
+        <Carousel
+          showDots={false}
+          responsive={responsive}
+          infinite={infinite || true}
+          removeArrowOnDeviceType={removeArrowOnDeviceType}
+          transitionDuration={2000}
+          ssr={true}
+          autoPlay={autoPlay}
         >
-          <Carousel
-            showDots={false}
-            responsive={responsive}
-            infinite={infinite || true}
-            removeArrowOnDeviceType={removeArrowOnDeviceType}
-            transitionDuration={2000}
-            ssr={true}
-            autoPlay={autoPlay}
-          >
-            {images.map((image) => {
-              return (
-                <div className={className} key={image}>
-                  <CarouselImage image={image} />
-                </div>
-              );
-            })}
-          </Carousel>
-        </Suspense>
+          {images.map((image) => {
+            return (
+              <div className={className} key={image}>
+                <CarouselImage image={image} />
+              </div>
+            );
+          })}
+        </Carousel>
       </div>
     </>
   );

@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@fedexin40/auth-sdk':
+    specifier: ^1.0.2
+    version: 1.0.2(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)
   '@graphql-typed-document-node/core':
     specifier: 3.2.0
     version: 3.2.0(graphql@16.8.1)
@@ -17,6 +20,9 @@ dependencies:
   '@next/third-parties':
     specifier: ^14.1.3
     version: 14.1.3(next@14.1.4)(react@18.2.0)
+  '@saleor/auth-sdk':
+    specifier: ^1.0.1
+    version: 1.0.1(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)
   '@vercel/og':
     specifier: ^0.5.4
     version: 0.5.4
@@ -1407,6 +1413,32 @@ packages:
     resolution: {integrity: sha512-cEee/Z+I12mZcFJshKcCqC8tuX5hG3s+d+9nZ3LabqKF1vKdF41B92pJVCBggjAGORAeOzyyDDKrZwIkLffeOQ==}
     dev: false
 
+  /@fedexin40/auth-sdk@1.0.2(next@14.1.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-7otVipCvk4xOP6+/coYMjZm/g5x974SmM+KqCFEpBPcrbsLlm9vhKTNOu0V+6tz9u6JojDiStIEHByLpn0a3iQ==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      next: ^13.4.4 || ^14.0.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      urql: ^4.0.3
+    peerDependenciesMeta:
+      next:
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+      urql:
+        optional: true
+    dependencies:
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.8.1)
+      cookie: 0.6.0
+      graphql: 16.8.1
+      next: 14.1.4(@babel/core@7.24.3)(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /@floating-ui/core@1.6.0:
     resolution: {integrity: sha512-PcF++MykgmTj3CIyOQbKA/hDzOAiqI3mhuoN44WRCopIs1sgoDoU4oty4Jtqaj/y3oDU6fnVSm4QG0a3t5i0+g==}
     dependencies:
@@ -2686,6 +2718,32 @@ packages:
     resolution: {integrity: sha512-S3Kq8e7LqxkA9s7HKLqXGTGck1uwis5vAXan3FnU5yw1Ec5hsSGnq4s/UCaSqABPOnOTg7zASLyst7+ohgWexg==}
     dev: true
 
+  /@saleor/auth-sdk@1.0.1(next@14.1.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-kMAq9d6+C8dVzZIfHNACgXCx+9H4syBq90MXlEAtNXLPLzSn7MnuSp1bjwBbVghIDZJfMNGA7fdhzkG4eTRFMw==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      next: ^13.4.4 || ^14.0.0
+      react: ^18.2.0
+      react-dom: ^18.2.0
+      urql: ^4.0.3
+    peerDependenciesMeta:
+      next:
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+      urql:
+        optional: true
+    dependencies:
+      '@graphql-typed-document-node/core': 3.2.0(graphql@16.8.1)
+      cookie: 0.6.0
+      graphql: 16.8.1
+      next: 14.1.4(@babel/core@7.24.3)(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
   /@shuding/opentype.js@1.4.0-beta.0:
     resolution: {integrity: sha512-3NgmNyH3l/Hv6EvsWJbsvpcpUba6R8IREQ83nH83cyakCw7uM1arZKNfHwv1Wz6jgqrF/j4x5ELvR6PnK9nTcA==}
     engines: {node: '>= 8.0.0'}
@@ -3768,6 +3826,11 @@ packages:
 
   /convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
+
+  /cookie@0.6.0:
+    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
+    engines: {node: '>= 0.6'}
+    dev: false
 
   /core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}

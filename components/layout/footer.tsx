@@ -60,14 +60,14 @@ export function Contacto() {
     <>
       <div className="uppercase">Contacto</div>
       <div className="flex flex-row items-center gap-x-3">
-        <div>
-          <Image src={'/mail.png'} alt="" width="20" height="10" />
+        <div className="relative h-5 w-5">
+          <Image className="object-contain" src={'/mail.png'} alt="" fill />
         </div>
         <span>contacto@proyecto705.com</span>
       </div>
       <div className="-mt-3 flex flex-row items-center gap-x-3">
-        <div>
-          <Image src={'/whats.png'} alt="" width="20" height="10" />
+        <div className="relative h-5 w-5">
+          <Image src={'/whats.png'} alt="" fill />
         </div>
         <span>22 11 66 44 77</span>
       </div>
@@ -81,20 +81,30 @@ export function Pagos() {
       <div className="grid grid-cols-3 items-center gap-y-3 md:h-fit">
         <div className="flex flex-row gap-x-5 self-end">
           <Link className="hover:cursor-pointer" href="">
-            <Image src={'/facebook.png'} alt="" width="30" height="30" />
+            <div className="relative h-7 w-7">
+              <Image className="object-contain" src={'/facebook.png'} alt="" fill />
+            </div>
           </Link>
           <Link className="hover:cursor-pointer" href="">
-            <Image src={'/instagram.png'} alt="" width="30" height="30" />
+            <div className="relative h-7 w-7">
+              <Image src={'/instagram.png'} alt="" fill />
+            </div>
           </Link>
         </div>
         <div className="row-start-2 -mt-3">
-          <Image src={'/americanexpress.png'} alt="" width="100" height="100" />
+          <div className="relative h-7 w-20">
+            <Image className="cover-contain" src={'/americanexpress.png'} alt="" fill />
+          </div>
         </div>
         <div className="row-start-2">
-          <Image src={'/visa.png'} alt="" width="64" height="64" />
+          <div className="relative h-7 w-20">
+            <Image className="cover-contain" src={'/visa.png'} alt="" fill />
+          </div>
         </div>
         <div className="row-start-2">
-          <Image src={'/mastercard.png'} alt="" width="64" height="64" />
+          <div className="relative h-10 w-16">
+            <Image className="cover-contain" src={'/mastercard.png'} alt="" fill />
+          </div>
         </div>
       </div>
     </>

@@ -3,6 +3,7 @@ import Grid from 'components/grid';
 import Footer from 'components/layout/footer';
 import ProductGridItems from 'components/layout/product-grid-items';
 import { getCollectionProducts } from 'lib/saleor';
+import Image from 'next/image';
 import { Suspense } from 'react';
 
 export const runtime = 'edge';
@@ -20,20 +21,36 @@ export default async function HomePage() {
   return (
     <>
       <div className="hidden md:block">
-        <CarouselComponent
-          images={['/envioGratis.png', '/banner.png']}
-          className="md:h-64 lg:h-96 lg:w-96"
-          autoPlay={true}
-          removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
-        />
+        <Suspense
+          fallback={
+            <div className="relative md:h-64 lg:h-96 lg:w-96">
+              <Image src="/envioGratis.png'" fill alt="" />
+            </div>
+          }
+        >
+          <CarouselComponent
+            images={['/envioGratis.png', '/banner.png']}
+            className="md:h-64 lg:h-96 lg:w-96"
+            autoPlay={true}
+            removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
+          />
+        </Suspense>
       </div>
       <div className="block md:hidden">
-        <CarouselComponent
-          images={['/envioGratisMobile.png', '/bannerMobile.png']}
-          className="h-40"
-          autoPlay={true}
-          removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
-        />
+        <Suspense
+          fallback={
+            <div className="relative h-40">
+              <Image src="/envioGratis.png'" fill alt="" />
+            </div>
+          }
+        >
+          <CarouselComponent
+            images={['/envioGratisMobile.png', '/bannerMobile.png']}
+            className="h-40"
+            autoPlay={true}
+            removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
+          />
+        </Suspense>
       </div>
       <div className="m-10 grid justify-items-center whitespace-nowrap text-base font-medium tracking-wider text-[#a8a8a8] xl:text-3xl">
         Encuentra el arete perfecto para ti
