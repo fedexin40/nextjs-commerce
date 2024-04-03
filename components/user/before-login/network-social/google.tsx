@@ -6,12 +6,11 @@ import Link from 'next/link';
 
 export default function Google({
   SALEOR_INSTANCE_URL,
-  SHOP_PUBLIC_URL,
+  redirectURL,
 }: {
-  SHOP_PUBLIC_URL: string;
   SALEOR_INSTANCE_URL: string;
+  redirectURL: string;
 }) {
-  const redirectURL = new URL('api/auth/callback/google', SHOP_PUBLIC_URL).toString();
   const { authURL } = useSaleorExternalAuth({
     saleorURL: SALEOR_INSTANCE_URL,
     provider: ExternalProvider.OpenIDConnectGoogle,

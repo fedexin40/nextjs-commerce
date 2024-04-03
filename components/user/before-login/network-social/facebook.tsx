@@ -1,18 +1,18 @@
 'use client';
 import { ExternalProvider } from '@fedexin40/auth-sdk';
 import { useSaleorExternalAuth } from '@fedexin40/auth-sdk/react';
+import clsx from 'clsx';
 import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Facebook({
   SALEOR_INSTANCE_URL,
-  SHOP_PUBLIC_URL,
+  redirectURL,
 }: {
-  SHOP_PUBLIC_URL: string;
+  redirectURL: string;
   SALEOR_INSTANCE_URL: string;
 }) {
-  const redirectURL = new URL('api/auth/callback/facebook', SHOP_PUBLIC_URL).toString();
-  const { authURL } = useSaleorExternalAuth({
+  const { authURL, loading: isLoadingExternalAuth } = useSaleorExternalAuth({
     saleorURL: SALEOR_INSTANCE_URL,
     provider: ExternalProvider.OpenIDConnectFacebook,
     redirectURL: redirectURL,
@@ -24,7 +24,12 @@ export default function Facebook({
         <div className="relative h-5 w-5">
           <Image className="object-cover" src={'/facebookLogin.png'} alt="" fill />
         </div>
-        <div className="content-center whitespace-nowrap text-white">
+        <div
+          aria-disabled={isLoadingExternalAuth}
+          className={clsx('content-center whitespace-nowrap text-white', {
+            'cursor-not-allowed': isLoadingExternalAuth,
+          })}
+        >
           Inciar sesion con Facebook
         </div>
       </div>

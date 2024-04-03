@@ -1,13 +1,12 @@
 'use client';
 
 import { Dialog, Transition } from '@headlessui/react';
+import { usePersonStore } from 'components/user/store';
 import Image from 'next/image';
-import { Fragment, Suspense } from 'react';
-import SocialNetwork from '../network-social';
-import { usePersonStore } from '../store';
+import { Fragment, ReactNode, Suspense } from 'react';
 import CloseLogin from './close-login';
 
-export default function LoginModal() {
+export default function LoginModal({ children }: { children: ReactNode }) {
   const isOpen = usePersonStore((state) => state.Login);
   const openLogin = usePersonStore((state) => state.openLogin);
   const openRegister = usePersonStore((state) => state.openRegister);
@@ -106,7 +105,7 @@ export default function LoginModal() {
                       <div className="col-start-3 border-b-2 border-black	" />
                     </div>
                   </div>
-                  <SocialNetwork />
+                  {children}
                 </div>
                 <div className="flex h-full place-content-center justify-center bg-[#d2b6ab] pb-10">
                   <div className="mx-10 w-full">
