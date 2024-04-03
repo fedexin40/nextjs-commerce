@@ -24,7 +24,7 @@ function VariantSelectorDropdown({
   combinations: Combination[];
 }) {
   const searchParams = useSearchParams();
-  const pathname = usePathname();
+  const pathname = usePathname() || '';
   const [active, setActive] = useState('');
   const [openSelect, setOpenSelect] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -42,7 +42,7 @@ function VariantSelectorDropdown({
 
   useEffect(() => {
     option.values.forEach((value: string) => {
-      if (searchParams.get(option.name.toLowerCase()) === value) {
+      if (searchParams?.get(option.name.toLowerCase()) === value) {
         setActive(value);
       }
     });
@@ -70,7 +70,7 @@ function VariantSelectorDropdown({
             const optionNameLowerCase = option.name.toLowerCase();
 
             // Base option params on current params so we can preserve any other param state in the url.
-            const optionSearchParams = new URLSearchParams(searchParams.toString());
+            const optionSearchParams = new URLSearchParams(searchParams?.toString());
 
             // Update the option params using the current option to reflect how the url *would* change,
             // if the option was clicked.
