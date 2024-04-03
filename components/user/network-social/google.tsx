@@ -4,13 +4,18 @@ import { useSaleorExternalAuth } from '@fedexin40/auth-sdk/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Google() {
-  const saleorURL = 'https://api.proyecto705.com/graphql/';
-
+export default function Google({
+  SALEOR_INSTANCE_URL,
+  SHOP_PUBLIC_URL,
+}: {
+  SHOP_PUBLIC_URL: string;
+  SALEOR_INSTANCE_URL: string;
+}) {
+  const redirectURL = new URL('api/auth/callback/google', SHOP_PUBLIC_URL).toString();
   const { authURL } = useSaleorExternalAuth({
-    saleorURL: saleorURL,
+    saleorURL: SALEOR_INSTANCE_URL,
     provider: ExternalProvider.OpenIDConnectGoogle,
-    redirectURL: 'https://shop.proyecto705.com/api/login/external/google',
+    redirectURL: redirectURL,
   });
 
   return (
