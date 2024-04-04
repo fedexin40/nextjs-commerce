@@ -14,9 +14,11 @@ import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import {
+  AccountRegisterDocument,
   CheckoutAddLineDocument,
   CheckoutDeleteLineDocument,
   CheckoutUpdateLineDocument,
+  ConfirmAccountDocument,
   CreateCheckoutDocument,
   ExternalAuthenticationUrlDocument,
   ExternalObtainAccessTokensDocument,
@@ -600,6 +602,35 @@ export async function externalObtainAccessTokens(
     token: token.externalObtainAccessTokens?.token || '',
     tokenRefresh: token.externalObtainAccessTokens?.refreshToken || '',
   };
+}
+
+export async function confirmAccount(email: string, token: string) {
+  const confirmAccount = await saleorFetch({
+    query: ConfirmAccountDocument,
+    variables: {
+      email: email,
+      token: token,
+    },
+  });
+
+  if (confirmAccount.confirmAccount?.errors) {
+    throw new Error(confirmAccount.confirmAccount.errors[0]?.message || '');
+  }
+}
+
+export async function registerAccount(email: string, password: string, redirectUrl: string) {
+  const saleorAccount = await saleorFetch({
+    query: AccountRegisterDocument,
+    variables: {
+      email: email,
+      password: password,
+      redirectUrl: redirectUrl,
+    },
+  });
+
+  if (saleorAccount.accountRegister?.errors[0]) {
+    throw new Error(saleorAccount.accountRegister.errors[0]?.message || '');
+  }
 }
 
 // eslint-disable-next-line no-unused-vars

@@ -31260,6 +31260,19 @@ export type VariantFragment = {
   pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
 };
 
+export type AccountRegisterMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+  redirectUrl: Scalars['String'];
+}>;
+
+export type AccountRegisterMutation = {
+  accountRegister?: {
+    requiresConfirmation?: boolean | null;
+    errors: Array<{ code: AccountErrorCode; field?: string | null; message?: string | null }>;
+  } | null;
+};
+
 export type CheckoutAddLineMutationVariables = Exact<{
   checkoutId: Scalars['ID'];
   lines: Array<CheckoutLineInput> | CheckoutLineInput;
@@ -31464,6 +31477,17 @@ export type CheckoutUpdateLineMutation = {
         };
       }>;
     } | null;
+  } | null;
+};
+
+export type ConfirmAccountMutationVariables = Exact<{
+  email: Scalars['String'];
+  token: Scalars['String'];
+}>;
+
+export type ConfirmAccountMutation = {
+  confirmAccount?: {
+    errors: Array<{ code: AccountErrorCode; field?: string | null; message?: string | null }>;
   } | null;
 };
 
@@ -32311,6 +32335,20 @@ export const MenuItemFragmentDoc = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<MenuItemFragment, unknown>;
+export const AccountRegisterDocument = new TypedDocumentString(`
+    mutation AccountRegister($email: String!, $password: String!, $redirectUrl: String!) {
+  accountRegister(
+    input: {email: $email, channel: "proyecto705", password: $password, redirectUrl: $redirectUrl}
+  ) {
+    requiresConfirmation
+    errors {
+      code
+      field
+      message
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<AccountRegisterMutation, AccountRegisterMutationVariables>;
 export const CheckoutAddLineDocument = new TypedDocumentString(`
     mutation CheckoutAddLine($checkoutId: ID!, $lines: [CheckoutLineInput!]!) {
   checkoutLinesAdd(id: $checkoutId, lines: $lines) {
@@ -32653,6 +32691,17 @@ fragment Variant on ProductVariant {
   CheckoutUpdateLineMutation,
   CheckoutUpdateLineMutationVariables
 >;
+export const ConfirmAccountDocument = new TypedDocumentString(`
+    mutation ConfirmAccount($email: String!, $token: String!) {
+  confirmAccount(email: $email, token: $token) {
+    errors {
+      code
+      field
+      message
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ConfirmAccountMutation, ConfirmAccountMutationVariables>;
 export const CreateCheckoutDocument = new TypedDocumentString(`
     mutation CreateCheckout($input: CheckoutCreateInput!) {
   checkoutCreate(input: $input) {

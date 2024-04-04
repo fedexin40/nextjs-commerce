@@ -20,12 +20,16 @@ const documents = {
     types.ProductDetailsFragmentDoc,
   'fragment Variant on ProductVariant {\n  id\n  name\n  attributes {\n    attribute {\n      slug\n      name\n      choices(first: 100) {\n        edges {\n          node {\n            name\n          }\n        }\n      }\n    }\n    values {\n      name\n    }\n  }\n  pricing {\n    price {\n      gross {\n        currency\n        amount\n      }\n    }\n  }\n}':
     types.VariantFragmentDoc,
+  'mutation AccountRegister($email: String!, $password: String!, $redirectUrl: String!) {\n  accountRegister(\n    input: {email: $email, channel: "proyecto705", password: $password, redirectUrl: $redirectUrl}\n  ) {\n    requiresConfirmation\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
+    types.AccountRegisterDocument,
   'mutation CheckoutAddLine($checkoutId: ID!, $lines: [CheckoutLineInput!]!) {\n  checkoutLinesAdd(id: $checkoutId, lines: $lines) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
     types.CheckoutAddLineDocument,
   'mutation CheckoutDeleteLine($checkoutId: ID!, $lineIds: [ID!]!) {\n  checkoutLinesDelete(id: $checkoutId, linesIds: $lineIds) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
     types.CheckoutDeleteLineDocument,
   'mutation CheckoutUpdateLine($checkoutId: ID!, $lines: [CheckoutLineUpdateInput!]!) {\n  checkoutLinesUpdate(id: $checkoutId, lines: $lines) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
     types.CheckoutUpdateLineDocument,
+  'mutation ConfirmAccount($email: String!, $token: String!) {\n  confirmAccount(email: $email, token: $token) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
+    types.ConfirmAccountDocument,
   'mutation CreateCheckout($input: CheckoutCreateInput!) {\n  checkoutCreate(input: $input) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
     types.CreateCheckoutDocument,
   'mutation externalAuthenticationUrl($pluginId: String!, $input: JSONString!) {\n  externalAuthenticationUrl(pluginId: $pluginId, input: $input) {\n    errors {\n      code\n      message\n    }\n    authenticationData\n  }\n}':
@@ -92,6 +96,12 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: 'mutation AccountRegister($email: String!, $password: String!, $redirectUrl: String!) {\n  accountRegister(\n    input: {email: $email, channel: "proyecto705", password: $password, redirectUrl: $redirectUrl}\n  ) {\n    requiresConfirmation\n    errors {\n      code\n      field\n      message\n    }\n  }\n}',
+): typeof import('./graphql').AccountRegisterDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: 'mutation CheckoutAddLine($checkoutId: ID!, $lines: [CheckoutLineInput!]!) {\n  checkoutLinesAdd(id: $checkoutId, lines: $lines) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}',
 ): typeof import('./graphql').CheckoutAddLineDocument;
 /**
@@ -106,6 +116,12 @@ export function graphql(
 export function graphql(
   source: 'mutation CheckoutUpdateLine($checkoutId: ID!, $lines: [CheckoutLineUpdateInput!]!) {\n  checkoutLinesUpdate(id: $checkoutId, lines: $lines) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}',
 ): typeof import('./graphql').CheckoutUpdateLineDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation ConfirmAccount($email: String!, $token: String!) {\n  confirmAccount(email: $email, token: $token) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}',
+): typeof import('./graphql').ConfirmAccountDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

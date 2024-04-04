@@ -1,16 +1,21 @@
 'use client';
 
 import { Dialog, Transition } from '@headlessui/react';
-import { usePersonStore } from 'components/user/store';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import { useError, useErrorMessage, useLogin, usePersonActions } from 'components/user/store';
 import Image from 'next/image';
 import { Fragment, ReactNode, Suspense } from 'react';
 import CloseLogin from './close-login';
 
 export default function LoginModal({ children }: { children: ReactNode }) {
-  const isOpen = usePersonStore((state) => state.Login);
-  const openLogin = usePersonStore((state) => state.openLogin);
-  const openRegister = usePersonStore((state) => state.openRegister);
-  const closeLogin = usePersonStore((state) => state.closeLogin);
+  const isOpen = useLogin();
+  const ErrorMessage = useErrorMessage();
+  const isError = useError();
+  const { openLogin } = usePersonActions();
+  const { openRegister } = usePersonActions();
+  const { closeLogin } = usePersonActions();
+  const { closeError } = usePersonActions();
 
   return (
     <div className="z-50">
@@ -40,6 +45,18 @@ export default function LoginModal({ children }: { children: ReactNode }) {
             leaveTo="-translate-x-full"
           >
             <Dialog.Panel className="fixed bottom-0 left-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white md:w-[390px]">
+              <div>
+                <Snackbar open={isError} autoHideDuration={6000} onClose={closeError}>
+                  <Alert
+                    onClose={closeError}
+                    severity="error"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                  >
+                    {ErrorMessage}
+                  </Alert>
+                </Snackbar>
+              </div>
               <div className="flex h-full flex-col overflow-y-auto overflow-x-hidden">
                 <div className="relative">
                   <button

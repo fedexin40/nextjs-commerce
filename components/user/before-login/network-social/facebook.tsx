@@ -1,4 +1,5 @@
 'use client';
+
 import { ExternalProvider } from '@fedexin40/auth-sdk';
 import { useSaleorExternalAuth } from '@fedexin40/auth-sdk/react';
 import clsx from 'clsx';

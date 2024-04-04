@@ -1,0 +1,12 @@
+mutation AccountRegister($email: String!, $password: String!, $redirectUrl: String!) {
+  accountRegister(
+    input: { email: $email, channel: "proyecto705", password: $password, redirectUrl: $redirectUrl }
+  ) {
+    requiresConfirmation
+    errors {
+      code
+      field
+      message
+    }
+  }
+}

@@ -1,15 +1,61 @@
 'use client';
 
 import { Dialog, Transition } from '@headlessui/react';
-import { usePersonStore } from 'components/user/store';
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
+import { clsx } from 'clsx';
+import {
+  useError,
+  useErrorMessage,
+  useLoading,
+  usePersonActions,
+  useRegister,
+} from 'components/user/store';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Fragment, ReactNode, Suspense } from 'react';
+import { accountRegister } from './actions';
 import CloseRegister from './close-register';
 
 export default function RegisterModal({ children }: { children: ReactNode }) {
-  const closeRegister = usePersonStore((state) => state.closeRegister);
-  const openLogin = usePersonStore((state) => state.openLogin);
-  const isOpen = usePersonStore((state) => state.Register);
+  const ErrorMessage = useErrorMessage();
+  const isError = useError();
+  const isOpen = useRegister();
+  const Loading = useLoading();
+  const { closeRegister } = usePersonActions();
+  const { openLogin } = usePersonActions();
+  const { closeError } = usePersonActions();
+  const { setErrorMessage } = usePersonActions();
+  const { openError } = usePersonActions();
+  const { isLoading } = usePersonActions();
+  const { isNotLoading } = usePersonActions();
+  const router = useRouter();
+
+  async function RegisterAction(formData: FormData) {
+    isLoading();
+    const rawFormData = {
+      password: formData.get('password')?.toString() || '',
+      passwordConfirm: formData.get('passwordConfirm')?.toString() || '',
+      email: formData.get('email')?.toString() || '',
+    };
+
+    if (rawFormData.password !== rawFormData.passwordConfirm) {
+      openError();
+      setErrorMessage('Las contraseñas no coinciden');
+    } else {
+      const error = await accountRegister({
+        email: rawFormData.email,
+        password: rawFormData.password,
+      });
+      if (error) {
+        setErrorMessage(error);
+        openError();
+      } else {
+        router.push('/new-user');
+      }
+    }
+    isNotLoading();
+  }
 
   return (
     <div className="z-50">
@@ -36,6 +82,23 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
             leaveTo="-translate-x-full"
           >
             <Dialog.Panel className="fixed bottom-0 left-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white md:w-[390px]">
+              <div>
+                <Snackbar
+                  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                  open={isError}
+                  autoHideDuration={6000}
+                  onClose={closeError}
+                >
+                  <Alert
+                    onClose={closeError}
+                    severity="error"
+                    variant="filled"
+                    sx={{ width: '100%' }}
+                  >
+                    {ErrorMessage}
+                  </Alert>
+                </Snackbar>
+              </div>
               <div className="flex h-full flex-col overflow-y-auto overflow-x-hidden">
                 <div className="relative">
                   <button
@@ -51,7 +114,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                 </div>
                 <div className="mx-10 mb-10 mt-10 flex flex-col md:my-20 lg:mb-7 lg:mt-7">
                   <div className="gap-y-4">
-                    <form>
+                    <form action={RegisterAction}>
                       <div className="mb-4 flex flex-row gap-x-2 border-b-2 border-[#d2b6ab] p-1">
                         <div className="relative grid h-5 w-5 place-content-center">
                           <Suspense>
@@ -66,7 +129,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                         <input
                           className="w-full bg-transparent pl-1 focus:ring-0 focus:ring-offset-0"
                           type="email"
-                          name="UserName"
+                          name="email"
                           placeholder="Email..."
                         />
                       </div>
@@ -79,7 +142,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                         <input
                           className="w-full bg-transparent pl-1 focus:ring-0 focus:ring-offset-0"
                           type="password"
-                          name="Password"
+                          name="password"
                           placeholder="Contraseña..."
                         />
                       </div>
@@ -93,7 +156,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                         <input
                           className="w-full bg-transparent pl-1 focus:ring-0 focus:ring-offset-0"
                           type="password"
-                          name="Password"
+                          name="passwordConfirm"
                           placeholder="Confirmar contraseña..."
                         />
                       </div>
@@ -102,7 +165,14 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                         aceptas nuestras Condiciones, nuestra Politica de privacidad y nuestra
                         Politica de cookies
                       </div>
-                      <button className="h-10 w-full bg-[#d2b6ab] p-2 text-white hover:opacity-60">
+                      <button
+                        className={clsx(
+                          'h-10 w-full bg-[#d2b6ab] p-2 text-white hover:opacity-60',
+                          {
+                            'cursor-not-allowed opacity-60 hover:opacity-60': Loading,
+                          },
+                        )}
+                      >
                         Registrate
                       </button>
                     </form>

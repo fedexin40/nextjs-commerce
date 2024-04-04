@@ -1,6 +1,7 @@
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import FilterList from 'components/layout/search/filter';
+import NotFound from 'components/product/not-found';
 import { defaultSort, sorting } from 'lib/constants';
 import { getProducts } from 'lib/saleor';
 
@@ -35,7 +36,7 @@ export default async function SearchPage({
           </Grid>
         </div>
       ) : (
-        <></>
+        <NotFound query={searchValue || ''} />
       )}
     </>
   );
