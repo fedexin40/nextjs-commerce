@@ -48,13 +48,13 @@ export default function UserMenuModal({
               >
                 <Dialog.Panel className="h-[600px] w-full text-left align-middle shadow-xl md:h-[800px] md:max-w-xl lg:h-[550px] lg:max-w-4xl">
                   <div className="relative">
-                    <button
+                    <div
                       className="absolute -right-4 -top-3 flex h-7 w-7 place-content-center rounded-full bg-[hsl(28,30%,59%)] pt-0.5 text-[15px] font-medium text-white"
                       aria-label="Cerrar Incio de sesion"
                       onClick={closeMenu}
                     >
                       x
-                    </button>
+                    </div>
                   </div>
                   <div className="flex h-full flex-row">
                     <div className="w-1/3 bg-[#f7e7da]">{UserDetails}</div>

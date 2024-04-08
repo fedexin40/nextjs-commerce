@@ -24,8 +24,8 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
           </ul>
         </div>
       </div>
-      <div className="hidden md:grid md:grid-rows-4 lg:grid-cols-4 lg:grid-rows-1">
-        <div className="hidden gap-y-3 pl-10 lg:flex lg:h-[500px] lg:w-[500px] lg:flex-col">
+      <div className="hidden md:grid md:h-[550px] md:grid-rows-4 lg:grid-cols-4 lg:grid-rows-1">
+        <div className="hidden gap-y-3 pl-10 lg:flex lg:flex-col">
           {images.map((image: { src: string; altText: string }, index) => (
             <div className="relative h-24 w-24" key={image.src}>
               <Suspense>
@@ -41,7 +41,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
             </div>
           ))}
         </div>
-        <div className="relative pr-10 md:row-span-3 md:h-[410px] md:w-[410px] lg:col-span-3 lg:h-[500px] lg:w-[500px]">
+        <div className="relative mr-10 md:row-span-3 lg:col-span-3">
           <Image
             priority={true}
             className="rounded-b-lg object-cover"
