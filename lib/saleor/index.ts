@@ -1,3 +1,4 @@
+import { getServerAuthClient } from 'app/login';
 import { TAGS } from 'lib/constants';
 import {
   Cart,
@@ -56,7 +57,7 @@ type GraphQlError = {
 };
 type GraphQlErrorRespone<T> = { data: T } | { errors: readonly GraphQlError[] };
 
-export async function currentPerson(): Promise<CurrentPerson> {
+export async function Me(): Promise<CurrentPerson> {
   const cookieStore = cookies();
   const accessToken = cookieStore.get('accessToken');
   let headers = new Headers({});
@@ -72,6 +73,7 @@ export async function currentPerson(): Promise<CurrentPerson> {
     query: GetMeDocument,
     variables: {},
     headers: headers,
+    withAuth: true,
   });
 
   return {
@@ -92,18 +94,20 @@ export async function saleorFetch<Result, Variables>({
   headers,
   cache,
   tags,
+  withAuth,
 }: {
   query: TypedDocumentString<Result, Variables>;
   variables: Variables;
   headers?: HeadersInit;
   cache?: RequestCache;
   tags?: NextFetchRequestConfig['tags'];
+  withAuth?: boolean;
 }): Promise<Result> {
   invariant(endpoint, `Missing SALEOR_INSTANCE_URL!`);
 
   const options = cache ? { cache, next: { tags } } : { next: { revalidate: 120, tags } };
 
-  const result = await fetch(endpoint, {
+  const input = {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -114,7 +118,11 @@ export async function saleorFetch<Result, Variables>({
       ...(variables && { variables }),
     }),
     ...options,
-  });
+  };
+
+  const result = withAuth
+    ? await getServerAuthClient().fetchWithAuth(endpoint, input)
+    : await fetch(endpoint, input);
 
   const body = (await result.json()) as GraphQlErrorRespone<Result>;
 

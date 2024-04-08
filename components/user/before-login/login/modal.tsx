@@ -3,9 +3,18 @@
 import { Dialog, Transition } from '@headlessui/react';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import { useError, useErrorMessage, useLogin, usePersonActions } from 'components/user/store';
+import clsx from 'clsx';
+import {
+  useError,
+  useErrorMessage,
+  useLoading,
+  useLogin,
+  usePersonActions,
+} from 'components/user/before-login/store';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Fragment, ReactNode, Suspense } from 'react';
+import { Login } from './actions';
 import CloseLogin from './close-login';
 
 export default function LoginModal({ children }: { children: ReactNode }) {
@@ -15,7 +24,34 @@ export default function LoginModal({ children }: { children: ReactNode }) {
   const { openLogin } = usePersonActions();
   const { openRegister } = usePersonActions();
   const { closeLogin } = usePersonActions();
+  const { isLoading } = usePersonActions();
+  const { isNotLoading } = usePersonActions();
   const { closeError } = usePersonActions();
+  const { setErrorMessage } = usePersonActions();
+  const { openError } = usePersonActions();
+  const Loading = useLoading();
+  const router = useRouter();
+
+  async function LoginAction(formData: FormData) {
+    isLoading();
+    const rawFormData = {
+      password: formData.get('password')?.toString() || '',
+      email: formData.get('email')?.toString() || '',
+    };
+    const data = await Login({
+      email: rawFormData.email,
+      password: rawFormData.password,
+    });
+    if (data.tokenCreate.errors.length > 0) {
+      console.log(data);
+      setErrorMessage(data.tokenCreate.errors[0]?.message || '');
+      openError();
+    } else {
+      closeLogin();
+      router.refresh();
+    }
+    isNotLoading();
+  }
 
   return (
     <div className="z-50">
@@ -46,7 +82,12 @@ export default function LoginModal({ children }: { children: ReactNode }) {
           >
             <Dialog.Panel className="fixed bottom-0 left-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white md:w-[390px]">
               <div>
-                <Snackbar open={isError} autoHideDuration={6000} onClose={closeError}>
+                <Snackbar
+                  anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                  open={isError}
+                  autoHideDuration={6000}
+                  onClose={closeError}
+                >
                   <Alert
                     onClose={closeError}
                     severity="error"
@@ -75,7 +116,7 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                 </div>
                 <div className="mx-10 mb-10 mt-10 flex flex-col md:my-20 lg:mb-7 lg:mt-7">
                   <div>
-                    <form>
+                    <form action={LoginAction}>
                       <div className="mb-4 flex flex-row gap-x-2 border-b-2 border-[#d2b6ab] p-1">
                         <div className="relative grid h-5 w-5 place-content-center">
                           <Suspense>
@@ -90,7 +131,7 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                         <input
                           className="w-full bg-transparent pl-1 focus:ring-0 focus:ring-offset-0"
                           type="email"
-                          name="UserName"
+                          name="email"
                           placeholder="Email..."
                         />
                       </div>
@@ -103,14 +144,21 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                         <input
                           className="w-full bg-transparent pl-1 focus:ring-0 focus:ring-offset-0"
                           type="password"
-                          name="Password"
+                          name="password"
                           placeholder="Contraseña..."
                         />
                       </div>
                       <div className="flex flex-col-reverse place-content-end	 py-5	hover:cursor-pointer hover:opacity-25">
                         <div className="text-xs">¿Olvidaste tu contrasena?</div>
                       </div>
-                      <button className="h-10 w-full bg-[#d2b6ab] p-2 text-white hover:opacity-60">
+                      <button
+                        className={clsx(
+                          'h-10 w-full bg-[#d2b6ab] p-2 text-white hover:opacity-60',
+                          {
+                            'cursor-not-allowed opacity-60 hover:opacity-60': Loading,
+                          },
+                        )}
+                      >
                         Entrar
                       </button>
                     </form>

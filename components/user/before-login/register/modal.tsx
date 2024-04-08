@@ -10,7 +10,7 @@ import {
   useLoading,
   usePersonActions,
   useRegister,
-} from 'components/user/store';
+} from 'components/user/before-login/store';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Fragment, ReactNode, Suspense } from 'react';
@@ -51,6 +51,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
         setErrorMessage(error);
         openError();
       } else {
+        closeRegister();
         router.push('/new-user');
       }
     }
