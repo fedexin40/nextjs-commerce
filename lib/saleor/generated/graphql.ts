@@ -31273,6 +31273,37 @@ export type AccountRegisterMutation = {
   } | null;
 };
 
+export type AccountUpdateMutationVariables = Exact<{
+  input: AccountInput;
+}>;
+
+export type AccountUpdateMutation = {
+  accountUpdate?: {
+    errors: Array<{ code: AccountErrorCode; message?: string | null; field?: string | null }>;
+  } | null;
+};
+
+export type AddressCreateMutationVariables = Exact<{
+  input: AddressInput;
+}>;
+
+export type AddressCreateMutation = {
+  accountAddressCreate?: {
+    errors: Array<{ code: AccountErrorCode; message?: string | null; field?: string | null }>;
+  } | null;
+};
+
+export type AddressUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: AddressInput;
+}>;
+
+export type AddressUpdateMutation = {
+  accountAddressUpdate?: {
+    errors: Array<{ code: AccountErrorCode; message?: string | null; field?: string | null }>;
+  } | null;
+};
+
 export type CheckoutAddLineMutationVariables = Exact<{
   checkoutId: Scalars['ID'];
   lines: Array<CheckoutLineInput> | CheckoutLineInput;
@@ -31584,6 +31615,14 @@ export type ExternalObtainAccessTokensMutation = {
   } | null;
 };
 
+export type AddressValidationQueryVariables = Exact<{ [key: string]: never }>;
+
+export type AddressValidationQuery = {
+  addressValidationRules?: {
+    countryAreaChoices: Array<{ raw?: string | null; verbose?: string | null }>;
+  } | null;
+};
+
 export type GetCategoriesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GetCategoriesQuery = {
@@ -31844,6 +31883,29 @@ export type GetMeQuery = {
     firstName: string;
     lastName: string;
     avatar?: { url: string; alt?: string | null } | null;
+    addresses: Array<{
+      id: string;
+      city: string;
+      cityArea: string;
+      countryArea: string;
+      postalCode: string;
+      phone?: string | null;
+      streetAddress1: string;
+      streetAddress2: string;
+      country: { code: string; country: string };
+    }>;
+    checkouts?: {
+      edges: Array<{
+        node: {
+          created: string;
+          quantity: number;
+          lines: Array<{
+            quantity: number;
+            variant: { name: string; media?: Array<{ url: string }> | null };
+          }>;
+        };
+      }>;
+    } | null;
   } | null;
 };
 
@@ -32349,6 +32411,39 @@ export const AccountRegisterDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<AccountRegisterMutation, AccountRegisterMutationVariables>;
+export const AccountUpdateDocument = new TypedDocumentString(`
+    mutation AccountUpdate($input: AccountInput!) {
+  accountUpdate(input: $input) {
+    errors {
+      code
+      message
+      field
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<AccountUpdateMutation, AccountUpdateMutationVariables>;
+export const AddressCreateDocument = new TypedDocumentString(`
+    mutation AddressCreate($input: AddressInput!) {
+  accountAddressCreate(input: $input) {
+    errors {
+      code
+      message
+      field
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<AddressCreateMutation, AddressCreateMutationVariables>;
+export const AddressUpdateDocument = new TypedDocumentString(`
+    mutation AddressUpdate($id: ID!, $input: AddressInput!) {
+  accountAddressUpdate(id: $id, input: $input) {
+    errors {
+      code
+      message
+      field
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<AddressUpdateMutation, AddressUpdateMutationVariables>;
 export const CheckoutAddLineDocument = new TypedDocumentString(`
     mutation CheckoutAddLine($checkoutId: ID!, $lines: [CheckoutLineInput!]!) {
   checkoutLinesAdd(id: $checkoutId, lines: $lines) {
@@ -32843,6 +32938,16 @@ export const ExternalObtainAccessTokensDocument = new TypedDocumentString(`
   ExternalObtainAccessTokensMutation,
   ExternalObtainAccessTokensMutationVariables
 >;
+export const AddressValidationDocument = new TypedDocumentString(`
+    query AddressValidation {
+  addressValidationRules(countryCode: MX) {
+    countryAreaChoices {
+      raw
+      verbose
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<AddressValidationQuery, AddressValidationQueryVariables>;
 export const GetCategoriesDocument = new TypedDocumentString(`
     query GetCategories {
   categories(first: 100) {
@@ -33263,6 +33368,37 @@ export const GetMeDocument = new TypedDocumentString(`
     avatar {
       url
       alt
+    }
+    addresses {
+      id
+      city
+      cityArea
+      countryArea
+      postalCode
+      phone
+      streetAddress1
+      streetAddress2
+      country {
+        code
+        country
+      }
+    }
+    checkouts(first: 100) {
+      edges {
+        node {
+          created
+          quantity
+          lines {
+            quantity
+            variant {
+              name
+              media {
+                url
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

@@ -1,0 +1,8 @@
+query AddressValidation {
+  addressValidationRules(countryCode: MX) {
+    countryAreaChoices {
+      raw
+      verbose
+    }
+  }
+}

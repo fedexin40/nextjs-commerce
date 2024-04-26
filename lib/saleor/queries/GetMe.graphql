@@ -8,5 +8,36 @@ query GetMe {
       url
       alt
     }
+    addresses {
+      id
+      city
+      cityArea
+      countryArea
+      postalCode
+      phone
+      streetAddress1
+      streetAddress2
+      country {
+        code
+        country
+      }
+    }
+    checkouts(first: 100) {
+      edges {
+        node {
+          created
+          quantity
+          lines {
+            quantity
+            variant {
+              name
+              media {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
   }
 }

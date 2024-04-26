@@ -1,4 +1,3 @@
-import Footer from 'components/layout/footer';
 import Link from 'next/link';
 
 export default function newUser() {
@@ -16,7 +15,6 @@ export default function newUser() {
           </Link>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

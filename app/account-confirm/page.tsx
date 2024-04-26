@@ -1,4 +1,3 @@
-import Footer from 'components/layout/footer';
 import { confirmAccount } from 'lib/saleor';
 import Link from 'next/link';
 
@@ -28,7 +27,6 @@ export default async function accountConfirm({
           </Link>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

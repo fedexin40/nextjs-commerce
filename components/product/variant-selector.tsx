@@ -112,8 +112,7 @@ function VariantSelectorDropdown({
                 className={clsx(
                   'flex w-fit min-w-[95px] items-center justify-center whitespace-nowrap px-2 py-1 text-sm',
                   {
-                    'relative cursor-not-allowed overflow-hidden text-neutral-500':
-                      !isAvailableForSale,
+                    'relative hidden text-neutral-500': !isAvailableForSale,
                   },
                 )}
                 {...dynamicProps}

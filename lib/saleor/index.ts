@@ -10,16 +10,21 @@ import {
   Product,
   Token,
   authenticationUrl,
+  countryAreaChoices,
 } from 'lib/types';
 import { revalidateTag } from 'next/cache';
-import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import {
   AccountRegisterDocument,
+  AccountUpdateDocument,
+  AddressCreateDocument,
+  AddressUpdateDocument,
+  AddressValidationDocument,
   CheckoutAddLineDocument,
   CheckoutDeleteLineDocument,
   CheckoutUpdateLineDocument,
   ConfirmAccountDocument,
+  CountryCode,
   CreateCheckoutDocument,
   ExternalAuthenticationUrlDocument,
   ExternalObtainAccessTokensDocument,
@@ -56,37 +61,6 @@ type GraphQlError = {
   message: string;
 };
 type GraphQlErrorRespone<T> = { data: T } | { errors: readonly GraphQlError[] };
-
-export async function Me(): Promise<CurrentPerson> {
-  const cookieStore = cookies();
-  const accessToken = cookieStore.get('accessToken');
-  let headers = new Headers({});
-
-  if (accessToken) {
-    // Template Strings
-    const token = `Bearer ${accessToken}`;
-    const headerDict = { Authorization: token };
-    headers = new Headers(headerDict);
-  }
-
-  const CurrentPerson = await saleorFetch({
-    query: GetMeDocument,
-    variables: {},
-    headers: headers,
-    withAuth: true,
-  });
-
-  return {
-    id: CurrentPerson.me?.id || '',
-    email: CurrentPerson.me?.email || '',
-    firstName: CurrentPerson.me?.firstName || '',
-    lastName: CurrentPerson.me?.lastName || '',
-    avatar: {
-      alt: CurrentPerson.me?.avatar?.alt,
-      url: CurrentPerson.me?.avatar?.url,
-    },
-  };
-}
 
 export async function saleorFetch<Result, Variables>({
   query,
@@ -638,6 +612,136 @@ export async function registerAccount(email: string, password: string, redirectU
 
   if (saleorAccount.accountRegister?.errors[0]) {
     throw new Error(saleorAccount.accountRegister.errors[0]?.message || '');
+  }
+}
+
+export async function countryArea(): Promise<countryAreaChoices> {
+  const states = await saleorFetch({
+    query: AddressValidationDocument,
+    variables: {},
+  });
+  return states.addressValidationRules?.countryAreaChoices;
+}
+
+export async function addressUpdate({
+  id,
+  streetAddress1,
+  streetAddress2,
+  postalCode,
+  countryArea,
+  city,
+  country,
+}: {
+  id: string;
+  streetAddress1: string;
+  streetAddress2: string;
+  postalCode: string;
+  countryArea: string;
+  city: string;
+  country: CountryCode;
+}) {
+  const input = {
+    streetAddress1: streetAddress1,
+    streetAddress2: streetAddress2,
+    postalCode: postalCode,
+    countryArea: countryArea,
+    city: city,
+    country: country,
+  };
+  const errors = await saleorFetch({
+    query: AddressUpdateDocument,
+    variables: {
+      id: id,
+      input: input,
+    },
+    withAuth: true,
+  });
+  if (errors.accountAddressUpdate?.errors[0]) {
+    throw new Error(errors.accountAddressUpdate?.errors[0]?.field || '');
+  }
+}
+
+export async function addressCreate({
+  streetAddress1,
+  streetAddress2,
+  postalCode,
+  countryArea,
+  city,
+  country,
+}: {
+  streetAddress1: string;
+  streetAddress2: string;
+  postalCode: string;
+  countryArea: string;
+  city: string;
+  country: CountryCode;
+}) {
+  const input = {
+    streetAddress1: streetAddress1,
+    streetAddress2: streetAddress2,
+    postalCode: postalCode,
+    countryArea: countryArea,
+    city: city,
+    country: country,
+  };
+  const errors = await saleorFetch({
+    query: AddressCreateDocument,
+    variables: { input: input },
+    withAuth: true,
+  });
+  if (errors.accountAddressCreate?.errors[0]) {
+    throw new Error(errors.accountAddressCreate?.errors[0]?.field || '');
+  }
+}
+
+export async function Me(): Promise<CurrentPerson> {
+  const CurrentPerson = await saleorFetch({
+    query: GetMeDocument,
+    variables: {},
+    withAuth: true,
+    tags: [TAGS.userAddress],
+  });
+
+  return {
+    id: CurrentPerson.me?.id || '',
+    email: CurrentPerson.me?.email || '',
+    firstName: CurrentPerson.me?.firstName || '',
+    lastName: CurrentPerson.me?.lastName || '',
+    avatar: {
+      alt: CurrentPerson.me?.avatar?.alt,
+      url: CurrentPerson.me?.avatar?.url,
+    },
+    address: {
+      id: CurrentPerson.me?.addresses[0]?.id || '',
+      city: CurrentPerson.me?.addresses[0]?.city || '',
+      countryArea: CurrentPerson.me?.addresses[0]?.countryArea || '',
+      postalCode: CurrentPerson.me?.addresses[0]?.postalCode || '',
+      streetAddress1: CurrentPerson.me?.addresses[0]?.streetAddress1 || '',
+      streetAddress2: CurrentPerson.me?.addresses[0]?.streetAddress2 || '',
+    },
+  };
+}
+
+export async function accountUpdate({
+  firstName,
+  lastName,
+}: {
+  firstName: string;
+  lastName: string;
+}) {
+  const input = {
+    firstName: firstName,
+    lastName: lastName,
+  };
+  const errors = await saleorFetch({
+    query: AccountUpdateDocument,
+    variables: { input: input },
+    withAuth: true,
+    tags: [TAGS.userAddress],
+  });
+
+  if (errors.accountUpdate?.errors[0]) {
+    throw new Error(errors.accountUpdate?.errors[0]?.message || '');
   }
 }
 

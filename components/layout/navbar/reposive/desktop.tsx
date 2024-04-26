@@ -28,8 +28,8 @@ export default function DesktopNavbar() {
               aria-label="Go back home"
               className="mr-2 flex w-auto items-center justify-center lg:mr-6"
             >
-              <div>
-                <Image src={'/logoNegro.png'} alt="" width="150" height="150" />
+              <div className="relative h-[100px] w-full">
+                <Image className="object-contain" src={'/logoNegro.png'} alt="" fill />
               </div>
             </Link>
           </div>
