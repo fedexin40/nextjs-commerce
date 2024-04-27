@@ -3,6 +3,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import { Fragment, ReactNode } from 'react';
+import CloseLogin from './close-login';
 import { useOpen, useUserMenuActions } from './store';
 
 export default function UserMenuModal({
@@ -47,7 +48,7 @@ export default function UserMenuModal({
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="h-full w-full text-left align-middle md:w-3/4 md:py-28 lg:py-10">
-                  <div className="relative">
+                  <div className="relative hidden md:block">
                     <div
                       className="absolute -right-4 -top-3 flex h-7 w-7 place-content-center rounded-full bg-[hsl(28,30%,59%)] pt-0.5 text-[15px] font-medium text-white hover:cursor-pointer"
                       aria-label="Cerrar Incio de sesion"
@@ -56,9 +57,20 @@ export default function UserMenuModal({
                       x
                     </div>
                   </div>
+                  <div className="relative md:hidden">
+                    <button
+                      className="absolute right-5 top-5"
+                      aria-label="Cerrar Incio de sesion"
+                      onClick={closeMenu}
+                    >
+                      <CloseLogin />
+                    </button>
+                  </div>
                   <div className="flex h-full flex-col md:flex-row">
-                    <div className="bg-[#f7e7da] pb-10 pt-10 md:w-1/3">{UserDetails}</div>
-                    <div className="h-full bg-white pt-10 md:w-2/3">{UserShoppings}</div>
+                    <div className="overflow-x-auto bg-[#f7e7da] pb-10 pt-10 md:w-1/3">
+                      {UserDetails}
+                    </div>
+                    <div className="overflow-x-auto bg-white pt-10 md:w-2/3">{UserShoppings}</div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
