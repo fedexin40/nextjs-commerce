@@ -1,7 +1,7 @@
 'use server';
 
 import { TAGS } from 'lib/constants';
-import { addressCreate, addressUpdate } from 'lib/saleor';
+import { accountUpdate, addressCreate, addressUpdate } from 'lib/saleor';
 import { CountryCode } from 'lib/saleor/generated/graphql';
 import { revalidateTag } from 'next/cache';
 
@@ -12,6 +12,8 @@ export async function updateAddress({
   city,
   postalCode,
   countryArea,
+  firstName,
+  lastName,
 }: {
   id: string;
   streetAddress1: string;
@@ -19,6 +21,8 @@ export async function updateAddress({
   city: string;
   postalCode: string;
   countryArea: string;
+  firstName: string;
+  lastName: string;
 }) {
   try {
     await addressUpdate({
@@ -36,8 +40,9 @@ export async function updateAddress({
       case 'postalCode':
         return 'El codigo postal no es correcto';
     }
-    return 'Error inesperado';
+    return 'Algo salio mal pero no sabemos que es';
   }
+  await accountUpdate({ firstName, lastName });
   revalidateTag(TAGS.userAddress);
 }
 
@@ -47,12 +52,16 @@ export async function createAddress({
   city,
   postalCode,
   countryArea,
+  firstName,
+  lastName,
 }: {
   streetAddress1: string;
   streetAddress2: string;
   city: string;
   postalCode: string;
   countryArea: string;
+  firstName: string;
+  lastName: string;
 }) {
   try {
     await addressCreate({
@@ -69,7 +78,8 @@ export async function createAddress({
       case 'postalCode':
         return 'El codigo postal no es correcto';
     }
-    return 'Error inesperado';
+    return 'Algo salio mal pero no sabemos que es';
   }
+  await accountUpdate({ firstName, lastName });
   revalidateTag(TAGS.userAddress);
 }

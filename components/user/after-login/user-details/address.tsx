@@ -43,6 +43,8 @@ export default function Address({
           city: rawFormData.city,
           postalCode: rawFormData.postalCode,
           countryArea: rawFormData.countryArea,
+          firstName: rawFormData.firstName,
+          lastName: rawFormData.lastName,
         });
         // If the user does not have an address then create a new one
       } else {
@@ -52,6 +54,8 @@ export default function Address({
           city: rawFormData.city,
           postalCode: rawFormData.postalCode,
           countryArea: rawFormData.countryArea,
+          firstName: rawFormData.firstName,
+          lastName: rawFormData.lastName,
         });
       }
       if (errors) {

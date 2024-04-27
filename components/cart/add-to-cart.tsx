@@ -1,10 +1,12 @@
 'use client';
 
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 import clsx from 'clsx';
 import { addItem } from 'components/cart/actions';
 import { ProductVariant } from 'lib/types';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 
 export function AddToCart({
   variants,
@@ -16,6 +18,14 @@ export function AddToCart({
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isPending, startTransition] = useTransition();
+  const [isError, setIsError] = useState(false);
+  const [ErrorMessage, setErrorMessage] = useState('');
+  const closeError = () => {
+    setIsError(false);
+  };
+  const openError = () => {
+    setIsError(true);
+  };
   const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined;
   const variant = variants.find((variant: ProductVariant) =>
     variant.selectedOptions.every(
@@ -30,34 +40,63 @@ export function AddToCart({
     : undefined;
 
   return (
-    <button
-      aria-label="Agregar al carrito"
-      disabled={isPending || !availableForSale || !selectedVariantId}
-      title={title}
-      onClick={() => {
-        // Safeguard in case someone messes with `disabled` in devtools.
-        if (!availableForSale || !selectedVariantId) return;
+    <div>
+      <div>
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={isError}
+          autoHideDuration={6000}
+          onClose={closeError}
+        >
+          <Alert onClose={closeError} severity="error" variant="filled" sx={{ width: '100%' }}>
+            {ErrorMessage}
+          </Alert>
+        </Snackbar>
+      </div>
+      <button
+        aria-label="Agregar al carrito"
+        disabled={isPending || !availableForSale || !selectedVariantId}
+        title={title}
+        onClick={() => {
+          // Safeguard in case someone messes with `disabled` in devtools.
+          if (!availableForSale || !selectedVariantId) return;
 
-        startTransition(async () => {
-          const error = await addItem(selectedVariantId);
+          startTransition(async () => {
+            const error = await addItem(selectedVariantId);
 
-          if (error) {
-            // Trigger the error boundary in the root error.js
-            throw new Error(error.toString());
-          }
+            if (error) {
+              // Trigger the error boundary in the root error.js
+              setErrorMessage(error.toString());
+              openError();
+            }
 
-          router.refresh();
-        });
-      }}
-      className={clsx(
-        'relative flex w-full items-center justify-center  bg-[#f5e1d1] p-4 tracking-wider text-black hover:opacity-90',
-        {
-          'cursor-not-allowed opacity-60 hover:opacity-60': !availableForSale || !selectedVariantId,
-          'cursor-not-allowed': isPending,
-        },
-      )}
-    >
-      <span>{availableForSale ? 'Agregar al carrito' : 'Out Of Stock'}</span>
-    </button>
+            router.refresh();
+          });
+        }}
+        className={clsx(
+          'relative flex w-full items-center justify-center  bg-[#f5e1d1] p-4 tracking-wider text-black hover:opacity-90',
+          {
+            'cursor-not-allowed opacity-60 hover:opacity-60':
+              !availableForSale || !selectedVariantId,
+            hidden: isPending,
+          },
+        )}
+      >
+        <span>{availableForSale ? 'Agregar al carrito' : 'Out Of Stock'}</span>
+      </button>
+      <div
+        className={clsx(
+          'relative flex h-[56px] w-full items-center justify-center space-x-6 bg-[#f5e1d1] p-4 tracking-wider',
+          {
+            hidden: !isPending,
+          },
+        )}
+      >
+        <span className="sr-only">Loading...</span>
+        <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] [animation-delay:-0.3s]"></div>
+        <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] [animation-delay:-0.15s]"></div>
+        <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)]"></div>
+      </div>
+    </div>
   );
 }
