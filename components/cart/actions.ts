@@ -23,8 +23,14 @@ export const addItem = async (variantId: string | undefined): Promise<String | u
 
   try {
     await addToCart(cartId, [{ merchandiseId: variantId, quantity: 1 }]);
-  } catch (e) {
-    return 'Error adding item to cart';
+  } catch (error: any) {
+    const field: string = error.message;
+    let error_message: string = 'Hubo un error al añadir el producto';
+    switch (field) {
+      case 'INSUFFICIENT_STOCK':
+        error_message = 'Perdon, nos quedamos sin productos';
+    }
+    return error_message;
   }
 };
 

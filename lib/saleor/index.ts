@@ -473,8 +473,7 @@ export async function addToCart(
   });
 
   if (!saleorCheckout.checkoutLinesAdd?.checkout) {
-    console.error(saleorCheckout.checkoutLinesAdd?.errors);
-    throw new Error(`Couldn't add lines to checkout.`);
+    throw new Error(saleorCheckout.checkoutLinesAdd?.errors[0]?.code);
   }
 
   return saleorCheckoutToVercelCart(saleorCheckout.checkoutLinesAdd.checkout);
