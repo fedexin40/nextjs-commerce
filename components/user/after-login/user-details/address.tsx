@@ -9,9 +9,11 @@ import { createAddress, updateAddress } from './actions';
 export default function Address({
   user,
   countryAreaChoices,
+  black,
 }: {
   user: CurrentPerson;
   countryAreaChoices: countryAreaChoicesType;
+  black?: boolean;
 }) {
   const [isError, setError] = useState(false);
   const [ErrorMessage, seterrorMessage] = useState('');
@@ -67,7 +69,7 @@ export default function Address({
 
   return (
     <>
-      <form className="text-sm" action={saveAddress}>
+      <form className="text-xs lg:text-sm" action={saveAddress}>
         <div className="flex flex-col gap-2">
           <div>
             <Snackbar
@@ -174,12 +176,12 @@ export default function Address({
           />
           <div className="flex">
             <button
-              className={clsx(
-                'self-end pt-2 uppercase text-[hsl(28,30%,59%)] underline decoration-solid decoration-2	underline-offset-4',
-                {
-                  'cursor-not-allowed opacity-60': isPending,
-                },
-              )}
+              className={clsx('self-end pt-2 uppercase', {
+                'cursor-not-allowed opacity-60': isPending,
+                'text-[hsl(28,30%,59%)] underline decoration-solid decoration-2	underline-offset-4':
+                  !black,
+                'bg-black p-2 text-white': black,
+              })}
               type="submit"
             >
               <div>Guardar</div>
