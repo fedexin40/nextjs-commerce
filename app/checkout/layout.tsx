@@ -8,8 +8,9 @@ export default function SearchLayout({ children }: { children: React.ReactNode }
       <Suspense>
         <Navbar />
       </Suspense>
-      {children}
+      <div className="">{children}</div>
       <Suspense>
+        <div className="min-h-10 h-10 w-full bg-zinc-400" />
         <Footer />
       </Suspense>
     </>

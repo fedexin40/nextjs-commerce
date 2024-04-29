@@ -1,10 +1,13 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Navbar() {
   return (
     <div className="grid grid-cols-7 bg-black px-5 text-[8px] uppercase tracking-wider text-white md:px-10 md:text-xs">
       <div className="relative col-span-2 h-[100px] w-full md:col-span-1 lg:h-[130px] lg:w-[130px]">
-        <Image className="object-contain" src={'/logoBlanco.png'} alt="" fill />
+        <Link href={'/'}>
+          <Image className="object-contain" src={'/logoBlanco.png'} alt="" fill />
+        </Link>
       </div>
       <div className="col-span-5 ml-5 grid grid-cols-2 place-content-around gap-3 py-5 md:col-span-6 md:flex md:flex-row md:py-8 lg:py-10">
         <div className="flex flex-row gap-2">

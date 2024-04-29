@@ -101,7 +101,7 @@ export function saleorVariantsToVercelVariants(
 
 export function saleorCheckoutToVercelCart(checkout: CheckoutFragment): Cart {
   const domain = new URL(process.env.SALEOR_INSTANCE_URL!).hostname;
-  const checkoutUrl = new URL(process.env.SHOP_PUBLIC_URL || '');
+  const checkoutUrl = new URL('checkout', process.env.SHOP_PUBLIC_URL || '');
   checkoutUrl.searchParams.append('checkout', checkout.id);
   checkoutUrl.searchParams.append('locale', `en-US`);
   checkoutUrl.searchParams.append('channel', `proyecto705`);

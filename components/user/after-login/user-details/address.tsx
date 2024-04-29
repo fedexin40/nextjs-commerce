@@ -142,7 +142,7 @@ export default function Address({
             defaultValue={user.address.postalCode}
           />
           <input
-            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider"
+            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider focus:ring-0 focus:ring-offset-0"
             type="text"
             name="city"
             placeholder="Ciudad..."
