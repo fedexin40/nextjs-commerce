@@ -2,7 +2,7 @@
 
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
-import { Fragment, ReactNode } from 'react';
+import { Fragment, ReactNode, useRef } from 'react';
 import CloseLogin from './close-login';
 import { useOpen, useUserMenuActions } from './store';
 
@@ -16,6 +16,7 @@ export default function UserMenuModal({
   const isOpen = useOpen();
   const { openMenu } = useUserMenuActions();
   const { closeMenu } = useUserMenuActions();
+  const initialFocusRef = useRef(null);
 
   return (
     <div className="z-50 opacity-50 hover:cursor-pointer">
@@ -23,7 +24,12 @@ export default function UserMenuModal({
         <Image src={'/registro.png'} alt="" width="27" height="27" />
       </div>
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-10" onClose={() => {}}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          onClose={() => {}}
+          initialFocus={initialFocusRef}
+        >
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -67,7 +73,10 @@ export default function UserMenuModal({
                     </button>
                   </div>
                   <div className="flex h-full flex-col md:flex-row">
-                    <div className="overflow-x-auto bg-[#f7e7da] pb-10 pt-10 md:w-1/3">
+                    <div
+                      className="overflow-x-auto bg-[#f7e7da] pb-10 pt-10 md:w-1/3"
+                      ref={initialFocusRef}
+                    >
                       {UserDetails}
                     </div>
                     <div className="overflow-x-auto bg-white pt-10 md:w-2/3">{UserShoppings}</div>

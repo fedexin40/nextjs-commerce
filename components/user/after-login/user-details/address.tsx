@@ -85,7 +85,7 @@ export default function Address({
           </div>
           <div className="flex w-full flex-row gap-x-2">
             <input
-              className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider focus:ring-0 focus:ring-offset-0 lg:w-1/2"
+              className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider lg:w-1/2"
               type="text"
               name="firstName"
               placeholder="Nombre..."
@@ -93,7 +93,7 @@ export default function Address({
               defaultValue={user.firstName}
             />
             <input
-              className="hidden border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider focus:ring-0 focus:ring-offset-0 lg:block lg:w-1/2"
+              className="hidden border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider lg:block lg:w-1/2"
               type="text"
               name="lastname"
               placeholder="Apellido..."
@@ -102,7 +102,7 @@ export default function Address({
             />
           </div>
           <input
-            className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider focus:ring-0 focus:ring-offset-0 lg:hidden"
+            className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider lg:hidden"
             type="text"
             name="lastname"
             placeholder="Apellido..."
@@ -110,7 +110,7 @@ export default function Address({
             defaultValue={user.lastName}
           />
           <input
-            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider focus:ring-0 focus:ring-offset-0"
+            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider"
             type="text"
             name="streetAddress1"
             placeholder="Calle y numero de casa..."
@@ -119,7 +119,7 @@ export default function Address({
           />
           <div className="flex w-full flex-row gap-x-2">
             <input
-              className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider focus:ring-0 focus:ring-offset-0 lg:w-1/2"
+              className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider lg:w-1/2"
               type="text"
               name="streetAddress2"
               placeholder="Colonia..."
@@ -127,7 +127,7 @@ export default function Address({
               defaultValue={user.address.streetAddress2}
             />
             <input
-              className="hidden w-1/2 border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider focus:ring-0 focus:ring-offset-0 lg:block"
+              className="hidden w-1/2 border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider lg:block"
               type="text"
               name="postalcode"
               placeholder="Codigo postal..."
@@ -136,7 +136,7 @@ export default function Address({
             />
           </div>
           <input
-            className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider focus:ring-0 focus:ring-offset-0 lg:hidden"
+            className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider lg:hidden"
             type="text"
             name="postalcode"
             placeholder="Codigo postal..."
@@ -144,7 +144,7 @@ export default function Address({
             defaultValue={user.address.postalCode}
           />
           <input
-            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider focus:ring-0 focus:ring-offset-0"
+            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider"
             type="text"
             name="city"
             placeholder="Ciudad..."
@@ -163,29 +163,42 @@ export default function Address({
               </option>
             ))}
           </select>
-          <div className="border-2	border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed focus:ring-0 focus:ring-offset-0">
+          <div className="border-2	border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed">
             Mexico
           </div>
           <input
-            className="border-2	border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed focus:ring-0 focus:ring-offset-0"
+            className="border-2	border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed"
             type="email"
             name="email"
             placeholder="Correo electronico..."
             required={true}
             defaultValue={user.email}
           />
-          <div className="flex">
+          <div>
             <button
-              className={clsx('self-end pt-2 uppercase', {
-                'cursor-not-allowed opacity-60': isPending,
-                'text-[hsl(28,30%,59%)] underline decoration-solid decoration-2	underline-offset-4':
-                  !black,
-                'bg-black p-2 text-white': black,
+              className={clsx('h-[36px] w-1/3 self-end p-2 uppercase text-white', {
+                hidden: isPending,
+                'bg-[hsl(28,30%,59%)] ': !black,
+                'bg-black': black,
               })}
               type="submit"
             >
               <div>Guardar</div>
             </button>
+            <div
+              className={clsx(
+                'flex h-[36px] w-1/3 items-center justify-center space-x-3 self-end p-2 tracking-wider text-white',
+                {
+                  hidden: !isPending,
+                  'bg-[hsl(28,30%,59%)] ': !black,
+                  'bg-black': black,
+                },
+              )}
+            >
+              <div className="h-[8px] w-[8px] animate-bounce rounded-full bg-white [animation-delay:-0.3s]"></div>
+              <div className="h-[8px] w-[8px] animate-bounce rounded-full bg-white [animation-delay:-0.15s]"></div>
+              <div className="h-[8px] w-[8px] animate-bounce rounded-full bg-white"></div>
+            </div>
           </div>
         </div>
       </form>
