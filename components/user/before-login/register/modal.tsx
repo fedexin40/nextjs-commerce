@@ -13,7 +13,7 @@ import {
 } from 'components/user/before-login/store';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Fragment, ReactNode, Suspense } from 'react';
+import { Fragment, ReactNode, Suspense, useRef } from 'react';
 import { accountRegister } from './actions';
 import CloseRegister from './close-register';
 
@@ -30,6 +30,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
   const { isLoading } = usePersonActions();
   const { isNotLoading } = usePersonActions();
   const router = useRouter();
+  const initialFocusRef = useRef(null);
 
   async function RegisterAction(formData: FormData) {
     isLoading();
@@ -61,7 +62,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
   return (
     <div className="z-50">
       <Transition show={isOpen}>
-        <Dialog onClose={() => {}} className="relative z-50">
+        <Dialog onClose={() => {}} className="relative z-50" initialFocus={initialFocusRef}>
           <Transition.Child
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
@@ -115,7 +116,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                 </div>
                 <div className="mx-10 mb-10 mt-10 flex flex-col md:my-20 lg:mb-7 lg:mt-7">
                   <div className="gap-y-4">
-                    <form action={RegisterAction}>
+                    <form action={RegisterAction} ref={initialFocusRef}>
                       <div className="mb-4 flex flex-row gap-x-2 border-b-2 border-[#d2b6ab] p-1">
                         <div className="relative grid h-5 w-5 place-content-center">
                           <Suspense>

@@ -14,6 +14,7 @@ import {
 } from 'lib/types';
 import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
+import 'server-only';
 import {
   AccountRegisterDocument,
   AccountUpdateDocument,

@@ -1,9 +1,10 @@
 import { ExternalProvider, SaleorExternalAuth } from '@fedexin40/auth-sdk';
 import { createSaleorExternalAuthHandler } from '@fedexin40/auth-sdk/next';
+import { invariant } from 'lib/saleor/utils';
 
-const externalAuth = new SaleorExternalAuth(
-  'https://api.proyecto705.com/graphql/',
-  ExternalProvider.OpenIDConnectFacebook,
-);
+const endpoint = process.env.SALEOR_INSTANCE_URL;
+invariant(endpoint, `Missing SALEOR_INSTANCE_URL!`);
+
+const externalAuth = new SaleorExternalAuth(endpoint, ExternalProvider.OpenIDConnectFacebook);
 
 export default createSaleorExternalAuthHandler(externalAuth);

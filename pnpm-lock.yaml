@@ -12,8 +12,8 @@ dependencies:
     specifier: ^11.11.5
     version: 11.11.5(@emotion/react@11.11.4)(@types/react@18.2.16)(react@18.2.0)
   '@fedexin40/auth-sdk':
-    specifier: ^1.0.2
-    version: 1.0.2(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^1.0.4
+    version: 1.0.4(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)
   '@graphql-typed-document-node/core':
     specifier: 3.2.0
     version: 3.2.0(graphql@16.8.1)
@@ -1517,8 +1517,8 @@ packages:
     resolution: {integrity: sha512-cEee/Z+I12mZcFJshKcCqC8tuX5hG3s+d+9nZ3LabqKF1vKdF41B92pJVCBggjAGORAeOzyyDDKrZwIkLffeOQ==}
     dev: false
 
-  /@fedexin40/auth-sdk@1.0.2(next@14.1.4)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-7otVipCvk4xOP6+/coYMjZm/g5x974SmM+KqCFEpBPcrbsLlm9vhKTNOu0V+6tz9u6JojDiStIEHByLpn0a3iQ==}
+  /@fedexin40/auth-sdk@1.0.4(next@14.1.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-AeEgaXE5YP3nOh3bRD8iDo5VMdWvGR6K6RHOwvbGN/Uj2+tjCKvfXkouIIrbLsPRXtql94NXOzU548XA0/4reA==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       next: ^13.4.4 || ^14.0.0
