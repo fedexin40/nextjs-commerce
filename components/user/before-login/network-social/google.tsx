@@ -34,7 +34,7 @@ export default function Google({
           <Image className="object-cover" src={'/googleLogin.png'} alt="" fill />
         </div>
         <div
-          className={clsx('content-center whitespace-nowrap text-[#a8a8a8]', {
+          className={clsx('content-center whitespace-nowrap text-[#a8a8a8] dark:dark:text-white', {
             hidden: isPending,
           })}
         >

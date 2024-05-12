@@ -14,7 +14,7 @@ export default function TabletNavbar() {
         <div className="grid grid-cols-5 content-center items-center pb-3 uppercase">
           <div className="col-span-2 self-end">
             <div className="flex flex-row justify-end gap-x-10">
-              <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-neutral-400 dark:hover:text-neutral-300">
+              <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300">
                 Nosotros
               </div>
               <div className="relative">

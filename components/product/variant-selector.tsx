@@ -54,7 +54,7 @@ function VariantSelectorDropdown({
         onClick={() => {
           setOpenSelect(!openSelect);
         }}
-        className="flex	rounded border border-black/30 px-4  text-sm"
+        className="flex	rounded border border-black/30 px-4 text-sm dark:border-[#c9aa9e]"
       >
         <div className="min-h-[38px] min-w-[95px] max-w-none p-2">{active}</div>
         <ChevronDownIcon className="h-4 self-center" />

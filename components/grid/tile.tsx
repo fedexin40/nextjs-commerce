@@ -28,7 +28,7 @@ export function GridTileImage({
       {label ? <Label amount={label.amount} currencyCode={label.currencyCode} /> : null}
       <div className="absolute bottom-0 left-4 -mb-16 flex flex-col p-2 text-xs font-semibold md:-mb-20">
         <div className="line-clamp-1 text-ellipsis uppercase">{label?.title}</div>
-        <div className="pt-2 md:pt-4">{label?.category}</div>
+        <div className="pt-2 dark:text-[#c9aa9e] md:pt-4">{label?.category}</div>
       </div>
     </div>
   );

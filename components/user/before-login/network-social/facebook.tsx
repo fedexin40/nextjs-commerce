@@ -20,7 +20,6 @@ export default function Facebook({
     provider: ExternalProvider.OpenIDConnectFacebook,
     redirectURL: redirectURL,
   });
-  console.log(authURL);
 
   function Login() {
     startTransition(() => {

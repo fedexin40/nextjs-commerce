@@ -31,7 +31,7 @@ const FooterMenuItem = ({ item }: { item: Menu }) => {
       ) : null}
       {item.data ? (
         <div>
-          <div className="mb-2 uppercase">{item.title}</div>
+          <div className="mb-2 uppercase dark:text-[#c9aa9e]">{item.title}</div>
           <span>{item.data}</span>
         </div>
       ) : null}

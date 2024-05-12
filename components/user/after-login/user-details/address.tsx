@@ -83,9 +83,9 @@ export default function Address({
               </Alert>
             </Snackbar>
           </div>
-          <div className="flex w-full flex-row gap-x-2">
+          <div className="flex w-full md:flex-col md:gap-y-2 lg:flex-row lg:gap-x-2">
             <input
-              className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider lg:w-1/2"
+              className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:w-1/2"
               type="text"
               name="firstName"
               placeholder="Nombre..."
@@ -93,7 +93,7 @@ export default function Address({
               defaultValue={user.firstName}
             />
             <input
-              className="hidden border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider lg:block lg:w-1/2"
+              className="hidden border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:block lg:w-1/2"
               type="text"
               name="lastname"
               placeholder="Apellido..."
@@ -102,24 +102,16 @@ export default function Address({
             />
           </div>
           <input
-            className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider lg:hidden"
-            type="text"
-            name="lastname"
-            placeholder="Apellido..."
-            required={true}
-            defaultValue={user.lastName}
-          />
-          <input
-            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider"
+            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
             type="text"
             name="streetAddress1"
             placeholder="Calle y numero de casa..."
             required={true}
             defaultValue={user.address.streetAddress1}
           />
-          <div className="flex w-full flex-row gap-x-2">
+          <div className="flex w-full flex-col gap-y-2 lg:flex-row lg:gap-x-2">
             <input
-              className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider lg:w-1/2"
+              className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:w-1/2"
               type="text"
               name="streetAddress2"
               placeholder="Colonia..."
@@ -127,7 +119,7 @@ export default function Address({
               defaultValue={user.address.streetAddress2}
             />
             <input
-              className="hidden w-1/2 border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider lg:block"
+              className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:block lg:w-1/2"
               type="text"
               name="postalcode"
               placeholder="Codigo postal..."
@@ -136,15 +128,7 @@ export default function Address({
             />
           </div>
           <input
-            className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider lg:hidden"
-            type="text"
-            name="postalcode"
-            placeholder="Codigo postal..."
-            required={true}
-            defaultValue={user.address.postalCode}
-          />
-          <input
-            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider"
+            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
             type="text"
             name="city"
             placeholder="Ciudad..."
@@ -155,7 +139,7 @@ export default function Address({
             name="countryAreaChoice"
             required={true}
             defaultValue={user.address.countryArea}
-            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider"
+            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
           >
             {countryAreaChoices?.map(({ raw, verbose }) => (
               <option className="tracking-wider" key={raw} value={raw || ''}>
@@ -163,11 +147,11 @@ export default function Address({
               </option>
             ))}
           </select>
-          <div className="border-2	border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed">
+          <div className="border-2	border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed dark:border dark:border-[#c9aa9e] dark:bg-zinc-700">
             Mexico
           </div>
           <input
-            className="border-2	border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed"
+            className="border-2	border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
             type="email"
             name="email"
             placeholder="Correo electronico..."
@@ -176,7 +160,7 @@ export default function Address({
           />
           <div>
             <button
-              className={clsx('h-[36px] w-1/3 self-end p-2 uppercase text-white', {
+              className={clsx('h-[36px] w-1/2 self-end p-2 uppercase text-white lg:w-1/3', {
                 hidden: isPending,
                 'bg-[hsl(28,30%,59%)] ': !black,
                 'bg-black': black,
@@ -187,7 +171,7 @@ export default function Address({
             </button>
             <div
               className={clsx(
-                'flex h-[36px] w-1/3 items-center justify-center space-x-3 self-end p-2 tracking-wider text-white',
+                'flex h-[36px] w-1/2 items-center justify-center space-x-3 self-end p-2 tracking-wider text-white lg:w-1/3',
                 {
                   hidden: !isPending,
                   'bg-[hsl(28,30%,59%)] ': !black,

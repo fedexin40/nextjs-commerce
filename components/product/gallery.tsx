@@ -25,12 +25,12 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
         </div>
       </div>
       <div className="hidden md:grid md:h-[550px] md:grid-rows-4 lg:grid-cols-4 lg:grid-rows-1">
-        <div className="hidden gap-y-3 pl-10 lg:flex lg:flex-col">
+        <div className="hidden gap-y-3 pr-10 lg:flex lg:flex-col">
           {images.map((image: { src: string; altText: string }, index) => (
-            <div className="relative h-24 w-24" key={image.src}>
+            <div className="relative lg:h-24 lg:w-24" key={image.src}>
               <Suspense>
                 <Image
-                  className="relative object-contain"
+                  className="object-contain"
                   src={image.src}
                   alt=""
                   fill

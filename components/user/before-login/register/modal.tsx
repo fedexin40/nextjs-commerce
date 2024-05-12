@@ -112,7 +112,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                   </button>
                 </div>
                 <div className="mt-14 w-full text-center text-base font-medium tracking-wide md:mt-20 lg:mt-8">
-                  <div className="mt-4 text-[#a8a8a8]">Registrate</div>
+                  <div className="mt-4 text-[#a8a8a8] dark:text-white">Registrate</div>
                 </div>
                 <div className="mx-10 mb-10 mt-10 flex flex-col md:my-20 lg:mb-7 lg:mt-7">
                   <div className="gap-y-4">
@@ -162,7 +162,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                           placeholder="Confirmar contraseña..."
                         />
                       </div>
-                      <div className="mb-4 text-center text-xs tracking-wider text-slate-500">
+                      <div className="mb-4 text-center text-xs tracking-wider text-slate-500 dark:text-white">
                         Te recordamos que toda tu informacion es confidencial. Al registrarte
                         aceptas nuestras Condiciones, nuestra Politica de privacidad y nuestra
                         Politica de cookies

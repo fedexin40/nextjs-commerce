@@ -113,7 +113,7 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                   <div className="flex justify-center">
                     <Image src={'/session.png'} alt="" width={60} height={60} />
                   </div>
-                  <div className="mt-4 text-[#a8a8a8]">Iniciar Sesion</div>
+                  <div className="mt-4 text-[#a8a8a8] dark:text-white">Iniciar Sesion</div>
                 </div>
                 <div className="mx-10 mb-10 mt-10 flex flex-col md:my-20 lg:mb-7 lg:mt-7">
                   <div>

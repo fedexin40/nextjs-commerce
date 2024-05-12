@@ -56,7 +56,7 @@ export default function UserMenuModal({
                 <Dialog.Panel className="h-full w-full text-left align-middle md:w-3/4 md:py-28 lg:py-10">
                   <div className="relative hidden md:block">
                     <div
-                      className="absolute -right-4 -top-3 flex h-7 w-7 place-content-center rounded-full bg-[hsl(28,30%,59%)] pt-0.5 text-[15px] font-medium text-white hover:cursor-pointer"
+                      className="absolute -right-4 -top-3 flex h-7 w-7 place-content-center rounded-full bg-[hsl(28,30%,59%)] pt-0.5 text-[15px] font-medium text-white hover:cursor-pointer dark:bg-[#c9aa9e] dark:text-black"
                       aria-label="Cerrar Incio de sesion"
                       onClick={closeMenu}
                     >
@@ -74,12 +74,14 @@ export default function UserMenuModal({
                   </div>
                   <div className="flex h-full flex-col md:flex-row">
                     <div
-                      className="overflow-x-auto bg-[#f7e7da] pb-10 pt-10 md:w-1/3"
+                      className="overflow-x-auto bg-[#f7e7da] pb-10 pt-10 dark:bg-zinc-700 md:w-1/3"
                       ref={initialFocusRef}
                     >
                       {UserDetails}
                     </div>
-                    <div className="overflow-x-auto bg-white pt-10 md:w-2/3">{UserShoppings}</div>
+                    <div className="overflow-x-auto bg-white pt-10 dark:bg-black md:w-2/3">
+                      {UserShoppings}
+                    </div>
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

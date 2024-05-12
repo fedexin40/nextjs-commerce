@@ -12,7 +12,7 @@ export default async function UserDetails() {
           <Image className="object-cover" src={'/session_blanco.png'} alt="" fill />
         </div>
       </div>
-      <div className="pt-3 text-center text-sm tracking-wider">Mi Cuenta</div>
+      <div className="pt-3 text-center text-sm tracking-wider dark:text-[#c9aa9e]">Mi Cuenta</div>
       <div className="pt-5">
         <Address user={me} countryAreaChoices={states} />
       </div>

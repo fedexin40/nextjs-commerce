@@ -20,7 +20,7 @@ export default function MobileNavbar() {
           </div>
           <div className="col-span-1 self-end">
             <div className="flex flex-row gap-x-5">
-              <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-neutral-400 dark:hover:text-neutral-300">
+              <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300">
                 Nosotros
               </div>
               <div className="relative">

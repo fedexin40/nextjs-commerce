@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 import { GridTileImage } from 'components/grid/tile';
-import Footer from 'components/layout/footer';
 import { Gallery } from 'components/product/gallery';
 import { ProductDescription } from 'components/product/product-description';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
@@ -58,7 +57,7 @@ export default async function Product({ params }: { params: { handle: string } }
 
   return (
     <>
-      <div className="mx-auto max-w-screen-2xl">
+      <div className="mx-auto max-w-screen-2xl dark:bg-black">
         <div className="flex flex-col px-10 md:grid md:grid-cols-3 md:px-16 md:pt-12 lg:px-36 lg:pt-16">
           <div className="md:col-span-2">
             <Gallery
@@ -76,9 +75,6 @@ export default async function Product({ params }: { params: { handle: string } }
           <RelatedProducts product={product} />
         </Suspense>
       </div>
-      <Suspense>
-        <Footer />
-      </Suspense>
     </>
   );
 }
@@ -91,7 +87,7 @@ async function RelatedProducts({ product }: { product: Product }) {
   return (
     <div className="py-10 md:py-20 lg:py-20">
       <h4 className="mb-4 text-2xl font-bold">
-        <div className="bg-[#f1f1f1]">
+        <div className="bg-[#e6e1e1] dark:bg-zinc-800">
           <div className="flex flex-row gap-x-2 p-5 px-10 tracking-wider md:px-16 lg:px-40">
             <div className="border-b-2 border-[#c9aa9e]">Productos</div>
             <div>relacionas</div>

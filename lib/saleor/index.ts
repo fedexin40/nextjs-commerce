@@ -1,3 +1,5 @@
+'use server';
+
 import { getServerAuthClient } from 'app/login';
 import { TAGS } from 'lib/constants';
 import {
@@ -14,7 +16,6 @@ import {
 } from 'lib/types';
 import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
-import 'server-only';
 import {
   AccountRegisterDocument,
   AccountUpdateDocument,

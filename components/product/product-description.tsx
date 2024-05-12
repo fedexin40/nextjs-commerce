@@ -10,13 +10,15 @@ export function ProductDescription({ product }: { product: Product }) {
   return (
     <div className="flex flex-col">
       <div className="flex flex-col border-b dark:border-neutral-700">
-        <h1 className="mb-2 font-medium tracking-wider md:text-base lg:text-xl">{product.title}</h1>
+        <h1 className="mb-2 font-medium tracking-wider dark:text-[#c9aa9e] md:text-base lg:text-xl">
+          {product.title}
+        </h1>
         {product.descriptionHtml ? (
-          <div className="pb-2 pt-2 text-justify text-xs leading-tight text-gray-500">
+          <div className="pb-2 pt-2 text-justify text-xs leading-tight text-gray-500 dark:text-white">
             {ReactHtmlParser(product.descriptionHtml)}
           </div>
         ) : null}
-        <div className="mr-auto w-auto p-2 pl-0 tracking-wider md:text-base lg:text-lg">
+        <div className="mr-auto w-auto p-2 pl-0 tracking-wider dark:text-[#c9aa9e] md:text-base lg:text-lg">
           <Price
             amount={product.priceRange.minVariantPrice.amount}
             currencyCode={product.priceRange.minVariantPrice.currencyCode}
@@ -34,7 +36,7 @@ export function ProductDescription({ product }: { product: Product }) {
           <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
         </Suspense>
       </div>
-      <div className="inline pt-6 text-xs leading-tight text-gray-800">
+      <div className="inline pt-6 text-xs leading-tight text-gray-800 dark:text-white">
         <div className="pb-3">Tiempo de entrega de 2 a 7 dias habiles</div>
         <div className="pb-3">Envio gratis a la ciudad de Puebla</div>
         <div className="flex flex-row gap-x-4">

@@ -33,7 +33,7 @@ export default function MenuDropdown({ categories }: { categories: Category[] })
         onClick={() => {
           setOpenSelect(!openSelect);
         }}
-        className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-neutral-400 dark:hover:text-neutral-300"
+        className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300"
       >
         Aretes
       </div>
@@ -42,7 +42,7 @@ export default function MenuDropdown({ categories }: { categories: Category[] })
           onClick={() => {
             setOpenSelect(false);
           }}
-          className="absolute right-0 top-10 z-50 w-fit rounded-b-md bg-white pb-4 shadow-md md:-right-28 md:top-8 lg:right-4 lg:top-8"
+          className="absolute right-0 top-10 z-50 w-fit rounded-b-md bg-white pb-4 shadow-md dark:bg-black md:-right-28 md:top-8 lg:right-4 lg:top-8"
         >
           <div className="grid grid-rows-4 place-content-center capitalize text-black md:gap-x-3">
             {categories.map((category: Category, key: number) => (

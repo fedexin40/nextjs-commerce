@@ -14,7 +14,7 @@ export default function DesktopNavbar() {
         <div className="grid grid-cols-5 content-center items-center pb-3 uppercase">
           <div className="col-span-2 block">
             <div className="flex w-full flex-row justify-end gap-x-10">
-              <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-neutral-400 dark:hover:text-neutral-300">
+              <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300">
                 Nosotros
               </div>
               <div className="relative">
@@ -35,7 +35,7 @@ export default function DesktopNavbar() {
           </div>
           <div className="md:col-span-2">
             <div className="flex flex-row items-center space-x-3">
-              <div>
+              <div className="w-1/3">
                 <Suspense>
                   <Search />
                 </Suspense>

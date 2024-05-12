@@ -12,8 +12,8 @@ dependencies:
     specifier: ^11.11.5
     version: 11.11.5(@emotion/react@11.11.4)(@types/react@18.2.16)(react@18.2.0)
   '@fedexin40/auth-sdk':
-    specifier: ^1.0.5
-    version: 1.0.5(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^1.0.7
+    version: 1.0.7(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)
   '@graphql-typed-document-node/core':
     specifier: 3.2.0
     version: 3.2.0(graphql@16.8.1)
@@ -1517,8 +1517,8 @@ packages:
     resolution: {integrity: sha512-cEee/Z+I12mZcFJshKcCqC8tuX5hG3s+d+9nZ3LabqKF1vKdF41B92pJVCBggjAGORAeOzyyDDKrZwIkLffeOQ==}
     dev: false
 
-  /@fedexin40/auth-sdk@1.0.5(next@14.1.4)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-zRWYZ9cKjmrWJ01kISNdICBVOHsBNWY7jyd5toWWh932gb9XH4s855qjiNv3l6lIfPYUf8zf7uVkT8toDL2rtw==}
+  /@fedexin40/auth-sdk@1.0.7(next@14.1.4)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-DkHQZUnKk4ukUXml/pMTLXnMl0YV4mTvSXEB+MTjk9Lzc4TqtIlj+xYWBEiZRGOr4tHCm0GV437bCyDMvq+I3g==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       next: ^13.4.4 || ^14.0.0
@@ -1540,6 +1540,7 @@ packages:
       graphql: 16.8.1
       next: 14.1.4(@babel/core@7.24.3)(@opentelemetry/api@1.7.0)(react-dom@18.2.0)(react@18.2.0)
       react: 18.2.0
+      react-cookie: 7.1.4(react@18.2.0)
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
@@ -3072,6 +3073,10 @@ packages:
       '@types/estree': 1.0.5
     dev: false
 
+  /@types/cookie@0.6.0:
+    resolution: {integrity: sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==}
+    dev: false
+
   /@types/debug@4.1.12:
     resolution: {integrity: sha512-vIChWdVG3LG1SMxEvI/AK+FWJthlrqlTu7fbrlywTkkaONwk/UAGaULXRlf8vkzFBLVm0zkMdCquhL5aOjhXPQ==}
     dependencies:
@@ -3098,6 +3103,13 @@ packages:
     resolution: {integrity: sha512-WPs+bbQw5aCj+x6laNGWLH3wviHtoCv/P3+otBhbOhJgG8qtpdAMlTCxLtsTWA7LH1Oh/bFCHsBn0TPS5m30EQ==}
     dependencies:
       '@types/unist': 3.0.2
+    dev: false
+
+  /@types/hoist-non-react-statics@3.3.5:
+    resolution: {integrity: sha512-SbcrWzkKBw2cdwRTwQAswfpB9g9LJWfjtUeW/jvNwbhC8cpmmNYVePa+ncbUe0rGTQ7G3Ff6mYUN2VMfLVr+Sg==}
+    dependencies:
+      '@types/react': 18.2.16
+      hoist-non-react-statics: 3.3.2
     dev: false
 
   /@types/js-yaml@4.0.5:
@@ -8343,6 +8355,17 @@ packages:
       strip-json-comments: 2.0.1
     dev: false
 
+  /react-cookie@7.1.4(react@18.2.0):
+    resolution: {integrity: sha512-wDxxa/HYaSXSMlyWJvJ5uZTzIVtQTPf1gMksFgwAz/2/W3lCtY8r4OChCXMPE7wax0PAdMY97UkNJedGv7KnDw==}
+    peerDependencies:
+      react: '>= 16.3.0'
+    dependencies:
+      '@types/hoist-non-react-statics': 3.3.5
+      hoist-non-react-statics: 3.3.2
+      react: 18.2.0
+      universal-cookie: 7.1.4
+    dev: false
+
   /react-dom@18.2.0(react@18.2.0):
     resolution: {integrity: sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g==}
     peerDependencies:
@@ -9725,6 +9748,13 @@ packages:
       '@types/unist': 3.0.2
       unist-util-is: 6.0.0
       unist-util-visit-parents: 6.0.1
+    dev: false
+
+  /universal-cookie@7.1.4:
+    resolution: {integrity: sha512-Q+DVJsdykStWRMtXr2Pdj3EF98qZHUH/fXv/gwFz/unyToy1Ek1w5GsWt53Pf38tT8Gbcy5QNsj61Xe9TggP4g==}
+    dependencies:
+      '@types/cookie': 0.6.0
+      cookie: 0.6.0
     dev: false
 
   /unixify@1.0.0:

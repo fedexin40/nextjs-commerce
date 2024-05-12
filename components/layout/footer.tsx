@@ -14,7 +14,7 @@ export default async function Footer() {
   const copyrightName = COMPANY_NAME || SITE_NAME || '';
 
   return (
-    <footer className="bg-[#f1f1f1] text-sm text-black">
+    <footer className="bg-[#f1f1f1] text-sm text-black dark:bg-zinc-800 dark:text-white">
       <div className="flex w-full flex-col gap-6 px-6 py-12 text-sm md:gap-12 md:px-4 xl:px-10">
         <div className="grid grid-cols-1 justify-around gap-10 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
           <Suspense
@@ -42,7 +42,7 @@ export default async function Footer() {
             <Pagos />
           </div>
         </div>
-        <div className="mx-10 border-t-2 border-t-gray-500 py-6 text-sm lg:-mt-28">
+        <div className="mx-10 border-t-2 border-t-gray-500 py-6 text-sm dark:border-t-[#c9aa9e] dark:text-[#c9aa9e] lg:-mt-28">
           <div className="flex w-full flex-row justify-center md:pl-10 lg:justify-start">
             <p>
               &copy; {copyrightDate} {copyrightName}
@@ -58,7 +58,7 @@ export default async function Footer() {
 export function Contacto() {
   return (
     <>
-      <div className="uppercase">Contacto</div>
+      <div className="uppercase dark:text-[#c9aa9e]">Contacto</div>
       <div className="flex flex-row items-center gap-x-3">
         <div className="relative h-5 w-5">
           <Image className="object-contain" src={'/mail.png'} alt="" fill />
@@ -93,17 +93,17 @@ export function Pagos() {
         </div>
         <div className="row-start-2 -mt-3">
           <div className="relative h-7 w-20">
-            <Image className="cover-contain" src={'/americanexpress.png'} alt="" fill />
+            <Image className="object-contain" src={'/americanexpress.png'} alt="" fill />
           </div>
         </div>
         <div className="row-start-2">
           <div className="relative h-7 w-20">
-            <Image className="cover-contain" src={'/visa.png'} alt="" fill />
+            <Image className="object-contain" src={'/visa.png'} alt="" fill />
           </div>
         </div>
         <div className="row-start-2">
           <div className="relative h-10 w-16">
-            <Image className="cover-contain" src={'/mastercard.png'} alt="" fill />
+            <Image className="object-contain" src={'/mastercard.png'} alt="" fill />
           </div>
         </div>
       </div>
