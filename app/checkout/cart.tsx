@@ -39,7 +39,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
           return (
             <div
               key={i}
-              className="flex w-full flex-col border-2 border-neutral-300 dark:border-neutral-700"
+              className="flex w-full flex-col border-2 border-neutral-300 dark:border-[#c9aa9e]"
             >
               <div className="relative flex w-full flex-row justify-between px-1 py-4">
                 <Link href={merchandiseUrl} className="z-30 flex flex-row space-x-4">
@@ -80,8 +80,13 @@ export default function Cart({ cart }: { cart: CartType | null }) {
         })}
       </ul>
       <div className="flex w-full flex-row gap-3 pt-7">
-        <input className="w-3/4 pl-2 tracking-wider" placeholder="Codigo de cupon..." />
-        <div className="w-1/4 bg-neutral-500 p-3 text-center text-white">Aplicar</div>
+        <input
+          className="w-3/4 pl-2 tracking-wider dark:border dark:border-[#c9aa9e]"
+          placeholder="Codigo de cupon..."
+        />
+        <div className="w-1/4 bg-neutral-500 p-3 text-center text-white dark:bg-[#c9aa9e] dark:text-black">
+          Aplicar
+        </div>
       </div>
       <div className="pb-7 text-neutral-500 dark:text-neutral-400">
         <div className="mb-2 mt-5 flex items-center justify-between pb-1 dark:border-neutral-700">

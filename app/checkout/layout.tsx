@@ -10,7 +10,7 @@ export default function SearchLayout({ children }: { children: React.ReactNode }
       </Suspense>
       <div className="">{children}</div>
       <Suspense>
-        <div className="min-h-10 h-10 w-full bg-zinc-400" />
+        <div className="min-h-10 h-10 w-full bg-zinc-400 dark:bg-[#c9aa9e]" />
         <Footer />
       </Suspense>
     </>

@@ -83,7 +83,7 @@ export default function Address({
               </Alert>
             </Snackbar>
           </div>
-          <div className="flex w-full md:flex-col md:gap-y-2 lg:flex-row lg:gap-x-2">
+          <div className="flex w-full flex-col gap-y-2 lg:flex-row lg:gap-x-2">
             <input
               className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:w-1/2"
               type="text"
@@ -93,7 +93,7 @@ export default function Address({
               defaultValue={user.firstName}
             />
             <input
-              className="hidden border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:block lg:w-1/2"
+              className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:block lg:w-1/2"
               type="text"
               name="lastname"
               placeholder="Apellido..."

@@ -35,7 +35,7 @@ export default async function HomePage() {
           />
         </Suspense>
       </div>
-      <div className="block md:hidden">
+      <div className="block dark:bg-black md:hidden">
         <Suspense
           fallback={
             <div className="relative h-40">
@@ -55,7 +55,7 @@ export default async function HomePage() {
         Encuentra el arete perfecto para ti
       </div>
       <Suspense>
-        <div className="mx-10 mb-24 dark:bg-black lg:mx-32 lg:mb-40">
+        <div className="mx-10 mb-24 lg:mx-32 lg:mb-40">
           {products.length > 0 ? (
             <Grid className="grid-cols-1 gap-y-24 md:grid-cols-3 lg:grid-cols-4 xl:gap-y-40">
               <ProductGridItems products={products} />

@@ -74,7 +74,7 @@ export function AddToCart({
           });
         }}
         className={clsx(
-          'relative flex w-full items-center justify-center  bg-[#f5e1d1] p-4 tracking-wider text-black hover:opacity-90 dark:border-2 dark:border-[#c9aa9e] dark:bg-black dark:text-white',
+          'relative flex h-[60px] w-full items-center justify-center  bg-[#f5e1d1] p-4 tracking-wider text-black hover:opacity-90 dark:border-2 dark:border-[#c9aa9e] dark:bg-black dark:text-white',
           {
             'cursor-not-allowed opacity-60 hover:opacity-60':
               !availableForSale || !selectedVariantId,
@@ -86,16 +86,15 @@ export function AddToCart({
       </button>
       <div
         className={clsx(
-          'relative flex h-[56px] w-full items-center justify-center space-x-6 bg-[#f5e1d1] p-4 tracking-wider',
+          'relative flex h-[60px] w-full items-center justify-center space-x-6 bg-[#f5e1d1] p-4 tracking-wider dark:border-2 dark:border-[#c9aa9e]  dark:bg-black dark:text-white',
           {
             hidden: !isPending,
           },
         )}
       >
-        <span className="sr-only">Loading...</span>
-        <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] [animation-delay:-0.3s]"></div>
-        <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] [animation-delay:-0.15s]"></div>
-        <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)]"></div>
+        <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] [animation-delay:-0.3s] dark:bg-white"></div>
+        <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] [animation-delay:-0.15s] dark:bg-white"></div>
+        <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] dark:bg-white"></div>
       </div>
     </div>
   );
