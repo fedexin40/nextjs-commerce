@@ -18,6 +18,8 @@ import { revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 import {
   AccountRegisterDocument,
+  AccountSetDefaultAddressBillingDocument,
+  AccountSetDefaultAddressShippingDocument,
   AccountUpdateDocument,
   AddressCreateDocument,
   AddressUpdateDocument,
@@ -46,6 +48,7 @@ import {
   OrderDirection,
   ProductOrderField,
   SearchProductsDocument,
+  TransactionInitializeDocument,
   TypedDocumentString,
 } from './generated/graphql';
 import { verifySignature } from './jwks';
@@ -441,13 +444,14 @@ export async function getCart(cartId: string): Promise<Cart | null> {
   return saleorCheckoutToVercelCart(saleorCheckout.checkout);
 }
 
-export async function createCart(): Promise<Cart> {
+export async function createCart(email: string): Promise<Cart> {
   const saleorCheckout = await saleorFetch({
     query: CreateCheckoutDocument,
     variables: {
       input: {
         channel: 'proyecto705',
         lines: [],
+        email: email,
       },
     },
     cache: 'no-store',
@@ -685,13 +689,32 @@ export async function addressCreate({
     city: city,
     country: country,
   };
-  const errors = await saleorFetch({
+  const address = await saleorFetch({
     query: AddressCreateDocument,
     variables: { input: input },
     withAuth: true,
   });
-  if (errors.accountAddressCreate?.errors[0]) {
-    throw new Error(errors.accountAddressCreate?.errors[0]?.field || '');
+  if (address.accountAddressCreate?.errors[0]) {
+    throw new Error(address.accountAddressCreate?.errors[0]?.field || '');
+  }
+
+  const addressId = address.accountAddressCreate?.address?.id;
+  const errorsShipping = await saleorFetch({
+    query: AccountSetDefaultAddressShippingDocument,
+    variables: { id: addressId || '' },
+    withAuth: true,
+  });
+  if (errorsShipping.accountSetDefaultAddress?.errors[0]) {
+    throw new Error(errorsShipping.accountSetDefaultAddress?.errors[0]?.field || '');
+  }
+
+  const errorsBilling = await saleorFetch({
+    query: AccountSetDefaultAddressBillingDocument,
+    variables: { id: addressId || '' },
+    withAuth: true,
+  });
+  if (errorsBilling.accountSetDefaultAddress?.errors[0]) {
+    throw new Error(errorsShipping.accountSetDefaultAddress?.errors[0]?.field || '');
   }
 }
 
@@ -744,6 +767,26 @@ export async function accountUpdate({
   if (errors.accountUpdate?.errors[0]) {
     throw new Error(errors.accountUpdate?.errors[0]?.message || '');
   }
+}
+
+export async function transactionInitialize(checkoutId: string) {
+  const transaction = await saleorFetch({
+    query: TransactionInitializeDocument,
+    variables: {
+      checkoutId: checkoutId,
+      data: {
+        automatic_payment_methods: {
+          enabled: true,
+        },
+      },
+    },
+    withAuth: true,
+    cache: 'no-store',
+  });
+  if (transaction.transactionInitialize?.errors[0]) {
+    throw new Error(transaction.transactionInitialize.errors[0].message || '');
+  }
+  return transaction;
 }
 
 // eslint-disable-next-line no-unused-vars

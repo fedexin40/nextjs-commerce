@@ -1,5 +1,7 @@
 fragment Checkout on Checkout {
   id
+  token
+  updatedAt
   totalPrice {
     gross {
       currency

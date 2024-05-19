@@ -1,0 +1,9 @@
+mutation accountSetDefaultAddressBilling($id: ID!) {
+  accountSetDefaultAddress(id: $id, type: BILLING) {
+    errors {
+      code
+      field
+      message
+    }
+  }
+}

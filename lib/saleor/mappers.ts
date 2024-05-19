@@ -100,17 +100,18 @@ export function saleorVariantsToVercelVariants(
 }
 
 export function saleorCheckoutToVercelCart(checkout: CheckoutFragment): Cart {
-  const domain = new URL(process.env.SALEOR_INSTANCE_URL!).hostname;
   const checkoutUrl = new URL('checkout', process.env.SHOP_PUBLIC_URL || '');
+  const checkoutUrlPayment = new URL('checkout-payment', process.env.SHOP_PUBLIC_URL || '');
   checkoutUrl.searchParams.append('checkout', checkout.id);
-  checkoutUrl.searchParams.append('locale', `en-US`);
-  checkoutUrl.searchParams.append('channel', `proyecto705`);
-  checkoutUrl.searchParams.append('saleorApiUrl', process.env.SALEOR_INSTANCE_URL!);
-  checkoutUrl.searchParams.append('domain', domain);
+  checkoutUrlPayment.searchParams.append('checkout', checkout.id);
+  const checkoutToken = checkout.token.slice(-5);
 
   return {
     id: checkout.id,
+    token: checkoutToken,
     checkoutUrl: checkoutUrl.toString(),
+    checkoutUrlPayment: checkoutUrlPayment.toString(),
+    updatedAt: checkout.updatedAt,
     cost: {
       subtotalAmount: {
         amount: checkout.subtotalPrice.gross.amount.toString(),

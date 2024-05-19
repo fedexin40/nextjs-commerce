@@ -4,7 +4,9 @@ import { Alert, Snackbar } from '@mui/material';
 import clsx from 'clsx';
 import { CurrentPerson, countryAreaChoices as countryAreaChoicesType } from 'lib/types';
 import { useState, useTransition } from 'react';
+import { useUserDetailsActions } from '../store';
 import { createAddress, updateAddress } from './actions';
+import AddressInput from './address-input';
 
 export default function Address({
   user,
@@ -20,6 +22,21 @@ export default function Address({
   const [isPending, startTransition] = useTransition();
   const closeError = () => setError(false);
   const openError = () => setError(true);
+  const { setUserDetails } = useUserDetailsActions();
+
+  // Save the address into the zustand store
+  // this is in order to use the address in any other place
+  setUserDetails({
+    firstName: user.firstName || '',
+    lastName: user.lastName || '',
+    streetAddress1: user.address.streetAddress1 || '',
+    streetAddress2: user.address.streetAddress2 || '',
+    postalCode: user.address.postalCode || '',
+    city: user.address.city || '',
+    // TODO: countryArea is fixed
+    countryArea: 'PUE',
+    email: user.email,
+  });
 
   function saveAddress(formData: FormData) {
     startTransition(async () => {
@@ -64,6 +81,12 @@ export default function Address({
         openError();
         seterrorMessage(errors);
       }
+      // If all the above process was ok then
+      // save the address into the zustand store
+      setUserDetails({
+        ...rawFormData,
+        ...{ email: user.email },
+      });
     });
   }
 
@@ -83,81 +106,9 @@ export default function Address({
               </Alert>
             </Snackbar>
           </div>
-          <div className="flex w-full flex-col gap-y-2 lg:flex-row lg:gap-x-2">
-            <input
-              className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:w-1/2"
-              type="text"
-              name="firstName"
-              placeholder="Nombre..."
-              required={true}
-              defaultValue={user.firstName}
-            />
-            <input
-              className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:block lg:w-1/2"
-              type="text"
-              name="lastname"
-              placeholder="Apellido..."
-              required={true}
-              defaultValue={user.lastName}
-            />
+          <div>
+            <AddressInput user={user} countryAreaChoices={countryAreaChoices} />
           </div>
-          <input
-            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
-            type="text"
-            name="streetAddress1"
-            placeholder="Calle y numero de casa..."
-            required={true}
-            defaultValue={user.address.streetAddress1}
-          />
-          <div className="flex w-full flex-col gap-y-2 lg:flex-row lg:gap-x-2">
-            <input
-              className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:w-1/2"
-              type="text"
-              name="streetAddress2"
-              placeholder="Colonia..."
-              required={true}
-              defaultValue={user.address.streetAddress2}
-            />
-            <input
-              className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:block lg:w-1/2"
-              type="text"
-              name="postalcode"
-              placeholder="Codigo postal..."
-              required={true}
-              defaultValue={user.address.postalCode}
-            />
-          </div>
-          <input
-            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
-            type="text"
-            name="city"
-            placeholder="Ciudad..."
-            required={true}
-            defaultValue={user.address.city}
-          />
-          <select
-            name="countryAreaChoice"
-            required={true}
-            defaultValue={user.address.countryArea}
-            className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
-          >
-            {countryAreaChoices?.map(({ raw, verbose }) => (
-              <option className="tracking-wider" key={raw} value={raw || ''}>
-                {verbose}
-              </option>
-            ))}
-          </select>
-          <div className="border-2	border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed dark:border dark:border-[#c9aa9e] dark:bg-zinc-700">
-            Mexico
-          </div>
-          <input
-            className="border-2	border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
-            type="email"
-            name="email"
-            placeholder="Correo electronico..."
-            required={true}
-            defaultValue={user.email}
-          />
           <div>
             <button
               className={clsx('h-[36px] w-1/2 self-end p-2 uppercase text-white lg:w-1/3', {

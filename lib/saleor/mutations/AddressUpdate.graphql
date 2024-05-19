@@ -1,5 +1,8 @@
 mutation AddressUpdate($id: ID!, $input: AddressInput!) {
   accountAddressUpdate(id: $id, input: $input) {
+    address {
+      id
+    }
     errors {
       code
       message

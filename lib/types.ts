@@ -91,7 +91,10 @@ export type SEO = {
 
 export type VercelCommerceCart = {
   id: string;
+  token: string;
+  updatedAt: string;
   checkoutUrl: string;
+  checkoutUrlPayment: string;
   cost: {
     subtotalAmount: Money;
     totalAmount: Money;

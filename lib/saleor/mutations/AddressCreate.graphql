@@ -1,5 +1,8 @@
 mutation AddressCreate($input: AddressInput!) {
   accountAddressCreate(input: $input) {
+    address {
+      id
+    }
     errors {
       code
       message

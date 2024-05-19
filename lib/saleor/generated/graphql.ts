@@ -31132,6 +31132,8 @@ export type _Service = {
 
 export type CheckoutFragment = {
   id: string;
+  token: string;
+  updatedAt: string;
   quantity: number;
   totalPrice: {
     gross: { currency: string; amount: number };
@@ -31273,6 +31275,26 @@ export type AccountRegisterMutation = {
   } | null;
 };
 
+export type AccountSetDefaultAddressBillingMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type AccountSetDefaultAddressBillingMutation = {
+  accountSetDefaultAddress?: {
+    errors: Array<{ code: AccountErrorCode; field?: string | null; message?: string | null }>;
+  } | null;
+};
+
+export type AccountSetDefaultAddressShippingMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type AccountSetDefaultAddressShippingMutation = {
+  accountSetDefaultAddress?: {
+    errors: Array<{ code: AccountErrorCode; field?: string | null; message?: string | null }>;
+  } | null;
+};
+
 export type AccountUpdateMutationVariables = Exact<{
   input: AccountInput;
 }>;
@@ -31289,6 +31311,7 @@ export type AddressCreateMutationVariables = Exact<{
 
 export type AddressCreateMutation = {
   accountAddressCreate?: {
+    address?: { id: string } | null;
     errors: Array<{ code: AccountErrorCode; message?: string | null; field?: string | null }>;
   } | null;
 };
@@ -31300,6 +31323,7 @@ export type AddressUpdateMutationVariables = Exact<{
 
 export type AddressUpdateMutation = {
   accountAddressUpdate?: {
+    address?: { id: string } | null;
     errors: Array<{ code: AccountErrorCode; message?: string | null; field?: string | null }>;
   } | null;
 };
@@ -31314,6 +31338,8 @@ export type CheckoutAddLineMutation = {
     errors: Array<{ code: CheckoutErrorCode; message?: string | null; field?: string | null }>;
     checkout?: {
       id: string;
+      token: string;
+      updatedAt: string;
       quantity: number;
       totalPrice: {
         gross: { currency: string; amount: number };
@@ -31383,6 +31409,8 @@ export type CheckoutDeleteLineMutation = {
     errors: Array<{ code: CheckoutErrorCode; message?: string | null; field?: string | null }>;
     checkout?: {
       id: string;
+      token: string;
+      updatedAt: string;
       quantity: number;
       totalPrice: {
         gross: { currency: string; amount: number };
@@ -31452,6 +31480,8 @@ export type CheckoutUpdateLineMutation = {
     errors: Array<{ code: CheckoutErrorCode; message?: string | null; field?: string | null }>;
     checkout?: {
       id: string;
+      token: string;
+      updatedAt: string;
       quantity: number;
       totalPrice: {
         gross: { currency: string; amount: number };
@@ -31531,6 +31561,8 @@ export type CreateCheckoutMutation = {
     errors: Array<{ code: CheckoutErrorCode; message?: string | null; field?: string | null }>;
     checkout?: {
       id: string;
+      token: string;
+      updatedAt: string;
       quantity: number;
       totalPrice: {
         gross: { currency: string; amount: number };
@@ -31612,6 +31644,24 @@ export type ExternalObtainAccessTokensMutation = {
     refreshToken?: string | null;
     token?: string | null;
     errors: Array<{ code: AccountErrorCode; message?: string | null }>;
+  } | null;
+};
+
+export type TransactionInitializeMutationVariables = Exact<{
+  checkoutId: Scalars['ID'];
+  data?: InputMaybe<Scalars['JSON']>;
+}>;
+
+export type TransactionInitializeMutation = {
+  transactionInitialize?: {
+    data?: unknown | null;
+    transaction?: { id: string } | null;
+    transactionEvent?: { id: string } | null;
+    errors: Array<{
+      field?: string | null;
+      message?: string | null;
+      code: TransactionInitializeErrorCode;
+    }>;
   } | null;
 };
 
@@ -31701,6 +31751,8 @@ export type GetCheckoutByIdQueryVariables = Exact<{
 export type GetCheckoutByIdQuery = {
   checkout?: {
     id: string;
+    token: string;
+    updatedAt: string;
     quantity: number;
     totalPrice: {
       gross: { currency: string; amount: number };
@@ -32229,6 +32281,8 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(`
 export const CheckoutFragmentDoc = new TypedDocumentString(`
     fragment Checkout on Checkout {
   id
+  token
+  updatedAt
   totalPrice {
     gross {
       currency
@@ -32411,6 +32465,34 @@ export const AccountRegisterDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<AccountRegisterMutation, AccountRegisterMutationVariables>;
+export const AccountSetDefaultAddressBillingDocument = new TypedDocumentString(`
+    mutation accountSetDefaultAddressBilling($id: ID!) {
+  accountSetDefaultAddress(id: $id, type: BILLING) {
+    errors {
+      code
+      field
+      message
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  AccountSetDefaultAddressBillingMutation,
+  AccountSetDefaultAddressBillingMutationVariables
+>;
+export const AccountSetDefaultAddressShippingDocument = new TypedDocumentString(`
+    mutation accountSetDefaultAddressShipping($id: ID!) {
+  accountSetDefaultAddress(id: $id, type: SHIPPING) {
+    errors {
+      code
+      field
+      message
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  AccountSetDefaultAddressShippingMutation,
+  AccountSetDefaultAddressShippingMutationVariables
+>;
 export const AccountUpdateDocument = new TypedDocumentString(`
     mutation AccountUpdate($input: AccountInput!) {
   accountUpdate(input: $input) {
@@ -32425,6 +32507,9 @@ export const AccountUpdateDocument = new TypedDocumentString(`
 export const AddressCreateDocument = new TypedDocumentString(`
     mutation AddressCreate($input: AddressInput!) {
   accountAddressCreate(input: $input) {
+    address {
+      id
+    }
     errors {
       code
       message
@@ -32436,6 +32521,9 @@ export const AddressCreateDocument = new TypedDocumentString(`
 export const AddressUpdateDocument = new TypedDocumentString(`
     mutation AddressUpdate($id: ID!, $input: AddressInput!) {
   accountAddressUpdate(id: $id, input: $input) {
+    address {
+      id
+    }
     errors {
       code
       message
@@ -32459,6 +32547,8 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
 }
     fragment Checkout on Checkout {
   id
+  token
+  updatedAt
   totalPrice {
     gross {
       currency
@@ -32571,6 +32661,8 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
 }
     fragment Checkout on Checkout {
   id
+  token
+  updatedAt
   totalPrice {
     gross {
       currency
@@ -32686,6 +32778,8 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
 }
     fragment Checkout on Checkout {
   id
+  token
+  updatedAt
   totalPrice {
     gross {
       currency
@@ -32812,6 +32906,8 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
 }
     fragment Checkout on Checkout {
   id
+  token
+  updatedAt
   totalPrice {
     gross {
       currency
@@ -32937,6 +33033,30 @@ export const ExternalObtainAccessTokensDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   ExternalObtainAccessTokensMutation,
   ExternalObtainAccessTokensMutationVariables
+>;
+export const TransactionInitializeDocument = new TypedDocumentString(`
+    mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {
+  transactionInitialize(
+    id: $checkoutId
+    paymentGateway: {id: "app.saleor.stripe", data: $data}
+  ) {
+    transaction {
+      id
+    }
+    transactionEvent {
+      id
+    }
+    data
+    errors {
+      field
+      message
+      code
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  TransactionInitializeMutation,
+  TransactionInitializeMutationVariables
 >;
 export const AddressValidationDocument = new TypedDocumentString(`
     query AddressValidation {
@@ -33079,6 +33199,8 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
 }
     fragment Checkout on Checkout {
   id
+  token
+  updatedAt
   totalPrice {
     gross {
       currency

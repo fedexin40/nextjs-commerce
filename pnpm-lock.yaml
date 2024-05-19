@@ -35,6 +35,12 @@ dependencies:
   '@saleor/auth-sdk':
     specifier: ^1.0.1
     version: 1.0.1(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)
+  '@stripe/react-stripe-js':
+    specifier: ^2.7.1
+    version: 2.7.1(@stripe/stripe-js@3.4.0)(react-dom@18.2.0)(react@18.2.0)
+  '@stripe/stripe-js':
+    specifier: ^3.4.0
+    version: 3.4.0
   '@vercel/og':
     specifier: ^0.5.4
     version: 0.5.4
@@ -3034,6 +3040,24 @@ packages:
     dependencies:
       fflate: 0.7.4
       string.prototype.codepointat: 0.2.1
+    dev: false
+
+  /@stripe/react-stripe-js@2.7.1(@stripe/stripe-js@3.4.0)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-/i13alp27HaSBbMM6kW0jhy8KqdtOL1T/EcRjFjfhvt+CBtMEg8TD7y28W3oZG0+OBDdCyGGnXgNgrKPYQH40g==}
+    peerDependencies:
+      '@stripe/stripe-js': ^1.44.1 || ^2.0.0 || ^3.0.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      '@stripe/stripe-js': 3.4.0
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /@stripe/stripe-js@3.4.0:
+    resolution: {integrity: sha512-a2kUP7OrsV0SSIk3UxWa+cnrW+PPIyuCbWIBH8vxfHIqmyeQN/d0lsplZJ2h7MlLsU/sB3EyhNBkhLLT+zHwKw==}
+    engines: {node: '>=12.16'}
     dev: false
 
   /@swc/helpers@0.5.2:

@@ -1,9 +1,13 @@
 'use server';
 
-import { addToCart, createCart, getCart, removeFromCart, updateCart } from 'lib/saleor';
+import { Me, addToCart, createCart, getCart, removeFromCart, updateCart } from 'lib/saleor';
 import { cookies } from 'next/headers';
 
 export const addItem = async (variantId: string | undefined): Promise<String | undefined> => {
+  const userEmail = (await Me()).email;
+  if (!userEmail) {
+    return 'Debes iniciar sesion primero :D';
+  }
   let cartId = cookies().get('cartId')?.value;
   let cart;
 
@@ -12,7 +16,7 @@ export const addItem = async (variantId: string | undefined): Promise<String | u
   }
 
   if (!cartId || !cart) {
-    cart = await createCart();
+    cart = await createCart(userEmail);
     cartId = cart.id;
     cookies().set('cartId', cartId);
   }

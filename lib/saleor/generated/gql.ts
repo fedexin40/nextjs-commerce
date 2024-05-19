@@ -12,7 +12,7 @@ import * as types from './graphql';
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  'fragment Checkout on Checkout {\n  id\n  totalPrice {\n    gross {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  subtotalPrice {\n    gross {\n      currency\n      amount\n    }\n  }\n  quantity\n  lines {\n    id\n    quantity\n    variant {\n      ...Variant\n      product {\n        ...ProductDetails\n      }\n    }\n  }\n}':
+  'fragment Checkout on Checkout {\n  id\n  token\n  updatedAt\n  totalPrice {\n    gross {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  subtotalPrice {\n    gross {\n      currency\n      amount\n    }\n  }\n  quantity\n  lines {\n    id\n    quantity\n    variant {\n      ...Variant\n      product {\n        ...ProductDetails\n      }\n    }\n  }\n}':
     types.CheckoutFragmentDoc,
   'fragment FeaturedProduct on Product {\n  id\n  slug\n  name\n  isAvailableForPurchase\n  description\n  seoTitle\n  seoDescription\n  pricing {\n    priceRange {\n      start {\n        gross {\n          currency\n          amount\n        }\n      }\n      stop {\n        gross {\n          currency\n          amount\n        }\n      }\n    }\n  }\n  media {\n    url(size: 1080)\n    type\n    alt\n  }\n  collections {\n    name\n  }\n  updatedAt\n  variants {\n    id\n    name\n    pricing {\n      price {\n        gross {\n          currency\n          amount\n        }\n      }\n    }\n  }\n}':
     types.FeaturedProductFragmentDoc,
@@ -22,11 +22,15 @@ const documents = {
     types.VariantFragmentDoc,
   'mutation AccountRegister($email: String!, $password: String!, $redirectUrl: String!) {\n  accountRegister(\n    input: {email: $email, channel: "proyecto705", password: $password, redirectUrl: $redirectUrl}\n  ) {\n    requiresConfirmation\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
     types.AccountRegisterDocument,
+  'mutation accountSetDefaultAddressBilling($id: ID!) {\n  accountSetDefaultAddress(id: $id, type: BILLING) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
+    types.AccountSetDefaultAddressBillingDocument,
+  'mutation accountSetDefaultAddressShipping($id: ID!) {\n  accountSetDefaultAddress(id: $id, type: SHIPPING) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
+    types.AccountSetDefaultAddressShippingDocument,
   'mutation AccountUpdate($input: AccountInput!) {\n  accountUpdate(input: $input) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
     types.AccountUpdateDocument,
-  'mutation AddressCreate($input: AddressInput!) {\n  accountAddressCreate(input: $input) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
+  'mutation AddressCreate($input: AddressInput!) {\n  accountAddressCreate(input: $input) {\n    address {\n      id\n    }\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
     types.AddressCreateDocument,
-  'mutation AddressUpdate($id: ID!, $input: AddressInput!) {\n  accountAddressUpdate(id: $id, input: $input) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
+  'mutation AddressUpdate($id: ID!, $input: AddressInput!) {\n  accountAddressUpdate(id: $id, input: $input) {\n    address {\n      id\n    }\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
     types.AddressUpdateDocument,
   'mutation CheckoutAddLine($checkoutId: ID!, $lines: [CheckoutLineInput!]!) {\n  checkoutLinesAdd(id: $checkoutId, lines: $lines) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
     types.CheckoutAddLineDocument,
@@ -42,6 +46,8 @@ const documents = {
     types.ExternalAuthenticationUrlDocument,
   'mutation externalObtainAccessTokens($pluginId: String!, $input: JSONString!) {\n  externalObtainAccessTokens(input: $input, pluginId: $pluginId) {\n    errors {\n      code\n      message\n    }\n    refreshToken\n    token\n  }\n}':
     types.ExternalObtainAccessTokensDocument,
+  'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
+    types.TransactionInitializeDocument,
   'query AddressValidation {\n  addressValidationRules(countryCode: MX) {\n    countryAreaChoices {\n      raw\n      verbose\n    }\n  }\n}':
     types.AddressValidationDocument,
   'query GetCategories {\n  categories(first: 100) {\n    edges {\n      node {\n        slug\n        name\n        parent {\n          level\n        }\n      }\n    }\n  }\n}':
@@ -80,7 +86,7 @@ const documents = {
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'fragment Checkout on Checkout {\n  id\n  totalPrice {\n    gross {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  subtotalPrice {\n    gross {\n      currency\n      amount\n    }\n  }\n  quantity\n  lines {\n    id\n    quantity\n    variant {\n      ...Variant\n      product {\n        ...ProductDetails\n      }\n    }\n  }\n}',
+  source: 'fragment Checkout on Checkout {\n  id\n  token\n  updatedAt\n  totalPrice {\n    gross {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  subtotalPrice {\n    gross {\n      currency\n      amount\n    }\n  }\n  quantity\n  lines {\n    id\n    quantity\n    variant {\n      ...Variant\n      product {\n        ...ProductDetails\n      }\n    }\n  }\n}',
 ): typeof import('./graphql').CheckoutFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -110,19 +116,31 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: 'mutation accountSetDefaultAddressBilling($id: ID!) {\n  accountSetDefaultAddress(id: $id, type: BILLING) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}',
+): typeof import('./graphql').AccountSetDefaultAddressBillingDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation accountSetDefaultAddressShipping($id: ID!) {\n  accountSetDefaultAddress(id: $id, type: SHIPPING) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}',
+): typeof import('./graphql').AccountSetDefaultAddressShippingDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: 'mutation AccountUpdate($input: AccountInput!) {\n  accountUpdate(input: $input) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}',
 ): typeof import('./graphql').AccountUpdateDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation AddressCreate($input: AddressInput!) {\n  accountAddressCreate(input: $input) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}',
+  source: 'mutation AddressCreate($input: AddressInput!) {\n  accountAddressCreate(input: $input) {\n    address {\n      id\n    }\n    errors {\n      code\n      message\n      field\n    }\n  }\n}',
 ): typeof import('./graphql').AddressCreateDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation AddressUpdate($id: ID!, $input: AddressInput!) {\n  accountAddressUpdate(id: $id, input: $input) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}',
+  source: 'mutation AddressUpdate($id: ID!, $input: AddressInput!) {\n  accountAddressUpdate(id: $id, input: $input) {\n    address {\n      id\n    }\n    errors {\n      code\n      message\n      field\n    }\n  }\n}',
 ): typeof import('./graphql').AddressUpdateDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -166,6 +184,12 @@ export function graphql(
 export function graphql(
   source: 'mutation externalObtainAccessTokens($pluginId: String!, $input: JSONString!) {\n  externalObtainAccessTokens(input: $input, pluginId: $pluginId) {\n    errors {\n      code\n      message\n    }\n    refreshToken\n    token\n  }\n}',
 ): typeof import('./graphql').ExternalObtainAccessTokensDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
+): typeof import('./graphql').TransactionInitializeDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
