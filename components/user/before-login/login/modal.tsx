@@ -44,7 +44,6 @@ export default function LoginModal({ children }: { children: ReactNode }) {
       password: rawFormData.password,
     });
     if (data.tokenCreate.errors.length > 0) {
-      console.log(data);
       setErrorMessage(data.tokenCreate.errors[0]?.message || '');
       openError();
     } else {

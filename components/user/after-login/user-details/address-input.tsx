@@ -1,4 +1,8 @@
+'use client';
+
 import { CurrentPerson, countryAreaChoices as countryAreaChoicesType } from 'lib/types';
+import { useEffect } from 'react';
+import { useUser, useUserDetailsActions } from '../store';
 
 export default function AddressInput({
   user,
@@ -7,8 +11,29 @@ export default function AddressInput({
   user: CurrentPerson;
   countryAreaChoices: countryAreaChoicesType;
 }) {
+  const userStore = useUser();
+  const { setUserDetails } = useUserDetailsActions();
+
+  useEffect(() => {
+    setUserDetails({
+      firstName: user.firstName,
+      lastName: user.lastName || '',
+      streetAddress1: user.address.streetAddress1,
+      streetAddress2: user.address.streetAddress2 || '',
+      city: user.address.city,
+      postalCode: user.address.postalCode,
+      countryArea: user.address.countryArea,
+      email: user.email,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setUserDetails({ ...userStore, [event.target.name]: event.target.value });
+  }
+
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 text-xs tracking-wider lg:text-sm">
       <div className="flex w-full flex-col gap-y-2 lg:flex-row lg:gap-x-2">
         <input
           className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:w-1/2"
@@ -17,14 +42,16 @@ export default function AddressInput({
           placeholder="Nombre..."
           required={true}
           defaultValue={user.firstName}
+          onChange={handleChange}
         />
         <input
           className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:block lg:w-1/2"
           type="text"
-          name="lastname"
+          name="lastName"
           placeholder="Apellido..."
           required={true}
           defaultValue={user.lastName}
+          onChange={handleChange}
         />
       </div>
       <input
@@ -34,6 +61,7 @@ export default function AddressInput({
         placeholder="Calle y numero de casa..."
         required={true}
         defaultValue={user.address.streetAddress1}
+        onChange={handleChange}
       />
       <div className="flex w-full flex-col gap-y-2 lg:flex-row lg:gap-x-2">
         <input
@@ -43,14 +71,16 @@ export default function AddressInput({
           placeholder="Colonia..."
           required={true}
           defaultValue={user.address.streetAddress2}
+          onChange={handleChange}
         />
         <input
           className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:block lg:w-1/2"
           type="text"
-          name="postalcode"
+          name="postalCode"
           placeholder="Codigo postal..."
           required={true}
           defaultValue={user.address.postalCode}
+          onChange={handleChange}
         />
       </div>
       <input
@@ -60,6 +90,7 @@ export default function AddressInput({
         placeholder="Ciudad..."
         required={true}
         defaultValue={user.address.city}
+        onChange={handleChange}
       />
       <select
         name="countryAreaChoice"

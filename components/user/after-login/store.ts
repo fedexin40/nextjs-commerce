@@ -1,3 +1,5 @@
+'use client';
+
 import { create } from 'zustand';
 
 interface userMenu {
@@ -19,7 +21,7 @@ interface userDetails {
   email: string;
 }
 
-interface user extends userDetails {
+export interface user extends userDetails {
   actions: {
     // eslint-disable-next-line no-unused-vars
     setUserDetails: (user: userDetails) => void;

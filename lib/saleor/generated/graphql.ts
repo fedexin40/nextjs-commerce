@@ -31399,6 +31399,31 @@ export type CheckoutAddLineMutation = {
   } | null;
 };
 
+export type CheckoutBillingAddressUpdateMutationVariables = Exact<{
+  checkoutId: Scalars['ID'];
+  billingAddress: AddressInput;
+}>;
+
+export type CheckoutBillingAddressUpdateMutation = {
+  checkoutBillingAddressUpdate?: {
+    errors: Array<{ code: CheckoutErrorCode; message?: string | null }>;
+  } | null;
+};
+
+export type CheckoutCompleteMutationVariables = Exact<{
+  checkoutId: Scalars['ID'];
+}>;
+
+export type CheckoutCompleteMutation = {
+  checkoutComplete?: {
+    order?: {
+      id: string;
+      errors: Array<{ field?: string | null; message?: string | null; code: OrderErrorCode }>;
+    } | null;
+    errors: Array<{ field?: string | null; message?: string | null; code: CheckoutErrorCode }>;
+  } | null;
+};
+
 export type CheckoutDeleteLineMutationVariables = Exact<{
   checkoutId: Scalars['ID'];
   lineIds: Array<Scalars['ID']> | Scalars['ID'];
@@ -31644,6 +31669,29 @@ export type ExternalObtainAccessTokensMutation = {
     refreshToken?: string | null;
     token?: string | null;
     errors: Array<{ code: AccountErrorCode; message?: string | null }>;
+  } | null;
+};
+
+export type PaymentGatewayInitializeMutationVariables = Exact<{
+  checkoutId: Scalars['ID'];
+}>;
+
+export type PaymentGatewayInitializeMutation = {
+  paymentGatewayInitialize?: {
+    gatewayConfigs?: Array<{
+      id: string;
+      data?: unknown | null;
+      errors?: Array<{
+        field?: string | null;
+        message?: string | null;
+        code: PaymentGatewayConfigErrorCode;
+      }> | null;
+    }> | null;
+    errors: Array<{
+      field?: string | null;
+      message?: string | null;
+      code: PaymentGatewayInitializeErrorCode;
+    }>;
   } | null;
 };
 
@@ -31946,14 +31994,18 @@ export type GetMeQuery = {
       streetAddress2: string;
       country: { code: string; country: string };
     }>;
-    checkouts?: {
+    orders?: {
       edges: Array<{
         node: {
           created: string;
-          quantity: number;
+          number: string;
+          statusDisplay: string;
+          total: { gross: { amount: number } };
           lines: Array<{
+            productName: string;
             quantity: number;
-            variant: { name: string; media?: Array<{ url: string }> | null };
+            totalPrice: { gross: { amount: number } };
+            thumbnail?: { url: string } | null;
           }>;
         };
       }>;
@@ -32646,6 +32698,44 @@ fragment Variant on ProductVariant {
     }
   }
 }`) as unknown as TypedDocumentString<CheckoutAddLineMutation, CheckoutAddLineMutationVariables>;
+export const CheckoutBillingAddressUpdateDocument = new TypedDocumentString(`
+    mutation checkoutBillingAddressUpdate($checkoutId: ID!, $billingAddress: AddressInput!) {
+  checkoutBillingAddressUpdate(
+    checkoutId: $checkoutId
+    billingAddress: $billingAddress
+  ) {
+    errors {
+      code
+      message
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  CheckoutBillingAddressUpdateMutation,
+  CheckoutBillingAddressUpdateMutationVariables
+>;
+export const CheckoutCompleteDocument = new TypedDocumentString(`
+    mutation CheckoutComplete($checkoutId: ID!) {
+  checkoutComplete(id: $checkoutId) {
+    order {
+      id
+      errors {
+        field
+        message
+        code
+      }
+    }
+    errors {
+      field
+      message
+      code
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  CheckoutCompleteMutation,
+  CheckoutCompleteMutationVariables
+>;
 export const CheckoutDeleteLineDocument = new TypedDocumentString(`
     mutation CheckoutDeleteLine($checkoutId: ID!, $lineIds: [ID!]!) {
   checkoutLinesDelete(id: $checkoutId, linesIds: $lineIds) {
@@ -33033,6 +33123,33 @@ export const ExternalObtainAccessTokensDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   ExternalObtainAccessTokensMutation,
   ExternalObtainAccessTokensMutationVariables
+>;
+export const PaymentGatewayInitializeDocument = new TypedDocumentString(`
+    mutation PaymentGatewayInitialize($checkoutId: ID!) {
+  paymentGatewayInitialize(
+    id: $checkoutId
+    amount: 0
+    paymentGateways: [{id: "app.saleor.stripe"}]
+  ) {
+    gatewayConfigs {
+      id
+      data
+      errors {
+        field
+        message
+        code
+      }
+    }
+    errors {
+      field
+      message
+      code
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  PaymentGatewayInitializeMutation,
+  PaymentGatewayInitializeMutationVariables
 >;
 export const TransactionInitializeDocument = new TypedDocumentString(`
     mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {
@@ -33505,18 +33622,27 @@ export const GetMeDocument = new TypedDocumentString(`
         country
       }
     }
-    checkouts(first: 100) {
+    orders(first: 100) {
       edges {
         node {
           created
-          quantity
+          number
+          statusDisplay
+          total {
+            gross {
+              amount
+            }
+          }
           lines {
+            productName
             quantity
-            variant {
-              name
-              media {
-                url
+            totalPrice {
+              gross {
+                amount
               }
+            }
+            thumbnail {
+              url
             }
           }
         }

@@ -1,0 +1,8 @@
+mutation checkoutBillingAddressUpdate($checkoutId: ID!, $billingAddress: AddressInput!) {
+  checkoutBillingAddressUpdate(checkoutId: $checkoutId, billingAddress: $billingAddress) {
+    errors {
+      code
+      message
+    }
+  }
+}

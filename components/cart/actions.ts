@@ -6,8 +6,12 @@ import { cookies } from 'next/headers';
 export const addItem = async (variantId: string | undefined): Promise<String | undefined> => {
   const userEmail = (await Me()).email;
   if (!userEmail) {
-    return 'Debes iniciar sesion primero :D';
+    return 'Por favor inicia sesion primero';
   }
+  // Get the current date plus 30 days
+  const todayDate = new Date();
+  todayDate.setDate(todayDate.getDate() + 30);
+
   let cartId = cookies().get('cartId')?.value;
   let cart;
 
@@ -18,7 +22,7 @@ export const addItem = async (variantId: string | undefined): Promise<String | u
   if (!cartId || !cart) {
     cart = await createCart(userEmail);
     cartId = cart.id;
-    cookies().set('cartId', cartId);
+    cookies().set('cartId', cartId, { expires: todayDate });
   }
 
   if (!variantId) {

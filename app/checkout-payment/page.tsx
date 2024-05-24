@@ -13,6 +13,7 @@ export default async function CheckoutPayment({
   }
 
   const cart = await getCart(checkout || '');
+  const checkoutPayment = new URL('cart/payment', process.env.SHOP_PUBLIC_URL || '').toString();
 
   // I believe it is impossible to get until here without
   // a cart, so it is ok just to pass, I am doing the below to make
@@ -70,21 +71,23 @@ export default async function CheckoutPayment({
           </div>
         </div>
       </Suspense>
-      <div className="w-full place-content-center text-base md:w-1/2">
-        <div className="flex flex-row space-x-3 bg-[#f0dccc] p-5 dark:text-black lg:text-lg">
-          <span>Proyecto 705:</span>
-          <span>${cart?.cost.totalAmount.amount}</span>
+      <Suspense>
+        <div className="w-full place-content-center text-base md:w-1/2">
+          <div className="flex flex-row space-x-3 bg-[#f0dccc] p-5 dark:text-black lg:text-lg">
+            <span>Proyecto 705:</span>
+            <span>${cart?.cost.totalAmount.amount}</span>
+          </div>
+          <div className="border-2 px-5 py-3 pb-20 shadow-lg">
+            <Suspense>
+              <StripeComponent
+                clientSecret={stripeData.paymentIntent.client_secret}
+                publishableKey={stripeData.publishableKey}
+                returnUrl={checkoutPayment}
+              />
+            </Suspense>
+          </div>
         </div>
-        <div className="border-2 px-5 py-3 pb-20 shadow-lg">
-          <Suspense>
-            <StripeComponent
-              clientSecret={stripeData.paymentIntent.client_secret}
-              publishableKey={stripeData.publishableKey}
-              returnUrl="http://localhost:3002/app-router/cart/payment"
-            />
-          </Suspense>
-        </div>
-      </div>
+      </Suspense>
     </div>
   );
 }

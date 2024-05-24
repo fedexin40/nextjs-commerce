@@ -4,7 +4,6 @@ import { Alert, Snackbar } from '@mui/material';
 import clsx from 'clsx';
 import { CurrentPerson, countryAreaChoices as countryAreaChoicesType } from 'lib/types';
 import { useState, useTransition } from 'react';
-import { useUserDetailsActions } from '../store';
 import { createAddress, updateAddress } from './actions';
 import AddressInput from './address-input';
 
@@ -18,25 +17,10 @@ export default function Address({
   black?: boolean;
 }) {
   const [isError, setError] = useState(false);
-  const [ErrorMessage, seterrorMessage] = useState('');
+  const [ErrorMessage, setErrorMessage] = useState('');
   const [isPending, startTransition] = useTransition();
   const closeError = () => setError(false);
   const openError = () => setError(true);
-  const { setUserDetails } = useUserDetailsActions();
-
-  // Save the address into the zustand store
-  // this is in order to use the address in any other place
-  setUserDetails({
-    firstName: user.firstName || '',
-    lastName: user.lastName || '',
-    streetAddress1: user.address.streetAddress1 || '',
-    streetAddress2: user.address.streetAddress2 || '',
-    postalCode: user.address.postalCode || '',
-    city: user.address.city || '',
-    // TODO: countryArea is fixed
-    countryArea: 'PUE',
-    email: user.email,
-  });
 
   function saveAddress(formData: FormData) {
     startTransition(async () => {
@@ -79,14 +63,8 @@ export default function Address({
       }
       if (errors) {
         openError();
-        seterrorMessage(errors);
+        setErrorMessage(errors);
       }
-      // If all the above process was ok then
-      // save the address into the zustand store
-      setUserDetails({
-        ...rawFormData,
-        ...{ email: user.email },
-      });
     });
   }
 

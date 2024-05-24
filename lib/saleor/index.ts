@@ -13,8 +13,11 @@ import {
   Token,
   authenticationUrl,
   countryAreaChoices,
+  order,
+  orderLines,
 } from 'lib/types';
 import { revalidateTag } from 'next/cache';
+import { cookies } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
 import {
   AccountRegisterDocument,
@@ -25,6 +28,8 @@ import {
   AddressUpdateDocument,
   AddressValidationDocument,
   CheckoutAddLineDocument,
+  CheckoutBillingAddressUpdateDocument,
+  CheckoutCompleteDocument,
   CheckoutDeleteLineDocument,
   CheckoutUpdateLineDocument,
   ConfirmAccountDocument,
@@ -46,6 +51,7 @@ import {
   GetProductBySlugDocument,
   MenuItemFragment,
   OrderDirection,
+  PaymentGatewayInitializeDocument,
   ProductOrderField,
   SearchProductsDocument,
   TransactionInitializeDocument,
@@ -600,7 +606,7 @@ export async function confirmAccount(email: string, token: string) {
     },
   });
 
-  if (confirmAccount.confirmAccount?.errors) {
+  if (confirmAccount.confirmAccount?.errors[0]) {
     throw new Error(confirmAccount.confirmAccount.errors[0]?.message || '');
   }
 }
@@ -705,7 +711,7 @@ export async function addressCreate({
     withAuth: true,
   });
   if (errorsShipping.accountSetDefaultAddress?.errors[0]) {
-    throw new Error(errorsShipping.accountSetDefaultAddress?.errors[0]?.field || '');
+    throw new Error(errorsShipping.accountSetDefaultAddress?.errors[0]?.message || '');
   }
 
   const errorsBilling = await saleorFetch({
@@ -714,7 +720,7 @@ export async function addressCreate({
     withAuth: true,
   });
   if (errorsBilling.accountSetDefaultAddress?.errors[0]) {
-    throw new Error(errorsShipping.accountSetDefaultAddress?.errors[0]?.field || '');
+    throw new Error(errorsShipping.accountSetDefaultAddress?.errors[0]?.message || '');
   }
 }
 
@@ -724,6 +730,31 @@ export async function Me(): Promise<CurrentPerson> {
     variables: {},
     withAuth: true,
     tags: [TAGS.userAddress],
+  });
+
+  const orders: order[] = [];
+  CurrentPerson.me?.orders?.edges.forEach((item) => {
+    // Read all the lines in the order
+    const items: orderLines[] = [];
+    item.node.lines.forEach((itemLine) => {
+      const line = {
+        productName: itemLine.productName,
+        quantity: itemLine.quantity,
+        amount: itemLine.totalPrice.gross.amount,
+        urlImage: itemLine.thumbnail?.url || '',
+      };
+      items.push(line);
+    });
+
+    // Add the orders
+    const order = {
+      status: item.node.statusDisplay,
+      number: item.node.number,
+      date: item.node.created,
+      amount: item.node.total.gross.amount,
+      lines: items,
+    };
+    orders.push(order);
   });
 
   return {
@@ -743,6 +774,7 @@ export async function Me(): Promise<CurrentPerson> {
       streetAddress1: CurrentPerson.me?.addresses[0]?.streetAddress1 || '',
       streetAddress2: CurrentPerson.me?.addresses[0]?.streetAddress2 || '',
     },
+    orders: orders,
   };
 }
 
@@ -769,6 +801,7 @@ export async function accountUpdate({
   }
 }
 
+// TODO: Add the type for the return value
 export async function transactionInitialize(checkoutId: string) {
   const transaction = await saleorFetch({
     query: TransactionInitializeDocument,
@@ -789,11 +822,78 @@ export async function transactionInitialize(checkoutId: string) {
   return transaction;
 }
 
+// TODO: Add the type for the return value
+export async function gatewayPayment(checkoutId: string) {
+  const paymentGateway = await saleorFetch({
+    query: PaymentGatewayInitializeDocument,
+    variables: {
+      checkoutId: checkoutId,
+    },
+  });
+  return paymentGateway;
+}
+
+// TODO: Add the type for the return value
+export async function completeCheckout(checkoutId: string) {
+  const checkout = await saleorFetch({
+    query: CheckoutCompleteDocument,
+    variables: {
+      checkoutId: checkoutId,
+    },
+  });
+  if (checkout.checkoutComplete?.errors[0]) {
+    throw new Error(checkout.checkoutComplete.errors[0].message || '');
+  }
+  return checkout;
+}
+
+export async function billingAddressCheckoutUpdate({
+  checkoutId,
+  streetAddress1,
+  streetAddress2,
+  postalCode,
+  countryArea,
+  city,
+  country,
+}: {
+  checkoutId: string;
+  streetAddress1: string;
+  streetAddress2: string;
+  postalCode: string;
+  countryArea: string;
+  city: string;
+  country: CountryCode;
+}) {
+  const billingAddress = {
+    streetAddress1: streetAddress1,
+    streetAddress2: streetAddress2,
+    postalCode: postalCode,
+    countryArea: countryArea,
+    city: city,
+    country: country,
+  };
+  const checkout = await saleorFetch({
+    query: CheckoutBillingAddressUpdateDocument,
+    variables: {
+      checkoutId: checkoutId,
+      billingAddress: billingAddress,
+    },
+  });
+  if (checkout.checkoutBillingAddressUpdate?.errors[0]) {
+    throw new Error(checkout.checkoutBillingAddressUpdate?.errors[0].message || '');
+  }
+}
+
 // eslint-disable-next-line no-unused-vars
 export async function getProductRecommendations(productId: Product): Promise<Product[]> {
   // @todo
   // tags: [TAGS.products],
   return [];
+}
+
+export async function getCheckoutFromCookiesOrRedirect(): Promise<string> {
+  const checkoutId = cookies().get('cartId')?.value;
+  return checkoutId || '';
 }
 
 // eslint-disable-next-line no-unused-vars

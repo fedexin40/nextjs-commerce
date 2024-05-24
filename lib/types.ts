@@ -299,6 +299,7 @@ export type CurrentPerson = {
     alt: string | undefined | null;
     url: string | undefined | null;
   };
+  orders?: order[];
   address: {
     id: string;
     city: string;
@@ -310,6 +311,21 @@ export type CurrentPerson = {
     postalCode: string;
     streetAddress1: string;
   };
+};
+
+export type orderLines = {
+  productName: string;
+  quantity: number;
+  amount: number;
+  urlImage: string;
+};
+
+export type order = {
+  status: string;
+  number: string;
+  date: string;
+  amount: number;
+  lines: orderLines[];
 };
 
 export type countryAreaChoices =

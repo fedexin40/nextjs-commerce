@@ -34,6 +34,10 @@ const documents = {
     types.AddressUpdateDocument,
   'mutation CheckoutAddLine($checkoutId: ID!, $lines: [CheckoutLineInput!]!) {\n  checkoutLinesAdd(id: $checkoutId, lines: $lines) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
     types.CheckoutAddLineDocument,
+  'mutation checkoutBillingAddressUpdate($checkoutId: ID!, $billingAddress: AddressInput!) {\n  checkoutBillingAddressUpdate(\n    checkoutId: $checkoutId\n    billingAddress: $billingAddress\n  ) {\n    errors {\n      code\n      message\n    }\n  }\n}':
+    types.CheckoutBillingAddressUpdateDocument,
+  'mutation CheckoutComplete($checkoutId: ID!) {\n  checkoutComplete(id: $checkoutId) {\n    order {\n      id\n      errors {\n        field\n        message\n        code\n      }\n    }\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
+    types.CheckoutCompleteDocument,
   'mutation CheckoutDeleteLine($checkoutId: ID!, $lineIds: [ID!]!) {\n  checkoutLinesDelete(id: $checkoutId, linesIds: $lineIds) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
     types.CheckoutDeleteLineDocument,
   'mutation CheckoutUpdateLine($checkoutId: ID!, $lines: [CheckoutLineUpdateInput!]!) {\n  checkoutLinesUpdate(id: $checkoutId, lines: $lines) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
@@ -46,6 +50,8 @@ const documents = {
     types.ExternalAuthenticationUrlDocument,
   'mutation externalObtainAccessTokens($pluginId: String!, $input: JSONString!) {\n  externalObtainAccessTokens(input: $input, pluginId: $pluginId) {\n    errors {\n      code\n      message\n    }\n    refreshToken\n    token\n  }\n}':
     types.ExternalObtainAccessTokensDocument,
+  'mutation PaymentGatewayInitialize($checkoutId: ID!) {\n  paymentGatewayInitialize(\n    id: $checkoutId\n    amount: 0\n    paymentGateways: [{id: "app.saleor.stripe"}]\n  ) {\n    gatewayConfigs {\n      id\n      data\n      errors {\n        field\n        message\n        code\n      }\n    }\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
+    types.PaymentGatewayInitializeDocument,
   'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
     types.TransactionInitializeDocument,
   'query AddressValidation {\n  addressValidationRules(countryCode: MX) {\n    countryAreaChoices {\n      raw\n      verbose\n    }\n  }\n}':
@@ -66,7 +72,7 @@ const documents = {
     types.GetCollectionsDocument,
   'query GetFeaturedProducts($first: Int!) {\n  products(first: $first, channel: "proyecto705") {\n    edges {\n      node {\n        ...FeaturedProduct\n      }\n    }\n  }\n}':
     types.GetFeaturedProductsDocument,
-  'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    checkouts(first: 100) {\n      edges {\n        node {\n          created\n          quantity\n          lines {\n            quantity\n            variant {\n              name\n              media {\n                url\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}':
+  'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          created\n          number\n          statusDisplay\n          total {\n            gross {\n              amount\n            }\n          }\n          lines {\n            productName\n            quantity\n            totalPrice {\n              gross {\n                amount\n              }\n            }\n            thumbnail {\n              url\n            }\n          }\n        }\n      }\n    }\n  }\n}':
     types.GetMeDocument,
   'fragment MenuItem on MenuItem {\n  id\n  name\n  url\n  collection {\n    slug\n    products(first: 0) {\n      totalCount\n    }\n  }\n  category {\n    slug\n    products(channel: "proyecto705", first: 0) {\n      totalCount\n    }\n  }\n  page {\n    slug\n    content\n  }\n}\n\nquery GetMenuBySlug($slug: String!) {\n  menu(slug: $slug, channel: "proyecto705") {\n    id\n    slug\n    name\n    items {\n      ...MenuItem\n      children {\n        ...MenuItem\n        children {\n          ...MenuItem\n          children {\n            ...MenuItem\n          }\n        }\n      }\n    }\n  }\n}':
     types.MenuItemFragmentDoc,
@@ -152,6 +158,18 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: 'mutation checkoutBillingAddressUpdate($checkoutId: ID!, $billingAddress: AddressInput!) {\n  checkoutBillingAddressUpdate(\n    checkoutId: $checkoutId\n    billingAddress: $billingAddress\n  ) {\n    errors {\n      code\n      message\n    }\n  }\n}',
+): typeof import('./graphql').CheckoutBillingAddressUpdateDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation CheckoutComplete($checkoutId: ID!) {\n  checkoutComplete(id: $checkoutId) {\n    order {\n      id\n      errors {\n        field\n        message\n        code\n      }\n    }\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
+): typeof import('./graphql').CheckoutCompleteDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: 'mutation CheckoutDeleteLine($checkoutId: ID!, $lineIds: [ID!]!) {\n  checkoutLinesDelete(id: $checkoutId, linesIds: $lineIds) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}',
 ): typeof import('./graphql').CheckoutDeleteLineDocument;
 /**
@@ -184,6 +202,12 @@ export function graphql(
 export function graphql(
   source: 'mutation externalObtainAccessTokens($pluginId: String!, $input: JSONString!) {\n  externalObtainAccessTokens(input: $input, pluginId: $pluginId) {\n    errors {\n      code\n      message\n    }\n    refreshToken\n    token\n  }\n}',
 ): typeof import('./graphql').ExternalObtainAccessTokensDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation PaymentGatewayInitialize($checkoutId: ID!) {\n  paymentGatewayInitialize(\n    id: $checkoutId\n    amount: 0\n    paymentGateways: [{id: "app.saleor.stripe"}]\n  ) {\n    gatewayConfigs {\n      id\n      data\n      errors {\n        field\n        message\n        code\n      }\n    }\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
+): typeof import('./graphql').PaymentGatewayInitializeDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -248,7 +272,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    checkouts(first: 100) {\n      edges {\n        node {\n          created\n          quantity\n          lines {\n            quantity\n            variant {\n              name\n              media {\n                url\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}',
+  source: 'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          created\n          number\n          statusDisplay\n          total {\n            gross {\n              amount\n            }\n          }\n          lines {\n            productName\n            quantity\n            totalPrice {\n              gross {\n                amount\n              }\n            }\n            thumbnail {\n              url\n            }\n          }\n        }\n      }\n    }\n  }\n}',
 ): typeof import('./graphql').GetMeDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

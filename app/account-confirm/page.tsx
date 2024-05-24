@@ -12,6 +12,7 @@ export default async function accountConfirm({
     try {
       await confirmAccount(email, token);
     } catch (e: any) {
+      console.log(e);
       return;
     }
   }

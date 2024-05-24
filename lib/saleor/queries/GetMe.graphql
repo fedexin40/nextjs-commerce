@@ -22,18 +22,27 @@ query GetMe {
         country
       }
     }
-    checkouts(first: 100) {
+    orders(first: 100) {
       edges {
         node {
           created
-          quantity
+          number
+          statusDisplay
+          total {
+            gross {
+              amount
+            }
+          }
           lines {
+            productName
             quantity
-            variant {
-              name
-              media {
-                url
+            totalPrice {
+              gross {
+                amount
               }
+            }
+            thumbnail {
+              url
             }
           }
         }
