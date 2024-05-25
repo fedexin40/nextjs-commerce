@@ -41,36 +41,7 @@ export default async function CheckoutPayment({
   }
 
   return (
-    <div className="flex w-full flex-row text-sm tracking-wider">
-      <Suspense>
-        <div className="hidden w-1/2 flex-col gap-y-8 pt-8 md:flex">
-          <div>
-            <div className="text-base font-medium">!! Gracias por comprar con nosotros !!</div>
-          </div>
-          <div className="flex flex-col gap-y-3 px-7">
-            <div className="flex flex-row gap-x-2">
-              <div className="h-2 w-2 place-self-center bg-[#c9aa9e]" />
-              <div>Numero de pedido:</div>
-              <div className="font-semibold text-[#c9aa9e]">{cart?.token}</div>
-            </div>
-            <div className="flex flex-row gap-x-2">
-              <div className="h-2 w-2 place-self-center bg-[#c9aa9e]" />
-              <div>Fecha:</div>
-              <div className="font-semibold text-[#c9aa9e]">{cart?.updatedAt.split('T')[0]}</div>
-            </div>
-            <div className="flex flex-row gap-x-2">
-              <div className="h-2 w-2 place-self-center bg-[#c9aa9e]" />
-              <div>Total:</div>
-              <div className="font-semibold text-[#c9aa9e]">${cart?.cost.totalAmount.amount}</div>
-            </div>
-            <div className="flex flex-row gap-x-2">
-              <div className="h-2 w-2 place-self-center bg-[#c9aa9e]" />
-              <div>Tiempo de entrega:</div>
-              <div className="font-semibold text-[#c9aa9e]">4 a 7 dias habiles</div>
-            </div>
-          </div>
-        </div>
-      </Suspense>
+    <div className="flex w-full flex-row place-content-center">
       <Suspense>
         <div className="w-full place-content-center text-base md:w-1/2">
           <div className="flex flex-row space-x-3 bg-[#f0dccc] p-5 dark:text-black lg:text-lg">
@@ -78,7 +49,7 @@ export default async function CheckoutPayment({
             <span>${cart?.cost.totalAmount.amount}</span>
           </div>
           <div className="border-2 px-5 py-3 pb-20 shadow-lg">
-            <Suspense>
+            <Suspense fallback={<div>Loading</div>}>
               <StripeComponent
                 clientSecret={stripeData.paymentIntent.client_secret}
                 publishableKey={stripeData.publishableKey}

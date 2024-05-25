@@ -32066,6 +32066,32 @@ export type GetMenuBySlugQuery = {
   } | null;
 };
 
+export type GetOrderByIdQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetOrderByIdQuery = {
+  order?: {
+    number: string;
+    created: string;
+    origin: OrderOriginEnum;
+    paymentStatus: PaymentChargeStatusEnum;
+    status: OrderStatus;
+    statusDisplay: string;
+    isPaid: boolean;
+    isShippingRequired: boolean;
+    lines: Array<{
+      productName: string;
+      quantity: number;
+      quantityFulfilled: number;
+      quantityToFulfill: number;
+      totalPrice: { gross: { amount: number } };
+      thumbnail?: { url: string } | null;
+    }>;
+    total: { gross: { amount: number } };
+  } | null;
+};
+
 export type GetPageBySlugQueryVariables = Exact<{
   slug: Scalars['String'];
 }>;
@@ -33692,6 +33718,39 @@ export const GetMenuBySlugDocument = new TypedDocumentString(`
     content
   }
 }`) as unknown as TypedDocumentString<GetMenuBySlugQuery, GetMenuBySlugQueryVariables>;
+export const GetOrderByIdDocument = new TypedDocumentString(`
+    query GetOrderById($id: ID!) {
+  order(id: $id) {
+    number
+    created
+    origin
+    paymentStatus
+    status
+    statusDisplay
+    lines {
+      productName
+      quantity
+      quantityFulfilled
+      quantityToFulfill
+      totalPrice {
+        gross {
+          amount
+        }
+      }
+      thumbnail {
+        url
+      }
+    }
+    isPaid
+    isShippingRequired
+    total {
+      gross {
+        amount
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetOrderByIdQuery, GetOrderByIdQueryVariables>;
 export const GetPageBySlugDocument = new TypedDocumentString(`
     query GetPageBySlug($slug: String!) {
   page(slug: $slug) {

@@ -12,6 +12,7 @@ export default async function CartPaymentPage({
     redirect('/');
   }
 
+  let order;
   const checkoutId = await getCheckoutFromCookiesOrRedirect();
   const paymentGateway = await gatewayPayment(checkoutId);
 
@@ -44,12 +45,12 @@ export default async function CartPaymentPage({
   }
   if (paymentIntent.status === 'succeeded') {
     try {
-      const order = await completeCheckout(checkoutId);
-      const orderId = order.checkoutComplete?.order?.id;
-      redirect(`/cart/success/${orderId}`);
+      order = await completeCheckout(checkoutId);
     } catch (e) {
       console.log(e);
       return <>Error</>;
     }
+    const orderId = order.checkoutComplete?.order?.id;
+    redirect(`/cart/success/${orderId}`);
   }
 }

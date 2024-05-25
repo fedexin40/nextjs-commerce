@@ -46,6 +46,7 @@ import {
   GetCollectionsDocument,
   GetMeDocument,
   GetMenuBySlugDocument,
+  GetOrderByIdDocument,
   GetPageBySlugDocument,
   GetPagesDocument,
   GetProductBySlugDocument,
@@ -882,6 +883,31 @@ export async function billingAddressCheckoutUpdate({
   if (checkout.checkoutBillingAddressUpdate?.errors[0]) {
     throw new Error(checkout.checkoutBillingAddressUpdate?.errors[0].message || '');
   }
+}
+
+export async function GetOrderById(id: string): Promise<order> {
+  const orderbyID = await saleorFetch({
+    query: GetOrderByIdDocument,
+    variables: {
+      id: id,
+    },
+  });
+  const lines: orderLines[] = [];
+  orderbyID.order?.lines.forEach((line) =>
+    lines.push({
+      productName: line.productName,
+      quantity: line.quantity,
+      amount: line.totalPrice.gross.amount,
+      urlImage: line.thumbnail?.url || '',
+    }),
+  );
+  return {
+    status: orderbyID.order?.status || '',
+    number: orderbyID.order?.number || '',
+    date: orderbyID.order?.created || '',
+    amount: orderbyID.order?.total.gross.amount || 0,
+    lines: lines,
+  };
 }
 
 // eslint-disable-next-line no-unused-vars

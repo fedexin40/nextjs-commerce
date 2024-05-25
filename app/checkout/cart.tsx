@@ -1,7 +1,5 @@
 'use client';
 
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 import clsx from 'clsx';
 import Price from 'components/price';
 import { useUser } from 'components/user/after-login/store';
@@ -10,7 +8,7 @@ import type { Cart as CartType } from 'lib/types';
 import { createUrl } from 'lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState, useTransition } from 'react';
+import { useTransition } from 'react';
 import { addressBillingCheckoutUpdate } from './actions';
 import DeleteItemButton from './delete-item-button';
 
@@ -21,8 +19,6 @@ type MerchandiseSearchParams = {
 export default function Cart({ cart }: { cart: CartType | null }) {
   const userStore = useUser();
   const [isPending, startTransition] = useTransition();
-  const [isErrorOpen, useIsErrorOpen] = useState(false);
-  const [ErrorMessage, useErrorMessage] = useState('');
 
   async function handlePayment() {
     const error = await addressBillingCheckoutUpdate({
@@ -46,18 +42,6 @@ export default function Cart({ cart }: { cart: CartType | null }) {
 
   return (
     <>
-      <div>
-        <Snackbar
-          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-          open={isErrorOpen}
-          autoHideDuration={6000}
-          onClose={() => {}}
-        >
-          <Alert onClose={() => {}} severity="error" variant="filled" sx={{ width: '100%' }}>
-            {ErrorMessage}
-          </Alert>
-        </Snackbar>
-      </div>
       <div className="flex h-full flex-col justify-between overflow-hidden p-1 pb-20 text-xs tracking-wider lg:text-sm">
         <ul className="flex flex-col gap-3 overflow-auto lg:gap-5">
           {cart.lines.map((item, i) => {
@@ -93,7 +77,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
                       />
                     </div>
 
-                    <div className="flex flex-col">
+                    <div className="flex flex-col place-content-center">
                       <span className="leading-tight">{item.merchandise.product.title}</span>
                       {item.merchandise.title !== DEFAULT_OPTION ? (
                         <p className="text-neutral-500 dark:text-neutral-400">
@@ -150,7 +134,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
         </div>
         <div
           className={clsx(
-            'block w-full bg-black text-center text-sm font-medium uppercase text-white opacity-90 hover:cursor-pointer hover:opacity-100 dark:bg-[#c9aa9e] md:py-3 lg:py-5',
+            'block w-full bg-black py-3 text-center text-sm font-medium uppercase text-white opacity-90 hover:cursor-pointer hover:opacity-100 dark:bg-[#c9aa9e] lg:py-5',
             {
               hidden: isPending,
             },
