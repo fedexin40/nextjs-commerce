@@ -134,7 +134,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
         </div>
         <div
           className={clsx(
-            'block w-full bg-black py-3 text-center text-sm font-medium uppercase text-white opacity-90 hover:cursor-pointer hover:opacity-100 dark:bg-[#c9aa9e] lg:py-5',
+            'flex h-[44px] w-full flex-col place-content-center bg-black text-center text-sm font-medium uppercase text-white opacity-90 hover:cursor-pointer hover:opacity-100 dark:bg-[#c9aa9e]',
             {
               hidden: isPending,
             },
@@ -149,7 +149,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
         </div>
         <div
           className={clsx(
-            'relative flex w-full items-center justify-center space-x-6 bg-black tracking-wider dark:border-2 dark:border-[#c9aa9e] dark:bg-black dark:text-white  md:py-3 lg:py-5',
+            'relative flex h-[44px] w-full items-center justify-center space-x-6 bg-black py-3 tracking-wider dark:bg-[#c9aa9e] dark:text-white lg:py-5',
             {
               hidden: !isPending,
             },

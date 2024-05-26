@@ -53,13 +53,13 @@ export default function CheckoutForm({ returnUrl }: { returnUrl: string }) {
       <form className="payment-form" onSubmit={handleSubmit}>
         <PaymentElement className="payment-element" options={paymentElementOptions} />
         <button
-          className="md:1/2 mt-10 h-[45px] rounded-md bg-[#c9aa9e] px-5 shadow-lg lg:w-1/3 lg:py-1"
+          className="mt-10 h-[45px] w-1/2 bg-[#c9aa9e] px-5 shadow-lg lg:w-1/3 lg:py-1"
           disabled={isLoading || !stripe || !elements}
           id="submit"
         >
           <div className="p-0">
             {isLoading ? (
-              <div className="flex items-center justify-center space-x-6">
+              <div className="flex cursor-not-allowed items-center justify-center space-x-6">
                 <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.3s] dark:bg-white"></div>
                 <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.15s] dark:bg-white"></div>
                 <div className="h-4 w-4 animate-bounce rounded-full bg-white dark:bg-white"></div>
@@ -70,7 +70,7 @@ export default function CheckoutForm({ returnUrl }: { returnUrl: string }) {
           </div>
         </button>
         {/* Show any error or success messages */}
-        {message && <div className="payment-message">{message}</div>}
+        {message && <div className="payment-message pt-5">{message}</div>}
       </form>
     </div>
   );
