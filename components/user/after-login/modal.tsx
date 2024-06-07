@@ -1,7 +1,6 @@
 'use client';
 
 import { Dialog, Transition } from '@headlessui/react';
-import Image from 'next/image';
 import { Fragment, ReactNode, useRef } from 'react';
 import CloseLogin from './close-login';
 import { useOpen, useUserMenuActions } from './store';
@@ -14,15 +13,11 @@ export default function UserMenuModal({
   UserShoppings: ReactNode;
 }) {
   const isOpen = useOpen();
-  const { openMenu } = useUserMenuActions();
   const { closeMenu } = useUserMenuActions();
   const initialFocusRef = useRef(null);
 
   return (
     <div className="z-50 opacity-50 hover:cursor-pointer">
-      <div onClick={openMenu}>
-        <Image src={'/registro.png'} alt="" width="27" height="27" />
-      </div>
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog
           as="div"

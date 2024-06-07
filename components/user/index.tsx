@@ -1,5 +1,8 @@
 import { Me } from 'lib/saleor';
-import UserMenu from './after-login';
+import UserMenuDropDown from './after-login';
+import UserMenuModal from './after-login/modal';
+import UserDetails from './after-login/user-details/page';
+import UserShoppings from './after-login/user-shoppings';
 import Login from './before-login/login';
 import Register from './before-login/register';
 
@@ -13,5 +16,13 @@ export default async function User() {
       </>
     );
   }
-  return <UserMenu />;
+  return (
+    <>
+      <UserMenuDropDown />
+      <UserMenuModal
+        UserDetails={<UserDetails />}
+        UserShoppings={<UserShoppings />}
+      ></UserMenuModal>
+    </>
+  );
 }
