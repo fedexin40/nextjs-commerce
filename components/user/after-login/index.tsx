@@ -38,7 +38,7 @@ export default function UserMenuDropDown() {
             onClick={() => {
               setOpenSelect(false);
             }}
-            className="absolute right-0 top-10 z-50 w-fit rounded-b-md bg-white shadow-md dark:bg-black md:-right-28 md:top-8 lg:left-[4px] lg:top-[50px]"
+            className="absolute right-0 top-10 z-50 w-fit rounded-b-md bg-white shadow-md dark:bg-black md:-right-[28px] md:-top-[70px] lg:left-[4px] lg:top-[50px]"
           >
             <div className="flex flex-row whitespace-nowrap capitalize">
               <div
