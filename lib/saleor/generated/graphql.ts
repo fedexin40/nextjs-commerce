@@ -31495,6 +31495,28 @@ export type CheckoutDeleteLineMutation = {
   } | null;
 };
 
+export type CheckoutPostalCodeUpdateMutationVariables = Exact<{
+  checkoutId: Scalars['ID'];
+  PostalCode: Scalars['String'];
+}>;
+
+export type CheckoutPostalCodeUpdateMutation = {
+  checkoutShippingAddressUpdate?: {
+    errors: Array<{ code: CheckoutErrorCode; message?: string | null; field?: string | null }>;
+  } | null;
+};
+
+export type CheckoutShippingAddressUpdateMutationVariables = Exact<{
+  checkoutId: Scalars['ID'];
+  shippingAddress: AddressInput;
+}>;
+
+export type CheckoutShippingAddressUpdateMutation = {
+  checkoutShippingAddressUpdate?: {
+    errors: Array<{ code: CheckoutErrorCode; message?: string | null; field?: string | null }>;
+  } | null;
+};
+
 export type CheckoutUpdateLineMutationVariables = Exact<{
   checkoutId: Scalars['ID'];
   lines: Array<CheckoutLineUpdateInput> | CheckoutLineUpdateInput;
@@ -31644,6 +31666,17 @@ export type CreateCheckoutMutation = {
         };
       }>;
     } | null;
+  } | null;
+};
+
+export type DeliveryMethodUpdateMutationVariables = Exact<{
+  deliveryMethodId: Scalars['ID'];
+  id: Scalars['ID'];
+}>;
+
+export type DeliveryMethodUpdateMutation = {
+  checkoutDeliveryMethodUpdate?: {
+    errors: Array<{ code: CheckoutErrorCode; message?: string | null }>;
   } | null;
 };
 
@@ -32162,6 +32195,23 @@ export type GetProductBySlugQuery = {
       }>;
       pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
     }> | null;
+  } | null;
+};
+
+export type GetShippingMethodsQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type GetShippingMethodsQuery = {
+  checkout?: {
+    shippingMethods: Array<{
+      description?: string | null;
+      id: string;
+      message?: string | null;
+      maximumDeliveryDays?: number | null;
+      name: string;
+      price: { amount: number; currency: string };
+    }>;
   } | null;
 };
 
@@ -32879,6 +32929,40 @@ fragment Variant on ProductVariant {
   CheckoutDeleteLineMutation,
   CheckoutDeleteLineMutationVariables
 >;
+export const CheckoutPostalCodeUpdateDocument = new TypedDocumentString(`
+    mutation checkoutPostalCodeUpdate($checkoutId: ID!, $PostalCode: String!) {
+  checkoutShippingAddressUpdate(
+    checkoutId: $checkoutId
+    shippingAddress: {postalCode: $PostalCode, country: MX, countryArea: "Pue.", city: "Puebla", streetAddress1: "fds", streetAddress2: "fds"}
+  ) {
+    errors {
+      code
+      message
+      field
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  CheckoutPostalCodeUpdateMutation,
+  CheckoutPostalCodeUpdateMutationVariables
+>;
+export const CheckoutShippingAddressUpdateDocument = new TypedDocumentString(`
+    mutation checkoutShippingAddressUpdate($checkoutId: ID!, $shippingAddress: AddressInput!) {
+  checkoutShippingAddressUpdate(
+    checkoutId: $checkoutId
+    shippingAddress: $shippingAddress
+  ) {
+    errors {
+      code
+      message
+      field
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  CheckoutShippingAddressUpdateMutation,
+  CheckoutShippingAddressUpdateMutationVariables
+>;
 export const CheckoutUpdateLineDocument = new TypedDocumentString(`
     mutation CheckoutUpdateLine($checkoutId: ID!, $lines: [CheckoutLineUpdateInput!]!) {
   checkoutLinesUpdate(id: $checkoutId, lines: $lines) {
@@ -33121,6 +33205,19 @@ fragment Variant on ProductVariant {
     }
   }
 }`) as unknown as TypedDocumentString<CreateCheckoutMutation, CreateCheckoutMutationVariables>;
+export const DeliveryMethodUpdateDocument = new TypedDocumentString(`
+    mutation DeliveryMethodUpdate($deliveryMethodId: ID!, $id: ID!) {
+  checkoutDeliveryMethodUpdate(deliveryMethodId: $deliveryMethodId, id: $id) {
+    errors {
+      code
+      message
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  DeliveryMethodUpdateMutation,
+  DeliveryMethodUpdateMutationVariables
+>;
 export const ExternalAuthenticationUrlDocument = new TypedDocumentString(`
     mutation externalAuthenticationUrl($pluginId: String!, $input: JSONString!) {
   externalAuthenticationUrl(pluginId: $pluginId, input: $input) {
@@ -33856,6 +33953,23 @@ fragment Variant on ProductVariant {
     }
   }
 }`) as unknown as TypedDocumentString<GetProductBySlugQuery, GetProductBySlugQueryVariables>;
+export const GetShippingMethodsDocument = new TypedDocumentString(`
+    query GetShippingMethods($id: ID!) {
+  checkout(id: $id) {
+    shippingMethods {
+      description
+      id
+      message
+      maximumDeliveryDays
+      name
+      price {
+        amount
+        currency
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<GetShippingMethodsQuery, GetShippingMethodsQueryVariables>;
 export const SearchProductsDocument = new TypedDocumentString(`
     query SearchProducts($search: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {
   products(

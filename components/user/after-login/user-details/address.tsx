@@ -4,8 +4,9 @@ import { Alert, Snackbar } from '@mui/material';
 import clsx from 'clsx';
 import { CurrentPerson, countryAreaChoices as countryAreaChoicesType } from 'lib/types';
 import { useState, useTransition } from 'react';
-import { createAddress, updateAddress } from './actions';
-import AddressInput from './address-input';
+import { useCountryArea, usePostalCode, useUser } from '../store';
+import { updateAddress } from './actions';
+import AddressInput from './address-form';
 
 export default function Address({
   user,
@@ -21,46 +22,26 @@ export default function Address({
   const [isPending, startTransition] = useTransition();
   const closeError = () => setError(false);
   const openError = () => setError(true);
+  const userStore = useUser();
+  const postalCode = usePostalCode();
+  const countryArea = useCountryArea();
 
-  function saveAddress(formData: FormData) {
+  function saveAddress() {
     startTransition(async () => {
-      let errors: string | undefined;
-
       // Read the input parameters from the form
-      const rawFormData = {
-        firstName: formData.get('firstName')?.toString() || '',
-        lastName: formData.get('lastname')?.toString() || '',
-        streetAddress1: formData.get('streetAddress1')?.toString() || '',
-        streetAddress2: formData.get('streetAddress2')?.toString() || '',
-        city: formData.get('city')?.toString() || '',
-        postalCode: formData.get('postalcode')?.toString() || '',
-        countryArea: formData.get('countryAreaChoice')?.toString() || '',
+      const input = {
+        firstName: userStore.firstName,
+        lastName: userStore.lastName,
+        streetAddress1: userStore.streetAddress1,
+        streetAddress2: userStore.streetAddress2,
+        city: userStore.city,
+        postalCode: postalCode.postalCode,
+        countryArea: countryArea.countryArea,
+        phone: userStore.phone,
       };
-
+      console.log(input);
       // Update the address if the user already has one
-      if (user.address.id) {
-        errors = await updateAddress({
-          id: user.address.id,
-          streetAddress1: rawFormData.streetAddress1,
-          streetAddress2: rawFormData.streetAddress2,
-          city: rawFormData.city,
-          postalCode: rawFormData.postalCode,
-          countryArea: rawFormData.countryArea,
-          firstName: rawFormData.firstName,
-          lastName: rawFormData.lastName,
-        });
-        // If the user does not have an address then create a new one
-      } else {
-        errors = await createAddress({
-          streetAddress1: rawFormData.streetAddress1,
-          streetAddress2: rawFormData.streetAddress2,
-          city: rawFormData.city,
-          postalCode: rawFormData.postalCode,
-          countryArea: rawFormData.countryArea,
-          firstName: rawFormData.firstName,
-          lastName: rawFormData.lastName,
-        });
-      }
+      const errors = await updateAddress(input);
       if (errors) {
         openError();
         setErrorMessage(errors);
@@ -87,17 +68,19 @@ export default function Address({
           <div>
             <AddressInput user={user} countryAreaChoices={countryAreaChoices} />
           </div>
-          <div>
-            <button
-              className={clsx('h-[36px] w-1/2 self-end p-2 uppercase text-white lg:w-1/3', {
-                hidden: isPending,
-                'bg-[hsl(28,30%,59%)] ': !black,
-                'bg-black': black,
-              })}
-              type="submit"
+          <div onClick={() => saveAddress()}>
+            <div
+              className={clsx(
+                'h-[36px] w-1/2 self-end p-2 text-center uppercase text-white lg:w-1/3',
+                {
+                  hidden: isPending,
+                  'bg-[hsl(28,30%,59%)] ': !black,
+                  'bg-black': black,
+                },
+              )}
             >
               <div>Guardar</div>
-            </button>
+            </div>
             <div
               className={clsx(
                 'flex h-[36px] w-1/2 items-center justify-center space-x-3 self-end p-2 tracking-wider text-white lg:w-1/3',

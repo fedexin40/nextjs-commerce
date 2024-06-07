@@ -8,6 +8,15 @@ export type Edge<T> = {
   node: T;
 };
 
+export type shippingMethod = {
+  id: string;
+  name: string;
+  serviceName?: string;
+  price: number;
+  currency?: string;
+  maximumDeliveryDays?: number;
+};
+
 export type Cart = Omit<VercelCommerceCart, 'lines'> & {
   lines: CartItem[];
 };
@@ -310,6 +319,7 @@ export type CurrentPerson = {
     name?: string;
     postalCode: string;
     streetAddress1: string;
+    phone: string;
   };
 };
 

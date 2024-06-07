@@ -1,6 +1,8 @@
-import AddressInput from 'components/user/after-login/user-details/address-input';
-import { Me, countryArea, getCart } from 'lib/saleor';
-import Cart from './cart';
+import Shipping from 'components/shipping/page';
+import AddressInput from 'components/user/after-login/user-details/address-form';
+import { Me, countryArea } from 'lib/saleor';
+import { Suspense } from 'react';
+import Button from './next-button';
 
 export default async function Checkout({
   searchParams,
@@ -14,7 +16,6 @@ export default async function Checkout({
   if (searchParams) {
     checkout = searchParams['checkout'] || '';
   }
-  const cart = await getCart(checkout || '');
 
   return (
     <div className="flex flex-col tracking-wider md:flex-row">
@@ -31,10 +32,13 @@ export default async function Checkout({
           <div className="pt-5 text-xs tracking-wider">Tiempo de entrega: 2 a 7 dias habiles</div>
           <div className="pt-5 text-xs tracking-wider">Terminos y condiciones</div>
         </div>
+        <Button checkoutId={checkout || ''} />
       </div>
-      <div className="border-[#acacac] bg-[#d4d4d4] pt-16 dark:border-t-0 dark:border-[#c9aa9e] dark:dark:bg-zinc-700 md:ml-10 md:w-1/2 md:border-l-2">
+      <div className="border-[#acacac] bg-[#d4d4d4] py-16 dark:border-t-0 dark:border-[#c9aa9e] dark:dark:bg-zinc-700 md:ml-10 md:w-1/2 md:border-l-2">
         <div className="px-5">
-          <Cart cart={cart} />
+          <Suspense fallback={<>Cargando</>}>
+            <Shipping checkoutId={checkout || ''} />
+          </Suspense>
         </div>
       </div>
     </div>

@@ -15,6 +15,7 @@ import {
   countryAreaChoices,
   order,
   orderLines,
+  shippingMethod,
 } from 'lib/types';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
@@ -31,10 +32,13 @@ import {
   CheckoutBillingAddressUpdateDocument,
   CheckoutCompleteDocument,
   CheckoutDeleteLineDocument,
+  CheckoutPostalCodeUpdateDocument,
+  CheckoutShippingAddressUpdateDocument,
   CheckoutUpdateLineDocument,
   ConfirmAccountDocument,
   CountryCode,
   CreateCheckoutDocument,
+  DeliveryMethodUpdateDocument,
   ExternalAuthenticationUrlDocument,
   ExternalObtainAccessTokensDocument,
   GetCategoriesDocument,
@@ -50,6 +54,7 @@ import {
   GetPageBySlugDocument,
   GetPagesDocument,
   GetProductBySlugDocument,
+  GetShippingMethodsDocument,
   MenuItemFragment,
   OrderDirection,
   PaymentGatewayInitializeDocument,
@@ -643,6 +648,7 @@ export async function addressUpdate({
   countryArea,
   city,
   country,
+  phone,
 }: {
   id: string;
   streetAddress1: string;
@@ -651,6 +657,7 @@ export async function addressUpdate({
   countryArea: string;
   city: string;
   country: CountryCode;
+  phone: string;
 }) {
   const input = {
     streetAddress1: streetAddress1,
@@ -659,6 +666,7 @@ export async function addressUpdate({
     countryArea: countryArea,
     city: city,
     country: country,
+    phone: phone,
   };
   const errors = await saleorFetch({
     query: AddressUpdateDocument,
@@ -680,6 +688,7 @@ export async function addressCreate({
   countryArea,
   city,
   country,
+  phone,
 }: {
   streetAddress1: string;
   streetAddress2: string;
@@ -687,6 +696,7 @@ export async function addressCreate({
   countryArea: string;
   city: string;
   country: CountryCode;
+  phone: string;
 }) {
   const input = {
     streetAddress1: streetAddress1,
@@ -695,6 +705,7 @@ export async function addressCreate({
     countryArea: countryArea,
     city: city,
     country: country,
+    phone: phone,
   };
   const address = await saleorFetch({
     query: AddressCreateDocument,
@@ -774,6 +785,7 @@ export async function Me(): Promise<CurrentPerson> {
       postalCode: CurrentPerson.me?.addresses[0]?.postalCode || '',
       streetAddress1: CurrentPerson.me?.addresses[0]?.streetAddress1 || '',
       streetAddress2: CurrentPerson.me?.addresses[0]?.streetAddress2 || '',
+      phone: CurrentPerson.me?.addresses[0]?.phone || '',
     },
     orders: orders,
   };
@@ -863,7 +875,7 @@ export async function billingAddressCheckoutUpdate({
   postalCode: string;
   countryArea: string;
   city: string;
-  country: CountryCode;
+  country?: CountryCode;
 }) {
   const billingAddress = {
     streetAddress1: streetAddress1,
@@ -871,7 +883,7 @@ export async function billingAddressCheckoutUpdate({
     postalCode: postalCode,
     countryArea: countryArea,
     city: city,
-    country: country,
+    country: country || CountryCode.Mx,
   };
   const checkout = await saleorFetch({
     query: CheckoutBillingAddressUpdateDocument,
@@ -882,6 +894,72 @@ export async function billingAddressCheckoutUpdate({
   });
   if (checkout.checkoutBillingAddressUpdate?.errors[0]) {
     throw new Error(checkout.checkoutBillingAddressUpdate?.errors[0].message || '');
+  }
+}
+
+export async function postalCodeUpdate({
+  checkoutId,
+  postalCode,
+}: {
+  checkoutId: string;
+  postalCode: string;
+}) {
+  const checkout = await saleorFetch({
+    query: CheckoutPostalCodeUpdateDocument,
+    variables: {
+      checkoutId: checkoutId,
+      PostalCode: postalCode,
+    },
+  });
+  if (checkout.checkoutShippingAddressUpdate?.errors[0]) {
+    throw new Error(checkout.checkoutShippingAddressUpdate.errors[0].message || '');
+  }
+}
+
+export async function shippingAddressCheckoutUpdate({
+  checkoutId,
+  streetAddress1,
+  streetAddress2,
+  postalCode,
+  countryArea,
+  city,
+  country,
+  firstName,
+  lastName,
+  phone,
+}: {
+  checkoutId: string;
+  streetAddress1: string;
+  streetAddress2: string;
+  postalCode: string;
+  countryArea: string;
+  city: string;
+  country: CountryCode;
+  firstName: string;
+  lastName: string;
+  phone: string;
+}) {
+  const shippingAddress = {
+    streetAddress1: streetAddress1,
+    streetAddress2: streetAddress2,
+    postalCode: postalCode,
+    countryArea: countryArea,
+    city: city,
+    country: country,
+    firstName,
+    lastName,
+    phone,
+  };
+  console.log(shippingAddress);
+  const checkout = await saleorFetch({
+    query: CheckoutShippingAddressUpdateDocument,
+    variables: {
+      checkoutId: checkoutId,
+      shippingAddress: shippingAddress,
+    },
+  });
+  if (checkout.checkoutShippingAddressUpdate?.errors[0]) {
+    throw new Error(checkout.checkoutShippingAddressUpdate?.errors[0].message || '');
   }
 }
 
@@ -920,6 +998,47 @@ export async function getProductRecommendations(productId: Product): Promise<Pro
 export async function getCheckoutFromCookiesOrRedirect(): Promise<string> {
   const checkoutId = cookies().get('cartId')?.value;
   return checkoutId || '';
+}
+
+export async function getShippingMethods(
+  checkoutId: string,
+): Promise<shippingMethod[] | undefined> {
+  const checkout = await saleorFetch({
+    query: GetShippingMethodsDocument,
+    variables: {
+      id: checkoutId,
+    },
+  });
+  const shippingMethods = checkout.checkout?.shippingMethods.map((shippingMethod) => {
+    return {
+      id: shippingMethod.id,
+      name: shippingMethod.name.split('.')[1] || '',
+      serviceName: shippingMethod.name.split('.')[0] || '',
+      price: shippingMethod.price.amount,
+      currency: shippingMethod.price.currency,
+      maximumDeliveryDays: shippingMethod.maximumDeliveryDays || 0,
+    };
+  });
+  return shippingMethods;
+}
+
+export async function updateDeliveryMethod({
+  checkoutId,
+  deliveryMethodId,
+}: {
+  checkoutId: string;
+  deliveryMethodId: string;
+}) {
+  const checkout = await saleorFetch({
+    query: DeliveryMethodUpdateDocument,
+    variables: {
+      id: checkoutId,
+      deliveryMethodId: deliveryMethodId,
+    },
+  });
+  if (checkout.checkoutDeliveryMethodUpdate?.errors[0]) {
+    throw new Error(checkout.checkoutDeliveryMethodUpdate?.errors[0]?.message || '');
+  }
 }
 
 // eslint-disable-next-line no-unused-vars

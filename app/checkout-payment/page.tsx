@@ -1,6 +1,7 @@
 import { StripeComponent } from 'components/stripe/stripe-component';
 import { getCart, transactionInitialize } from 'lib/saleor';
 import { Suspense } from 'react';
+import Cart from './cart';
 
 export default async function CheckoutPayment({
   searchParams,
@@ -41,24 +42,27 @@ export default async function CheckoutPayment({
   }
 
   return (
-    <div className="flex w-full flex-row place-content-center">
-      <Suspense>
-        <div className="w-full place-content-center text-base md:w-1/2">
-          <div className="flex flex-row space-x-3 bg-[#f0dccc] p-5 dark:text-black lg:text-lg">
-            <span>Proyecto 705:</span>
-            <span>${cart?.cost.totalAmount.amount}</span>
-          </div>
-          <div className="border-2 px-5 py-3 pb-20 shadow-lg">
-            <Suspense fallback={<div>Loading</div>}>
-              <StripeComponent
-                clientSecret={stripeData.paymentIntent.client_secret}
-                publishableKey={stripeData.publishableKey}
-                returnUrl={checkoutPayment}
-              />
-            </Suspense>
-          </div>
+    <div className="flex flex-col tracking-wider md:flex-row">
+      <div className="mb-24 ml-10 pr-10 pt-16 md:w-1/2 lg:mb-40 lg:ml-32">
+        <div className="flex flex-row space-x-3 bg-[#f0dccc] p-5 dark:text-black lg:text-lg">
+          <span>Proyecto 705:</span>
+          <span>${cart?.cost.totalAmount.amount}</span>
         </div>
-      </Suspense>
+        <div className="border-2 px-5 py-3 pb-20 shadow-lg">
+          <Suspense fallback={<div>Loading</div>}>
+            <StripeComponent
+              clientSecret={stripeData.paymentIntent.client_secret}
+              publishableKey={stripeData.publishableKey}
+              returnUrl={checkoutPayment}
+            />
+          </Suspense>
+        </div>
+      </div>
+      <div className="border-[#acacac] bg-[#d4d4d4] py-16 dark:border-t-0 dark:border-[#c9aa9e] dark:dark:bg-zinc-700 md:ml-10 md:w-1/2 md:border-l-2">
+        <div className="px-5">
+          <Cart cart={cart} />
+        </div>
+      </div>
     </div>
   );
 }

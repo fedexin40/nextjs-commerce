@@ -1,15 +1,11 @@
 'use client';
 
-import clsx from 'clsx';
 import Price from 'components/price';
-import { useUser } from 'components/user/after-login/store';
 import { DEFAULT_OPTION } from 'lib/constants';
 import type { Cart as CartType } from 'lib/types';
 import { createUrl } from 'lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useTransition } from 'react';
-import { addressBillingCheckoutUpdate } from './actions';
 import DeleteItemButton from './delete-item-button';
 
 type MerchandiseSearchParams = {
@@ -17,28 +13,15 @@ type MerchandiseSearchParams = {
 };
 
 export default function Cart({ cart }: { cart: CartType | null }) {
-  const userStore = useUser();
-  const [isPending, startTransition] = useTransition();
-
-  async function handlePayment() {
-    const error = await addressBillingCheckoutUpdate({
-      url: cart?.checkoutUrlPayment || '',
-      checkoutId: cart?.id || '',
-      streetAddress1: userStore.streetAddress1,
-      streetAddress2: userStore.streetAddress2,
-      postalCode: userStore.postalCode,
-      countryArea: userStore.countryArea,
-      city: userStore.city,
-    });
-    if (error) {
-      console.log(error);
-    }
-  }
   // It is impossible to be here without a car, or at least I think
   // that's why I am only returning
   if (!cart) {
     return <div />;
   }
+  let deliveryPrice = Number(cart.cost.totalAmount.amount);
+  cart.lines.map((item) => {
+    deliveryPrice -= Number(item.cost.totalAmount.amount) * item.quantity;
+  });
 
   return (
     <>
@@ -111,19 +94,11 @@ export default function Cart({ cart }: { cart: CartType | null }) {
           </div>
         </div>
         <div className="pb-7 text-neutral-500 dark:text-white">
-          <div className="mb-2 mt-5 flex items-center justify-between pb-1 dark:border-neutral-700">
-            <p>Impuestos</p>
-            <Price
-              className="text-right text-black dark:text-white"
-              amount={cart.cost.totalTaxAmount.amount}
-              currencyCode={cart.cost.totalTaxAmount.currencyCode}
-            />
-          </div>
-          <div className="mb-2 flex items-center justify-between pb-1 pt-1 dark:border-neutral-700">
+          <div className="mb-2 mt-10 flex items-center justify-between pb-1 pt-1 text-black dark:border-neutral-700">
             <p>Envio</p>
-            <p className="text-right">Calculado al momento de pagar</p>
+            <p className="text-right text-black">${deliveryPrice}</p>
           </div>
-          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-2 text-sm uppercase dark:border-[#c9aa9e] lg:text-base">
+          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-2 text-sm uppercase text-black dark:border-[#c9aa9e] lg:text-base">
             <p>Total</p>
             <Price
               className="text-black dark:text-white"
@@ -131,33 +106,6 @@ export default function Cart({ cart }: { cart: CartType | null }) {
               currencyCode={cart.cost.totalAmount.currencyCode}
             />
           </div>
-        </div>
-        <div
-          className={clsx(
-            'flex h-[44px] w-full flex-col place-content-center bg-black text-center text-sm font-medium uppercase text-white opacity-90 hover:cursor-pointer hover:opacity-100 dark:bg-[#c9aa9e]',
-            {
-              hidden: isPending,
-            },
-          )}
-          onClick={async () => {
-            startTransition(() => {
-              handlePayment();
-            });
-          }}
-        >
-          Siguiente
-        </div>
-        <div
-          className={clsx(
-            'relative flex h-[44px] w-full items-center justify-center space-x-6 bg-black py-3 tracking-wider dark:bg-[#c9aa9e] dark:text-white lg:py-5',
-            {
-              hidden: !isPending,
-            },
-          )}
-        >
-          <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.3s] dark:bg-white"></div>
-          <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.15s] dark:bg-white"></div>
-          <div className="h-4 w-4 animate-bounce rounded-full bg-white dark:bg-white"></div>
         </div>
       </div>
     </>

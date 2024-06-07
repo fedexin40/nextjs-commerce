@@ -1,0 +1,15 @@
+query GetShippingMethods($id: ID!) {
+  checkout(id: $id) {
+    shippingMethods {
+      description
+      id
+      message
+      maximumDeliveryDays
+      name
+      price {
+        amount
+        currency
+      }
+    }
+  }
+}

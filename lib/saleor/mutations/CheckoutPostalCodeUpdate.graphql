@@ -1,0 +1,19 @@
+mutation checkoutPostalCodeUpdate($checkoutId: ID!, $PostalCode: String!) {
+  checkoutShippingAddressUpdate(
+    checkoutId: $checkoutId
+    shippingAddress: {
+      postalCode: $PostalCode
+      country: MX
+      countryArea: "Pue."
+      city: "Puebla"
+      streetAddress1: "fds"
+      streetAddress2: "fds"
+    }
+  ) {
+    errors {
+      code
+      message
+      field
+    }
+  }
+}

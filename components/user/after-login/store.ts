@@ -10,15 +10,30 @@ interface userMenu {
   };
 }
 
-interface userDetails {
+interface userDetailsPostalCode {
+  postalCode: string;
+  actions: {
+    // eslint-disable-next-line no-unused-vars
+    setPostalCode: (postalCode: string) => void;
+  };
+}
+
+interface userDetailsCountryArea {
+  countryArea: string;
+  actions: {
+    // eslint-disable-next-line no-unused-vars
+    setCountryArea: (countryArea: string) => void;
+  };
+}
+
+export interface userDetails {
   firstName: string;
   lastName: string;
   streetAddress1: string;
   streetAddress2: string;
-  postalCode: string;
   city: string;
-  countryArea: string;
   email: string;
+  phone: string;
 }
 
 export interface user extends userDetails {
@@ -27,6 +42,20 @@ export interface user extends userDetails {
     setUserDetails: (user: userDetails) => void;
   };
 }
+
+const useUserPostalCode = create<userDetailsPostalCode>()((set) => ({
+  postalCode: '',
+  actions: {
+    setPostalCode: (postalCode: string) => set({ postalCode: postalCode }),
+  },
+}));
+
+const useUserCountryArea = create<userDetailsCountryArea>()((set) => ({
+  countryArea: '',
+  actions: {
+    setCountryArea: (countryArea: string) => set({ countryArea: countryArea }),
+  },
+}));
 
 const useUserMenuStore = create<userMenu>()((set) => ({
   isOpen: false,
@@ -41,10 +70,10 @@ const useUserDetails = create<user>()((set) => ({
   lastName: '',
   streetAddress1: '',
   streetAddress2: '',
-  postalCode: '',
   city: '',
   countryArea: '',
   email: '',
+  phone: '',
   actions: {
     setUserDetails: (user: userDetails) =>
       set({
@@ -52,15 +81,18 @@ const useUserDetails = create<user>()((set) => ({
         lastName: user.lastName,
         streetAddress1: user.streetAddress1,
         streetAddress2: user.streetAddress2,
-        postalCode: user.postalCode,
         city: user.city,
-        countryArea: user.countryArea,
         email: user.email,
+        phone: user.phone,
       }),
   },
 }));
 
-export const useOpen = () => useUserMenuStore((state) => state.isOpen);
+export const usePostalCodeActions = () => useUserPostalCode((state) => state.actions);
+export const useCountryAreaActions = () => useUserCountryArea((state) => state.actions);
 export const useUserMenuActions = () => useUserMenuStore((state) => state.actions);
 export const useUserDetailsActions = () => useUserDetails((state) => state.actions);
+export const useCountryArea = () => useUserCountryArea((state) => state);
+export const usePostalCode = () => useUserPostalCode((state) => state);
+export const useOpen = () => useUserMenuStore((state) => state.isOpen);
 export const useUser = () => useUserDetails((state) => state);

@@ -40,12 +40,18 @@ const documents = {
     types.CheckoutCompleteDocument,
   'mutation CheckoutDeleteLine($checkoutId: ID!, $lineIds: [ID!]!) {\n  checkoutLinesDelete(id: $checkoutId, linesIds: $lineIds) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
     types.CheckoutDeleteLineDocument,
+  'mutation checkoutPostalCodeUpdate($checkoutId: ID!, $PostalCode: String!) {\n  checkoutShippingAddressUpdate(\n    checkoutId: $checkoutId\n    shippingAddress: {postalCode: $PostalCode, country: MX, countryArea: "Pue.", city: "Puebla", streetAddress1: "fds", streetAddress2: "fds"}\n  ) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
+    types.CheckoutPostalCodeUpdateDocument,
+  'mutation checkoutShippingAddressUpdate($checkoutId: ID!, $shippingAddress: AddressInput!) {\n  checkoutShippingAddressUpdate(\n    checkoutId: $checkoutId\n    shippingAddress: $shippingAddress\n  ) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
+    types.CheckoutShippingAddressUpdateDocument,
   'mutation CheckoutUpdateLine($checkoutId: ID!, $lines: [CheckoutLineUpdateInput!]!) {\n  checkoutLinesUpdate(id: $checkoutId, lines: $lines) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
     types.CheckoutUpdateLineDocument,
   'mutation ConfirmAccount($email: String!, $token: String!) {\n  confirmAccount(email: $email, token: $token) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
     types.ConfirmAccountDocument,
   'mutation CreateCheckout($input: CheckoutCreateInput!) {\n  checkoutCreate(input: $input) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
     types.CreateCheckoutDocument,
+  'mutation DeliveryMethodUpdate($deliveryMethodId: ID!, $id: ID!) {\n  checkoutDeliveryMethodUpdate(deliveryMethodId: $deliveryMethodId, id: $id) {\n    errors {\n      code\n      message\n    }\n  }\n}':
+    types.DeliveryMethodUpdateDocument,
   'mutation externalAuthenticationUrl($pluginId: String!, $input: JSONString!) {\n  externalAuthenticationUrl(pluginId: $pluginId, input: $input) {\n    errors {\n      code\n      message\n    }\n    authenticationData\n  }\n}':
     types.ExternalAuthenticationUrlDocument,
   'mutation externalObtainAccessTokens($pluginId: String!, $input: JSONString!) {\n  externalObtainAccessTokens(input: $input, pluginId: $pluginId) {\n    errors {\n      code\n      message\n    }\n    refreshToken\n    token\n  }\n}':
@@ -84,6 +90,8 @@ const documents = {
     types.GetPagesDocument,
   'query GetProductBySlug($slug: String!) {\n  product(channel: "proyecto705", slug: $slug) {\n    ...ProductDetails\n  }\n}':
     types.GetProductBySlugDocument,
+  'query GetShippingMethods($id: ID!) {\n  checkout(id: $id) {\n    shippingMethods {\n      description\n      id\n      message\n      maximumDeliveryDays\n      name\n      price {\n        amount\n        currency\n      }\n    }\n  }\n}':
+    types.GetShippingMethodsDocument,
   'query SearchProducts($search: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {\n  products(\n    first: 100\n    channel: "proyecto705"\n    sortBy: {field: $sortBy, direction: $sortDirection}\n    filter: {search: $search}\n  ) {\n    edges {\n      node {\n        id\n        slug\n        name\n        isAvailableForPurchase\n        description\n        seoTitle\n        seoDescription\n        category {\n          name\n          slug\n        }\n        pricing {\n          priceRange {\n            start {\n              gross {\n                currency\n                amount\n              }\n            }\n            stop {\n              gross {\n                currency\n                amount\n              }\n            }\n          }\n        }\n        media {\n          url(size: 2160)\n          type\n          alt\n        }\n        collections {\n          name\n        }\n        updatedAt\n        variants {\n          ...Variant\n        }\n      }\n    }\n  }\n}':
     types.SearchProductsDocument,
   'subscription WebhookSubscription {\n  event {\n    ... on CategoryCreated {\n      __typename\n      category {\n        id\n        slug\n      }\n    }\n    ... on CategoryDeleted {\n      __typename\n      category {\n        id\n        slug\n      }\n    }\n    ... on CategoryUpdated {\n      __typename\n      category {\n        id\n        slug\n      }\n    }\n    ... on CollectionUpdated {\n      __typename\n      collection {\n        id\n        slug\n      }\n    }\n    ... on CollectionDeleted {\n      __typename\n      collection {\n        id\n        slug\n      }\n    }\n    ... on CollectionCreated {\n      __typename\n      collection {\n        id\n        slug\n      }\n    }\n    ... on ProductCreated {\n      __typename\n      product {\n        id\n        slug\n      }\n    }\n    ... on ProductDeleted {\n      __typename\n      product {\n        id\n        slug\n      }\n    }\n    ... on ProductUpdated {\n      __typename\n      product {\n        id\n        slug\n      }\n    }\n    ... on ProductVariantCreated {\n      __typename\n      productVariant {\n        product {\n          id\n          slug\n        }\n      }\n    }\n    ... on ProductVariantDeleted {\n      __typename\n      productVariant {\n        product {\n          id\n          slug\n        }\n      }\n    }\n    ... on ProductVariantUpdated {\n      __typename\n      productVariant {\n        product {\n          id\n          slug\n        }\n      }\n    }\n  }\n}':
@@ -178,6 +186,18 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: 'mutation checkoutPostalCodeUpdate($checkoutId: ID!, $PostalCode: String!) {\n  checkoutShippingAddressUpdate(\n    checkoutId: $checkoutId\n    shippingAddress: {postalCode: $PostalCode, country: MX, countryArea: "Pue.", city: "Puebla", streetAddress1: "fds", streetAddress2: "fds"}\n  ) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}',
+): typeof import('./graphql').CheckoutPostalCodeUpdateDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation checkoutShippingAddressUpdate($checkoutId: ID!, $shippingAddress: AddressInput!) {\n  checkoutShippingAddressUpdate(\n    checkoutId: $checkoutId\n    shippingAddress: $shippingAddress\n  ) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}',
+): typeof import('./graphql').CheckoutShippingAddressUpdateDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: 'mutation CheckoutUpdateLine($checkoutId: ID!, $lines: [CheckoutLineUpdateInput!]!) {\n  checkoutLinesUpdate(id: $checkoutId, lines: $lines) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}',
 ): typeof import('./graphql').CheckoutUpdateLineDocument;
 /**
@@ -192,6 +212,12 @@ export function graphql(
 export function graphql(
   source: 'mutation CreateCheckout($input: CheckoutCreateInput!) {\n  checkoutCreate(input: $input) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}',
 ): typeof import('./graphql').CreateCheckoutDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation DeliveryMethodUpdate($deliveryMethodId: ID!, $id: ID!) {\n  checkoutDeliveryMethodUpdate(deliveryMethodId: $deliveryMethodId, id: $id) {\n    errors {\n      code\n      message\n    }\n  }\n}',
+): typeof import('./graphql').DeliveryMethodUpdateDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -306,6 +332,12 @@ export function graphql(
 export function graphql(
   source: 'query GetProductBySlug($slug: String!) {\n  product(channel: "proyecto705", slug: $slug) {\n    ...ProductDetails\n  }\n}',
 ): typeof import('./graphql').GetProductBySlugDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'query GetShippingMethods($id: ID!) {\n  checkout(id: $id) {\n    shippingMethods {\n      description\n      id\n      message\n      maximumDeliveryDays\n      name\n      price {\n        amount\n        currency\n      }\n    }\n  }\n}',
+): typeof import('./graphql').GetShippingMethodsDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

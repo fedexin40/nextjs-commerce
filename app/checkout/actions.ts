@@ -1,38 +1,20 @@
 'use server';
-import { billingAddressCheckoutUpdate } from 'lib/saleor';
-import { CountryCode } from 'lib/saleor/generated/graphql';
+
+import { getCart, updateDeliveryMethod } from 'lib/saleor';
 import { redirect } from 'next/navigation';
 
-export async function addressBillingCheckoutUpdate({
-  url,
+export async function deliveryMethodUpdate({
   checkoutId,
-  streetAddress1,
-  streetAddress2,
-  postalCode,
-  countryArea,
-  city,
+  deliveryMethodId,
 }: {
-  url: string;
   checkoutId: string;
-  streetAddress1: string;
-  streetAddress2: string;
-  postalCode: string;
-  countryArea: string;
-  city: string;
+  deliveryMethodId: string;
 }) {
-  const input = {
-    checkoutId: checkoutId,
-    streetAddress1: streetAddress1,
-    streetAddress2: streetAddress2,
-    postalCode: postalCode,
-    countryArea: countryArea,
-    city: city,
-    country: CountryCode.Mx,
-  };
+  const cart = await getCart(checkoutId);
   try {
-    await billingAddressCheckoutUpdate(input);
-  } catch (error) {
-    return error;
+    await updateDeliveryMethod({ checkoutId, deliveryMethodId });
+  } catch (error: any) {
+    console.log(error.message);
   }
-  redirect(url);
+  redirect(cart?.checkoutUrlPayment || '');
 }
