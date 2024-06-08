@@ -25,7 +25,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
 
   return (
     <>
-      <div className="flex h-full flex-col justify-between overflow-hidden p-1 pb-20 text-xs tracking-wider lg:text-sm">
+      <div className="flex h-full flex-col justify-between overflow-hidden p-1 pb-20 text-xs tracking-wider lg:text-base">
         <ul className="flex flex-col gap-3 overflow-auto lg:gap-5">
           {cart.lines.map((item, i) => {
             const merchandiseSearchParams = {} as MerchandiseSearchParams;

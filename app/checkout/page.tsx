@@ -32,13 +32,20 @@ export default async function Checkout({
           <div className="pt-5 text-xs tracking-wider">Tiempo de entrega: 2 a 7 dias habiles</div>
           <div className="pt-5 text-xs tracking-wider">Terminos y condiciones</div>
         </div>
-        <Button checkoutId={checkout || ''} />
+        <div className="hidden md:block">
+          <Button checkoutId={checkout || ''} />
+        </div>
       </div>
-      <div className="border-[#acacac] bg-[#d4d4d4] py-16 dark:border-t-0 dark:border-[#c9aa9e] dark:dark:bg-zinc-700 md:ml-10 md:w-1/2 md:border-l-2">
+      <div className="border-[#acacac] bg-[#d4d4d4] pt-16 dark:border-t-0 dark:border-[#c9aa9e] dark:dark:bg-zinc-700 md:ml-10 md:w-1/2 md:border-l-2">
         <div className="px-5">
           <Suspense fallback={<>Cargando</>}>
             <Shipping checkoutId={checkout || ''} />
           </Suspense>
+        </div>
+      </div>
+      <div className="flex w-full flex-col bg-[#d4d4d4] md:hidden">
+        <div className="mb-8 w-1/2 place-self-center">
+          <Button checkoutId={checkout || ''} />
         </div>
       </div>
     </div>

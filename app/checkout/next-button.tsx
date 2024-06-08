@@ -39,7 +39,7 @@ export default function Button({ checkoutId }: { checkoutId: string }) {
 
   if (!deliveryMethodId) {
     return (
-      <div className="mt-10 h-[50px] w-1/4 cursor-not-allowed bg-black p-3 text-center font-semibold text-white opacity-50">
+      <div className="mt-10 h-[50px] cursor-not-allowed bg-black p-3 text-center font-semibold text-white opacity-50 md:w-1/3 lg:w-1/4">
         Siguiente
       </div>
     );
@@ -49,7 +49,7 @@ export default function Button({ checkoutId }: { checkoutId: string }) {
     <>
       <div
         className={clsx(
-          'mt-10 h-[50px] w-1/4 cursor-pointer bg-black p-3 text-center font-semibold text-white hover:opacity-50',
+          'mt-10 h-[50px] cursor-pointer bg-black p-3 text-center font-semibold text-white hover:opacity-50 md:w-1/3 lg:w-1/4',
           { hidden: isPending },
         )}
         onClick={() => setupShippingAddress()}
@@ -58,7 +58,7 @@ export default function Button({ checkoutId }: { checkoutId: string }) {
       </div>
       <div
         className={clsx(
-          'h-50 relative mt-10 flex h-[50px] w-1/4 cursor-not-allowed items-center justify-center space-x-6 bg-black p-3 text-center font-semibold text-white',
+          'h-50 relative mt-10 flex h-[50px] cursor-not-allowed items-center justify-center space-x-6 bg-black p-3 text-center font-semibold text-white md:w-1/3 lg:w-1/4',
           { hidden: !isPending },
         )}
       >

@@ -1,5 +1,6 @@
 'use client';
 
+import Skeleton from '@mui/material/Skeleton';
 import { useCountryArea, usePostalCode, useUser } from 'components/user/after-login/store';
 import { useEffect, useTransition } from 'react';
 import { shippingAddressUpdate, shippingMethodsAction } from './actions';
@@ -41,7 +42,30 @@ export default function Shipping({ checkoutId }: { checkoutId: string }) {
   }, [setShippingMethods, checkoutId, postalCode, countryArea]);
 
   if (isPending) {
-    return <>Estoy cargando</>;
+    return (
+      <div className="flex flex-col space-y-14">
+        <div className="flex animate-pulse flex-col space-y-2">
+          <Skeleton animation={'pulse'} width={300} />
+          <Skeleton animation={'pulse'} />
+          <Skeleton animation={'wave'} />
+        </div>
+        <div className="flex animate-pulse flex-col space-y-2">
+          <Skeleton animation={'pulse'} width={300} />
+          <Skeleton animation={'pulse'} />
+          <Skeleton animation={'wave'} />
+        </div>
+        <div className="flex animate-pulse flex-col space-y-2">
+          <Skeleton animation={'pulse'} width={300} />
+          <Skeleton animation={'pulse'} />
+          <Skeleton animation={'wave'} />
+        </div>
+        <div className="flex animate-pulse flex-col space-y-2">
+          <Skeleton animation={'pulse'} width={300} />
+          <Skeleton animation={'pulse'} />
+          <Skeleton animation={'wave'} />
+        </div>
+      </div>
+    );
   }
 
   if (shippingMethods) {

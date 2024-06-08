@@ -23,6 +23,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
   const quantityRef = useRef(cart?.totalQuantity);
   const openCart = () => setIsOpen(true);
   const closeCart = () => setIsOpen(false);
+  let total = 0;
 
   useEffect(() => {
     // Open cart modal when quantity changes.
@@ -36,6 +37,12 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
       quantityRef.current = cart?.totalQuantity;
     }
   }, [isOpen, cart?.totalQuantity, quantityRef]);
+
+  if (cart) {
+    cart.lines.map((item) => {
+      total += Number(item.cost.totalAmount.amount) * Number(item.quantity);
+    });
+  }
 
   return (
     <div className="z-50">
@@ -153,14 +160,6 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                     })}
                   </ul>
                   <div className="py-4 text-sm text-neutral-500 dark:text-neutral-400">
-                    <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 dark:border-neutral-700">
-                      <p>Impuestos</p>
-                      <Price
-                        className="text-right text-base text-black dark:text-white"
-                        amount={cart.cost.totalTaxAmount.amount}
-                        currencyCode={cart.cost.totalTaxAmount.currencyCode}
-                      />
-                    </div>
                     <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
                       <p>Envio</p>
                       <p className="text-right">Calculado al momento de pagar</p>
@@ -169,7 +168,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                       <p>Total</p>
                       <Price
                         className="text-right text-base text-black dark:text-white"
-                        amount={cart.cost.totalAmount.amount}
+                        amount={String(total)}
                         currencyCode={cart.cost.totalAmount.currencyCode}
                       />
                     </div>
