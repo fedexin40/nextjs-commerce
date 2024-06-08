@@ -45,7 +45,7 @@ export default async function HomePage() {
         >
           <CarouselComponent
             images={['/envioGratisMobile.png', '/bannerMobile.png']}
-            className="h-40"
+            className="h-52"
             autoPlay={true}
             removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
           />
