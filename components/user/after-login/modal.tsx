@@ -69,12 +69,12 @@ export default function UserMenuModal({
                   </div>
                   <div className="flex h-full flex-col md:flex-row">
                     <div
-                      className="overflow-x-auto bg-[#f7e7da] pb-10 pt-10 dark:bg-zinc-700 md:w-1/3"
+                      className="bg-[#f7e7da] pb-10 pt-10 dark:bg-zinc-700 md:w-1/3 md:overflow-x-auto"
                       ref={initialFocusRef}
                     >
                       {UserDetails}
                     </div>
-                    <div className="overflow-x-auto bg-white pt-10 dark:bg-black md:w-2/3">
+                    <div className="bg-white pb-20 pt-10 dark:bg-black md:w-2/3 md:overflow-x-auto">
                       {UserShoppings}
                     </div>
                   </div>
