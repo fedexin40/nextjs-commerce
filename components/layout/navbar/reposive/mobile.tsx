@@ -10,21 +10,25 @@ export default function MobileNavbar() {
   return (
     <>
       <nav className="bg-[#f7e7da]">
-        <div className="grid grid-cols-2 content-center items-center pb-3 uppercase">
-          <div className="mt-4">
-            <Link href="/" aria-label="Go back home">
-              <div className="relative left-10 top-2">
-                <Image src={'/logoNegroMovil.png'} alt="" width="100" height="100" />
-              </div>
-            </Link>
+        <div className="grid grid-cols-2 pb-3 uppercase">
+          <div className="flex justify-center	">
+            <Suspense>
+              <Link href="/" aria-label="Go back home">
+                <div className="relative h-[120px] w-[120px]">
+                  <Image className="object-contain" src={'/logoNegroMovil.png'} alt="" fill />
+                </div>
+              </Link>
+            </Suspense>
           </div>
-          <div className="col-span-1 self-end">
-            <div className="flex flex-row gap-x-5">
+          <div className="h-full">
+            <div className="flex h-full flex-row place-items-center gap-x-5">
               <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300">
                 Nosotros
               </div>
-              <div className="relative">
-                <Menu />
+              <div>
+                <Suspense>
+                  <Menu />
+                </Suspense>
               </div>
             </div>
           </div>
@@ -34,12 +38,20 @@ export default function MobileNavbar() {
         <div className="grid grid-cols-4 bg-[#f7e7da]">
           <div className="w-full border-r-2 border-white p-2">
             <div className="flex justify-center">
-              <Image src="/facebookRosa.png" alt="" width="25" height="25" />
+              <Suspense>
+                <div className="relative h-[25px] w-[25px]">
+                  <Image className="object-cover" src="/facebookRosa.png" alt="" fill />
+                </div>
+              </Suspense>
             </div>
           </div>
           <div className="w-full border-x-2 border-white  p-2">
             <div className="flex justify-center">
-              <Image src="/instagramRosa.png" alt="" width="25" height="25" />
+              <Suspense>
+                <div className="relative h-[25px] w-[25px]">
+                  <Image className="object-cover" src="/instagramRosa.png" alt="" fill />
+                </div>
+              </Suspense>
             </div>
           </div>
           <div className="w-full border-x-2 border-white p-2">

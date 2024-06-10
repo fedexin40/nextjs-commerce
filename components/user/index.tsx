@@ -1,4 +1,5 @@
 import { Me } from 'lib/saleor';
+import { Suspense } from 'react';
 import UserMenuDropDown from './after-login';
 import UserMenuModal from './after-login/modal';
 import UserDetails from './after-login/user-details/page';
@@ -18,11 +19,12 @@ export default async function User() {
   }
   return (
     <>
-      <UserMenuDropDown />
-      <UserMenuModal
-        UserDetails={<UserDetails />}
-        UserShoppings={<UserShoppings />}
-      ></UserMenuModal>
+      <Suspense>
+        <UserMenuDropDown />
+      </Suspense>
+      <Suspense>
+        <UserMenuModal UserDetails={<UserDetails />} UserShoppings={<UserShoppings />} />
+      </Suspense>
     </>
   );
 }

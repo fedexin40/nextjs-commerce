@@ -18,20 +18,24 @@ export default function DesktopNavbar() {
                 Nosotros
               </div>
               <div className="relative">
-                <Menu />
+                <Suspense>
+                  <Menu />
+                </Suspense>
               </div>
             </div>
           </div>
           <div>
-            <Link
-              href="/"
-              aria-label="Go back home"
-              className="mr-2 flex w-auto items-center justify-center lg:mr-6"
-            >
-              <div className="relative h-[100px] w-full">
-                <Image className="object-contain" src={'/logoNegro.png'} alt="" fill />
-              </div>
-            </Link>
+            <Suspense>
+              <Link
+                href="/"
+                aria-label="Go back home"
+                className="mr-2 flex w-auto items-center justify-center lg:mr-6"
+              >
+                <div className="relative h-[100px] w-full">
+                  <Image className="object-contain" src={'/logoNegro.png'} alt="" fill />
+                </div>
+              </Link>
+            </Suspense>
           </div>
           <div className="md:col-span-2">
             <div className="flex flex-row items-center space-x-3">
@@ -51,12 +55,20 @@ export default function DesktopNavbar() {
                 </Suspense>
               </div>
               <div className="flex w-2/4 justify-end space-x-3 pr-10">
-                <Link href="">
-                  <Image src={'/facebookRosa.png'} alt="" width="25" height="25" />
-                </Link>
-                <Link href="">
-                  <Image src={'/instagramRosa.png'} alt="" width="25" height="25" />
-                </Link>
+                <Suspense>
+                  <Link href="">
+                    <div className="relative h-[25px] w-[25px]">
+                      <Image className="object-cover" src={'/facebookRosa.png'} alt="" fill />
+                    </div>
+                  </Link>
+                </Suspense>
+                <Suspense>
+                  <Link href="">
+                    <div className="relative h-[25px] w-[25px]">
+                      <Image className="object-cover" src={'/instagramRosa.png'} alt="" fill />
+                    </div>
+                  </Link>
+                </Suspense>
               </div>
             </div>
           </div>
