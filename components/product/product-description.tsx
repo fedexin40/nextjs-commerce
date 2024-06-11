@@ -41,8 +41,28 @@ export function ProductDescription({ product }: { product: Product }) {
         <div className="pb-3">Envio gratis a la ciudad de Puebla</div>
         <div className="flex flex-row gap-x-4">
           <div>Compartir con</div>
-          <Image src={'/facebook.png'} alt="" height={10} width={15} />
-          <Image src={'/instagram.png'} alt="" height={10} width={15} />
+          <Suspense>
+            <div className="relative h-[20px] w-[20px]">
+              <Image
+                className="object-contain"
+                src={'/facebook.png'}
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+              />
+            </div>
+          </Suspense>
+          <Suspense>
+            <div className="relative h-[20px] w-[20px]">
+              <Image
+                className="object-contain"
+                src={'/instagram.png'}
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+              />
+            </div>
+          </Suspense>
         </div>
       </div>
     </div>

@@ -12,13 +12,16 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
           <ul className="flex w-full gap-4 overflow-x-auto overflow-y-hidden pt-1">
             {images.map((image) => (
               <li key={image.src} className="aspect-square w-[250px] flex-none">
-                <Image
-                  className="relative h-full w-full object-cover"
-                  src={image.src}
-                  alt={image.altText}
-                  height={100}
-                  width={100}
-                />
+                <Suspense fallback={<div className="h-full w-full animate-spin" />}>
+                  <Image
+                    className="relative h-full w-full object-cover"
+                    src={image.src}
+                    alt={image.altText}
+                    height={100}
+                    width={100}
+                    sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+                  />
+                </Suspense>
               </li>
             ))}
           </ul>
@@ -28,7 +31,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
         <div className="hidden gap-y-3 pr-10 lg:flex lg:flex-col">
           {images.map((image: { src: string; altText: string }, index) => (
             <div className="relative lg:h-24 lg:w-24" key={image.src}>
-              <Suspense>
+              <Suspense fallback={<div className="h-full w-full animate-spin" />}>
                 <Image
                   className="object-contain"
                   src={image.src}
@@ -36,19 +39,23 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
                   fill
                   onClick={() => setSrc(index)}
                   priority={true}
+                  sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
                 />
               </Suspense>
             </div>
           ))}
         </div>
         <div className="relative mr-10 md:row-span-3 lg:col-span-3">
-          <Image
-            priority={true}
-            className="rounded-b-lg object-cover"
-            src={images[src]?.src as string}
-            alt=""
-            fill
-          />
+          <Suspense fallback={<div className="h-full w-full animate-spin" />}>
+            <Image
+              priority={true}
+              className="rounded-b-lg object-cover"
+              src={images[src]?.src as string}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+            />
+          </Suspense>
         </div>
         <div className=" mt-3 hidden flex-row gap-x-3 md:flex md:w-[410px] lg:hidden lg:w-[500px]">
           {images.map((image: { src: string; altText: string }, index) => (
@@ -60,6 +67,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
                 fill
                 onClick={() => setSrc(index)}
                 priority={true}
+                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
               />
             </div>
           ))}

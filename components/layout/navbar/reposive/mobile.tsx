@@ -15,7 +15,15 @@ export default function MobileNavbar() {
             <Suspense>
               <Link href="/" aria-label="Go back home">
                 <div className="relative h-[120px] w-[120px]">
-                  <Image className="object-contain" src={'/logoNegroMovil.png'} alt="" fill />
+                  <Suspense>
+                    <Image
+                      className="object-contain"
+                      src={'/logoNegroMovil.png'}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </Suspense>
                 </div>
               </Link>
             </Suspense>
@@ -38,18 +46,30 @@ export default function MobileNavbar() {
         <div className="grid grid-cols-4 bg-[#f7e7da]">
           <div className="w-full border-r-2 border-white p-2">
             <div className="flex justify-center">
-              <Suspense>
-                <div className="relative h-[25px] w-[25px]">
-                  <Image className="object-cover" src="/facebookRosa.png" alt="" fill />
-                </div>
-              </Suspense>
+              <div className="relative h-[25px] w-[25px]">
+                <Suspense>
+                  <Image
+                    className="object-cover"
+                    src="/facebookRosa.png"
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </Suspense>
+              </div>
             </div>
           </div>
           <div className="w-full border-x-2 border-white  p-2">
             <div className="flex justify-center">
               <Suspense>
                 <div className="relative h-[25px] w-[25px]">
-                  <Image className="object-cover" src="/instagramRosa.png" alt="" fill />
+                  <Image
+                    className="object-cover"
+                    src="/instagramRosa.png"
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                 </div>
               </Suspense>
             </div>
