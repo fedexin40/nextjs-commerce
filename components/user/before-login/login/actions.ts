@@ -12,5 +12,7 @@ export async function Login({ email, password }: { email: string; password: stri
 export async function Logout() {
   await getServerAuthClient().signOut();
   cookies().delete('cartId');
+  cookies().delete('token');
+  cookies().delete('refreshToken');
   redirect('/');
 }

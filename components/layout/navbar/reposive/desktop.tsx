@@ -32,7 +32,13 @@ export default function DesktopNavbar() {
                 className="mr-2 flex w-auto items-center justify-center lg:mr-6"
               >
                 <div className="relative h-[100px] w-full">
-                  <Image className="object-contain" src={'/logoNegro.png'} alt="" fill />
+                  <Image
+                    className="object-contain"
+                    src={'/logoNegro.png'}
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                 </div>
               </Link>
             </Suspense>
@@ -58,14 +64,26 @@ export default function DesktopNavbar() {
                 <Suspense>
                   <Link href="">
                     <div className="relative h-[25px] w-[25px]">
-                      <Image className="object-cover" src={'/facebookRosa.png'} alt="" fill />
+                      <Image
+                        className="object-cover"
+                        src={'/facebookRosa.png'}
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
                     </div>
                   </Link>
                 </Suspense>
                 <Suspense>
                   <Link href="">
                     <div className="relative h-[25px] w-[25px]">
-                      <Image className="object-cover" src={'/instagramRosa.png'} alt="" fill />
+                      <Image
+                        className="object-cover"
+                        src={'/instagramRosa.png'}
+                        alt=""
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      />
                     </div>
                   </Link>
                 </Suspense>

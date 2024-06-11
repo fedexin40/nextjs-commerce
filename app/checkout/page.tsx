@@ -37,7 +37,7 @@ export default async function Checkout({
         </div>
       </div>
       <div className="border-[#acacac] bg-[#d4d4d4] pt-16 dark:border-t-0 dark:border-[#c9aa9e] dark:dark:bg-zinc-700 md:ml-10 md:w-1/2 md:border-l-2">
-        <div className="px-5">
+        <div className="px-5 pb-10">
           <Suspense fallback={<>Cargando</>}>
             <Shipping checkoutId={checkout || ''} />
           </Suspense>

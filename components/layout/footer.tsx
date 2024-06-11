@@ -61,13 +61,24 @@ export function Contacto() {
       <div className="uppercase dark:text-[#c9aa9e]">Contacto</div>
       <div className="flex flex-row items-center gap-x-3">
         <div className="relative h-5 w-5">
-          <Image className="object-contain" src={'/mail.png'} alt="" fill />
+          <Image
+            className="object-contain"
+            src={'/mail.png'}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </div>
         <span>contacto@proyecto705.com</span>
       </div>
       <div className="-mt-3 flex flex-row items-center gap-x-3">
         <div className="relative h-5 w-5">
-          <Image src={'/whats.png'} alt="" fill />
+          <Image
+            src={'/whats.png'}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </div>
         <span>22 11 66 44 77</span>
       </div>
@@ -87,23 +98,46 @@ export function Pagos() {
           </Link>
           <Link className="hover:cursor-pointer" href="">
             <div className="relative h-7 w-7">
-              <Image src={'/instagram.png'} alt="" fill />
+              <Image
+                src={'/instagram.png'}
+                alt=""
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
             </div>
           </Link>
         </div>
         <div className="row-start-2 -mt-3">
           <div className="relative h-7 w-20">
-            <Image className="object-contain" src={'/americanexpress.png'} alt="" fill />
+            <Image
+              className="object-contain"
+              src={'/americanexpress.png'}
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
           </div>
         </div>
         <div className="row-start-2">
           <div className="relative h-7 w-20">
-            <Image className="object-contain" src={'/visa.png'} alt="" fill />
+            <Image
+              className="object-contain"
+              src={'/visa.png'}
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
           </div>
         </div>
         <div className="row-start-2">
           <div className="relative h-10 w-16">
-            <Image className="object-contain" src={'/mastercard.png'} alt="" fill />
+            <Image
+              className="object-contain"
+              src={'/mastercard.png'}
+              alt=""
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            />
           </div>
         </div>
       </div>

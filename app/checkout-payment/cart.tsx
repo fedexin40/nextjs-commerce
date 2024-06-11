@@ -19,6 +19,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
     return <div />;
   }
   let deliveryPrice = Number(cart.cost.totalAmount.amount);
+  console.log(deliveryPrice);
   cart.lines.map((item) => {
     deliveryPrice -= Number(item.cost.totalAmount.amount) * item.quantity;
   });
