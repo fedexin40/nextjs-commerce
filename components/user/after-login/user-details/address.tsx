@@ -39,7 +39,6 @@ export default function Address({
         countryArea: countryArea.countryArea,
         phone: userStore.phone,
       };
-      console.log(input);
       // Update the address if the user already has one
       const errors = await updateAddress(input);
       if (errors) {

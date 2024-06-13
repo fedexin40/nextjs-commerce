@@ -58,7 +58,7 @@ export default async function CheckoutPayment({
           </Suspense>
         </div>
       </div>
-      <div className="border-[#acacac] bg-[#d4d4d4] py-16 dark:border-t-0 dark:border-[#c9aa9e] dark:dark:bg-zinc-700 md:ml-10 md:w-1/2 md:border-l-2">
+      <div className="hidden border-[#acacac] bg-[#d4d4d4] py-16 dark:border-t-0 dark:border-[#c9aa9e] dark:dark:bg-zinc-700 md:ml-10 md:block md:w-1/2 md:border-l-2">
         <div className="px-5">
           <Cart cart={cart} />
         </div>

@@ -950,7 +950,6 @@ export async function shippingAddressCheckoutUpdate({
     lastName,
     phone,
   };
-  console.log(shippingAddress);
   const checkout = await saleorFetch({
     query: CheckoutShippingAddressUpdateDocument,
     variables: {

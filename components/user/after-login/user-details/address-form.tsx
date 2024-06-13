@@ -23,16 +23,16 @@ export default function AddressInput({
 
   useEffect(() => {
     setUserDetails({
-      firstName: user.firstName,
+      firstName: user.firstName || '',
       lastName: user.lastName || '',
       streetAddress1: user.address.streetAddress1,
       streetAddress2: user.address.streetAddress2 || '',
-      city: user.address.city,
-      email: user.email,
-      phone: user.address.phone,
+      city: user.address.city || '',
+      email: user.email || '',
+      phone: user.address.phone || '',
     });
-    setPostalCode(user.address.postalCode);
-    setCountryArea(user.address.countryArea);
+    setPostalCode(user.address.postalCode || '');
+    setCountryArea(user.address.countryArea || '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -135,8 +135,8 @@ export default function AddressInput({
         defaultValue={user.address.phone}
         onBlur={handleChange}
       />
-      <div className="border-2	border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed dark:border dark:border-[#c9aa9e] dark:bg-zinc-700">
-        {user.email}
+      <div className="h-[26px] border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:h-[32px]">
+        {user.email ? user.email : 'Correo electronico...'}
       </div>
     </div>
   );

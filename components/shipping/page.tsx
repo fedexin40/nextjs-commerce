@@ -19,14 +19,14 @@ export default function Shipping({ checkoutId }: { checkoutId: string }) {
     const methodShipping = async () => {
       const input = {
         checkoutId: checkoutId,
-        streetAddress1: userStore.streetAddress1,
-        streetAddress2: userStore.streetAddress2,
-        city: userStore.city,
+        streetAddress1: userStore.streetAddress1 || '',
+        streetAddress2: userStore.streetAddress2 || '',
+        city: userStore.city || '',
         postalCode: postalCode,
         countryArea: countryArea,
-        firstName: userStore.firstName,
-        lastName: userStore.lastName,
-        phone: userStore.phone,
+        firstName: userStore.firstName || '',
+        lastName: userStore.lastName || '',
+        phone: userStore.phone || '',
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
       const error = await shippingAddressUpdate(input);
@@ -43,34 +43,48 @@ export default function Shipping({ checkoutId }: { checkoutId: string }) {
 
   if (isPending) {
     return (
-      <div className="flex flex-col space-y-14">
-        <div className="flex animate-pulse flex-col space-y-2">
-          <Skeleton animation={'pulse'} width={300} />
-          <Skeleton animation={'pulse'} />
-          <Skeleton animation={'wave'} />
+      <>
+        <div className="flex flex-col space-y-4 md:space-y-8 lg:space-y-14">
+          <div className="flex flex-row space-x-2 text-sm lg:text-base">
+            <span>Cargando</span>
+            <div className="flex flex-row space-x-2 self-end">
+              <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black [animation-delay:-0.3s] dark:bg-white lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
+              <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black [animation-delay:-0.15s] dark:bg-white lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
+              <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black dark:bg-white lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
+            </div>
+          </div>
+          <div className="flex animate-pulse flex-col space-y-2">
+            <Skeleton animation={'pulse'} width={300} />
+            <Skeleton animation={'pulse'} />
+            <Skeleton animation={'wave'} />
+          </div>
+          <div className="hidden animate-pulse flex-col space-y-2 md:flex">
+            <Skeleton animation={'pulse'} width={300} />
+            <Skeleton animation={'pulse'} />
+            <Skeleton animation={'wave'} />
+          </div>
+          <div className="hidden animate-pulse flex-col space-y-2 md:flex">
+            <Skeleton animation={'pulse'} width={300} />
+            <Skeleton animation={'pulse'} />
+            <Skeleton animation={'wave'} />
+          </div>
+          <div className="hidden animate-pulse flex-col space-y-2 md:flex">
+            <Skeleton animation={'pulse'} width={300} />
+            <Skeleton animation={'pulse'} />
+            <Skeleton animation={'wave'} />
+          </div>
         </div>
-        <div className="flex animate-pulse flex-col space-y-2">
-          <Skeleton animation={'pulse'} width={300} />
-          <Skeleton animation={'pulse'} />
-          <Skeleton animation={'wave'} />
-        </div>
-        <div className="flex animate-pulse flex-col space-y-2">
-          <Skeleton animation={'pulse'} width={300} />
-          <Skeleton animation={'pulse'} />
-          <Skeleton animation={'wave'} />
-        </div>
-        <div className="flex animate-pulse flex-col space-y-2">
-          <Skeleton animation={'pulse'} width={300} />
-          <Skeleton animation={'pulse'} />
-          <Skeleton animation={'wave'} />
-        </div>
-      </div>
+      </>
     );
   }
 
-  if (shippingMethods) {
+  if (shippingMethods.length > 0) {
     return <ShippingMethods ShippingMethods={shippingMethods} />;
   }
 
-  return <>El codigo postal o la direccion no son correctos</>;
+  return (
+    <div className="space-y-5 text-xs leading-8	tracking-wider md:text-left lg:text-sm lg:leading-10">
+      Por favor ingresa una direccion correcta para poder calcular los envios disponibles.
+    </div>
+  );
 }

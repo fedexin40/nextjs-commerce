@@ -19,7 +19,7 @@ export default async function Checkout({
 
   return (
     <div className="flex flex-col tracking-wider md:flex-row">
-      <div className="mb-24 ml-10 pt-16 md:w-1/2 lg:mb-40 lg:ml-32">
+      <div className="mb-16 ml-10 pt-16 md:mb-24 md:w-1/2 lg:mb-40 lg:ml-32">
         <div className="font-medium dark:text-[#c9aa9e]">Detalles de entrega</div>
         <div className="flex flex-col pr-10 pt-5">
           <AddressInput user={me} countryAreaChoices={states} />
@@ -32,19 +32,19 @@ export default async function Checkout({
           <div className="pt-5 text-xs tracking-wider">Tiempo de entrega: 2 a 7 dias habiles</div>
           <div className="pt-5 text-xs tracking-wider">Terminos y condiciones</div>
         </div>
-        <div className="hidden md:block">
+        <div className="hidden pt-10 md:block">
           <Button checkoutId={checkout || ''} />
         </div>
       </div>
-      <div className="border-[#acacac] bg-[#d4d4d4] pt-16 dark:border-t-0 dark:border-[#c9aa9e] dark:dark:bg-zinc-700 md:ml-10 md:w-1/2 md:border-l-2">
+      <div className="border-[#acacac] bg-[#d4d4d4] pt-16 dark:border-t-0 dark:border-[#c9aa9e] dark:bg-zinc-700 md:ml-10 md:w-1/2 md:border-l-2">
         <div className="px-5 pb-10">
           <Suspense fallback={<>Cargando</>}>
             <Shipping checkoutId={checkout || ''} />
           </Suspense>
         </div>
       </div>
-      <div className="flex w-full flex-col bg-[#d4d4d4] md:hidden">
-        <div className="mb-8 w-1/2 place-self-center">
+      <div className="flex w-full flex-col bg-[#d4d4d4] dark:bg-zinc-700 md:hidden">
+        <div className="mb-8 w-1/2 place-self-center dark:bg-[#c9aa9e]">
           <Button checkoutId={checkout || ''} />
         </div>
       </div>

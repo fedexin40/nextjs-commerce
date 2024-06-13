@@ -19,7 +19,6 @@ export default function Cart({ cart }: { cart: CartType | null }) {
     return <div />;
   }
   let deliveryPrice = Number(cart.cost.totalAmount.amount);
-  console.log(deliveryPrice);
   cart.lines.map((item) => {
     deliveryPrice -= Number(item.cost.totalAmount.amount) * item.quantity;
   });
@@ -95,11 +94,11 @@ export default function Cart({ cart }: { cart: CartType | null }) {
           </div>
         </div>
         <div className="pb-7 text-neutral-500 dark:text-white">
-          <div className="mb-2 mt-10 flex items-center justify-between pb-1 pt-1 text-black dark:border-neutral-700">
+          <div className="mb-2 mt-10 flex items-center justify-between pb-1 pt-1 text-black dark:border-neutral-700 dark:text-white">
             <p>Envio</p>
-            <p className="text-right text-black">${deliveryPrice}</p>
+            <p className="text-right text-black dark:text-white">${deliveryPrice}</p>
           </div>
-          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-2 text-sm uppercase text-black dark:border-[#c9aa9e] lg:text-base">
+          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-2 text-sm uppercase text-black dark:border-[#c9aa9e] dark:text-white lg:text-base">
             <p>Total</p>
             <Price
               className="text-black dark:text-white"
