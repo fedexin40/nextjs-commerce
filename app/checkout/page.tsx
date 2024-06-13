@@ -36,8 +36,8 @@ export default async function Checkout({
           <Button checkoutId={checkout || ''} />
         </div>
       </div>
-      <div className="border-[#acacac] bg-[#d4d4d4] pt-16 dark:border-t-0 dark:border-[#c9aa9e] dark:bg-zinc-700 md:ml-10 md:w-1/2 md:border-l-2">
-        <div className="px-5 pb-10">
+      <div className="border-[#acacac] bg-[#d4d4d4] py-16 dark:border-t-0 dark:border-[#c9aa9e] dark:bg-zinc-700 md:ml-10 md:w-1/2 md:border-l-2">
+        <div className="px-5">
           <Suspense fallback={<>Cargando</>}>
             <Shipping checkoutId={checkout || ''} />
           </Suspense>

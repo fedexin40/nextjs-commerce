@@ -49,7 +49,7 @@ export default function Button({ checkoutId }: { checkoutId: string }) {
     <>
       <div
         className={clsx(
-          'h-[50px] cursor-pointer whitespace-nowrap bg-black p-3 pt-10 text-center font-semibold text-white hover:opacity-50 dark:bg-[#c9aa9e] md:w-1/3 lg:w-1/4',
+          'h-[50px] cursor-pointer whitespace-nowrap bg-black p-3 text-center font-semibold text-white hover:opacity-50 dark:bg-[#c9aa9e] md:w-1/3 lg:w-1/4',
           { hidden: isPending },
         )}
         onClick={() => setupShippingAddress()}
@@ -58,7 +58,7 @@ export default function Button({ checkoutId }: { checkoutId: string }) {
       </div>
       <div
         className={clsx(
-          'h-50 relative mt-10 flex h-[50px] cursor-not-allowed items-center justify-center space-x-6 whitespace-nowrap bg-black p-3 text-center font-semibold text-white dark:bg-[#c9aa9e] md:w-1/3 lg:w-1/4',
+          'relative flex h-[50px] cursor-not-allowed items-center justify-center space-x-6 whitespace-nowrap bg-black p-3 text-center font-semibold text-white dark:bg-[#c9aa9e] md:w-1/3 lg:w-1/4',
           { hidden: !isPending },
         )}
       >
