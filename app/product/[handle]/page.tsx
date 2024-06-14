@@ -1,13 +1,12 @@
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-
 import { GridTileImage } from 'components/grid/tile';
 import { Gallery } from 'components/product/gallery';
 import { ProductDescription } from 'components/product/product-description';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
 import { getCollectionProducts, getProduct } from 'lib/saleor';
-import { Image, Product } from 'lib/types';
+import { Image, Product, ProductVariant } from 'lib/types';
+import type { Metadata } from 'next';
 import Link from 'next/link';
+import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 export const runtime = 'edge';
@@ -50,8 +49,21 @@ export async function generateMetadata({
   };
 }
 
-export default async function Product({ params }: { params: { handle: string } }) {
+export default async function Product({
+  params,
+  searchParams,
+}: {
+  params: { handle: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
   const product = await getProduct(params.handle);
+  const variants = product?.variants;
+
+  const variant = variants?.find((variant: ProductVariant) =>
+    variant.selectedOptions.every(
+      (option) => option.value === searchParams[option.name.toLowerCase()],
+    ),
+  );
 
   if (!product) return notFound();
 
@@ -68,7 +80,7 @@ export default async function Product({ params }: { params: { handle: string } }
             />
           </div>
           <div>
-            <ProductDescription product={product} />
+            <ProductDescription product={product} variant={variant} />
           </div>
         </div>
         <Suspense>

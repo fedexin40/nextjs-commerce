@@ -1,12 +1,25 @@
 import { AddToCart } from 'components/cart/add-to-cart';
 import Price from 'components/price';
-import { Product } from 'lib/types';
+import { Product, ProductVariant } from 'lib/types';
 import Image from 'next/image';
 import { Suspense } from 'react';
 import ReactHtmlParser from 'react-html-parser';
 import { VariantSelector } from './variant-selector';
 
-export function ProductDescription({ product }: { product: Product }) {
+export function ProductDescription({
+  product,
+  variant,
+}: {
+  product: Product;
+  variant: ProductVariant | undefined;
+}) {
+  let amount;
+  if (!variant) {
+    amount = `${product.priceRange.maxVariantPrice.amount} - ${product.priceRange.minVariantPrice.amount}`;
+  } else {
+    amount = variant?.price.amount;
+  }
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col border-b dark:border-neutral-700">
@@ -19,10 +32,7 @@ export function ProductDescription({ product }: { product: Product }) {
           </div>
         ) : null}
         <div className="mr-auto w-auto p-2 pl-0 tracking-wider dark:text-[#c9aa9e] md:text-base lg:text-lg">
-          <Price
-            amount={product.priceRange.minVariantPrice.amount}
-            currencyCode={product.priceRange.minVariantPrice.currencyCode}
-          />
+          <Price amount={amount} currencyCode={product.priceRange.minVariantPrice.currencyCode} />
         </div>
       </div>
       <div className="flex flex-col border-b pb-6 dark:border-neutral-700">
