@@ -31,7 +31,13 @@ export default function Google({
     <div onClick={Login}>
       <div className="flex h-10 flex-row gap-5 border-2 border-[#a8a8a8] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
         <div className="relative h-5 w-5">
-          <Image className="object-cover" src={'/googleLogin.png'} alt="" fill />
+          <Image
+            className="object-cover"
+            src={'/googleLogin.png'}
+            alt=""
+            fill
+            sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+          />
         </div>
         <div
           className={clsx('content-center whitespace-nowrap text-[#a8a8a8] dark:dark:text-white', {

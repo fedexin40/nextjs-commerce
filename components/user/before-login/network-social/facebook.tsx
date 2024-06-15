@@ -30,8 +30,14 @@ export default function Facebook({
   return (
     <div onClick={Login}>
       <div className="mb-3 flex h-10 flex-row gap-5 border-2 border-[#1877F2] bg-[#1877F2] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
-        <div className="relative h-5 w-5">
-          <Image className="object-cover" src={'/facebookLogin.png'} alt="" fill />
+        <div className="relative h-5 w-5 overflow-hidden rounded-full">
+          <Image
+            className="scale-[1.8] object-contain"
+            src={'/facebookLogin.png'}
+            alt=""
+            fill
+            sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+          />
         </div>
         <div
           className={clsx('content-center whitespace-nowrap text-white', {
