@@ -39,7 +39,6 @@ export async function shippingAddressUpdate({
   try {
     await shippingAddressCheckoutUpdate(input);
   } catch (error: any) {
-    console.log(error.message);
     return error.message;
   }
 }
@@ -49,7 +48,7 @@ export async function shippingMethodsAction({ checkoutId }: { checkoutId: string
   try {
     const methodsShipping = await getShippingMethods(checkoutId || '');
     return methodsShipping;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    return error.message;
   }
 }

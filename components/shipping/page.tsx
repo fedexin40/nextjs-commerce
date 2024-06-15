@@ -2,7 +2,7 @@
 
 import Skeleton from '@mui/material/Skeleton';
 import { useCountryArea, usePostalCode, useUser } from 'components/user/after-login/store';
-import { useEffect, useTransition } from 'react';
+import { useEffect, useState, useTransition } from 'react';
 import { shippingAddressUpdate, shippingMethodsAction } from './actions';
 import ShippingMethods from './shipping';
 import { useShipping, useShippingActions } from './store';
@@ -14,6 +14,7 @@ export default function Shipping({ checkoutId }: { checkoutId: string }) {
   const [isPending, startTransition] = useTransition();
   const { setShippingMethods } = useShippingActions();
   const { shippingMethods } = useShipping();
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const methodShipping = async () => {
@@ -33,6 +34,8 @@ export default function Shipping({ checkoutId }: { checkoutId: string }) {
       if (!error) {
         const shippingMethod = await shippingMethodsAction({ checkoutId });
         setShippingMethods(shippingMethod || []);
+      } else {
+        setError(error);
       }
     };
     startTransition(() => {
@@ -80,6 +83,10 @@ export default function Shipping({ checkoutId }: { checkoutId: string }) {
 
   if (shippingMethods.length > 0) {
     return <ShippingMethods ShippingMethods={shippingMethods} />;
+  }
+
+  if (error) {
+    return <div>{error}</div>;
   }
 
   return (
