@@ -13,13 +13,6 @@ export function ProductDescription({
   product: Product;
   variant: ProductVariant | undefined;
 }) {
-  let amount;
-  if (!variant) {
-    amount = `${product.priceRange.maxVariantPrice.amount} - ${product.priceRange.minVariantPrice.amount}`;
-  } else {
-    amount = variant?.price.amount;
-  }
-
   return (
     <div className="flex flex-col">
       <div className="flex flex-col border-b dark:border-neutral-700">
@@ -32,7 +25,19 @@ export function ProductDescription({
           </div>
         ) : null}
         <div className="mr-auto w-auto p-2 pl-0 tracking-wider dark:text-[#c9aa9e] md:text-base lg:text-lg">
-          <Price amount={amount} currencyCode={product.priceRange.minVariantPrice.currencyCode} />
+          {variant && (
+            <Price
+              amountMax={variant.price.amount}
+              currencyCode={product.priceRange.minVariantPrice.currencyCode}
+            />
+          )}
+          {!variant && (
+            <Price
+              amountMax={product.priceRange.maxVariantPrice.amount}
+              amountMin={product.priceRange.minVariantPrice.amount}
+              currencyCode={product.priceRange.minVariantPrice.currencyCode}
+            />
+          )}
         </div>
       </div>
       <div className="flex flex-col border-b pb-6 dark:border-neutral-700">

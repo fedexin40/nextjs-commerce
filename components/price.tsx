@@ -1,24 +1,45 @@
 import clsx from 'clsx';
 
-const Price = ({
-  amount,
+export default function Price({
+  amountMax,
+  amountMin,
   className,
   currencyCode = 'USD',
   currencyCodeClassName,
 }: {
-  amount: string;
+  amountMax: string;
+  amountMin?: string;
   className?: string;
   currencyCode: string;
   currencyCodeClassName?: string;
-} & React.ComponentProps<'p'>) => (
-  <p suppressHydrationWarning={true} className={className}>
-    {`${new Intl.NumberFormat(undefined, {
-      style: 'currency',
-      currency: currencyCode,
-      currencyDisplay: 'narrowSymbol',
-    }).format(parseFloat(amount))}`}
-    <span className={clsx('ml-1 inline', currencyCodeClassName)}>{`${currencyCode}`}</span>
-  </p>
-);
-
-export default Price;
+}) {
+  const difference = Number(amountMax) - Number(amountMin);
+  if (amountMax && amountMin && difference > 0) {
+    return (
+      <p suppressHydrationWarning={true} className={className}>
+        {`${new Intl.NumberFormat(undefined, {
+          style: 'currency',
+          currency: currencyCode,
+          currencyDisplay: 'narrowSymbol',
+        }).format(parseFloat(amountMax))} - `}
+        {`${new Intl.NumberFormat(undefined, {
+          style: 'currency',
+          currency: currencyCode,
+          currencyDisplay: 'narrowSymbol',
+        }).format(parseFloat(amountMin))}`}
+        <span className={clsx('ml-1 inline', currencyCodeClassName)}>{`${currencyCode}`}</span>
+      </p>
+    );
+  } else {
+    return (
+      <p suppressHydrationWarning={true} className={className}>
+        {`${new Intl.NumberFormat(undefined, {
+          style: 'currency',
+          currency: currencyCode,
+          currencyDisplay: 'narrowSymbol',
+        }).format(parseFloat(amountMax))}`}
+        <span className={clsx('ml-1 inline', currencyCodeClassName)}>{`${currencyCode}`}</span>
+      </p>
+    );
+  }
+}
