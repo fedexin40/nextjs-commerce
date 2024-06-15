@@ -25,7 +25,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
 
   return (
     <>
-      <div className="flex h-full flex-col justify-between overflow-hidden p-1 pb-20 text-xs tracking-wider lg:text-base">
+      <div className="flex h-full flex-col justify-between overflow-hidden p-1 pb-20 text-xs tracking-wider lg:text-sm">
         <ul className="flex flex-col gap-3 overflow-auto lg:gap-5">
           {cart.lines.map((item, i) => {
             const merchandiseSearchParams = {} as MerchandiseSearchParams;
@@ -44,7 +44,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
             return (
               <div
                 key={i}
-                className="flex w-full flex-col border-2 border-[#acacac] dark:border-[#c9aa9e]"
+                className="flex w-full flex-col rounded-lg border-2 border-[#acacac] px-3 dark:border-[#c9aa9e]"
               >
                 <div className="relative flex w-full flex-row justify-between px-1 py-4">
                   <Link href={merchandiseUrl} className="z-30 flex flex-row space-x-4">
@@ -60,7 +60,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
                       />
                     </div>
 
-                    <div className="flex flex-col place-content-center">
+                    <div className="flex flex-col place-content-center space-y-2">
                       <span className="leading-tight">{item.merchandise.product.title}</span>
                       {item.merchandise.title !== DEFAULT_OPTION ? (
                         <p className="text-neutral-500 dark:text-neutral-400">
@@ -72,7 +72,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
                   <div className="flex h-16 flex-col justify-between">
                     <Price
                       className="flex justify-end space-y-2 text-right"
-                      amount={item.cost.totalAmount.amount}
+                      amountMax={item.cost.totalAmount.amount}
                       currencyCode={item.cost.totalAmount.currencyCode}
                     />
                     <div className="flex place-content-center hover:cursor-pointer">
@@ -98,11 +98,11 @@ export default function Cart({ cart }: { cart: CartType | null }) {
             <p>Envio</p>
             <p className="text-right text-black dark:text-white">${deliveryPrice}</p>
           </div>
-          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-2 text-sm uppercase text-black dark:border-[#c9aa9e] dark:text-white lg:text-base">
+          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 text-sm uppercase text-black dark:border-[#c9aa9e] dark:text-white lg:text-base">
             <p>Total</p>
             <Price
               className="text-black dark:text-white"
-              amount={cart.cost.totalAmount.amount}
+              amountMax={cart.cost.totalAmount.amount}
               currencyCode={cart.cost.totalAmount.currencyCode}
             />
           </div>
