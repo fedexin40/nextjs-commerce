@@ -51,13 +51,16 @@ export default function CheckoutForm({ returnUrl }: { returnUrl: string }) {
   return (
     <div className="stripe">
       <form className="payment-form" onSubmit={handleSubmit}>
-        <PaymentElement className="payment-element" options={paymentElementOptions} />
+        <PaymentElement
+          className="payment-element dark:text-white"
+          options={paymentElementOptions}
+        />
         <button
-          className="mt-10 h-[45px] w-1/2 bg-[#c9aa9e] px-5 shadow-lg lg:w-1/3 lg:py-1"
+          className="mt-10 h-[45px] w-1/2 bg-[#e4c0b2] px-5 lg:w-1/3 lg:py-1"
           disabled={isLoading || !stripe || !elements}
           id="submit"
         >
-          <div className="whitespace-nowrap p-0 text-base tracking-wider">
+          <div className="whitespace-nowrap p-0 text-sm tracking-wider">
             {isLoading ? (
               <div className="flex cursor-not-allowed items-center justify-center space-x-6">
                 <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.3s] dark:bg-white"></div>

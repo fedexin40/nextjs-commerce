@@ -2,12 +2,7 @@
 
 import { CurrentPerson, countryAreaChoices as countryAreaChoicesType } from 'lib/types';
 import { useEffect } from 'react';
-import {
-  useCountryAreaActions,
-  usePostalCodeActions,
-  useUser,
-  useUserDetailsActions,
-} from '../store';
+import { useUser, useUserDetailsActions } from '../store';
 
 export default function AddressInput({
   user,
@@ -18,8 +13,6 @@ export default function AddressInput({
 }) {
   const userStore = useUser();
   const { setUserDetails } = useUserDetailsActions();
-  const { setPostalCode } = usePostalCodeActions();
-  const { setCountryArea } = useCountryAreaActions();
 
   useEffect(() => {
     setUserDetails({
@@ -30,9 +23,9 @@ export default function AddressInput({
       city: user.address.city || '',
       email: user.email || '',
       phone: user.address.phone || '',
+      postalCode: user.address.phone || '',
+      countryArea: user.address.cityArea || '',
     });
-    setPostalCode(user.address.postalCode || '');
-    setCountryArea(user.address.countryArea || '');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -40,14 +33,6 @@ export default function AddressInput({
     event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>,
   ) {
     setUserDetails({ ...userStore, [event.target.name]: event.target.value });
-  }
-
-  function handleChangePostalCode(event: React.ChangeEvent<HTMLInputElement>) {
-    setPostalCode(event.target.value);
-  }
-
-  function handleChangeCountryCode(event: React.ChangeEvent<HTMLSelectElement>) {
-    setCountryArea(event.target.value);
   }
 
   return (
@@ -60,7 +45,7 @@ export default function AddressInput({
           placeholder="Nombre..."
           required={true}
           defaultValue={user.firstName}
-          onBlur={handleChange}
+          onChange={handleChange}
         />
         <input
           className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:block lg:w-1/2"
@@ -69,7 +54,7 @@ export default function AddressInput({
           placeholder="Apellido..."
           required={true}
           defaultValue={user.lastName}
-          onBlur={handleChange}
+          onChange={handleChange}
         />
       </div>
       <input
@@ -79,7 +64,7 @@ export default function AddressInput({
         placeholder="Calle y numero de casa..."
         required={true}
         defaultValue={user.address.streetAddress1}
-        onBlur={handleChange}
+        onChange={handleChange}
       />
       <div className="flex w-full flex-col gap-y-2 lg:flex-row lg:gap-x-2">
         <input
@@ -89,7 +74,7 @@ export default function AddressInput({
           placeholder="Colonia..."
           required={true}
           defaultValue={user.address.streetAddress2}
-          onBlur={handleChange}
+          onChange={handleChange}
         />
         <input
           className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:block lg:w-1/2"
@@ -98,7 +83,7 @@ export default function AddressInput({
           placeholder="Codigo postal..."
           required={true}
           defaultValue={user.address.postalCode}
-          onBlur={handleChangePostalCode}
+          onChange={handleChange}
         />
       </div>
       <input
@@ -108,10 +93,10 @@ export default function AddressInput({
         placeholder="Ciudad..."
         required={true}
         defaultValue={user.address.city}
-        onBlur={handleChange}
+        onChange={handleChange}
       />
       <select
-        onBlur={handleChangeCountryCode}
+        onChange={handleChange}
         name="countryArea"
         required={true}
         defaultValue={user.address.countryArea}
@@ -133,7 +118,7 @@ export default function AddressInput({
         placeholder="Telefono..."
         required={true}
         defaultValue={user.address.phone}
-        onBlur={handleChange}
+        onChange={handleChange}
       />
       <div className="h-[26px] border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:h-[32px]">
         {user.email ? user.email : 'Correo electronico...'}

@@ -14,7 +14,7 @@ export async function deliveryMethodUpdate({
   try {
     await updateDeliveryMethod({ checkoutId, deliveryMethodId });
   } catch (error: any) {
-    console.log(error.message);
+    return error.message;
   }
   redirect(cart?.checkoutUrlPayment || '');
 }

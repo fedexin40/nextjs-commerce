@@ -1,19 +1,23 @@
 'use client';
 
+import Alert from '@mui/material/Alert';
+import Snackbar from '@mui/material/Snackbar';
 import clsx from 'clsx';
 import { shippingAddressUpdate } from 'components/shipping/actions';
 import { useShipping } from 'components/shipping/store';
-import { useCountryArea, usePostalCode, useUser } from 'components/user/after-login/store';
+import { useUser } from 'components/user/after-login/store';
 import { billingAddressCheckoutUpdate } from 'lib/saleor';
-import { useTransition } from 'react';
+import { useState, useTransition } from 'react';
 import { deliveryMethodUpdate } from './actions';
 
 export default function Button({ checkoutId }: { checkoutId: string }) {
   const [isPending, startTransition] = useTransition();
   const deliveryMethodId = useShipping().selectedShippingId;
-  const postalCode = usePostalCode().postalCode;
-  const countryArea = useCountryArea().countryArea;
   const userStore = useUser();
+  const [ErrorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState(false);
+  const closeError = () => setError(false);
+  const openError = () => setError(true);
 
   function setupShippingAddress() {
     startTransition(async () => {
@@ -22,8 +26,8 @@ export default function Button({ checkoutId }: { checkoutId: string }) {
         streetAddress1: userStore.streetAddress1,
         streetAddress2: userStore.streetAddress2,
         city: userStore.city,
-        postalCode: postalCode,
-        countryArea: countryArea,
+        postalCode: userStore.postalCode,
+        countryArea: userStore.countryArea,
         firstName: userStore.firstName,
         lastName: userStore.lastName,
         phone: userStore.phone,
@@ -31,8 +35,18 @@ export default function Button({ checkoutId }: { checkoutId: string }) {
       // eslint-disable-next-line react-hooks/exhaustive-deps
       const error = await shippingAddressUpdate(input);
       if (!error) {
-        deliveryMethodUpdate({ checkoutId, deliveryMethodId });
-        billingAddressCheckoutUpdate(input);
+        const errorMethodUpdate = await deliveryMethodUpdate({ checkoutId, deliveryMethodId });
+        if (errorMethodUpdate) {
+          console.log('error en deliveryMethodUpdate');
+          setErrorMessage(errorMethodUpdate);
+          openError();
+        } else {
+          billingAddressCheckoutUpdate(input);
+        }
+      } else {
+        console.log('error en shippingAddressUpdate');
+        setErrorMessage(error);
+        openError();
       }
     });
   }
@@ -47,6 +61,18 @@ export default function Button({ checkoutId }: { checkoutId: string }) {
 
   return (
     <>
+      <div>
+        <Snackbar
+          anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+          open={error}
+          autoHideDuration={6000}
+          onClose={closeError}
+        >
+          <Alert onClose={closeError} severity="error" variant="filled" sx={{ width: '100%' }}>
+            {ErrorMessage}
+          </Alert>
+        </Snackbar>
+      </div>
       <div
         className={clsx(
           'h-[50px] cursor-pointer whitespace-nowrap bg-black p-3 text-center font-semibold text-white hover:opacity-50 dark:bg-[#c9aa9e] md:w-1/3 lg:w-1/4',

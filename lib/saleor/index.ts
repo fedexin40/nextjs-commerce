@@ -32,7 +32,6 @@ import {
   CheckoutBillingAddressUpdateDocument,
   CheckoutCompleteDocument,
   CheckoutDeleteLineDocument,
-  CheckoutPostalCodeUpdateDocument,
   CheckoutShippingAddressUpdateDocument,
   CheckoutUpdateLineDocument,
   ConfirmAccountDocument,
@@ -897,25 +896,6 @@ export async function billingAddressCheckoutUpdate({
   }
 }
 
-export async function postalCodeUpdate({
-  checkoutId,
-  postalCode,
-}: {
-  checkoutId: string;
-  postalCode: string;
-}) {
-  const checkout = await saleorFetch({
-    query: CheckoutPostalCodeUpdateDocument,
-    variables: {
-      checkoutId: checkoutId,
-      PostalCode: postalCode,
-    },
-  });
-  if (checkout.checkoutShippingAddressUpdate?.errors[0]) {
-    throw new Error(checkout.checkoutShippingAddressUpdate.errors[0].message || '');
-  }
-}
-
 export async function shippingAddressCheckoutUpdate({
   checkoutId,
   streetAddress1,
@@ -958,7 +938,9 @@ export async function shippingAddressCheckoutUpdate({
     },
   });
   if (checkout.checkoutShippingAddressUpdate?.errors[0]) {
-    throw new Error(checkout.checkoutShippingAddressUpdate?.errors[0].message || '');
+    throw new Error(
+      `${checkout.checkoutShippingAddressUpdate?.errors[0].message} - ${checkout.checkoutShippingAddressUpdate?.errors[0].field}`,
+    );
   }
 }
 

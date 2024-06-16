@@ -44,7 +44,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
             return (
               <div
                 key={i}
-                className="flex w-full flex-col rounded-lg border-2 border-[#acacac] px-3 dark:border-[#c9aa9e]"
+                className="flex w-full flex-col rounded-md border-2 border-[#acacac] px-3 dark:border-[#c9aa9e]"
               >
                 <div className="relative flex w-full flex-row justify-between px-1 py-4">
                   <Link href={merchandiseUrl} className="z-30 flex flex-row space-x-4">

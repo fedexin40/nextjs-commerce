@@ -4,7 +4,7 @@ import { Alert, Snackbar } from '@mui/material';
 import clsx from 'clsx';
 import { CurrentPerson, countryAreaChoices as countryAreaChoicesType } from 'lib/types';
 import { useState, useTransition } from 'react';
-import { useCountryArea, usePostalCode, useUser } from '../store';
+import { useUser } from '../store';
 import { updateAddress } from './actions';
 import AddressInput from './address-form';
 
@@ -23,8 +23,6 @@ export default function Address({
   const closeError = () => setError(false);
   const openError = () => setError(true);
   const userStore = useUser();
-  const postalCode = usePostalCode();
-  const countryArea = useCountryArea();
 
   function saveAddress() {
     startTransition(async () => {
@@ -35,8 +33,8 @@ export default function Address({
         streetAddress1: userStore.streetAddress1,
         streetAddress2: userStore.streetAddress2,
         city: userStore.city,
-        postalCode: postalCode.postalCode,
-        countryArea: countryArea.countryArea,
+        postalCode: userStore.postalCode,
+        countryArea: userStore.countryArea,
         phone: userStore.phone,
       };
       // Update the address if the user already has one

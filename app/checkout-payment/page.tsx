@@ -48,7 +48,7 @@ export default async function CheckoutPayment({
           <span>Proyecto 705:</span>
           <span>${cart?.cost.totalAmount.amount}</span>
         </div>
-        <div className="border-2 px-5 py-3 pb-20 shadow-lg">
+        <div className="border-2 px-5 py-3 pb-20">
           <Suspense fallback={<div>Loading</div>}>
             <StripeComponent
               clientSecret={stripeData.paymentIntent.client_secret}

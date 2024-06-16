@@ -1,15 +1,13 @@
 'use client';
 
 import Skeleton from '@mui/material/Skeleton';
-import { useCountryArea, usePostalCode, useUser } from 'components/user/after-login/store';
+import { useUser } from 'components/user/after-login/store';
 import { useEffect, useState, useTransition } from 'react';
 import { shippingAddressUpdate, shippingMethodsAction } from './actions';
 import ShippingMethods from './shipping';
 import { useShipping, useShippingActions } from './store';
 
 export default function Shipping({ checkoutId }: { checkoutId: string }) {
-  const postalCode = usePostalCode().postalCode;
-  const countryArea = useCountryArea().countryArea;
   const userStore = useUser();
   const [isPending, startTransition] = useTransition();
   const { setShippingMethods } = useShippingActions();
@@ -23,8 +21,8 @@ export default function Shipping({ checkoutId }: { checkoutId: string }) {
         streetAddress1: userStore.streetAddress1 || '',
         streetAddress2: userStore.streetAddress2 || '',
         city: userStore.city || '',
-        postalCode: postalCode,
-        countryArea: countryArea,
+        postalCode: userStore.postalCode,
+        countryArea: userStore.countryArea,
         firstName: userStore.firstName || '',
         lastName: userStore.lastName || '',
         phone: userStore.phone || '',
@@ -42,7 +40,15 @@ export default function Shipping({ checkoutId }: { checkoutId: string }) {
       methodShipping();
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [setShippingMethods, checkoutId, postalCode, countryArea]);
+  }, [
+    setShippingMethods,
+    checkoutId,
+    userStore.city,
+    userStore.countryArea,
+    userStore.streetAddress1,
+    userStore.streetAddress2,
+    userStore.postalCode,
+  ]);
 
   if (isPending) {
     return (

@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { Logout } from '../before-login/login/actions';
 import { useUserMenuActions } from './store';
 
@@ -30,7 +30,15 @@ export default function UserMenuDropDown() {
           className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300"
         >
           <div className="relative h-[27px] w-[27px] opacity-50">
-            <Image className="object-cover" src={'/registro.png'} alt="" fill />
+            <Suspense>
+              <Image
+                className="object-cover"
+                src={'/registro.png'}
+                alt=""
+                fill
+                sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+              />
+            </Suspense>
           </div>
         </div>
         {openSelect && (
