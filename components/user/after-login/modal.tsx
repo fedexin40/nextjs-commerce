@@ -3,6 +3,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, ReactNode, useRef } from 'react';
 import CloseLogin from './close-login';
+import ProfileTabs from './mobile-tabs';
 import { useOpen, useUserMenuActions } from './store';
 
 export default function UserMenuModal({
@@ -69,13 +70,19 @@ export default function UserMenuModal({
                   </div>
                   <div className="flex h-full flex-col md:flex-row">
                     <div
-                      className="bg-[#f7e7da] pb-10 pt-10 dark:bg-zinc-700 md:w-1/3 md:overflow-x-auto"
+                      className="hidden bg-[#f7e7da] pb-10 pt-10 dark:bg-zinc-700 md:block md:w-1/3 md:overflow-x-auto"
                       ref={initialFocusRef}
                     >
                       {UserDetails}
                     </div>
-                    <div className="bg-white pb-20 pt-10 dark:bg-black md:w-2/3 md:overflow-x-auto">
+                    <div className="hidden bg-white pb-20 pt-10 dark:bg-black md:block md:w-2/3 md:overflow-x-auto">
                       {UserShoppings}
+                    </div>
+                    <div
+                      className="h-full w-full bg-[#f7e7da] pb-10 pt-10 dark:bg-zinc-700 md:hidden"
+                      ref={initialFocusRef}
+                    >
+                      <ProfileTabs UserDetails={UserDetails} UserShoppings={UserShoppings} />
                     </div>
                   </div>
                 </Dialog.Panel>
