@@ -3,7 +3,7 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, ReactNode, useRef } from 'react';
 import CloseLogin from './close-login';
-import ProfileTabs from './mobile-tabs';
+import MobileMenu from './mobile';
 import { useOpen, useUserMenuActions } from './store';
 
 export default function UserMenuModal({
@@ -82,7 +82,7 @@ export default function UserMenuModal({
                       className="h-full w-full bg-[#f7e7da] pb-10 pt-10 dark:bg-zinc-700 md:hidden"
                       ref={initialFocusRef}
                     >
-                      <ProfileTabs UserDetails={UserDetails} UserShoppings={UserShoppings} />
+                      <MobileMenu UserDetails={UserDetails} UserShoppings={UserShoppings} />
                     </div>
                   </div>
                 </Dialog.Panel>

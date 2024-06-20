@@ -23,7 +23,7 @@ export default function AddressInput({
       city: user.address.city || '',
       email: user.email || '',
       phone: user.address.phone || '',
-      postalCode: user.address.phone || '',
+      postalCode: user.address.postalCode || '',
       countryArea: user.address.cityArea || '',
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps

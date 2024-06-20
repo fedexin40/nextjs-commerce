@@ -7,10 +7,11 @@ import { shippingAddressUpdate } from 'components/shipping/actions';
 import { useShipping } from 'components/shipping/store';
 import { useUser } from 'components/user/after-login/store';
 import { billingAddressCheckoutUpdate } from 'lib/saleor';
+import { CurrentPerson } from 'lib/types';
 import { useState, useTransition } from 'react';
 import { deliveryMethodUpdate } from './actions';
 
-export default function Button({ checkoutId }: { checkoutId: string }) {
+export default function Button({ checkoutId, user }: { checkoutId: string; user: CurrentPerson }) {
   const [isPending, startTransition] = useTransition();
   const deliveryMethodId = useShipping().selectedShippingId;
   const userStore = useUser();
@@ -23,15 +24,16 @@ export default function Button({ checkoutId }: { checkoutId: string }) {
     startTransition(async () => {
       const input = {
         checkoutId: checkoutId,
-        streetAddress1: userStore.streetAddress1,
-        streetAddress2: userStore.streetAddress2,
-        city: userStore.city,
-        postalCode: userStore.postalCode,
-        countryArea: userStore.countryArea,
-        firstName: userStore.firstName,
-        lastName: userStore.lastName,
-        phone: userStore.phone,
+        streetAddress1: userStore.streetAddress1 || user.address.streetAddress1 || '',
+        streetAddress2: userStore.streetAddress2 || user.address.streetAddress2 || '',
+        city: userStore.city || user.address.city || '',
+        postalCode: userStore.postalCode || user.address.postalCode || '',
+        countryArea: userStore.countryArea || user.address.countryArea || '',
+        firstName: userStore.firstName || user.firstName || '',
+        lastName: userStore.lastName || user.lastName || '',
+        phone: userStore.phone || user.address.phone || '',
       };
+      console.log(input);
       // eslint-disable-next-line react-hooks/exhaustive-deps
       const error = await shippingAddressUpdate(input);
       if (!error) {

@@ -7,7 +7,7 @@ export default async function UserDetails() {
   const states = await countryArea();
   const me = await Me();
   return (
-    <div className="flex flex-col px-5">
+    <div className="flex h-full flex-col content-center px-5">
       <div className="flex flex-row place-content-center pt-5">
         <div className="relative h-16 w-16">
           <Suspense>
@@ -21,8 +21,10 @@ export default async function UserDetails() {
           </Suspense>
         </div>
       </div>
-      <div className="pt-3 text-center text-sm tracking-wider dark:text-[#c9aa9e]">Mi Cuenta</div>
-      <div className="pt-5">
+      <div className="hidden pt-3 text-center text-sm tracking-wider dark:text-[#c9aa9e] md:flex">
+        Mi Cuenta
+      </div>
+      <div className="h-ful pt-5">
         <Address user={me} countryAreaChoices={states} />
       </div>
     </div>

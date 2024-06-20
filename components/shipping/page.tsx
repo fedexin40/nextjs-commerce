@@ -2,12 +2,19 @@
 
 import Skeleton from '@mui/material/Skeleton';
 import { useUser } from 'components/user/after-login/store';
+import { CurrentPerson } from 'lib/types';
 import { useEffect, useState, useTransition } from 'react';
 import { shippingAddressUpdate, shippingMethodsAction } from './actions';
 import ShippingMethods from './shipping';
 import { useShipping, useShippingActions } from './store';
 
-export default function Shipping({ checkoutId }: { checkoutId: string }) {
+export default function Shipping({
+  checkoutId,
+  user,
+}: {
+  checkoutId: string;
+  user: CurrentPerson;
+}) {
   const userStore = useUser();
   const [isPending, startTransition] = useTransition();
   const { setShippingMethods } = useShippingActions();
@@ -18,14 +25,14 @@ export default function Shipping({ checkoutId }: { checkoutId: string }) {
     const methodShipping = async () => {
       const input = {
         checkoutId: checkoutId,
-        streetAddress1: userStore.streetAddress1 || '',
-        streetAddress2: userStore.streetAddress2 || '',
-        city: userStore.city || '',
-        postalCode: userStore.postalCode,
-        countryArea: userStore.countryArea,
-        firstName: userStore.firstName || '',
-        lastName: userStore.lastName || '',
-        phone: userStore.phone || '',
+        streetAddress1: userStore.streetAddress1 || user.address.streetAddress1 || '',
+        streetAddress2: userStore.streetAddress2 || user.address.streetAddress2 || '',
+        city: userStore.city || user.address.city || '',
+        postalCode: userStore.postalCode || user.address.postalCode || '',
+        countryArea: userStore.countryArea || user.address.countryArea,
+        firstName: userStore.firstName || user.firstName || '',
+        lastName: userStore.lastName || user.lastName || '',
+        phone: userStore.phone || user.address.phone || '',
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
       const error = await shippingAddressUpdate(input);

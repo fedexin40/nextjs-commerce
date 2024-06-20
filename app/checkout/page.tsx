@@ -33,19 +33,19 @@ export default async function Checkout({
           <div className="pt-5 text-xs tracking-wider">Terminos y condiciones</div>
         </div>
         <div className="hidden pt-10 md:block">
-          <Button checkoutId={checkout || ''} />
+          <Button checkoutId={checkout || ''} user={me} />
         </div>
       </div>
       <div className="border-[#acacac] bg-[#d4d4d4] py-16 dark:border-t-0 dark:border-[#c9aa9e] dark:bg-zinc-700 md:ml-10 md:w-1/2 md:border-l-2">
         <div className="px-5">
           <Suspense fallback={<>Cargando</>}>
-            <Shipping checkoutId={checkout || ''} />
+            <Shipping checkoutId={checkout || ''} user={me} />
           </Suspense>
         </div>
       </div>
       <div className="flex w-full flex-col bg-[#d4d4d4] dark:bg-zinc-700 md:hidden">
         <div className="mb-8 w-1/2 place-self-center dark:bg-[#c9aa9e]">
-          <Button checkoutId={checkout || ''} />
+          <Button checkoutId={checkout || ''} user={me} />
         </div>
       </div>
     </div>
