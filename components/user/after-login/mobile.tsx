@@ -19,15 +19,15 @@ export default function MobileMenu({
 
   return (
     <div className="flex h-full flex-col text-sm tracking-wider">
-      <div className="flex basis-[5%] flex-row">
+      <div className="flex basis-[5%] flex-row text-[#8b725d]">
         <div
-          className="rounded-tl-md rounded-tr-3xl bg-[#dbc7b7] px-5 py-3 pr-10 text-[#8b725d]"
+          className=" bg-[#dbc7b7] px-5 pr-10 pt-2 [clip-path:polygon(0%_0%,80%_0%,100%_100%,0%_100%)]"
           onClick={() => displayProfile()}
         >
           Mi Perfil
         </div>
         <div
-          className="rounded-tl-md rounded-tr-3xl bg-white px-5 py-3 pr-10 text-[#8b725d]"
+          className="rounded-tl-md rounded-tr-3xl bg-white px-5 pr-10 pt-2 [clip-path:polygon(0%_0%,80%_0%,100%_100%,0%_100%)]"
           onClick={() => displayHistory()}
         >
           Historial
