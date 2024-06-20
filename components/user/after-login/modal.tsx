@@ -79,7 +79,7 @@ export default function UserMenuModal({
                       {UserShoppings}
                     </div>
                     <div
-                      className="h-full w-full bg-[#f7e7da] pb-10 pt-10 dark:bg-zinc-700 md:hidden"
+                      className="h-full w-full bg-[#f7e7da] pb-10 pt-10 md:hidden"
                       ref={initialFocusRef}
                     >
                       <MobileMenu UserDetails={UserDetails} UserShoppings={UserShoppings} />
