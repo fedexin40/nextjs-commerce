@@ -49,7 +49,7 @@ export default function Address({
   return (
     <>
       <form className="text-xs lg:text-sm" action={saveAddress}>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           <div>
             <Snackbar
               anchorOrigin={{ vertical: 'top', horizontal: 'left' }}

@@ -60,7 +60,7 @@ export default function CheckoutForm({ returnUrl }: { returnUrl: string }) {
           disabled={isLoading || !stripe || !elements}
           id="submit"
         >
-          <div className="whitespace-nowrap p-0 text-sm tracking-wider">
+          <div className="whitespace-nowrap p-0 text-sm uppercase tracking-wider dark:text-black">
             {isLoading ? (
               <div className="flex cursor-not-allowed items-center justify-center space-x-6">
                 <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.3s] dark:bg-white"></div>

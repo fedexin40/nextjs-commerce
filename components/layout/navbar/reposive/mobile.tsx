@@ -11,7 +11,7 @@ export default function MobileNavbar() {
     <>
       <nav className="bg-[#f7e7da]">
         <div className="grid grid-cols-2 pb-3 uppercase">
-          <div className="flex justify-center	">
+          <div className="flex justify-center">
             <Suspense>
               <Link href="/" aria-label="Go back home">
                 <div className="relative h-[120px] w-[120px]">

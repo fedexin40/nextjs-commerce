@@ -55,7 +55,7 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
 
   if (!deliveryMethodId) {
     return (
-      <div className="h-[50px] cursor-not-allowed whitespace-nowrap bg-black p-3 text-center font-semibold text-white opacity-50 dark:bg-[#c9aa9e] md:w-1/3 lg:w-1/4">
+      <div className="flex h-[60px] w-full cursor-not-allowed items-center justify-center whitespace-nowrap bg-black p-3 text-sm font-semibold uppercase text-white opacity-50 dark:bg-[#c9aa9e]">
         Siguiente
       </div>
     );
@@ -77,7 +77,7 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
       </div>
       <div
         className={clsx(
-          'h-[50px] cursor-pointer whitespace-nowrap bg-black p-3 text-center font-semibold text-white hover:opacity-50 dark:bg-[#c9aa9e] md:w-1/3 lg:w-1/4',
+          'flex h-[60px] w-full cursor-pointer items-center justify-center whitespace-nowrap bg-black p-3 text-sm font-semibold uppercase tracking-wider text-white hover:opacity-50 dark:bg-[#c9aa9e]',
           { hidden: isPending },
         )}
         onClick={() => setupShippingAddress()}
@@ -86,7 +86,7 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
       </div>
       <div
         className={clsx(
-          'relative flex h-[50px] cursor-not-allowed items-center justify-center space-x-6 whitespace-nowrap bg-black p-3 text-center font-semibold text-white dark:bg-[#c9aa9e] md:w-1/3 lg:w-1/4',
+          'relative flex h-[60px] w-full cursor-not-allowed items-center justify-center space-x-6 whitespace-nowrap bg-black p-3 text-center font-semibold text-white dark:bg-[#c9aa9e]',
           { hidden: !isPending },
         )}
       >

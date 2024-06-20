@@ -59,7 +59,7 @@ export default function Shipping({
 
   if (isPending) {
     return (
-      <>
+      <div className="w-full">
         <div className="flex flex-col space-y-4 md:space-y-8 lg:space-y-14">
           <div className="flex flex-row space-x-2 text-sm lg:text-base">
             <span>Cargando</span>
@@ -70,27 +70,27 @@ export default function Shipping({
             </div>
           </div>
           <div className="flex animate-pulse flex-col space-y-2">
-            <Skeleton animation={'pulse'} width={300} />
+            <Skeleton animation={'pulse'} />
             <Skeleton animation={'pulse'} />
             <Skeleton animation={'wave'} />
           </div>
           <div className="hidden animate-pulse flex-col space-y-2 md:flex">
-            <Skeleton animation={'pulse'} width={300} />
+            <Skeleton animation={'pulse'} />
             <Skeleton animation={'pulse'} />
             <Skeleton animation={'wave'} />
           </div>
           <div className="hidden animate-pulse flex-col space-y-2 md:flex">
-            <Skeleton animation={'pulse'} width={300} />
+            <Skeleton animation={'pulse'} />
             <Skeleton animation={'pulse'} />
             <Skeleton animation={'wave'} />
           </div>
           <div className="hidden animate-pulse flex-col space-y-2 md:flex">
-            <Skeleton animation={'pulse'} width={300} />
+            <Skeleton animation={'pulse'} />
             <Skeleton animation={'pulse'} />
             <Skeleton animation={'wave'} />
           </div>
         </div>
-      </>
+      </div>
     );
   }
 

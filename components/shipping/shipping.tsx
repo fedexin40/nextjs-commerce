@@ -18,7 +18,7 @@ export default function ShippingMethods({
   }
 
   return (
-    <div className="w-full px-4">
+    <div className="w-full">
       <RadioGroup
         value={selected}
         onChange={setSelected}
@@ -32,8 +32,8 @@ export default function ShippingMethods({
               value={ShippingMethod}
               className={({ active, checked }) =>
                 `${active ? 'ring-2 ring-white/60 ring-offset-2' : ''}
-                ${checked ? 'bg-gray-250/75 text-white' : 'bg-white'}
-                  relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none`
+                ${checked ? 'ring-2 ring-white/60 ring-offset-2' : ''}
+                  relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none dark:bg-zinc-900`
               }
             >
               <div
@@ -43,8 +43,10 @@ export default function ShippingMethods({
                 }}
               >
                 <div className="text-xs lg:text-sm">
-                  <p className="pb-2 font-semibold text-black">{ShippingMethod.name}</p>
-                  <div className="flex justify-center text-black">
+                  <p className="pb-2 font-semibold text-black dark:text-white">
+                    {ShippingMethod.name}
+                  </p>
+                  <div className="flex justify-center text-black dark:text-white">
                     <div className="">${ShippingMethod.price}</div>
                     <div aria-hidden="true">&middot;</div>
                     <div className="whitespace-nowrap">{ShippingMethod.serviceName}</div>

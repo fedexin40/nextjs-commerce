@@ -25,7 +25,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
 
   return (
     <>
-      <div className="flex h-full flex-col justify-between overflow-hidden p-1 pb-20 text-xs tracking-wider lg:text-sm">
+      <div className="flex h-full flex-col justify-between overflow-hidden pb-20 tracking-wider">
         <ul className="flex flex-col gap-3 overflow-auto lg:gap-5">
           {cart.lines.map((item, i) => {
             const merchandiseSearchParams = {} as MerchandiseSearchParams;
@@ -48,9 +48,9 @@ export default function Cart({ cart }: { cart: CartType | null }) {
               >
                 <div className="relative flex w-full flex-row justify-between px-1 py-4">
                   <Link href={merchandiseUrl} className="z-30 flex flex-row space-x-4">
-                    <div className="relative h-full w-16 cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">
+                    <div className="relative cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800 md:h-8 md:w-8 lg:h-16 lg:w-16">
                       <Image
-                        className="object-cover"
+                        className="md:object-contain lg:object-cover"
                         fill
                         alt={
                           item.merchandise.product.featuredImage.altText ||
@@ -94,7 +94,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
           </div>
         </div>
         <div className="pb-7 text-neutral-500 dark:text-white">
-          <div className="mb-2 mt-10 flex items-center justify-between pb-1 pt-1 text-black dark:border-neutral-700 dark:text-white">
+          <div className="mb-2 mt-10 flex items-center justify-between pb-1 pt-1 text-sm uppercase text-black dark:border-neutral-700 dark:text-white">
             <p>Envio</p>
             <p className="text-right text-black dark:text-white">${deliveryPrice}</p>
           </div>

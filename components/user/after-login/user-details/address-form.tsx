@@ -36,8 +36,8 @@ export default function AddressInput({
   }
 
   return (
-    <div className="flex flex-col gap-2 text-xs tracking-wider lg:text-sm">
-      <div className="flex w-full flex-col gap-y-2 lg:flex-row lg:gap-x-2">
+    <div className="flex flex-col gap-3 text-xs tracking-wider lg:text-sm">
+      <div className="flex w-full flex-col gap-3 lg:flex-row">
         <input
           className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:w-1/2"
           type="text"
@@ -66,7 +66,7 @@ export default function AddressInput({
         defaultValue={user.address.streetAddress1}
         onChange={handleChange}
       />
-      <div className="flex w-full flex-col gap-y-2 lg:flex-row lg:gap-x-2">
+      <div className="flex w-full flex-col gap-3 lg:flex-row">
         <input
           className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:w-1/2"
           type="text"

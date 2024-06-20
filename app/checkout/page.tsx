@@ -18,10 +18,10 @@ export default async function Checkout({
   }
 
   return (
-    <div className="flex flex-col tracking-wider md:flex-row">
-      <div className="mb-16 ml-10 pt-16 md:mb-24 md:w-1/2 lg:mb-40 lg:ml-32">
-        <div className="font-medium dark:text-[#c9aa9e]">Detalles de entrega</div>
-        <div className="flex flex-col pr-10 pt-5">
+    <div className="flex flex-col text-xs tracking-wider dark:bg-zinc-700 md:flex-row lg:text-sm">
+      <div className="mx-10 mb-16	pt-16 md:mb-24 md:basis-[52%] lg:mb-40 lg:px-10">
+        <div className="text-sm font-medium uppercase dark:text-[#c9aa9e]">Detalles de entrega</div>
+        <div className="flex flex-col pt-5">
           <AddressInput user={me} countryAreaChoices={states} />
           <div className="flex flex-row gap-3 pt-5">
             <input type="checkbox" />
@@ -32,20 +32,18 @@ export default async function Checkout({
           <div className="pt-5 text-xs tracking-wider">Tiempo de entrega: 2 a 7 dias habiles</div>
           <div className="pt-5 text-xs tracking-wider">Terminos y condiciones</div>
         </div>
-        <div className="hidden pt-10 md:block">
+        <div className="hidden pt-10 md:flex md:w-1/2 lg:w-1/3">
           <Button checkoutId={checkout || ''} user={me} />
         </div>
       </div>
-      <div className="border-[#acacac] bg-[#d4d4d4] py-16 dark:border-t-0 dark:border-[#c9aa9e] dark:bg-zinc-700 md:ml-10 md:w-1/2 md:border-l-2">
-        <div className="px-5">
+      <div className="border-[#acacac] bg-[#d4d4d4] px-10 py-16 dark:border-t-0 dark:border-[#c9aa9e] dark:bg-zinc-800 md:basis-[48%] md:border-l-2 lg:px-10">
+        <div className=" flex flex-col">
           <Suspense fallback={<>Cargando</>}>
             <Shipping checkoutId={checkout || ''} user={me} />
           </Suspense>
-        </div>
-      </div>
-      <div className="flex w-full flex-col bg-[#d4d4d4] dark:bg-zinc-700 md:hidden">
-        <div className="mb-8 w-1/2 place-self-center dark:bg-[#c9aa9e]">
-          <Button checkoutId={checkout || ''} user={me} />
+          <div className="mt-16 block w-full place-self-center dark:bg-[#c9aa9e] md:hidden">
+            <Button checkoutId={checkout || ''} user={me} />
+          </div>
         </div>
       </div>
     </div>
