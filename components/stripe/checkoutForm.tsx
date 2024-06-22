@@ -56,7 +56,7 @@ export default function CheckoutForm({ returnUrl }: { returnUrl: string }) {
           options={paymentElementOptions}
         />
         <button
-          className="mt-10 h-[45px] w-1/2 bg-[#e4c0b2] px-5 lg:w-1/3 lg:py-1"
+          className="mt-10 h-[45px] w-full bg-[#e4c0b2] px-5 md:w-1/2 lg:w-1/3 lg:py-1"
           disabled={isLoading || !stripe || !elements}
           id="submit"
         >

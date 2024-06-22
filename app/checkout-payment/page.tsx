@@ -44,7 +44,7 @@ export default async function CheckoutPayment({
   return (
     <div className="flex flex-col text-xs tracking-wider dark:bg-zinc-700 md:flex-row lg:text-sm">
       <div className="mx-10 mb-16	pt-16 md:mb-24 md:basis-[52%] lg:mb-40 lg:px-10">
-        <div className="flex flex-row space-x-3 bg-[#f0dccc] p-5 dark:text-black">
+        <div className="flex flex-row space-x-3 bg-[#e4c0b2] p-5 dark:text-black">
           <span className="text-sm uppercase">Proyecto 705:</span>
           <span className="text-sm uppercase">${cart?.cost.totalAmount.amount}</span>
         </div>

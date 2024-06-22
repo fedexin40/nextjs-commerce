@@ -25,15 +25,15 @@ export default function ShippingMethods({
         aria-label="shipping method"
         className="space-y-2"
       >
-        <div className="w-full space-y-5">
+        <div className="w-full space-y-5 lg:space-y-7">
           {ShippingMethods.map((ShippingMethod) => (
             <RadioGroup.Option
               key={ShippingMethod.id}
               value={ShippingMethod}
               className={({ active, checked }) =>
-                `${active ? 'ring-2 ring-white/60 ring-offset-2' : ''}
-                ${checked ? 'ring-2 ring-white/60 ring-offset-2' : ''}
-                  relative flex cursor-pointer rounded-lg px-5 py-4 shadow-md focus:outline-none dark:bg-zinc-900`
+                `${active ? 'opacity-30 ring-2 ring-white ring-offset-2' : ''}
+                ${checked ? 'ring-2 ring-white ring-offset-2' : ''}
+                  relative flex cursor-pointer rounded-lg bg-black px-5 py-4 opacity-70 shadow-md focus:outline-none dark:bg-zinc-900`
               }
             >
               <div
@@ -43,10 +43,10 @@ export default function ShippingMethods({
                 }}
               >
                 <div className="text-xs lg:text-sm">
-                  <p className="pb-2 font-semibold text-black dark:text-white">
+                  <p className="pb-2 font-semibold text-white opacity-100 dark:text-white">
                     {ShippingMethod.name}
                   </p>
-                  <div className="flex justify-center text-black dark:text-white">
+                  <div className="flex justify-center text-white opacity-100 dark:text-white ">
                     <div className="">${ShippingMethod.price}</div>
                     <div aria-hidden="true">&middot;</div>
                     <div className="whitespace-nowrap">{ShippingMethod.serviceName}</div>
