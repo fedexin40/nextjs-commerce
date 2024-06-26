@@ -1,16 +1,22 @@
 'use server';
 
-import { Me, addToCart, createCart, getCart, removeFromCart, updateCart } from 'lib/saleor';
+import {
+  Me,
+  addToCart,
+  createCart,
+  customerCheckoutAttach,
+  getCart,
+  removeFromCart,
+  updateCart,
+} from 'lib/saleor';
 import { cookies } from 'next/headers';
 
 export const addItem = async (variantId: string | undefined): Promise<String | undefined> => {
-  const userEmail = (await Me()).email;
+  const user = await Me();
+  const userEmail = user.email;
   if (!userEmail) {
     return 'Por favor inicia sesion primero';
   }
-  // Get the current date plus 30 days
-  const todayDate = new Date();
-  todayDate.setDate(todayDate.getDate() + 30);
 
   let cartId = cookies().get('cartId')?.value;
   let cart;
@@ -22,7 +28,8 @@ export const addItem = async (variantId: string | undefined): Promise<String | u
   if (!cartId || !cart) {
     cart = await createCart(userEmail);
     cartId = cart.id;
-    cookies().set('cartId', cartId, { expires: todayDate });
+    await customerCheckoutAttach({ checkoutId: cartId, customerId: user.id });
+    cookies().set('cartId', cartId);
   }
 
   if (!variantId) {
@@ -78,6 +85,7 @@ export const updateItemQuantity = async ({
       },
     ]);
   } catch (e) {
+    console.log(e);
     return 'Error updating item quantity';
   }
 };

@@ -31424,6 +31424,17 @@ export type CheckoutCompleteMutation = {
   } | null;
 };
 
+export type CheckoutCustomerAttachMutationVariables = Exact<{
+  id: Scalars['ID'];
+  customerId: Scalars['ID'];
+}>;
+
+export type CheckoutCustomerAttachMutation = {
+  checkoutCustomerAttach?: {
+    errors: Array<{ message?: string | null; code: CheckoutErrorCode; field?: string | null }>;
+  } | null;
+};
+
 export type CheckoutDeleteLineMutationVariables = Exact<{
   checkoutId: Scalars['ID'];
   lineIds: Array<Scalars['ID']> | Scalars['ID'];
@@ -32015,6 +32026,7 @@ export type GetMeQuery = {
     email: string;
     firstName: string;
     lastName: string;
+    checkoutIds?: Array<string> | null;
     avatar?: { url: string; alt?: string | null } | null;
     addresses: Array<{
       id: string;
@@ -32811,6 +32823,20 @@ export const CheckoutCompleteDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   CheckoutCompleteMutation,
   CheckoutCompleteMutationVariables
+>;
+export const CheckoutCustomerAttachDocument = new TypedDocumentString(`
+    mutation CheckoutCustomerAttach($id: ID!, $customerId: ID!) {
+  checkoutCustomerAttach(id: $id, customerId: $customerId) {
+    errors {
+      message
+      code
+      field
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  CheckoutCustomerAttachMutation,
+  CheckoutCustomerAttachMutationVariables
 >;
 export const CheckoutDeleteLineDocument = new TypedDocumentString(`
     mutation CheckoutDeleteLine($checkoutId: ID!, $lineIds: [ID!]!) {
@@ -33771,6 +33797,7 @@ export const GetMeDocument = new TypedDocumentString(`
         }
       }
     }
+    checkoutIds
   }
 }
     `) as unknown as TypedDocumentString<GetMeQuery, GetMeQueryVariables>;

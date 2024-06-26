@@ -31,6 +31,7 @@ import {
   CheckoutAddLineDocument,
   CheckoutBillingAddressUpdateDocument,
   CheckoutCompleteDocument,
+  CheckoutCustomerAttachDocument,
   CheckoutDeleteLineDocument,
   CheckoutShippingAddressUpdateDocument,
   CheckoutUpdateLineDocument,
@@ -109,7 +110,6 @@ export async function saleorFetch<Result, Variables>({
     }),
     ...options,
   };
-
   const result = withAuth
     ? await getServerAuthClient().fetchWithAuth(endpoint, input)
     : await fetch(endpoint, input);
@@ -445,6 +445,7 @@ export async function getCart(cartId: string): Promise<Cart | null> {
     variables: {
       id: cartId,
     },
+    withAuth: true,
     cache: 'no-store',
   });
 
@@ -486,11 +487,12 @@ export async function addToCart(
       checkoutId: cartId,
       lines: lines.map(({ merchandiseId, quantity }) => ({ variantId: merchandiseId, quantity })),
     },
+    withAuth: true,
     cache: 'no-store',
   });
 
   if (!saleorCheckout.checkoutLinesAdd?.checkout) {
-    throw new Error(saleorCheckout.checkoutLinesAdd?.errors[0]?.code);
+    throw new Error(saleorCheckout.checkoutLinesAdd?.errors[0]?.message || '');
   }
 
   return saleorCheckoutToVercelCart(saleorCheckout.checkoutLinesAdd.checkout);
@@ -787,6 +789,7 @@ export async function Me(): Promise<CurrentPerson> {
       phone: CurrentPerson.me?.addresses[0]?.phone || '',
     },
     orders: orders,
+    lastCheckout: CurrentPerson.me?.checkoutIds ? CurrentPerson.me?.checkoutIds[0] : '',
   };
 }
 
@@ -1019,6 +1022,26 @@ export async function updateDeliveryMethod({
   });
   if (checkout.checkoutDeliveryMethodUpdate?.errors[0]) {
     throw new Error(checkout.checkoutDeliveryMethodUpdate?.errors[0]?.message || '');
+  }
+}
+
+export async function customerCheckoutAttach({
+  checkoutId,
+  customerId,
+}: {
+  checkoutId: string;
+  customerId: string;
+}) {
+  const checkout = await saleorFetch({
+    query: CheckoutCustomerAttachDocument,
+    variables: {
+      id: checkoutId,
+      customerId: customerId,
+    },
+    withAuth: true,
+  });
+  if (checkout.checkoutCustomerAttach?.errors[0]) {
+    throw new Error(checkout.checkoutCustomerAttach?.errors[0]?.message || '');
   }
 }
 

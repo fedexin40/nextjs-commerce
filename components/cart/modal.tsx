@@ -8,35 +8,22 @@ import type { Cart } from 'lib/types';
 import { createUrl } from 'lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Fragment, useEffect, useRef, useState } from 'react';
+import { Fragment } from 'react';
 import CloseCart from './close-cart';
 import DeleteItemButton from './delete-item-button';
 import EditItemQuantityButton from './edit-item-quantity-button';
 import OpenCart from './open-cart';
+import { cartActions, useCartOpen } from './store';
 
 type MerchandiseSearchParams = {
   [key: string]: string;
 };
 
 export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
-  const [isOpen, setIsOpen] = useState(false);
-  const quantityRef = useRef(cart?.totalQuantity);
-  const openCart = () => setIsOpen(true);
-  const closeCart = () => setIsOpen(false);
+  const isOpen = useCartOpen();
+  const { closeMenu } = cartActions();
+  const { openMenu } = cartActions();
   let total = 0;
-
-  useEffect(() => {
-    // Open cart modal when quantity changes.
-    if (cart?.totalQuantity !== quantityRef.current) {
-      // But only if it's not already open (quantity also changes when editing items in cart).
-      if (!isOpen) {
-        setIsOpen(true);
-      }
-
-      // Always update the quantity reference
-      quantityRef.current = cart?.totalQuantity;
-    }
-  }, [isOpen, cart?.totalQuantity, quantityRef]);
 
   if (cart) {
     cart.lines.map((item) => {
@@ -46,11 +33,11 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
 
   return (
     <div className="z-50">
-      <div aria-label="Open cart" onClick={openCart}>
+      <div aria-label="Open cart" onClick={() => openMenu()}>
         <OpenCart quantity={cart?.totalQuantity} />
       </div>
       <Transition show={isOpen}>
-        <Dialog onClose={closeCart} className="relative z-50">
+        <Dialog onClose={() => {}} className="relative z-50">
           <Transition.Child
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
@@ -75,7 +62,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
               <div className="flex items-center justify-between border-b-2 border-[hsl(28,30%,59%)] pb-2 pt-10">
                 <p className="text-lg font-semibold">Mi Carrito</p>
 
-                <button className="" aria-label="Cerrar carrito" onClick={closeCart}>
+                <button className="" aria-label="Cerrar carrito" onClick={() => closeMenu()}>
                   <CloseCart />
                 </button>
               </div>
@@ -113,7 +100,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                             </div>
                             <Link
                               href={merchandiseUrl}
-                              onClick={closeCart}
+                              onClick={() => closeMenu()}
                               className="z-30 flex flex-row space-x-4"
                             >
                               <div className="relative h-16 w-16 cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800">

@@ -38,6 +38,8 @@ const documents = {
     types.CheckoutBillingAddressUpdateDocument,
   'mutation CheckoutComplete($checkoutId: ID!) {\n  checkoutComplete(id: $checkoutId) {\n    order {\n      id\n      errors {\n        field\n        message\n        code\n      }\n    }\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
     types.CheckoutCompleteDocument,
+  'mutation CheckoutCustomerAttach($id: ID!, $customerId: ID!) {\n  checkoutCustomerAttach(id: $id, customerId: $customerId) {\n    errors {\n      message\n      code\n      field\n    }\n  }\n}':
+    types.CheckoutCustomerAttachDocument,
   'mutation CheckoutDeleteLine($checkoutId: ID!, $lineIds: [ID!]!) {\n  checkoutLinesDelete(id: $checkoutId, linesIds: $lineIds) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
     types.CheckoutDeleteLineDocument,
   'mutation checkoutPostalCodeUpdate($checkoutId: ID!, $PostalCode: String!) {\n  checkoutShippingAddressUpdate(\n    checkoutId: $checkoutId\n    shippingAddress: {postalCode: $PostalCode, country: MX, countryArea: "Pue.", city: "Puebla", streetAddress1: "fds", streetAddress2: "fds"}\n  ) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
@@ -78,7 +80,7 @@ const documents = {
     types.GetCollectionsDocument,
   'query GetFeaturedProducts($first: Int!) {\n  products(first: $first, channel: "proyecto705") {\n    edges {\n      node {\n        ...FeaturedProduct\n      }\n    }\n  }\n}':
     types.GetFeaturedProductsDocument,
-  'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          created\n          number\n          statusDisplay\n          total {\n            gross {\n              amount\n            }\n          }\n          lines {\n            productName\n            quantity\n            totalPrice {\n              gross {\n                amount\n              }\n            }\n            thumbnail {\n              url\n            }\n          }\n        }\n      }\n    }\n  }\n}':
+  'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          created\n          number\n          statusDisplay\n          total {\n            gross {\n              amount\n            }\n          }\n          lines {\n            productName\n            quantity\n            totalPrice {\n              gross {\n                amount\n              }\n            }\n            thumbnail {\n              url\n            }\n          }\n        }\n      }\n    }\n    checkoutIds\n  }\n}':
     types.GetMeDocument,
   'fragment MenuItem on MenuItem {\n  id\n  name\n  url\n  collection {\n    slug\n    products(first: 0) {\n      totalCount\n    }\n  }\n  category {\n    slug\n    products(channel: "proyecto705", first: 0) {\n      totalCount\n    }\n  }\n  page {\n    slug\n    content\n  }\n}\n\nquery GetMenuBySlug($slug: String!) {\n  menu(slug: $slug, channel: "proyecto705") {\n    id\n    slug\n    name\n    items {\n      ...MenuItem\n      children {\n        ...MenuItem\n        children {\n          ...MenuItem\n          children {\n            ...MenuItem\n          }\n        }\n      }\n    }\n  }\n}':
     types.MenuItemFragmentDoc,
@@ -176,6 +178,12 @@ export function graphql(
 export function graphql(
   source: 'mutation CheckoutComplete($checkoutId: ID!) {\n  checkoutComplete(id: $checkoutId) {\n    order {\n      id\n      errors {\n        field\n        message\n        code\n      }\n    }\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
 ): typeof import('./graphql').CheckoutCompleteDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation CheckoutCustomerAttach($id: ID!, $customerId: ID!) {\n  checkoutCustomerAttach(id: $id, customerId: $customerId) {\n    errors {\n      message\n      code\n      field\n    }\n  }\n}',
+): typeof import('./graphql').CheckoutCustomerAttachDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -300,7 +308,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          created\n          number\n          statusDisplay\n          total {\n            gross {\n              amount\n            }\n          }\n          lines {\n            productName\n            quantity\n            totalPrice {\n              gross {\n                amount\n              }\n            }\n            thumbnail {\n              url\n            }\n          }\n        }\n      }\n    }\n  }\n}',
+  source: 'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          created\n          number\n          statusDisplay\n          total {\n            gross {\n              amount\n            }\n          }\n          lines {\n            productName\n            quantity\n            totalPrice {\n              gross {\n                amount\n              }\n            }\n            thumbnail {\n              url\n            }\n          }\n        }\n      }\n    }\n    checkoutIds\n  }\n}',
 ): typeof import('./graphql').GetMeDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

@@ -7,6 +7,7 @@ import { addItem } from 'components/cart/actions';
 import { ProductVariant } from 'lib/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
+import { cartActions } from './store';
 
 export function AddToCart({
   variants,
@@ -20,6 +21,7 @@ export function AddToCart({
   const [isPending, startTransition] = useTransition();
   const [isError, setIsError] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState('');
+  const { openMenu } = cartActions();
   const closeError = () => {
     setIsError(false);
   };
@@ -69,7 +71,7 @@ export function AddToCart({
               setErrorMessage(error.toString());
               openError();
             }
-
+            openMenu();
             router.refresh();
           });
         }}

@@ -309,6 +309,7 @@ export type CurrentPerson = {
     url: string | undefined | null;
   };
   orders?: order[];
+  lastCheckout?: string | undefined | null;
   address: {
     id: string;
     city: string;
