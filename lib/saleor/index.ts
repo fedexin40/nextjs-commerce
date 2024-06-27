@@ -992,6 +992,7 @@ export async function getShippingMethods(
     variables: {
       id: checkoutId,
     },
+    cache: 'no-store',
   });
   const shippingMethods = checkout.checkout?.shippingMethods.map((shippingMethod) => {
     return {

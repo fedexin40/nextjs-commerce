@@ -14,7 +14,7 @@ import {
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Fragment, ReactNode, Suspense, useRef } from 'react';
-import { Login, SetCart } from './actions';
+import { Login } from './actions';
 import CloseLogin from './close-login';
 
 export default function LoginModal({ children }: { children: ReactNode }) {
@@ -48,7 +48,6 @@ export default function LoginModal({ children }: { children: ReactNode }) {
       openError();
     } else {
       closeLogin();
-      await SetCart();
       router.refresh();
     }
     isNotLoading();

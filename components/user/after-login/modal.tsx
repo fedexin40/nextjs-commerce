@@ -70,7 +70,7 @@ export default function UserMenuModal({
                   </div>
                   <div className="flex h-full flex-col md:flex-row">
                     <div
-                      className="hidden bg-[#f7e7da] pb-10 pt-10 dark:bg-zinc-700 md:block md:w-1/3 md:overflow-x-auto"
+                      className="hidden bg-[#f7e7da] py-10 dark:bg-zinc-700 md:block md:w-1/3 md:overflow-x-auto"
                       ref={initialFocusRef}
                     >
                       {UserDetails}
