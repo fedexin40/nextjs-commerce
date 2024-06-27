@@ -8,7 +8,7 @@ export default function MobileMenu({
   UserDetails: ReactNode;
   UserShoppings: ReactNode;
 }) {
-  const [tab, setTab] = useState(true);
+  const [tab, setTab] = useState(false);
 
   function displayProfile() {
     setTab(false);
