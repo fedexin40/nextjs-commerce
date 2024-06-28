@@ -8,6 +8,7 @@ import type { Cart } from 'lib/types';
 import { createUrl } from 'lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { Fragment } from 'react';
 import CloseCart from './close-cart';
 import DeleteItemButton from './delete-item-button';
@@ -23,6 +24,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
   const isOpen = useCartOpen();
   const { closeMenu } = cartActions();
   const { openMenu } = cartActions();
+  const router = useRouter();
   let total = 0;
 
   if (cart) {
@@ -160,12 +162,12 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                       />
                     </div>
                   </div>
-                  <a
-                    href={cart.checkoutUrl}
+                  <div
                     className="block w-full bg-[hsl(28,30%,59%)] p-3 text-center text-sm font-medium uppercase text-white opacity-90 hover:opacity-100"
+                    onClick={() => router.push(cart?.checkoutUrl || '/')}
                   >
                     Pasar a pagar
-                  </a>
+                  </div>
                 </div>
               )}
             </Dialog.Panel>
