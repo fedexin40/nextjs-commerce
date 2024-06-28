@@ -92,7 +92,7 @@ const documents = {
     types.GetPagesDocument,
   'query GetProductBySlug($slug: String!) {\n  product(channel: "proyecto705", slug: $slug) {\n    ...ProductDetails\n  }\n}':
     types.GetProductBySlugDocument,
-  'query GetShippingMethods($id: ID!) {\n  checkout(id: $id) {\n    shippingMethods {\n      description\n      id\n      message\n      maximumDeliveryDays\n      name\n      price {\n        amount\n        currency\n      }\n    }\n  }\n}':
+  'query GetShippingMethods($id: ID!) {\n  checkout(id: $id) {\n    id\n    shippingMethods {\n      description\n      id\n      message\n      maximumDeliveryDays\n      name\n      price {\n        amount\n        currency\n      }\n    }\n  }\n}':
     types.GetShippingMethodsDocument,
   'query SearchProducts($search: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {\n  products(\n    first: 100\n    channel: "proyecto705"\n    sortBy: {field: $sortBy, direction: $sortDirection}\n    filter: {search: $search}\n  ) {\n    edges {\n      node {\n        id\n        slug\n        name\n        isAvailableForPurchase\n        description\n        seoTitle\n        seoDescription\n        category {\n          name\n          slug\n        }\n        pricing {\n          priceRange {\n            start {\n              gross {\n                currency\n                amount\n              }\n            }\n            stop {\n              gross {\n                currency\n                amount\n              }\n            }\n          }\n        }\n        media {\n          url(size: 2160)\n          type\n          alt\n        }\n        collections {\n          name\n        }\n        updatedAt\n        variants {\n          ...Variant\n        }\n      }\n    }\n  }\n}':
     types.SearchProductsDocument,
@@ -344,7 +344,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query GetShippingMethods($id: ID!) {\n  checkout(id: $id) {\n    shippingMethods {\n      description\n      id\n      message\n      maximumDeliveryDays\n      name\n      price {\n        amount\n        currency\n      }\n    }\n  }\n}',
+  source: 'query GetShippingMethods($id: ID!) {\n  checkout(id: $id) {\n    id\n    shippingMethods {\n      description\n      id\n      message\n      maximumDeliveryDays\n      name\n      price {\n        amount\n        currency\n      }\n    }\n  }\n}',
 ): typeof import('./graphql').GetShippingMethodsDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

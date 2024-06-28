@@ -39,6 +39,7 @@ export default function Shipping({
       if (!error) {
         const shippingMethod = await shippingMethodsAction({ checkoutId });
         setShippingMethods(shippingMethod || []);
+        setError('No hay envios disponibles por el momento, por favor intentalo mas tarde');
       } else {
         setError(error);
       }
@@ -48,8 +49,6 @@ export default function Shipping({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    setShippingMethods,
-    checkoutId,
     userStore.city,
     userStore.countryArea,
     userStore.streetAddress1,
@@ -99,7 +98,11 @@ export default function Shipping({
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <div className="space-y-5 text-xs leading-8	tracking-wider md:text-left lg:text-sm lg:leading-10">
+        {error}
+      </div>
+    );
   }
 
   return (

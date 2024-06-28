@@ -46,9 +46,9 @@ export default async function CartPaymentPage({
   if (paymentIntent.status === 'succeeded') {
     try {
       order = await completeCheckout(checkoutId);
-    } catch (e) {
-      console.log(e);
-      return <>Error</>;
+    } catch (error: any) {
+      console.log(error);
+      return <>{error.message}</>;
     }
     const orderId = order.checkoutComplete?.order?.id;
     redirect(`/cart/success/${orderId}`);

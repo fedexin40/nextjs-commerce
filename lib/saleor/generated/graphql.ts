@@ -32216,6 +32216,7 @@ export type GetShippingMethodsQueryVariables = Exact<{
 
 export type GetShippingMethodsQuery = {
   checkout?: {
+    id: string;
     shippingMethods: Array<{
       description?: string | null;
       id: string;
@@ -33983,6 +33984,7 @@ fragment Variant on ProductVariant {
 export const GetShippingMethodsDocument = new TypedDocumentString(`
     query GetShippingMethods($id: ID!) {
   checkout(id: $id) {
+    id
     shippingMethods {
       description
       id

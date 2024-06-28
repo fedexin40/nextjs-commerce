@@ -44,11 +44,12 @@ export async function shippingAddressUpdate({
 }
 
 export async function shippingMethodsAction({ checkoutId }: { checkoutId: string }) {
-  // Retry the shippingMethods
+  // Get the shippingMethods
+  let methodsShipping;
   try {
-    const methodsShipping = await getShippingMethods(checkoutId || '');
-    return methodsShipping;
+    methodsShipping = await getShippingMethods(checkoutId || '');
   } catch (error: any) {
     return error.message;
   }
+  return methodsShipping;
 }

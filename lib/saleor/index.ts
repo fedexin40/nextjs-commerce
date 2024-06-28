@@ -15,7 +15,6 @@ import {
   countryAreaChoices,
   order,
   orderLines,
-  shippingMethod,
 } from 'lib/types';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
@@ -939,6 +938,8 @@ export async function shippingAddressCheckoutUpdate({
       checkoutId: checkoutId,
       shippingAddress: shippingAddress,
     },
+    withAuth: true,
+    cache: 'no-store',
   });
   if (checkout.checkoutShippingAddressUpdate?.errors[0]) {
     throw new Error(
@@ -984,16 +985,16 @@ export async function getCheckoutFromCookiesOrRedirect(): Promise<string> {
   return checkoutId || '';
 }
 
-export async function getShippingMethods(
-  checkoutId: string,
-): Promise<shippingMethod[] | undefined> {
+export async function getShippingMethods(checkoutId: string): Promise<any> {
   const checkout = await saleorFetch({
     query: GetShippingMethodsDocument,
     variables: {
       id: checkoutId,
     },
     cache: 'no-store',
+    withAuth: true,
   });
+
   const shippingMethods = checkout.checkout?.shippingMethods.map((shippingMethod) => {
     return {
       id: shippingMethod.id,
