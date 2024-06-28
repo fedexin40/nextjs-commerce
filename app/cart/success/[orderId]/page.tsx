@@ -1,7 +1,6 @@
 import { GetOrderById } from 'lib/saleor';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
-import Firework from './firework';
 
 export default async function CartSuccessPage({ params }: { params: { orderId: string } }) {
   if (!params.orderId) {
@@ -12,9 +11,6 @@ export default async function CartSuccessPage({ params }: { params: { orderId: s
   const order = await GetOrderById(orderId);
   return (
     <>
-      <div className="-z-10">
-        <Firework />
-      </div>
       <div className="mx-10 mb-16 mt-10 flex flex-col justify-center text-center md:mx-20 md:mb-24 md:mt-16 md:tracking-wider lg:mx-32 lg:mb-40 lg:mt-20">
         <div className="bg-black p-10 text-white">
           <div className="pb-10 text-center text-base font-bold">

@@ -7,7 +7,7 @@ export default async function UserShoppings() {
 
   return (
     <div className="px-5 pt-5 text-center text-sm tracking-wider dark:text-[#c9aa9e] md:pt-10 md:text-left">
-      <div className="hidden md:block">Historial de Compras</div>
+      <div className="hidden text-sm uppercase md:block">Historial de Compras</div>
       <div className="mt-3">
         {orders?.length > 0 ? (
           <div className="pt-5">

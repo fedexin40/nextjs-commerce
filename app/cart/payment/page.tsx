@@ -1,6 +1,7 @@
 import { completeCheckout, gatewayPayment, getCheckoutFromCookiesOrRedirect } from 'lib/saleor';
 import { redirect } from 'next/navigation';
 import Stripe from 'stripe';
+import CartProcessing from '../processing/page';
 
 export default async function CartPaymentPage({
   searchParams,
@@ -36,9 +37,8 @@ export default async function CartPaymentPage({
     client_secret: searchParams.payment_intent_client_secret,
   });
 
-  if (paymentIntent.status === 'processing') {
-    // @todo refresh
-    return <p>Payment processing. We&apos;ll update you when payment is received.</p>;
+  if (paymentIntent.status === 'processing' || paymentIntent.status === 'requires_action') {
+    return <CartProcessing />;
   }
   if (paymentIntent.status === 'requires_payment_method') {
     redirect('/');
@@ -52,5 +52,7 @@ export default async function CartPaymentPage({
     }
     const orderId = order.checkoutComplete?.order?.id;
     redirect(`/cart/success/${orderId}`);
+  } else {
+    return <div>{paymentIntent.status}</div>;
   }
 }
