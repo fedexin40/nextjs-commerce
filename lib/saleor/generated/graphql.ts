@@ -31135,6 +31135,8 @@ export type CheckoutFragment = {
   token: string;
   updatedAt: string;
   quantity: number;
+  chargeStatus: CheckoutChargeStatusEnum;
+  authorizeStatus: CheckoutAuthorizeStatusEnum;
   totalPrice: {
     gross: { currency: string; amount: number };
     tax: { currency: string; amount: number };
@@ -31341,6 +31343,8 @@ export type CheckoutAddLineMutation = {
       token: string;
       updatedAt: string;
       quantity: number;
+      chargeStatus: CheckoutChargeStatusEnum;
+      authorizeStatus: CheckoutAuthorizeStatusEnum;
       totalPrice: {
         gross: { currency: string; amount: number };
         tax: { currency: string; amount: number };
@@ -31448,6 +31452,8 @@ export type CheckoutDeleteLineMutation = {
       token: string;
       updatedAt: string;
       quantity: number;
+      chargeStatus: CheckoutChargeStatusEnum;
+      authorizeStatus: CheckoutAuthorizeStatusEnum;
       totalPrice: {
         gross: { currency: string; amount: number };
         tax: { currency: string; amount: number };
@@ -31541,6 +31547,8 @@ export type CheckoutUpdateLineMutation = {
       token: string;
       updatedAt: string;
       quantity: number;
+      chargeStatus: CheckoutChargeStatusEnum;
+      authorizeStatus: CheckoutAuthorizeStatusEnum;
       totalPrice: {
         gross: { currency: string; amount: number };
         tax: { currency: string; amount: number };
@@ -31622,6 +31630,8 @@ export type CreateCheckoutMutation = {
       token: string;
       updatedAt: string;
       quantity: number;
+      chargeStatus: CheckoutChargeStatusEnum;
+      authorizeStatus: CheckoutAuthorizeStatusEnum;
       totalPrice: {
         gross: { currency: string; amount: number };
         tax: { currency: string; amount: number };
@@ -31846,6 +31856,8 @@ export type GetCheckoutByIdQuery = {
     token: string;
     updatedAt: string;
     quantity: number;
+    chargeStatus: CheckoutChargeStatusEnum;
+    authorizeStatus: CheckoutAuthorizeStatusEnum;
     totalPrice: {
       gross: { currency: string; amount: number };
       tax: { currency: string; amount: number };
@@ -32220,7 +32232,6 @@ export type GetShippingMethodsQuery = {
     shippingMethods: Array<{
       description?: string | null;
       id: string;
-      message?: string | null;
       maximumDeliveryDays?: number | null;
       name: string;
       price: { amount: number; currency: string };
@@ -32451,6 +32462,8 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
       }
     }
   }
+  chargeStatus
+  authorizeStatus
 }
     fragment ProductDetails on Product {
   id
@@ -32717,6 +32730,8 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
       }
     }
   }
+  chargeStatus
+  authorizeStatus
 }
 fragment ProductDetails on Product {
   id
@@ -32883,6 +32898,8 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
       }
     }
   }
+  chargeStatus
+  authorizeStatus
 }
 fragment ProductDetails on Product {
   id
@@ -33034,6 +33051,8 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
       }
     }
   }
+  chargeStatus
+  authorizeStatus
 }
 fragment ProductDetails on Product {
   id
@@ -33162,6 +33181,8 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
       }
     }
   }
+  chargeStatus
+  authorizeStatus
 }
 fragment ProductDetails on Product {
   id
@@ -33495,6 +33516,8 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
       }
     }
   }
+  chargeStatus
+  authorizeStatus
 }
 fragment ProductDetails on Product {
   id
@@ -33988,7 +34011,6 @@ export const GetShippingMethodsDocument = new TypedDocumentString(`
     shippingMethods {
       description
       id
-      message
       maximumDeliveryDays
       name
       price {

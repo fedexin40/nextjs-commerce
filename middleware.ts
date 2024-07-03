@@ -1,4 +1,4 @@
-import { Me } from 'lib/saleor';
+import { Me, getCart } from 'lib/saleor';
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
@@ -8,11 +8,16 @@ export async function middleware(request: NextRequest) {
   const cartId = request.cookies.get('cartId');
   const response = NextResponse.redirect(new URL('/home', request.url));
   if (!cartId && user.lastCheckout) {
-    response.cookies.set({
-      name: 'cartId',
-      value: user.lastCheckout,
-    });
-    return response;
+    console.log(user.lastCheckout);
+    const cart = await getCart(user.lastCheckout || '');
+
+    if (cart?.chargeStatus == 'NONE') {
+      response.cookies.set({
+        name: 'cartId',
+        value: user.lastCheckout,
+      });
+      return response;
+    }
   }
 }
 

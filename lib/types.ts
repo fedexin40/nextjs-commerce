@@ -111,6 +111,8 @@ export type VercelCommerceCart = {
   };
   lines: Connection<CartItem>;
   totalQuantity: number;
+  chargeStatus: string;
+  authorizeStatus: string;
 };
 
 export type VercelCommerceCollection = {

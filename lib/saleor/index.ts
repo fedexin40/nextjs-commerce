@@ -447,7 +447,6 @@ export async function getCart(cartId: string): Promise<Cart | null> {
     withAuth: true,
     cache: 'no-store',
   });
-
   if (!saleorCheckout.checkout) {
     return null;
   }

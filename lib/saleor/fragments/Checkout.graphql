@@ -29,4 +29,6 @@ fragment Checkout on Checkout {
       }
     }
   }
+  chargeStatus
+  authorizeStatus
 }

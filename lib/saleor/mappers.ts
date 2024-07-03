@@ -153,5 +153,7 @@ export function saleorCheckoutToVercelCart(checkout: CheckoutFragment): Cart {
       };
     }),
     totalQuantity: checkout.quantity,
+    chargeStatus: checkout.chargeStatus,
+    authorizeStatus: checkout.authorizeStatus,
   };
 }
