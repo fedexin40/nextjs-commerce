@@ -32239,6 +32239,10 @@ export type GetShippingMethodsQuery = {
   } | null;
 };
 
+export type GetUserCheckoutQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetUserCheckoutQuery = { me?: { checkoutIds?: Array<string> | null } | null };
+
 export type SearchProductsQueryVariables = Exact<{
   search: Scalars['String'];
   sortBy: ProductOrderField;
@@ -34021,6 +34025,13 @@ export const GetShippingMethodsDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetShippingMethodsQuery, GetShippingMethodsQueryVariables>;
+export const GetUserCheckoutDocument = new TypedDocumentString(`
+    query GetUserCheckout {
+  me {
+    checkoutIds
+  }
+}
+    `) as unknown as TypedDocumentString<GetUserCheckoutQuery, GetUserCheckoutQueryVariables>;
 export const SearchProductsDocument = new TypedDocumentString(`
     query SearchProducts($search: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {
   products(

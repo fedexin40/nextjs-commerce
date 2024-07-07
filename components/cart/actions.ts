@@ -1,15 +1,17 @@
 'use server';
 
+import { TAGS } from 'lib/constants';
 import {
   Me,
   addToCart,
+  checkoutUser,
   createCart,
   customerCheckoutAttach,
   getCart,
   removeFromCart,
   updateCart,
 } from 'lib/saleor';
-import { cookies } from 'next/headers';
+import { revalidateTag } from 'next/cache';
 
 export const addItem = async (variantId: string | undefined): Promise<String | undefined> => {
   const user = await Me();
@@ -18,7 +20,7 @@ export const addItem = async (variantId: string | undefined): Promise<String | u
     return 'Por favor inicia sesion primero';
   }
 
-  let cartId = cookies().get('cartId')?.value;
+  let cartId = await checkoutUser();
   let cart;
 
   if (cartId) {
@@ -29,7 +31,7 @@ export const addItem = async (variantId: string | undefined): Promise<String | u
     cart = await createCart(userEmail);
     cartId = cart.id;
     await customerCheckoutAttach({ checkoutId: cartId, customerId: user.id });
-    cookies().set('cartId', cartId);
+    revalidateTag(TAGS.checkoutUser);
   }
 
   if (!variantId) {
@@ -50,7 +52,7 @@ export const addItem = async (variantId: string | undefined): Promise<String | u
 };
 
 export const removeItem = async (lineId: string): Promise<String | undefined> => {
-  const cartId = cookies().get('cartId')?.value;
+  const cartId = await checkoutUser();
 
   if (!cartId) {
     return 'Missing cart ID';
@@ -71,7 +73,7 @@ export const updateItemQuantity = async ({
   variantId: string;
   quantity: number;
 }): Promise<String | undefined> => {
-  const cartId = cookies().get('cartId')?.value;
+  const cartId = await checkoutUser();
 
   if (!cartId) {
     return 'Missing cart ID';

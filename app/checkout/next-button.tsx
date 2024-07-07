@@ -33,7 +33,6 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
         lastName: userStore.lastName || user.lastName || '',
         phone: userStore.phone || user.address.phone || '',
       };
-      console.log(input);
       // eslint-disable-next-line react-hooks/exhaustive-deps
       const error = await shippingAddressUpdate(input);
       if (!error) {

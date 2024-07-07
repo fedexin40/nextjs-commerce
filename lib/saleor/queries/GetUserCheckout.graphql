@@ -1,0 +1,5 @@
+query GetUserCheckout {
+  me {
+    checkoutIds
+  }
+}

@@ -1,9 +1,8 @@
-import { getCart } from 'lib/saleor';
-import { cookies } from 'next/headers';
+import { checkoutUser, getCart } from 'lib/saleor';
 import CartModal from './modal';
 
 export default async function Cart() {
-  const cartId = cookies().get('cartId')?.value;
+  const cartId = await checkoutUser();
   let cart;
 
   if (cartId) {

@@ -54,6 +54,7 @@ import {
   GetPagesDocument,
   GetProductBySlugDocument,
   GetShippingMethodsDocument,
+  GetUserCheckoutDocument,
   MenuItemFragment,
   OrderDirection,
   PaymentGatewayInitializeDocument,
@@ -847,7 +848,7 @@ export async function gatewayPayment(checkoutId: string) {
 }
 
 // TODO: Add the type for the return value
-export async function completeCheckout(checkoutId: string) {
+export async function completeCheckout({ checkoutId }: { checkoutId: string }) {
   const checkout = await saleorFetch({
     query: CheckoutCompleteDocument,
     variables: {
@@ -1044,6 +1045,30 @@ export async function customerCheckoutAttach({
   if (checkout.checkoutCustomerAttach?.errors[0]) {
     throw new Error(checkout.checkoutCustomerAttach?.errors[0]?.message || '');
   }
+}
+
+export async function checkoutUser(): Promise<string> {
+  const checkout = await saleorFetch({
+    query: GetUserCheckoutDocument,
+    variables: {},
+    withAuth: true,
+    tags: [TAGS.checkoutUser],
+  });
+  if (!checkout.me?.checkoutIds) {
+    return '';
+  }
+  const lastCheckout = checkout.me.checkoutIds[0] || '';
+  const cart = await saleorFetch({
+    query: GetCheckoutByIdDocument,
+    variables: {
+      id: lastCheckout,
+    },
+    withAuth: true,
+  });
+  if (cart.checkout?.chargeStatus == 'NONE' || cart.checkout?.chargeStatus == 'PARTIAL') {
+    return lastCheckout;
+  }
+  return '';
 }
 
 // eslint-disable-next-line no-unused-vars

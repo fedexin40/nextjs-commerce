@@ -14,7 +14,7 @@ export default async function CheckoutPayment({
   }
 
   const cart = await getCart(checkout || '');
-  const checkoutPayment = new URL('cart/payment', process.env.SHOP_PUBLIC_URL || '').toString();
+  const checkoutPayment = new URL('cart/processing', process.env.SHOP_PUBLIC_URL || '').toString();
 
   // I believe it is impossible to get until here without
   // a cart, so it is ok just to pass, I am doing the below to make

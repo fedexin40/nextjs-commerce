@@ -31,9 +31,9 @@ export default function ShippingMethods({
               key={ShippingMethod.id}
               value={ShippingMethod}
               className={({ active, checked }) =>
-                `${active ? 'opacity-30 ring-2 ring-white ring-offset-2' : ''}
-                ${checked ? 'ring-2 ring-white ring-offset-2' : ''}
-                  relative flex cursor-pointer rounded-lg bg-black px-5 py-4 shadow-md focus:outline-none dark:bg-black`
+                `${active ? 'ring-2 ring-black ring-offset-2 dark:ring-white ' : ''}
+                ${checked ? 'ring-2 ring-black ring-offset-2 dark:ring-white' : ''}
+                  relative flex cursor-pointer rounded-lg bg-zinc-100 px-5 py-4 shadow-md focus:outline-none dark:bg-zinc-700`
               }
             >
               <div
@@ -43,10 +43,10 @@ export default function ShippingMethods({
                 }}
               >
                 <div className="text-xs lg:text-sm">
-                  <p className="pb-2 font-semibold text-white opacity-100 dark:text-white">
+                  <p className="pb-2 font-semibold text-black opacity-100 dark:text-white dark:text-white">
                     {ShippingMethod.name}
                   </p>
-                  <div className="flex justify-center text-white opacity-100 dark:text-white ">
+                  <div className="flex justify-center text-black opacity-100 dark:text-white ">
                     <div className="">${ShippingMethod.price}</div>
                     <div aria-hidden="true">&middot;</div>
                     <div className="whitespace-nowrap">{ShippingMethod.serviceName}</div>
