@@ -6,9 +6,7 @@ import { Suspense } from 'react';
 export default function SearchLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Suspense>
-        <Navbar />
-      </Suspense>
+      <Navbar />
       <div>
         <Suspense
           fallback={

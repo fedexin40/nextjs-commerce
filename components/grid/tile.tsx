@@ -25,7 +25,15 @@ export function GridTileImage({
       })}
     >
       {props.src ? (
-        <Suspense fallback={<Loading />}>
+        <Suspense
+          fallback={
+            <>
+              <div className="h-18 flex place-items-center justify-center text-center">
+                <Loading />
+              </div>
+            </>
+          }
+        >
           <Image className="relative h-full w-full object-cover" {...props} />
         </Suspense>
       ) : null}

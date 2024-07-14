@@ -33,9 +33,7 @@ export default function MobileNavbar() {
                 Nosotros
               </div>
               <div>
-                <Suspense>
-                  <Menu />
-                </Suspense>
+                <Menu />
               </div>
             </div>
             <div className="flex h-full items-center">
