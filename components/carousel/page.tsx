@@ -26,13 +26,11 @@ const responsive = {
 
 export default function CarouselComponent({
   images,
-  className,
   autoPlay,
   removeArrowOnDeviceType,
   infinite,
 }: {
   images: string[];
-  className: string;
   autoPlay: boolean;
   infinite?: boolean;
   removeArrowOnDeviceType?: string[];
@@ -51,7 +49,7 @@ export default function CarouselComponent({
         >
           {images.map((image) => {
             return (
-              <div className={className} key={image}>
+              <div key={image}>
                 <CarouselImage image={image} />
               </div>
             );
