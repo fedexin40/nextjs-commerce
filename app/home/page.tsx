@@ -1,8 +1,6 @@
-import CarouselComponent from 'components/carousel/page';
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import { getCollectionProducts } from 'lib/saleor';
-import Image from 'next/image';
 import { Suspense } from 'react';
 
 export const runtime = 'edge';
@@ -19,38 +17,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <div className="hidden md:block">
-        <Suspense
-          fallback={
-            <div className="relative md:h-64 lg:h-96 lg:w-96">
-              <Image src="/envioGratis.png'" fill alt="" />
-            </div>
-          }
-        >
-          <CarouselComponent
-            images={['/envioGratis.png', '/banner.png']}
-            className="md:h-64 lg:h-96 lg:w-96"
-            autoPlay={true}
-            removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
-          />
-        </Suspense>
-      </div>
-      <div className="block dark:bg-black md:hidden">
-        <Suspense
-          fallback={
-            <div className="relative h-40">
-              <Image src="/envioGratis.png'" fill alt="" />
-            </div>
-          }
-        >
-          <CarouselComponent
-            images={['/envioGratisMobile.png', '/bannerMobile.png']}
-            className="h-52"
-            autoPlay={true}
-            removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
-          />
-        </Suspense>
-      </div>
       <div className="m-10 grid justify-items-center whitespace-nowrap text-base font-medium tracking-wider text-[#a8a8a8] dark:text-[#c9aa9e] xl:text-3xl">
         Encuentra el arete perfecto para ti
       </div>
