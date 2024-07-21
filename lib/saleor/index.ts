@@ -675,6 +675,7 @@ export async function addressUpdate({
       input: input,
     },
     withAuth: true,
+    cache: 'no-store',
   });
   if (errors.accountAddressUpdate?.errors[0]) {
     throw new Error(errors.accountAddressUpdate?.errors[0]?.field || '');
@@ -711,6 +712,7 @@ export async function addressCreate({
     query: AddressCreateDocument,
     variables: { input: input },
     withAuth: true,
+    cache: 'no-store',
   });
   if (address.accountAddressCreate?.errors[0]) {
     throw new Error(address.accountAddressCreate?.errors[0]?.field || '');
@@ -721,6 +723,7 @@ export async function addressCreate({
     query: AccountSetDefaultAddressShippingDocument,
     variables: { id: addressId || '' },
     withAuth: true,
+    cache: 'no-store',
   });
   if (errorsShipping.accountSetDefaultAddress?.errors[0]) {
     throw new Error(errorsShipping.accountSetDefaultAddress?.errors[0]?.message || '');
@@ -730,6 +733,7 @@ export async function addressCreate({
     query: AccountSetDefaultAddressBillingDocument,
     variables: { id: addressId || '' },
     withAuth: true,
+    cache: 'no-store',
   });
   if (errorsBilling.accountSetDefaultAddress?.errors[0]) {
     throw new Error(errorsShipping.accountSetDefaultAddress?.errors[0]?.message || '');
@@ -741,6 +745,7 @@ export async function Me(): Promise<CurrentPerson> {
     query: GetMeDocument,
     variables: {},
     withAuth: true,
+    cache: 'no-store',
     tags: [TAGS.userAddress],
   });
 
@@ -807,6 +812,7 @@ export async function accountUpdate({
     query: AccountUpdateDocument,
     variables: { input: input },
     withAuth: true,
+    cache: 'no-store',
     tags: [TAGS.userAddress],
   });
 
@@ -1041,6 +1047,7 @@ export async function customerCheckoutAttach({
       customerId: customerId,
     },
     withAuth: true,
+    cache: 'no-store',
   });
   if (checkout.checkoutCustomerAttach?.errors[0]) {
     throw new Error(checkout.checkoutCustomerAttach?.errors[0]?.message || '');
@@ -1052,6 +1059,7 @@ export async function checkoutUser(): Promise<string> {
     query: GetUserCheckoutDocument,
     variables: {},
     withAuth: true,
+    cache: 'no-store',
     tags: [TAGS.checkoutUser],
   });
   if (!checkout.me?.checkoutIds) {
@@ -1064,6 +1072,7 @@ export async function checkoutUser(): Promise<string> {
       id: lastCheckout,
     },
     withAuth: true,
+    cache: 'no-store',
   });
   if (cart.checkout?.chargeStatus == 'NONE' || cart.checkout?.chargeStatus == 'PARTIAL') {
     return lastCheckout;
