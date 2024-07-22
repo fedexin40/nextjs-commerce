@@ -6,7 +6,6 @@ import { Suspense } from 'react';
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Navbar />
       <div>
         <Suspense
           fallback={
@@ -17,10 +16,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             </>
           }
         >
+          <Navbar />
           {children}
+          <Footer />
         </Suspense>
       </div>
-      <Footer />
     </>
   );
 }

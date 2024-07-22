@@ -6,7 +6,6 @@ import { Suspense } from 'react';
 export default function SearchLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Navbar />
       <div>
         <Suspense
           fallback={
@@ -17,13 +16,12 @@ export default function SearchLayout({ children }: { children: React.ReactNode }
             </>
           }
         >
+          <Navbar />
           {children}
+          <div className="min-h-10 h-10 w-full bg-zinc-400 dark:bg-[#c9aa9e]" />
+          <Footer />
         </Suspense>
       </div>
-      <Suspense>
-        <div className="min-h-10 h-10 w-full bg-zinc-400 dark:bg-[#c9aa9e]" />
-        <Footer />
-      </Suspense>
     </>
   );
 }

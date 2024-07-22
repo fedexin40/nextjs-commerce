@@ -1,17 +1,26 @@
 import Footer from 'components/layout/footer';
 import Navbar from 'components/layout/navbar';
+import Loading from 'components/loading';
 import { Suspense } from 'react';
 
-export default function SearchLayout({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Navbar />
-      <Suspense>
-        <div className="flex flex-col gap-8 px-4 pb-4 text-black dark:text-white md:flex-row">
-          <div className="order-last w-full md:order-none">{children}</div>
-        </div>
-      </Suspense>
-      <Footer />
+      <div>
+        <Suspense
+          fallback={
+            <>
+              <div className="flex h-[300px] place-items-center justify-center text-center lg:h-[400px]">
+                <Loading />
+              </div>
+            </>
+          }
+        >
+          <Navbar />
+          {children}
+          <Footer />
+        </Suspense>
+      </div>
     </>
   );
 }
