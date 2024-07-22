@@ -10,8 +10,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Suspense
           fallback={
             <>
-              <div className="flex h-[300px] place-items-center justify-center text-center lg:h-[400px]">
-                <Loading />
+              <div className="flex h-screen flex-col items-center justify-center">
+                <div className="relative bottom-10 right-6">
+                  <Loading />
+                </div>
               </div>
             </>
           }
