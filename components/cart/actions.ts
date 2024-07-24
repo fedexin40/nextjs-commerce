@@ -4,7 +4,6 @@ import { TAGS } from 'lib/constants';
 import {
   Me,
   addToCart,
-  checkoutUser,
   createCart,
   customerCheckoutAttach,
   getCart,
@@ -20,19 +19,15 @@ export const addItem = async (variantId: string | undefined): Promise<String | u
     return 'Por favor inicia sesion primero';
   }
 
-  let cartId = await checkoutUser();
-  let cart;
+  let cart = await lastCheckout();
 
-  if (cartId) {
-    cart = await getCart(cartId);
-  }
-
-  if (!cartId || !cart) {
+  if (!cart) {
     cart = await createCart(userEmail);
-    cartId = cart.id;
-    await customerCheckoutAttach({ checkoutId: cartId, customerId: user.id });
-    revalidateTag(TAGS.checkoutUser);
+
+    await customerCheckoutAttach({ checkoutId: cart.id, customerId: user.id });
+    revalidateTag(TAGS.user);
   }
+  const cartId = cart.id;
 
   if (!variantId) {
     return 'Missing product variant ID';
@@ -52,13 +47,13 @@ export const addItem = async (variantId: string | undefined): Promise<String | u
 };
 
 export const removeItem = async (lineId: string): Promise<String | undefined> => {
-  const cartId = await checkoutUser();
+  const cart = await lastCheckout();
 
-  if (!cartId) {
+  if (!cart?.id) {
     return 'Missing cart ID';
   }
   try {
-    await removeFromCart(cartId, [lineId]);
+    await removeFromCart(cart.id, [lineId]);
   } catch (e) {
     return 'Error removing item from cart';
   }
@@ -73,13 +68,13 @@ export const updateItemQuantity = async ({
   variantId: string;
   quantity: number;
 }): Promise<String | undefined> => {
-  const cartId = await checkoutUser();
+  const cart = await lastCheckout();
 
-  if (!cartId) {
-    return 'Missing cart ID';
+  if (!cart) {
+    return 'Missing cart';
   }
   try {
-    await updateCart(cartId, [
+    await updateCart(cart.id, [
       {
         id: lineId,
         merchandiseId: variantId,
@@ -90,4 +85,14 @@ export const updateItemQuantity = async ({
     console.log(e);
     return 'Error updating item quantity';
   }
+};
+
+export const lastCheckout = async () => {
+  const cartId = (await Me()).lastCheckout;
+
+  if (cartId) {
+    const cart = await getCart(cartId);
+    return cart;
+  }
+  return null;
 };

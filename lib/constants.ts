@@ -45,7 +45,7 @@ export const sorting: SortFilterItem[] = [
 export const TAGS = {
   collections: 'collections',
   products: 'products',
-  userAddress: 'userAddress',
+  user: 'user',
   checkoutUser: 'checkoutUser',
 };
 

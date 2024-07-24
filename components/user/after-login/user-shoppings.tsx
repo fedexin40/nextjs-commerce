@@ -12,9 +12,9 @@ export default async function UserShoppings() {
         {orders?.length > 0 ? (
           <div className="pt-5">
             {orders.map((order) => (
-              <div key={order.amount}>
+              <div key={order.id}>
                 {order.lines.map((line) => (
-                  <div key={line.amount} className="m-3 border p-3 text-xs">
+                  <div key={line.id} className="m-3 border p-3 text-xs">
                     <div className="flex flex-row justify-around	gap-3">
                       <div className="relative h-14 w-14">
                         <Image className="object-contain" alt="" src={line.urlImage} fill />

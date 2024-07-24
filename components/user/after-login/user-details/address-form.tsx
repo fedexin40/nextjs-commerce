@@ -33,6 +33,7 @@ export default function AddressInput({
     event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>,
   ) {
     setUserDetails({ ...userStore, [event.target.name]: event.target.value });
+    console.log(userStore);
   }
 
   return (

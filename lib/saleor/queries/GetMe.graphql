@@ -25,6 +25,7 @@ query GetMe {
     orders(first: 100) {
       edges {
         node {
+          id
           created
           number
           statusDisplay
@@ -34,6 +35,7 @@ query GetMe {
             }
           }
           lines {
+            id
             productName
             quantity
             totalPrice {

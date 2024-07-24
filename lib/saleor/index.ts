@@ -54,7 +54,6 @@ import {
   GetPagesDocument,
   GetProductBySlugDocument,
   GetShippingMethodsDocument,
-  GetUserCheckoutDocument,
   MenuItemFragment,
   OrderDirection,
   PaymentGatewayInitializeDocument,
@@ -678,6 +677,7 @@ export async function addressUpdate({
     cache: 'no-store',
   });
   if (errors.accountAddressUpdate?.errors[0]) {
+    console.log(errors.accountAddressUpdate?.errors[0]);
     throw new Error(errors.accountAddressUpdate?.errors[0]?.field || '');
   }
 }
@@ -746,7 +746,7 @@ export async function Me(): Promise<CurrentPerson> {
     variables: {},
     withAuth: true,
     cache: 'no-store',
-    tags: [TAGS.userAddress],
+    tags: [TAGS.user],
   });
 
   const orders: order[] = [];
@@ -755,6 +755,7 @@ export async function Me(): Promise<CurrentPerson> {
     const items: orderLines[] = [];
     item.node.lines.forEach((itemLine) => {
       const line = {
+        id: itemLine.id,
         productName: itemLine.productName,
         quantity: itemLine.quantity,
         amount: itemLine.totalPrice.gross.amount,
@@ -765,6 +766,7 @@ export async function Me(): Promise<CurrentPerson> {
 
     // Add the orders
     const order = {
+      id: item.node.id,
       status: item.node.statusDisplay,
       number: item.node.number,
       date: item.node.created,
@@ -813,7 +815,7 @@ export async function accountUpdate({
     variables: { input: input },
     withAuth: true,
     cache: 'no-store',
-    tags: [TAGS.userAddress],
+    tags: [TAGS.user],
   });
 
   if (errors.accountUpdate?.errors[0]) {
@@ -1052,32 +1054,6 @@ export async function customerCheckoutAttach({
   if (checkout.checkoutCustomerAttach?.errors[0]) {
     throw new Error(checkout.checkoutCustomerAttach?.errors[0]?.message || '');
   }
-}
-
-export async function checkoutUser(): Promise<string> {
-  const checkout = await saleorFetch({
-    query: GetUserCheckoutDocument,
-    variables: {},
-    withAuth: true,
-    cache: 'no-store',
-    tags: [TAGS.checkoutUser],
-  });
-  if (!checkout.me?.checkoutIds) {
-    return '';
-  }
-  const lastCheckout = checkout.me.checkoutIds[0] || '';
-  const cart = await saleorFetch({
-    query: GetCheckoutByIdDocument,
-    variables: {
-      id: lastCheckout,
-    },
-    withAuth: true,
-    cache: 'no-store',
-  });
-  if (cart.checkout?.chargeStatus == 'NONE' || cart.checkout?.chargeStatus == 'PARTIAL') {
-    return lastCheckout;
-  }
-  return '';
 }
 
 // eslint-disable-next-line no-unused-vars

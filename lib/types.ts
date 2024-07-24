@@ -327,6 +327,7 @@ export type CurrentPerson = {
 };
 
 export type orderLines = {
+  id: string;
   productName: string;
   quantity: number;
   amount: number;
@@ -334,6 +335,7 @@ export type orderLines = {
 };
 
 export type order = {
+  id: string;
   status: string;
   number: string;
   date: string;

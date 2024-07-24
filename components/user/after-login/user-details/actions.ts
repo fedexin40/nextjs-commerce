@@ -66,5 +66,5 @@ export async function updateAddress({
     }
   }
   await accountUpdate({ firstName, lastName });
-  revalidateTag(TAGS.userAddress);
+  revalidateTag(TAGS.user);
 }
