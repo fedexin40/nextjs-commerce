@@ -966,6 +966,7 @@ export async function GetOrderById(id: string): Promise<order> {
   const lines: orderLines[] = [];
   orderbyID.order?.lines.forEach((line) =>
     lines.push({
+      id: line.id,
       productName: line.productName,
       quantity: line.quantity,
       amount: line.totalPrice.gross.amount,
@@ -978,6 +979,7 @@ export async function GetOrderById(id: string): Promise<order> {
     date: orderbyID.order?.created || '',
     amount: orderbyID.order?.total.gross.amount || 0,
     lines: lines,
+    id: orderbyID.order?.id || '',
   };
 }
 

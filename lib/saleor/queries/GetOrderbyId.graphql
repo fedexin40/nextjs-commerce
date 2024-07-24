@@ -1,5 +1,6 @@
 query GetOrderById($id: ID!) {
   order(id: $id) {
+    id
     number
     created
     origin
@@ -7,6 +8,7 @@ query GetOrderById($id: ID!) {
     status
     statusDisplay
     lines {
+      id
       productName
       quantity
       quantityFulfilled

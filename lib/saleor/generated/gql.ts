@@ -84,7 +84,7 @@ const documents = {
     types.GetMeDocument,
   'fragment MenuItem on MenuItem {\n  id\n  name\n  url\n  collection {\n    slug\n    products(first: 0) {\n      totalCount\n    }\n  }\n  category {\n    slug\n    products(channel: "proyecto705", first: 0) {\n      totalCount\n    }\n  }\n  page {\n    slug\n    content\n  }\n}\n\nquery GetMenuBySlug($slug: String!) {\n  menu(slug: $slug, channel: "proyecto705") {\n    id\n    slug\n    name\n    items {\n      ...MenuItem\n      children {\n        ...MenuItem\n        children {\n          ...MenuItem\n          children {\n            ...MenuItem\n          }\n        }\n      }\n    }\n  }\n}':
     types.MenuItemFragmentDoc,
-  'query GetOrderById($id: ID!) {\n  order(id: $id) {\n    number\n    created\n    origin\n    paymentStatus\n    status\n    statusDisplay\n    lines {\n      productName\n      quantity\n      quantityFulfilled\n      quantityToFulfill\n      totalPrice {\n        gross {\n          amount\n        }\n      }\n      thumbnail {\n        url\n      }\n    }\n    isPaid\n    isShippingRequired\n    total {\n      gross {\n        amount\n      }\n    }\n  }\n}':
+  'query GetOrderById($id: ID!) {\n  order(id: $id) {\n    id\n    number\n    created\n    origin\n    paymentStatus\n    status\n    statusDisplay\n    lines {\n      id\n      productName\n      quantity\n      quantityFulfilled\n      quantityToFulfill\n      totalPrice {\n        gross {\n          amount\n        }\n      }\n      thumbnail {\n        url\n      }\n    }\n    isPaid\n    isShippingRequired\n    total {\n      gross {\n        amount\n      }\n    }\n  }\n}':
     types.GetOrderByIdDocument,
   'query GetPageBySlug($slug: String!) {\n  page(slug: $slug) {\n    id\n    title\n    slug\n    content\n    seoTitle\n    seoDescription\n    created\n  }\n}':
     types.GetPageBySlugDocument,
@@ -320,7 +320,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query GetOrderById($id: ID!) {\n  order(id: $id) {\n    number\n    created\n    origin\n    paymentStatus\n    status\n    statusDisplay\n    lines {\n      productName\n      quantity\n      quantityFulfilled\n      quantityToFulfill\n      totalPrice {\n        gross {\n          amount\n        }\n      }\n      thumbnail {\n        url\n      }\n    }\n    isPaid\n    isShippingRequired\n    total {\n      gross {\n        amount\n      }\n    }\n  }\n}',
+  source: 'query GetOrderById($id: ID!) {\n  order(id: $id) {\n    id\n    number\n    created\n    origin\n    paymentStatus\n    status\n    statusDisplay\n    lines {\n      id\n      productName\n      quantity\n      quantityFulfilled\n      quantityToFulfill\n      totalPrice {\n        gross {\n          amount\n        }\n      }\n      thumbnail {\n        url\n      }\n    }\n    isPaid\n    isShippingRequired\n    total {\n      gross {\n        amount\n      }\n    }\n  }\n}',
 ): typeof import('./graphql').GetOrderByIdDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

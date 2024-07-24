@@ -32767,6 +32767,7 @@ export type GetOrderByIdQueryVariables = Exact<{
 
 export type GetOrderByIdQuery = {
   order?: {
+    id: string;
     number: string;
     created: string;
     origin: OrderOriginEnum;
@@ -32776,6 +32777,7 @@ export type GetOrderByIdQuery = {
     isPaid: boolean;
     isShippingRequired: boolean;
     lines: Array<{
+      id: string;
       productName: string;
       quantity: number;
       quantityFulfilled: number;
@@ -34509,6 +34511,7 @@ export const GetMenuBySlugDocument = new TypedDocumentString(`
 export const GetOrderByIdDocument = new TypedDocumentString(`
     query GetOrderById($id: ID!) {
   order(id: $id) {
+    id
     number
     created
     origin
@@ -34516,6 +34519,7 @@ export const GetOrderByIdDocument = new TypedDocumentString(`
     status
     statusDisplay
     lines {
+      id
       productName
       quantity
       quantityFulfilled
