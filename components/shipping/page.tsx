@@ -36,10 +36,11 @@ export default function Shipping({
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
       const error = await shippingAddressUpdate(input);
+      console.log(error);
       if (!error) {
-        const shippingMethod = await shippingMethodsAction({ checkoutId });
-        setShippingMethods(shippingMethod || []);
-        setError('No hay envios disponibles por el momento, por favor intentalo mas tarde');
+        const shippingMethods = await shippingMethodsAction({ checkoutId });
+        setShippingMethods(shippingMethods || []);
+        setError('');
       } else {
         setError(error);
       }
@@ -93,16 +94,16 @@ export default function Shipping({
     );
   }
 
-  if (shippingMethods.length > 0) {
-    return <ShippingMethods ShippingMethods={shippingMethods} />;
-  }
-
   if (error) {
     return (
       <div className="space-y-5 text-xs leading-8	tracking-wider md:text-left lg:text-sm lg:leading-10">
-        {error}
+        El código postal o el estado no son válidos
       </div>
     );
+  }
+
+  if (shippingMethods.length > 0) {
+    return <ShippingMethods ShippingMethods={shippingMethods} />;
   }
 
   return (

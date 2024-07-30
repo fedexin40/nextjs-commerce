@@ -125,6 +125,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                               src="/email.png"
                               alt=""
                               fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
                           </Suspense>
                         </div>
@@ -138,7 +139,13 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                       <div className="mb-4 flex flex-row gap-x-2 border-b-2 border-[#d2b6ab] p-1">
                         <div className="relative h-5 w-5 place-content-center">
                           <Suspense>
-                            <Image className="object-cover" src="/contrasena.png" alt="" fill />
+                            <Image
+                              className="object-cover"
+                              src="/contrasena.png"
+                              alt=""
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
                           </Suspense>
                         </div>
                         <input
@@ -148,11 +155,16 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                           placeholder="Contraseña..."
                         />
                       </div>
-
                       <div className="mb-4 flex flex-row gap-x-2 border-b-2 border-[#d2b6ab] p-1">
                         <div className="relative h-5 w-5 place-content-center">
                           <Suspense>
-                            <Image className="object-cover" src="/contrasena.png" alt="" fill />
+                            <Image
+                              className="object-cover"
+                              src="/contrasena.png"
+                              alt=""
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
                           </Suspense>
                         </div>
                         <input
@@ -168,6 +180,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                         Politica de cookies
                       </div>
                       <button
+                        type="submit"
                         className={clsx(
                           'h-10 w-full bg-[#d2b6ab] p-2 text-white hover:opacity-60',
                           {
