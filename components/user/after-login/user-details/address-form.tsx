@@ -9,7 +9,7 @@ export default function AddressInput({
   user,
   countryAreaChoices,
 }: {
-  cart: Cart | null;
+  cart?: Cart | null;
   user: CurrentPerson;
   countryAreaChoices: countryAreaChoicesType;
 }) {
