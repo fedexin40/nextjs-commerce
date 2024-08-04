@@ -46,30 +46,35 @@ export default function Cart({ cart }: { cart: CartType | null }) {
                 key={i}
                 className="flex w-full flex-col rounded-md border-2 border-[#acacac] px-3 dark:border-[#c9aa9e]"
               >
-                <div className="relative flex w-full flex-row justify-between px-1 py-4">
-                  <Link href={merchandiseUrl} className="z-30 flex flex-row space-x-4">
-                    <div className="relative cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300 dark:border-neutral-700 dark:bg-neutral-900 dark:hover:bg-neutral-800 md:h-8 md:w-8 lg:h-16 lg:w-16">
-                      <Image
-                        className="md:object-contain lg:object-cover"
-                        fill
-                        alt={
-                          item.merchandise.product.featuredImage.altText ||
-                          item.merchandise.product.title
-                        }
-                        src={item.merchandise.product.featuredImage.url}
-                      />
-                    </div>
-
-                    <div className="flex flex-col place-content-center space-y-2">
-                      <span className="leading-tight">{item.merchandise.product.title}</span>
-                      {item.merchandise.title !== DEFAULT_OPTION ? (
-                        <p className="text-neutral-500 dark:text-neutral-400">
-                          {item.merchandise.title}
-                        </p>
-                      ) : null}
-                    </div>
-                  </Link>
-                  <div className="flex h-16 flex-col justify-between">
+                <div className="relative flex w-full flex-row justify-around px-1 py-4">
+                  <div className="w-2/3">
+                    <Link href={merchandiseUrl} className="flex flex-row justify-between">
+                      <div className="flex w-full flex-row justify-around space-x-2">
+                        <div className="relative overflow-hidden rounded-md md:h-8 md:w-8 lg:h-16 lg:w-16">
+                          <Image
+                            className="md:object-contain lg:object-cover"
+                            fill
+                            alt={
+                              item.merchandise.product.featuredImage.altText ||
+                              item.merchandise.product.title
+                            }
+                            src={item.merchandise.product.featuredImage.url}
+                          />
+                        </div>
+                        <div className="flex flex-col">
+                          <span className="pb-3 leading-tight">
+                            {item.merchandise.product.title}
+                          </span>
+                          {item.merchandise.title !== DEFAULT_OPTION ? (
+                            <p className="text-neutral-500 dark:text-neutral-400">
+                              {item.merchandise.title}
+                            </p>
+                          ) : null}
+                        </div>
+                      </div>
+                    </Link>
+                  </div>
+                  <div className="flex w-1/3 flex-col justify-between">
                     <Price
                       className="flex justify-end space-y-2 text-right"
                       amountMax={item.cost.totalAmount.amount}
@@ -94,11 +99,11 @@ export default function Cart({ cart }: { cart: CartType | null }) {
           </div>
         </div>
         <div className="pb-7 text-neutral-500 dark:text-white">
-          <div className="mb-2 mt-10 flex items-center justify-between pb-1 pt-1 text-sm uppercase text-black dark:border-neutral-700 dark:text-white">
+          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 uppercase text-black dark:border-[#c9aa9e] dark:text-white">
             <p>Envio</p>
             <p className="text-right text-black dark:text-white">${deliveryPrice}</p>
           </div>
-          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 text-sm uppercase text-black dark:border-[#c9aa9e] dark:text-white lg:text-base">
+          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 uppercase text-black dark:border-[#c9aa9e] dark:text-white">
             <p>Total</p>
             <Price
               className="text-black dark:text-white"

@@ -31827,6 +31827,16 @@ export type CheckoutFragment = {
       pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
     };
   }>;
+  shippingAddress?: {
+    city: string;
+    countryArea: string;
+    firstName: string;
+    lastName: string;
+    phone?: string | null;
+    postalCode: string;
+    streetAddress1: string;
+    streetAddress2: string;
+  } | null;
 };
 
 export type FeaturedProductFragment = {
@@ -32035,6 +32045,16 @@ export type CheckoutAddLineMutation = {
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         };
       }>;
+      shippingAddress?: {
+        city: string;
+        countryArea: string;
+        firstName: string;
+        lastName: string;
+        phone?: string | null;
+        postalCode: string;
+        streetAddress1: string;
+        streetAddress2: string;
+      } | null;
     } | null;
   } | null;
 };
@@ -32144,6 +32164,16 @@ export type CheckoutDeleteLineMutation = {
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         };
       }>;
+      shippingAddress?: {
+        city: string;
+        countryArea: string;
+        firstName: string;
+        lastName: string;
+        phone?: string | null;
+        postalCode: string;
+        streetAddress1: string;
+        streetAddress2: string;
+      } | null;
     } | null;
   } | null;
 };
@@ -32239,6 +32269,16 @@ export type CheckoutUpdateLineMutation = {
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         };
       }>;
+      shippingAddress?: {
+        city: string;
+        countryArea: string;
+        firstName: string;
+        lastName: string;
+        phone?: string | null;
+        postalCode: string;
+        streetAddress1: string;
+        streetAddress2: string;
+      } | null;
     } | null;
   } | null;
 };
@@ -32322,6 +32362,16 @@ export type CreateCheckoutMutation = {
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         };
       }>;
+      shippingAddress?: {
+        city: string;
+        countryArea: string;
+        firstName: string;
+        lastName: string;
+        phone?: string | null;
+        postalCode: string;
+        streetAddress1: string;
+        streetAddress2: string;
+      } | null;
     } | null;
   } | null;
 };
@@ -32548,6 +32598,16 @@ export type GetCheckoutByIdQuery = {
         pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
       };
     }>;
+    shippingAddress?: {
+      city: string;
+      countryArea: string;
+      firstName: string;
+      lastName: string;
+      phone?: string | null;
+      postalCode: string;
+      streetAddress1: string;
+      streetAddress2: string;
+    } | null;
   } | null;
 };
 
@@ -33104,6 +33164,16 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
   }
   chargeStatus
   authorizeStatus
+  shippingAddress {
+    city
+    countryArea
+    firstName
+    lastName
+    phone
+    postalCode
+    streetAddress1
+    streetAddress2
+  }
 }
     fragment ProductDetails on Product {
   id
@@ -33372,6 +33442,16 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
   }
   chargeStatus
   authorizeStatus
+  shippingAddress {
+    city
+    countryArea
+    firstName
+    lastName
+    phone
+    postalCode
+    streetAddress1
+    streetAddress2
+  }
 }
 fragment ProductDetails on Product {
   id
@@ -33540,6 +33620,16 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
   }
   chargeStatus
   authorizeStatus
+  shippingAddress {
+    city
+    countryArea
+    firstName
+    lastName
+    phone
+    postalCode
+    streetAddress1
+    streetAddress2
+  }
 }
 fragment ProductDetails on Product {
   id
@@ -33693,6 +33783,16 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
   }
   chargeStatus
   authorizeStatus
+  shippingAddress {
+    city
+    countryArea
+    firstName
+    lastName
+    phone
+    postalCode
+    streetAddress1
+    streetAddress2
+  }
 }
 fragment ProductDetails on Product {
   id
@@ -33823,6 +33923,16 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
   }
   chargeStatus
   authorizeStatus
+  shippingAddress {
+    city
+    countryArea
+    firstName
+    lastName
+    phone
+    postalCode
+    streetAddress1
+    streetAddress2
+  }
 }
 fragment ProductDetails on Product {
   id
@@ -34158,6 +34268,16 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
   }
   chargeStatus
   authorizeStatus
+  shippingAddress {
+    city
+    countryArea
+    firstName
+    lastName
+    phone
+    postalCode
+    streetAddress1
+    streetAddress2
+  }
 }
 fragment ProductDetails on Product {
   id

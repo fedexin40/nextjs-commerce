@@ -155,5 +155,15 @@ export function saleorCheckoutToVercelCart(checkout: CheckoutFragment): Cart {
     totalQuantity: checkout.quantity,
     chargeStatus: checkout.chargeStatus,
     authorizeStatus: checkout.authorizeStatus,
+    shippingAddress: {
+      city: checkout.shippingAddress?.city,
+      countryArea: checkout.shippingAddress?.countryArea,
+      firstName: checkout.shippingAddress?.firstName,
+      lastName: checkout.shippingAddress?.lastName,
+      phone: checkout.shippingAddress?.phone,
+      postalCode: checkout.shippingAddress?.postalCode,
+      streetAddress1: checkout.shippingAddress?.streetAddress1,
+      streetAddress2: checkout.shippingAddress?.streetAddress2,
+    },
   };
 }

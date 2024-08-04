@@ -113,6 +113,18 @@ export type VercelCommerceCart = {
   totalQuantity: number;
   chargeStatus: string;
   authorizeStatus: string;
+  shippingAddress:
+    | {
+        city: string | undefined;
+        countryArea: string | undefined;
+        firstName: string | undefined;
+        lastName: string | undefined;
+        phone: string | undefined | null;
+        postalCode: string | undefined;
+        streetAddress1: string | undefined;
+        streetAddress2: string | undefined;
+      }
+    | undefined;
 };
 
 export type VercelCommerceCollection = {

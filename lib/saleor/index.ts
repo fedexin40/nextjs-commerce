@@ -450,7 +450,6 @@ export async function getCart(cartId: string): Promise<Cart | null> {
   if (!saleorCheckout.checkout) {
     return null;
   }
-
   return saleorCheckoutToVercelCart(saleorCheckout.checkout);
 }
 

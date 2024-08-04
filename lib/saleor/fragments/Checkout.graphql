@@ -31,4 +31,14 @@ fragment Checkout on Checkout {
   }
   chargeStatus
   authorizeStatus
+  shippingAddress {
+    city
+    countryArea
+    firstName
+    lastName
+    phone
+    postalCode
+    streetAddress1
+    streetAddress2
+  }
 }

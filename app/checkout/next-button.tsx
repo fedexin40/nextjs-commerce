@@ -33,19 +33,21 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
         lastName: userStore.lastName || user.lastName || '',
         phone: userStore.phone || user.address.phone || '',
       };
+      if (!userStore.phone && user.address.phone) {
+        setErrorMessage('Por favor ingresa tu número telefónico');
+        openError();
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
       const error = await shippingAddressUpdate(input);
       if (!error) {
         const errorMethodUpdate = await deliveryMethodUpdate({ checkoutId, deliveryMethodId });
         if (errorMethodUpdate) {
-          console.log('error en deliveryMethodUpdate');
           setErrorMessage(errorMethodUpdate);
           openError();
         } else {
           billingAddressCheckoutUpdate(input);
         }
       } else {
-        console.log('error en shippingAddressUpdate');
         setErrorMessage(error);
         openError();
       }

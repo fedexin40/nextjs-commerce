@@ -6,14 +6,17 @@ import { CurrentPerson } from 'lib/types';
 import { useEffect, useState, useTransition } from 'react';
 import { shippingAddressUpdate, shippingMethodsAction } from './actions';
 import ShippingMethods from './shipping';
+import ShippingFree from './shipping-free';
 import { useShipping, useShippingActions } from './store';
 
 export default function Shipping({
   checkoutId,
   user,
+  checkoutTotal,
 }: {
   checkoutId: string;
   user: CurrentPerson;
+  checkoutTotal: string | undefined;
 }) {
   const userStore = useUser();
   const [isPending, startTransition] = useTransition();
@@ -36,7 +39,6 @@ export default function Shipping({
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
       const error = await shippingAddressUpdate(input);
-      console.log(error);
       if (!error) {
         const shippingMethods = await shippingMethodsAction({ checkoutId });
         setShippingMethods(shippingMethods || []);
@@ -103,6 +105,10 @@ export default function Shipping({
   }
 
   if (shippingMethods.length > 0) {
+    shippingMethods.sort((y, x) => y.price - x.price);
+    if (Number(checkoutTotal) > 1500) {
+      return <ShippingFree ShippingMethods={shippingMethods} />;
+    }
     return <ShippingMethods ShippingMethods={shippingMethods} />;
   }
 
