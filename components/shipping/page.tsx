@@ -97,11 +97,7 @@ export default function Shipping({
   }
 
   if (error) {
-    return (
-      <div className="space-y-5 leading-8 md:text-left lg:leading-10">
-        El código postal o el estado no son válidos
-      </div>
-    );
+    return <div className="space-y-5 leading-8 md:text-left lg:leading-10">{error}</div>;
   }
 
   if (shippingMethods.length > 0) {
