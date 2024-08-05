@@ -1,0 +1,14 @@
+mutation CheckoutAddPromoCode($id: ID!) {
+  checkoutAddPromoCode(promoCode: "free-shipping", id: $id) {
+    errors {
+      code
+      field
+      message
+    }
+    checkout {
+      giftCards {
+        code
+      }
+    }
+  }
+}

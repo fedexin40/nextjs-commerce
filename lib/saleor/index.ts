@@ -28,6 +28,7 @@ import {
   AddressUpdateDocument,
   AddressValidationDocument,
   CheckoutAddLineDocument,
+  CheckoutAddPromoCodeDocument,
   CheckoutBillingAddressUpdateDocument,
   CheckoutCompleteDocument,
   CheckoutCustomerAttachDocument,
@@ -935,9 +936,9 @@ export async function shippingAddressCheckoutUpdate({
     countryArea: countryArea,
     city: city,
     country: country,
-    firstName,
-    lastName,
-    phone,
+    firstName: firstName,
+    lastName: lastName,
+    phone: phone,
   };
   const checkout = await saleorFetch({
     query: CheckoutShippingAddressUpdateDocument,
@@ -1054,6 +1055,19 @@ export async function customerCheckoutAttach({
   });
   if (checkout.checkoutCustomerAttach?.errors[0]) {
     throw new Error(checkout.checkoutCustomerAttach?.errors[0]?.message || '');
+  }
+}
+
+export async function checkoutAddPromoCode({ checkoutId }: { checkoutId: string }) {
+  const checkout = await saleorFetch({
+    query: CheckoutAddPromoCodeDocument,
+    variables: {
+      id: checkoutId,
+    },
+    cache: 'no-store',
+  });
+  if (checkout.checkoutAddPromoCode?.errors[0]) {
+    throw new Error(checkout.checkoutAddPromoCode?.errors[0]?.message || '');
   }
 }
 

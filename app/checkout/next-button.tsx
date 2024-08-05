@@ -33,9 +33,10 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
         lastName: userStore.lastName || user.lastName || '',
         phone: userStore.phone || user.address.phone || '',
       };
-      if (!userStore.phone && user.address.phone) {
+      if (!userStore.phone && !user.address.phone) {
         setErrorMessage('Por favor ingresa tu número telefónico');
         openError();
+        return;
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
       const error = await shippingAddressUpdate(input);
@@ -56,7 +57,7 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
 
   if (!deliveryMethodId) {
     return (
-      <div className="flex h-[60px] w-full cursor-not-allowed items-center justify-center whitespace-nowrap bg-black p-3 text-sm font-semibold uppercase text-white opacity-50 dark:bg-[#c9aa9e]">
+      <div className="flex h-[60px] w-full cursor-not-allowed items-center justify-center whitespace-nowrap bg-black p-3 font-semibold uppercase text-white opacity-50 dark:bg-[#c9aa9e]">
         Siguiente
       </div>
     );
@@ -78,7 +79,7 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
       </div>
       <div
         className={clsx(
-          'flex h-[60px] w-full cursor-pointer items-center justify-center whitespace-nowrap bg-black p-3 text-sm font-semibold uppercase tracking-wider text-white hover:opacity-50 dark:bg-[#c9aa9e]',
+          'flex h-[60px] w-full cursor-pointer items-center justify-center whitespace-nowrap bg-black p-3 font-semibold uppercase text-white hover:opacity-50 dark:bg-[#c9aa9e]',
           { hidden: isPending },
         )}
         onClick={() => setupShippingAddress()}

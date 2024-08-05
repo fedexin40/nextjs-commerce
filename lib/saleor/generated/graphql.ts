@@ -32189,6 +32189,17 @@ export type CheckoutPostalCodeUpdateMutation = {
   } | null;
 };
 
+export type CheckoutAddPromoCodeMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+export type CheckoutAddPromoCodeMutation = {
+  checkoutAddPromoCode?: {
+    errors: Array<{ code: CheckoutErrorCode; field?: string | null; message?: string | null }>;
+    checkout?: { giftCards: Array<{ code: string }> } | null;
+  } | null;
+};
+
 export type CheckoutShippingAddressUpdateMutationVariables = Exact<{
   checkoutId: Scalars['ID'];
   shippingAddress: AddressInput;
@@ -33719,6 +33730,25 @@ export const CheckoutPostalCodeUpdateDocument = new TypedDocumentString(`
     `) as unknown as TypedDocumentString<
   CheckoutPostalCodeUpdateMutation,
   CheckoutPostalCodeUpdateMutationVariables
+>;
+export const CheckoutAddPromoCodeDocument = new TypedDocumentString(`
+    mutation CheckoutAddPromoCode($id: ID!) {
+  checkoutAddPromoCode(promoCode: "free-shipping", id: $id) {
+    errors {
+      code
+      field
+      message
+    }
+    checkout {
+      giftCards {
+        code
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  CheckoutAddPromoCodeMutation,
+  CheckoutAddPromoCodeMutationVariables
 >;
 export const CheckoutShippingAddressUpdateDocument = new TypedDocumentString(`
     mutation checkoutShippingAddressUpdate($checkoutId: ID!, $shippingAddress: AddressInput!) {

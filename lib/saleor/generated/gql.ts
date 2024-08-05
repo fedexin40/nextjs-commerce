@@ -44,6 +44,8 @@ const documents = {
     types.CheckoutDeleteLineDocument,
   'mutation checkoutPostalCodeUpdate($checkoutId: ID!, $PostalCode: String!) {\n  checkoutShippingAddressUpdate(\n    checkoutId: $checkoutId\n    shippingAddress: {postalCode: $PostalCode, country: MX, countryArea: "Pue.", city: "Puebla", streetAddress1: "fds", streetAddress2: "fds"}\n  ) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
     types.CheckoutPostalCodeUpdateDocument,
+  'mutation CheckoutAddPromoCode($id: ID!) {\n  checkoutAddPromoCode(promoCode: "free-shipping", id: $id) {\n    errors {\n      code\n      field\n      message\n    }\n    checkout {\n      giftCards {\n        code\n      }\n    }\n  }\n}':
+    types.CheckoutAddPromoCodeDocument,
   'mutation checkoutShippingAddressUpdate($checkoutId: ID!, $shippingAddress: AddressInput!) {\n  checkoutShippingAddressUpdate(\n    checkoutId: $checkoutId\n    shippingAddress: $shippingAddress\n  ) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
     types.CheckoutShippingAddressUpdateDocument,
   'mutation CheckoutUpdateLine($checkoutId: ID!, $lines: [CheckoutLineUpdateInput!]!) {\n  checkoutLinesUpdate(id: $checkoutId, lines: $lines) {\n    errors {\n      code\n      message\n      field\n    }\n    checkout {\n      ...Checkout\n    }\n  }\n}':
@@ -196,6 +198,12 @@ export function graphql(
 export function graphql(
   source: 'mutation checkoutPostalCodeUpdate($checkoutId: ID!, $PostalCode: String!) {\n  checkoutShippingAddressUpdate(\n    checkoutId: $checkoutId\n    shippingAddress: {postalCode: $PostalCode, country: MX, countryArea: "Pue.", city: "Puebla", streetAddress1: "fds", streetAddress2: "fds"}\n  ) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}',
 ): typeof import('./graphql').CheckoutPostalCodeUpdateDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation CheckoutAddPromoCode($id: ID!) {\n  checkoutAddPromoCode(promoCode: "free-shipping", id: $id) {\n    errors {\n      code\n      field\n      message\n    }\n    checkout {\n      giftCards {\n        code\n      }\n    }\n  }\n}',
+): typeof import('./graphql').CheckoutAddPromoCodeDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

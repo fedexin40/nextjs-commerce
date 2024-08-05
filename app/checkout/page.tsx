@@ -20,19 +20,19 @@ export default async function Checkout({
   const cartTotal = cart?.cost.totalAmount.amount;
 
   return (
-    <div className="flex flex-col text-xs tracking-wider dark:bg-zinc-700 md:flex-row lg:text-sm">
+    <div className="flex flex-col tracking-wider dark:bg-zinc-700 md:flex-row">
       <div className="mx-10 mb-16	pt-16 md:mb-24 md:basis-[52%] lg:mb-40 lg:px-10">
-        <div className="text-sm font-medium uppercase dark:text-[#c9aa9e]">Detalles de entrega</div>
+        <div className="font-medium uppercase dark:text-[#c9aa9e]">Detalles de entrega</div>
         <div className="flex flex-col pt-5">
           <AddressInput cart={cart} user={me} countryAreaChoices={states} />
           <div className="flex flex-row gap-3 pt-5">
             <input type="checkbox" />
-            <div className="text-xs tracking-wider">
+            <div className="text-[10px] md:text-xs">
               Enviarme novedades y ofertas por correo electronico
             </div>
           </div>
-          <div className="pt-5 text-xs tracking-wider">Tiempo de entrega: 2 a 7 dias habiles</div>
-          <div className="pt-5 text-xs tracking-wider">Terminos y condiciones</div>
+          <div className="pt-5 text-[10px] md:text-xs">Tiempo de entrega: 2 a 7 dias habiles</div>
+          <div className="pt-5 text-[10px] md:text-xs">Terminos y condiciones</div>
         </div>
         <div className="hidden pt-10 md:flex md:w-1/2 lg:w-1/3">
           <Button checkoutId={checkout || ''} user={me} />

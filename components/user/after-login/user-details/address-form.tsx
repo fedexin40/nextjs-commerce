@@ -38,10 +38,10 @@ export default function AddressInput({
   }
 
   return (
-    <div className="flex flex-col gap-3 text-xs tracking-wider lg:text-sm">
+    <div className="flex flex-col gap-3">
       <div className="flex w-full flex-col gap-3 lg:flex-row">
         <input
-          className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:w-1/2"
+          className="w-full border-2 border-neutral-300 bg-white px-2 py-1 dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:w-1/2"
           type="text"
           name="firstName"
           placeholder="Nombre..."
@@ -50,7 +50,7 @@ export default function AddressInput({
           onChange={handleChange}
         />
         <input
-          className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:block lg:w-1/2"
+          className="border-2 border-neutral-300 bg-white px-2 py-1 dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:block lg:w-1/2"
           type="text"
           name="lastName"
           placeholder="Apellido..."
@@ -60,7 +60,7 @@ export default function AddressInput({
         />
       </div>
       <input
-        className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
+        className="border-2 border-neutral-300 bg-white px-2 py-1 dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
         type="text"
         name="streetAddress1"
         placeholder="Calle y numero de casa..."
@@ -70,7 +70,7 @@ export default function AddressInput({
       />
       <div className="flex w-full flex-col gap-3 lg:flex-row">
         <input
-          className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:w-1/2"
+          className="w-full border-2 border-neutral-300 bg-white px-2 py-1 dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:w-1/2"
           type="text"
           name="streetAddress2"
           placeholder="Colonia..."
@@ -79,7 +79,7 @@ export default function AddressInput({
           onChange={handleChange}
         />
         <input
-          className="w-full border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:block lg:w-1/2"
+          className="w-full border-2 border-neutral-300 bg-white px-2 py-1 dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:block lg:w-1/2"
           type="text"
           name="postalCode"
           placeholder="Codigo postal..."
@@ -89,7 +89,7 @@ export default function AddressInput({
         />
       </div>
       <input
-        className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
+        className="border-2 border-neutral-300 bg-white px-2 py-1 dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
         type="text"
         name="city"
         placeholder="Ciudad..."
@@ -102,19 +102,19 @@ export default function AddressInput({
         name="countryArea"
         required={true}
         defaultValue={cart?.shippingAddress?.countryArea || user.address.countryArea}
-        className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
+        className="border-2 border-neutral-300 bg-white px-2 py-1 dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
       >
         {countryAreaChoices?.map(({ raw, verbose }) => (
-          <option className="tracking-wider" key={raw} value={raw || ''}>
+          <option className="" key={raw} value={raw || ''}>
             {verbose}
           </option>
         ))}
       </select>
-      <div className="border-2	border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed dark:border dark:border-[#c9aa9e] dark:bg-zinc-700">
+      <div className="border-2	border-neutral-300 bg-white px-2 py-1 hover:cursor-not-allowed dark:border dark:border-[#c9aa9e] dark:bg-zinc-700">
         Mexico
       </div>
       <input
-        className="border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
+        className="border-2 border-neutral-300 bg-white px-2 py-1 dark:border dark:border-[#c9aa9e] dark:bg-zinc-700"
         type="tel"
         name="phone"
         placeholder="Telefono..."
@@ -122,7 +122,7 @@ export default function AddressInput({
         defaultValue={cart?.shippingAddress?.phone || user.address.phone}
         onChange={handleChange}
       />
-      <div className="h-[26px] border-2 border-neutral-300 bg-white px-2 py-1 tracking-wider text-neutral-500 hover:cursor-not-allowed dark:border dark:border-[#c9aa9e] dark:bg-zinc-700 lg:h-[32px]">
+      <div className="border-2	border-neutral-300 bg-white px-2 py-1 hover:cursor-not-allowed dark:border dark:border-[#c9aa9e] dark:bg-zinc-700">
         {user.email ? user.email : 'Correo electronico...'}
       </div>
     </div>

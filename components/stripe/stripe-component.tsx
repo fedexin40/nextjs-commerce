@@ -17,8 +17,29 @@ export const StripeComponent = ({
   const stripePromise = useMemo(() => loadStripe(publishableKey), [publishableKey]);
 
   return (
-    <Elements options={{ clientSecret, appearance: { theme: 'stripe' } }} stripe={stripePromise}>
-      <CheckoutForm returnUrl={returnUrl} />
-    </Elements>
+    <>
+      <div className="hidden dark:block">
+        <Elements
+          options={{
+            clientSecret,
+            appearance: { theme: 'night', variables: { fontLineHeight: '16px' } },
+          }}
+          stripe={stripePromise}
+        >
+          <CheckoutForm returnUrl={returnUrl} />
+        </Elements>
+      </div>
+      <div className="block dark:hidden">
+        <Elements
+          options={{
+            clientSecret,
+            appearance: { theme: 'stripe', variables: { fontLineHeight: '16px' } },
+          }}
+          stripe={stripePromise}
+        >
+          <CheckoutForm returnUrl={returnUrl} />
+        </Elements>
+      </div>
+    </>
   );
 };

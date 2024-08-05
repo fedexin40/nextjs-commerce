@@ -63,7 +63,7 @@ export default function Shipping({
     return (
       <div className="w-full">
         <div className="flex flex-col space-y-4 md:space-y-8 lg:space-y-14">
-          <div className="flex flex-row space-x-2 text-sm lg:text-base">
+          <div className="flex flex-row space-x-2">
             <span>Cargando</span>
             <div className="flex flex-row space-x-2 self-end">
               <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black [animation-delay:-0.3s] dark:bg-white lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
@@ -98,7 +98,7 @@ export default function Shipping({
 
   if (error) {
     return (
-      <div className="space-y-5 text-xs leading-8	tracking-wider md:text-left lg:text-sm lg:leading-10">
+      <div className="space-y-5 leading-8 md:text-left lg:leading-10">
         El código postal o el estado no son válidos
       </div>
     );
@@ -113,7 +113,7 @@ export default function Shipping({
   }
 
   return (
-    <div className="space-y-5 text-xs leading-8	tracking-wider md:text-left lg:text-sm lg:leading-10">
+    <div className="space-y-5 leading-8	md:text-left lg:leading-10">
       Por favor ingresa una direccion correcta para poder calcular los envios disponibles.
     </div>
   );

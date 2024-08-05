@@ -33,7 +33,7 @@ export default function ShippingMethods({
               className={({ active, checked }) =>
                 `${active ? 'ring-2 ring-black ring-offset-2 dark:ring-white ' : ''}
                 ${checked ? 'ring-2 ring-black ring-offset-2 dark:ring-white' : ''}
-                  relative flex cursor-pointer rounded-lg bg-zinc-100 px-5 py-4 shadow-md focus:outline-none dark:bg-zinc-700`
+                  relative flex cursor-pointer rounded-lg bg-zinc-100 px-5 py-4 shadow-md shadow-slate-900 focus:outline-none dark:bg-zinc-700`
               }
             >
               <div
