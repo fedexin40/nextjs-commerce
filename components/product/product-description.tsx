@@ -16,15 +16,13 @@ export function ProductDescription({
   return (
     <div className="flex flex-col">
       <div className="flex flex-col border-b dark:border-neutral-700">
-        <h1 className="mb-2 font-medium tracking-wider dark:text-[#c9aa9e] md:text-base lg:text-xl">
-          {product.title}
-        </h1>
+        <h1 className="mb-2 font-medium dark:text-[#c9aa9e]">{product.title}</h1>
         {product.descriptionHtml ? (
-          <div className="pb-2 pt-2 text-justify text-xs leading-tight text-gray-500 dark:text-white">
+          <div className="pb-2 pt-2 text-justify leading-tight text-gray-500 dark:text-white">
             {ReactHtmlParser(product.descriptionHtml)}
           </div>
         ) : null}
-        <div className="mr-auto w-auto p-2 pl-0 tracking-wider dark:text-[#c9aa9e] md:text-base lg:text-lg">
+        <div className="mr-auto w-auto p-2 pl-0 dark:text-[#c9aa9e]">
           {variant && (
             <Price
               amountMax={variant.price.amount}
@@ -43,15 +41,15 @@ export function ProductDescription({
       <div className="flex flex-col border-b pb-6 dark:border-neutral-700">
         <VariantSelector options={product.options} variants={product.variants} />
       </div>
-      <div className="mt-6 flex flex-col gap-5 border-b pb-6 dark:border-neutral-700">
-        <div className="flex w-full items-center justify-center bg-[#c9aa9e] p-4 tracking-wider text-black hover:opacity-90">
+      <div className="mt-6 flex flex-col gap-5 border-b pb-6 uppercase dark:border-neutral-700">
+        <div className="flex w-full items-center justify-center bg-[#c9aa9e] p-4 text-black hover:opacity-90">
           Comprar ahora
         </div>
         <Suspense>
           <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
         </Suspense>
       </div>
-      <div className="inline pt-6 text-xs leading-tight text-gray-800 dark:text-white">
+      <div className="inline pt-6 leading-tight text-gray-800 dark:text-white">
         <div className="pb-3">Tiempo de entrega de 2 a 7 dias habiles</div>
         <div className="pb-3">Envio gratis a la ciudad de Puebla</div>
         <div className="flex flex-row gap-x-4">

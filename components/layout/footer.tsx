@@ -13,8 +13,8 @@ export default async function Footer() {
   const copyrightName = COMPANY_NAME || SITE_NAME || '';
 
   return (
-    <footer className="bg-[#f1f1f1] text-sm text-black dark:bg-zinc-800 dark:text-white">
-      <div className="flex w-full flex-col gap-6 px-6 py-12 text-sm md:gap-12 md:px-4 xl:px-10">
+    <footer className="bg-[#f1f1f1] text-black dark:bg-zinc-800 dark:text-white">
+      <div className="flex w-full flex-col gap-6 px-6 py-12 md:gap-12 md:px-4 xl:px-10">
         <div className="grid grid-cols-1 justify-around gap-10 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
           <Suspense>
             <FooterMenu menu={menu} />
@@ -30,7 +30,7 @@ export default async function Footer() {
             <Pagos />
           </div>
         </div>
-        <div className="border-t-2 border-t-gray-500 py-6 text-sm dark:border-t-[#c9aa9e] dark:text-[#c9aa9e] lg:-mt-28">
+        <div className="border-t-2 border-t-gray-500 py-6 dark:border-t-[#c9aa9e] dark:text-[#c9aa9e] lg:-mt-28">
           <div className="flex w-full flex-row justify-start md:pl-10">
             <p>
               &copy; {copyrightDate} {copyrightName}

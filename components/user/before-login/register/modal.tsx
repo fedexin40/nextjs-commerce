@@ -101,7 +101,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                   </Alert>
                 </Snackbar>
               </div>
-              <div className="flex h-full flex-col overflow-y-auto overflow-x-hidden">
+              <div className="flex h-full flex-col overflow-y-auto overflow-x-hidden text-[13px] tracking-widest lg:text-[14.3px]">
                 <div className="relative">
                   <button
                     className="absolute right-5 top-5"

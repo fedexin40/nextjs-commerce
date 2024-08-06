@@ -25,7 +25,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
 
   return (
     <>
-      <div className="flex h-full flex-col justify-between overflow-hidden pb-20 tracking-wider">
+      <div className="flex h-full flex-col justify-between overflow-hidden pb-20">
         <ul className="flex flex-col gap-3 overflow-auto lg:gap-5">
           {cart.lines.map((item, i) => {
             const merchandiseSearchParams = {} as MerchandiseSearchParams;
@@ -91,7 +91,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
         </ul>
         <div className="flex w-full flex-row gap-3 pt-7">
           <input
-            className="w-3/4 border-2 border-neutral-300 bg-[#f1f1f1] pl-2 tracking-wider dark:border dark:border-[#c9aa9e]"
+            className="w-3/4 border-2 border-neutral-300 bg-[#f1f1f1] pl-2 dark:border dark:border-[#c9aa9e]"
             placeholder="Codigo de cupon..."
           />
           <div className="w-1/4 bg-neutral-500 p-3 text-center text-white dark:bg-[#c9aa9e] dark:text-black">
@@ -99,9 +99,25 @@ export default function Cart({ cart }: { cart: CartType | null }) {
           </div>
         </div>
         <div className="pb-7 text-neutral-500 dark:text-white">
-          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 uppercase text-black dark:border-[#c9aa9e] dark:text-white">
-            <p>Envio</p>
+          <div className="mb-2 flex items-center justify-between border-[#acacac] pb-1 pt-5 uppercase text-black dark:border-[#c9aa9e] dark:text-white">
+            <p>Envío</p>
             <p className="text-right text-black dark:text-white">${deliveryPrice}</p>
+          </div>
+          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 uppercase text-black dark:border-[#c9aa9e] dark:text-white">
+            <p>Subtotal</p>
+            <Price
+              className="text-black dark:text-white"
+              amountMax={cart.cost.subtotalAmount.amount}
+              currencyCode={cart.cost.subtotalAmount.currencyCode}
+            />
+          </div>
+          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 uppercase text-black dark:border-[#c9aa9e] dark:text-white">
+            <p>Iva (16%)</p>
+            <Price
+              className="text-black dark:text-white"
+              amountMax={cart.cost.totalTaxAmount.amount}
+              currencyCode={cart.cost.totalTaxAmount.currencyCode}
+            />
           </div>
           <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 uppercase text-black dark:border-[#c9aa9e] dark:text-white">
             <p>Total</p>

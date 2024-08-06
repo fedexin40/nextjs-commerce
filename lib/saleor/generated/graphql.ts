@@ -31775,9 +31775,14 @@ export type CheckoutFragment = {
   authorizeStatus: CheckoutAuthorizeStatusEnum;
   totalPrice: {
     gross: { currency: string; amount: number };
+    net: { currency: string; amount: number };
     tax: { currency: string; amount: number };
   };
-  subtotalPrice: { gross: { currency: string; amount: number } };
+  subtotalPrice: {
+    gross: { currency: string; amount: number };
+    net: { currency: string; amount: number };
+    tax: { currency: string; amount: number };
+  };
   lines: Array<{
     id: string;
     quantity: number;
@@ -31993,9 +31998,14 @@ export type CheckoutAddLineMutation = {
       authorizeStatus: CheckoutAuthorizeStatusEnum;
       totalPrice: {
         gross: { currency: string; amount: number };
+        net: { currency: string; amount: number };
         tax: { currency: string; amount: number };
       };
-      subtotalPrice: { gross: { currency: string; amount: number } };
+      subtotalPrice: {
+        gross: { currency: string; amount: number };
+        net: { currency: string; amount: number };
+        tax: { currency: string; amount: number };
+      };
       lines: Array<{
         id: string;
         quantity: number;
@@ -32112,9 +32122,14 @@ export type CheckoutDeleteLineMutation = {
       authorizeStatus: CheckoutAuthorizeStatusEnum;
       totalPrice: {
         gross: { currency: string; amount: number };
+        net: { currency: string; amount: number };
         tax: { currency: string; amount: number };
       };
-      subtotalPrice: { gross: { currency: string; amount: number } };
+      subtotalPrice: {
+        gross: { currency: string; amount: number };
+        net: { currency: string; amount: number };
+        tax: { currency: string; amount: number };
+      };
       lines: Array<{
         id: string;
         quantity: number;
@@ -32228,9 +32243,14 @@ export type CheckoutUpdateLineMutation = {
       authorizeStatus: CheckoutAuthorizeStatusEnum;
       totalPrice: {
         gross: { currency: string; amount: number };
+        net: { currency: string; amount: number };
         tax: { currency: string; amount: number };
       };
-      subtotalPrice: { gross: { currency: string; amount: number } };
+      subtotalPrice: {
+        gross: { currency: string; amount: number };
+        net: { currency: string; amount: number };
+        tax: { currency: string; amount: number };
+      };
       lines: Array<{
         id: string;
         quantity: number;
@@ -32321,9 +32341,14 @@ export type CreateCheckoutMutation = {
       authorizeStatus: CheckoutAuthorizeStatusEnum;
       totalPrice: {
         gross: { currency: string; amount: number };
+        net: { currency: string; amount: number };
         tax: { currency: string; amount: number };
       };
-      subtotalPrice: { gross: { currency: string; amount: number } };
+      subtotalPrice: {
+        gross: { currency: string; amount: number };
+        net: { currency: string; amount: number };
+        tax: { currency: string; amount: number };
+      };
       lines: Array<{
         id: string;
         quantity: number;
@@ -32557,9 +32582,14 @@ export type GetCheckoutByIdQuery = {
     authorizeStatus: CheckoutAuthorizeStatusEnum;
     totalPrice: {
       gross: { currency: string; amount: number };
+      net: { currency: string; amount: number };
       tax: { currency: string; amount: number };
     };
-    subtotalPrice: { gross: { currency: string; amount: number } };
+    subtotalPrice: {
+      gross: { currency: string; amount: number };
+      net: { currency: string; amount: number };
+      tax: { currency: string; amount: number };
+    };
     lines: Array<{
       id: string;
       quantity: number;
@@ -33151,6 +33181,10 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
       currency
       amount
     }
+    net {
+      currency
+      amount
+    }
     tax {
       currency
       amount
@@ -33158,6 +33192,14 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
   }
   subtotalPrice {
     gross {
+      currency
+      amount
+    }
+    net {
+      currency
+      amount
+    }
+    tax {
       currency
       amount
     }
@@ -33429,6 +33471,10 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
       currency
       amount
     }
+    net {
+      currency
+      amount
+    }
     tax {
       currency
       amount
@@ -33436,6 +33482,14 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
   }
   subtotalPrice {
     gross {
+      currency
+      amount
+    }
+    net {
+      currency
+      amount
+    }
+    tax {
       currency
       amount
     }
@@ -33607,6 +33661,10 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
       currency
       amount
     }
+    net {
+      currency
+      amount
+    }
     tax {
       currency
       amount
@@ -33614,6 +33672,14 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
   }
   subtotalPrice {
     gross {
+      currency
+      amount
+    }
+    net {
+      currency
+      amount
+    }
+    tax {
       currency
       amount
     }
@@ -33789,6 +33855,10 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
       currency
       amount
     }
+    net {
+      currency
+      amount
+    }
     tax {
       currency
       amount
@@ -33796,6 +33866,14 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
   }
   subtotalPrice {
     gross {
+      currency
+      amount
+    }
+    net {
+      currency
+      amount
+    }
+    tax {
       currency
       amount
     }
@@ -33929,6 +34007,10 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
       currency
       amount
     }
+    net {
+      currency
+      amount
+    }
     tax {
       currency
       amount
@@ -33936,6 +34018,14 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
   }
   subtotalPrice {
     gross {
+      currency
+      amount
+    }
+    net {
+      currency
+      amount
+    }
+    tax {
       currency
       amount
     }
@@ -34274,6 +34364,10 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
       currency
       amount
     }
+    net {
+      currency
+      amount
+    }
     tax {
       currency
       amount
@@ -34281,6 +34375,14 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
   }
   subtotalPrice {
     gross {
+      currency
+      amount
+    }
+    net {
+      currency
+      amount
+    }
+    tax {
       currency
       amount
     }

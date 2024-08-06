@@ -7,6 +7,10 @@ fragment Checkout on Checkout {
       currency
       amount
     }
+    net {
+      currency
+      amount
+    }
     tax {
       currency
       amount
@@ -14,6 +18,14 @@ fragment Checkout on Checkout {
   }
   subtotalPrice {
     gross {
+      currency
+      amount
+    }
+    net {
+      currency
+      amount
+    }
+    tax {
       currency
       amount
     }

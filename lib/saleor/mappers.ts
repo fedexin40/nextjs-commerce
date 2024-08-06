@@ -114,16 +114,16 @@ export function saleorCheckoutToVercelCart(checkout: CheckoutFragment): Cart {
     updatedAt: checkout.updatedAt,
     cost: {
       subtotalAmount: {
-        amount: checkout.subtotalPrice.gross.amount.toString(),
-        currencyCode: checkout.subtotalPrice.gross.currency,
+        amount: checkout.totalPrice.net.amount.toString(),
+        currencyCode: checkout.totalPrice.gross.currency,
       },
       totalAmount: {
         amount: checkout.totalPrice.gross.amount.toString(),
-        currencyCode: checkout.totalPrice.gross.currency,
+        currencyCode: checkout.subtotalPrice.gross.currency,
       },
       totalTaxAmount: {
-        amount: checkout.totalPrice.tax.amount.toString(),
-        currencyCode: checkout.totalPrice.tax.currency,
+        amount: checkout.subtotalPrice.tax.amount.toString(),
+        currencyCode: checkout.subtotalPrice.tax.currency,
       },
     },
     lines: checkout.lines.map((line) => {

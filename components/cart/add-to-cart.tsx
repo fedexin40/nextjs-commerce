@@ -84,7 +84,9 @@ export function AddToCart({
           },
         )}
       >
-        <span>{availableForSale ? 'Agregar al carrito' : 'Out Of Stock'}</span>
+        <span className="uppercase">
+          {availableForSale ? 'Agregar al carrito' : 'Out Of Stock'}
+        </span>
       </button>
       <div
         className={clsx(

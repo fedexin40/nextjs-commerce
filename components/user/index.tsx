@@ -18,13 +18,13 @@ export default async function User() {
     );
   }
   return (
-    <>
+    <div className="text-[13px] tracking-widest lg:text-[14.3px]">
       <Suspense>
         <UserMenuDropDown />
       </Suspense>
       <Suspense>
         <UserMenuModal UserDetails={<UserDetails />} UserShoppings={<UserShoppings />} />
       </Suspense>
-    </>
+    </div>
   );
 }

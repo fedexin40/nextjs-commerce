@@ -29,7 +29,7 @@ export default function Facebook({
 
   return (
     <div onClick={Login}>
-      <div className="mb-3 flex h-10 flex-row gap-5 border-2 border-[#1877F2] bg-[#1877F2] px-5 py-2 text-sm hover:cursor-pointer hover:opacity-60 hover:ease-in">
+      <div className="mb-3 flex h-10 flex-row gap-5 border-2 border-[#1877F2] bg-[#1877F2] px-5 py-2 hover:cursor-pointer hover:opacity-60 hover:ease-in">
         <div className="relative h-5 w-5 overflow-hidden rounded-full">
           <Image
             className="scale-[1.8] object-contain"
@@ -48,7 +48,7 @@ export default function Facebook({
         </div>
         <div
           className={clsx(
-            'flex w-[180px] cursor-not-allowed items-center justify-center space-x-3 self-end p-1 tracking-wider',
+            'flex w-[180px] cursor-not-allowed items-center justify-center space-x-3 self-end p-1',
             {
               hidden: !isPending,
             },

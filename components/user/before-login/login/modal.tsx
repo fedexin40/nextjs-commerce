@@ -98,7 +98,7 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                   </Alert>
                 </Snackbar>
               </div>
-              <div className="flex h-full flex-col overflow-y-auto overflow-x-hidden">
+              <div className="flex h-full flex-col overflow-y-auto overflow-x-hidden text-[13px] tracking-widest lg:text-[14.3px]">
                 <div className="relative">
                   <button
                     className="absolute right-5 top-5"
@@ -108,11 +108,11 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                     <CloseLogin />
                   </button>
                 </div>
-                <div className="mt-14 w-full text-center text-base font-medium tracking-wide md:mt-20 lg:mt-8">
+                <div className="mt-14 w-full text-center font-medium md:mt-20 lg:mt-8">
                   <div className="flex justify-center">
                     <Image src={'/session.png'} alt="" width={60} height={60} />
                   </div>
-                  <div className="mt-4 text-[#a8a8a8] dark:text-white">Iniciar Sesion</div>
+                  <div className="mt-4 text-[#a8a8a8] dark:text-white">Iniciar Sesión</div>
                 </div>
                 <div className="mx-10 mb-10 mt-10 flex flex-col md:my-20 lg:mb-7 lg:mt-7">
                   <div>
@@ -149,7 +149,7 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                         />
                       </div>
                       <div className="flex flex-col-reverse place-content-end	 py-5	hover:cursor-pointer hover:opacity-25">
-                        <div className="text-xs">¿Olvidaste tu contrasena?</div>
+                        <div className="">¿Olvidaste tu contrasena?</div>
                       </div>
                       <button
                         className={clsx(
