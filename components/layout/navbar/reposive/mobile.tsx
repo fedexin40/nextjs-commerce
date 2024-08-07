@@ -10,7 +10,7 @@ import Search from '../search';
 export default function MobileNavbar() {
   return (
     <>
-      <nav className="bg-[#f7e7da]">
+      <nav className="bg-[#f7e7da] text-[13px] tracking-widest lg:text-[14.3px]">
         <div className="grid grid-cols-2 pb-3 uppercase">
           <div className="flex items-center justify-center">
             <Link href="/" aria-label="Go back home">

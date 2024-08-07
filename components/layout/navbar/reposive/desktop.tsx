@@ -9,7 +9,7 @@ import Search from '../search';
 export default function DesktopNavbar() {
   return (
     <>
-      <nav className="bg-[#f7e7da]">
+      <nav className="bg-[#f7e7da] text-[13px] tracking-widest lg:text-[14.3px]">
         <div className="grid grid-cols-5 content-center items-center pb-3 uppercase">
           <div className="col-span-2 block">
             <div className="flex w-full flex-row justify-end gap-x-10">

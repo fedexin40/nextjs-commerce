@@ -61,8 +61,8 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
             leaveTo="translate-x-full"
           >
             <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col bg-white/80 p-6 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white md:w-[390px]">
-              <div className="flex items-center justify-between border-b-2 border-[hsl(28,30%,59%)] pb-2 pt-10">
-                <p className="text-lg font-semibold">Mi Carrito</p>
+              <div className="flex items-center justify-between border-b-2 border-[hsl(28,30%,59%)] pb-2 pt-10 text-[13px] tracking-widest lg:text-[14.3px]">
+                <p className="font-semibold">Mi Carrito</p>
 
                 <button className="" aria-label="Cerrar carrito" onClick={() => closeMenu()}>
                   <CloseCart />
@@ -70,12 +70,12 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
               </div>
 
               {!cart || cart.lines.length === 0 ? (
-                <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden">
+                <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden text-[13px] tracking-widest lg:text-[14.3px]">
                   <ShoppingCartIcon className="h-16" />
                   <p className="mt-6 text-center text-2xl font-bold">Tu carrito esta vacio.</p>
                 </div>
               ) : (
-                <div className="flex h-full flex-col justify-between overflow-hidden p-1">
+                <div className="flex h-full flex-col justify-between overflow-hidden p-1 text-[13px] tracking-widest lg:text-[14.3px]">
                   <ul className="flex-grow overflow-auto py-4">
                     {cart.lines.map((item, i) => {
                       const merchandiseSearchParams = {} as MerchandiseSearchParams;
@@ -118,12 +118,12 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                                 />
                               </div>
 
-                              <div className="flex flex-1 flex-col text-base">
+                              <div className="flex flex-1 flex-col">
                                 <span className="leading-tight">
                                   {item.merchandise.product.title}
                                 </span>
                                 {item.merchandise.title !== DEFAULT_OPTION ? (
-                                  <p className="text-sm text-neutral-500 dark:text-neutral-400">
+                                  <p className="text-neutral-500 dark:text-neutral-400">
                                     {item.merchandise.title}
                                   </p>
                                 ) : null}
@@ -131,14 +131,14 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                             </Link>
                             <div className="flex h-16 flex-col justify-between">
                               <Price
-                                className="flex justify-end space-y-2 text-right text-sm"
+                                className="flex justify-end space-y-2 text-right"
                                 amountMax={item.cost.totalAmount.amount}
                                 currencyCode={item.cost.totalAmount.currencyCode}
                               />
                               <div className="ml-auto flex h-9 flex-row items-center rounded-full border border-neutral-200 dark:border-neutral-700">
                                 <EditItemQuantityButton item={item} type="minus" />
                                 <p className="w-6 text-center">
-                                  <span className="w-full text-sm">{item.quantity}</span>
+                                  <span className="w-full">{item.quantity}</span>
                                 </p>
                                 <EditItemQuantityButton item={item} type="plus" />
                               </div>
@@ -148,7 +148,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                       );
                     })}
                   </ul>
-                  <div className="py-4 text-sm text-neutral-500 dark:text-neutral-400">
+                  <div className="py-4 text-neutral-500 dark:text-neutral-400">
                     <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
                       <p>Envio</p>
                       <p className="text-right">Calculado al momento de pagar</p>
@@ -156,14 +156,14 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                     <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
                       <p>Total</p>
                       <Price
-                        className="text-right text-base text-black dark:text-white"
+                        className="text-right text-black dark:text-white"
                         amountMax={String(total)}
                         currencyCode={cart.cost.totalAmount.currencyCode}
                       />
                     </div>
                   </div>
                   <div
-                    className="block w-full bg-[hsl(28,30%,59%)] p-3 text-center text-sm font-medium uppercase text-white opacity-90 hover:opacity-100"
+                    className="block w-full bg-[hsl(28,30%,59%)] p-3 text-center font-medium uppercase text-white opacity-90 hover:opacity-100"
                     onClick={() => router.push(cart?.checkoutUrl || '/')}
                   >
                     Pasar a pagar

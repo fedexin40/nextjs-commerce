@@ -10,7 +10,7 @@ import Search from '../search';
 export default function TabletNavbar() {
   return (
     <>
-      <nav className="bg-[#f7e7da] pb-3">
+      <nav className="bg-[#f7e7da] pb-3 text-[13px] tracking-widest lg:text-[14.3px]">
         <div className="grid grid-cols-5 content-center items-center pb-3 uppercase">
           <div className="col-span-2 h-full self-end">
             <div className="flex h-full flex-row place-items-center items-center justify-end gap-x-10">
