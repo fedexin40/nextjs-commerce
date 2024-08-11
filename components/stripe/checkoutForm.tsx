@@ -45,7 +45,12 @@ export default function CheckoutForm({ returnUrl }: { returnUrl: string }) {
   };
 
   const paymentElementOptions = {
-    layout: 'tabs',
+    layout: {
+      type: 'accordion',
+      defaultCollapsed: false,
+      radios: false,
+      spacedAccordionItems: true,
+    },
   };
 
   return (
