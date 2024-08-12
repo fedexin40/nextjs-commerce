@@ -13,7 +13,7 @@ export default async function Footer() {
   const copyrightName = COMPANY_NAME || SITE_NAME || '';
 
   return (
-    <footer className="bg-[#f1f1f1] text-black dark:bg-zinc-800 dark:text-white">
+    <footer className="bg-[#f1f1f1] text-[13px] tracking-widest text-black dark:bg-zinc-800 dark:text-white lg:text-[14.3px]">
       <div className="flex w-full flex-col gap-6 px-6 py-12 md:gap-12 md:px-4 xl:px-10">
         <div className="grid grid-cols-1 justify-around gap-10 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
           <Suspense>

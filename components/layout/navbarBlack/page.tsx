@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 
 export default function Navbar() {
   return (
-    <div className="grid grid-cols-2 bg-black px-5 text-[13px] capitalize tracking-widest text-white md:grid-cols-7 md:px-10 lg:text-[14.3px]">
+    <div className="grid grid-cols-2 bg-black px-5 text-[10px] text-white md:grid-cols-7 md:px-10 md:text-[13px] md:capitalize md:tracking-widest lg:text-[14.3px]">
       <div className="flex justify-center md:col-span-1 lg:h-[130px] lg:w-[130px]">
         <Link href={'/'}>
           <Suspense>
