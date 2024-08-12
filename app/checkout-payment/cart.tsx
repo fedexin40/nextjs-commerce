@@ -98,12 +98,12 @@ export default function Cart({ cart }: { cart: CartType | null }) {
             Aplicar
           </div>
         </div>
-        <div className="pb-7 text-neutral-500 dark:text-white">
-          <div className="mb-2 flex items-center justify-between border-[#acacac] pb-1 pt-5 uppercase text-black dark:border-[#c9aa9e] dark:text-white">
+        <div className="py-7 text-neutral-500 dark:text-white">
+          <div className="mb-2 flex items-center justify-between border-[#acacac] pb-1 pt-5 capitalize text-black dark:border-[#c9aa9e] dark:text-white">
             <p>Envío</p>
             <p className="text-right text-black dark:text-white">${deliveryPrice}</p>
           </div>
-          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 uppercase text-black dark:border-[#c9aa9e] dark:text-white">
+          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 capitalize text-black dark:border-[#c9aa9e] dark:text-white">
             <p>Subtotal</p>
             <Price
               className="text-black dark:text-white"
@@ -119,7 +119,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
               currencyCode={cart.cost.totalTaxAmount.currencyCode}
             />
           </div>
-          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 uppercase text-black dark:border-[#c9aa9e] dark:text-white">
+          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 capitalize text-black dark:border-[#c9aa9e] dark:text-white">
             <p>Total</p>
             <Price
               className="text-black dark:text-white"

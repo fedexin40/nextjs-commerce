@@ -15,6 +15,32 @@ export default async function CheckoutPayment({
 
   const cart = await getCart(checkout || '');
   const checkoutPayment = new URL('cart/processing', process.env.SHOP_PUBLIC_URL || '').toString();
+  const userEmail = cart?.userEmail;
+  const firstName = cart?.firstName;
+  const lastName = cart?.lastName;
+  /*
+  FIX: I am hard coding the stripe key, this is not correct
+  */
+  const stripe = require('stripe')(
+    'sk_test_51K2ULRLPhG5Wi083Gv8nLnMHg4c8qwDBraeb4Av33C6su0NgvH2aoXUqxWAfl3oWtjtG617rJAkpQCO48RbMRkXu00y9PNWQg6',
+  );
+  let user = await stripe.customers.search({
+    query: `email:"${userEmail}"`,
+  });
+  let userId;
+
+  /*
+  Create the customer in Stripe
+  */
+  if (user.data.length <= 0) {
+    user = await stripe.customers.create({
+      name: firstName + ' ' + lastName,
+      email: userEmail,
+    });
+    userId = user.id;
+  } else {
+    userId = user.data[0].id;
+  }
 
   // I believe it is impossible to get until here without
   // a cart, so it is ok just to pass, I am doing the below to make
@@ -22,7 +48,10 @@ export default async function CheckoutPayment({
   if (!cart) {
     return;
   }
-  const transaction = await transactionInitialize(cart.id);
+  const transaction = await transactionInitialize({
+    checkoutId: cart.id,
+    userId: userId,
+  });
   const stripeData = transaction.transactionInitialize?.data as
     | undefined
     | {

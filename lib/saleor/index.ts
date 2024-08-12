@@ -824,7 +824,13 @@ export async function accountUpdate({
 }
 
 // TODO: Add the type for the return value
-export async function transactionInitialize(checkoutId: string) {
+export async function transactionInitialize({
+  checkoutId,
+  userId,
+}: {
+  checkoutId: string;
+  userId: string;
+}) {
   const transaction = await saleorFetch({
     query: TransactionInitializeDocument,
     variables: {
@@ -833,6 +839,7 @@ export async function transactionInitialize(checkoutId: string) {
         automatic_payment_methods: {
           enabled: true,
         },
+        customer: userId,
       },
     },
     withAuth: true,

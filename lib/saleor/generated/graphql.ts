@@ -31842,6 +31842,7 @@ export type CheckoutFragment = {
     streetAddress1: string;
     streetAddress2: string;
   } | null;
+  user?: { firstName: string; lastName: string; email: string } | null;
 };
 
 export type FeaturedProductFragment = {
@@ -32065,6 +32066,7 @@ export type CheckoutAddLineMutation = {
         streetAddress1: string;
         streetAddress2: string;
       } | null;
+      user?: { firstName: string; lastName: string; email: string } | null;
     } | null;
   } | null;
 };
@@ -32189,6 +32191,7 @@ export type CheckoutDeleteLineMutation = {
         streetAddress1: string;
         streetAddress2: string;
       } | null;
+      user?: { firstName: string; lastName: string; email: string } | null;
     } | null;
   } | null;
 };
@@ -32310,6 +32313,7 @@ export type CheckoutUpdateLineMutation = {
         streetAddress1: string;
         streetAddress2: string;
       } | null;
+      user?: { firstName: string; lastName: string; email: string } | null;
     } | null;
   } | null;
 };
@@ -32408,6 +32412,7 @@ export type CreateCheckoutMutation = {
         streetAddress1: string;
         streetAddress2: string;
       } | null;
+      user?: { firstName: string; lastName: string; email: string } | null;
     } | null;
   } | null;
 };
@@ -32649,6 +32654,7 @@ export type GetCheckoutByIdQuery = {
       streetAddress1: string;
       streetAddress2: string;
     } | null;
+    user?: { firstName: string; lastName: string; email: string } | null;
   } | null;
 };
 
@@ -33227,6 +33233,11 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
     streetAddress1
     streetAddress2
   }
+  user {
+    firstName
+    lastName
+    email
+  }
 }
     fragment ProductDetails on Product {
   id
@@ -33517,6 +33528,11 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
     streetAddress1
     streetAddress2
   }
+  user {
+    firstName
+    lastName
+    email
+  }
 }
 fragment ProductDetails on Product {
   id
@@ -33706,6 +33722,11 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
     postalCode
     streetAddress1
     streetAddress2
+  }
+  user {
+    firstName
+    lastName
+    email
   }
 }
 fragment ProductDetails on Product {
@@ -33901,6 +33922,11 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
     streetAddress1
     streetAddress2
   }
+  user {
+    firstName
+    lastName
+    email
+  }
 }
 fragment ProductDetails on Product {
   id
@@ -34052,6 +34078,11 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
     postalCode
     streetAddress1
     streetAddress2
+  }
+  user {
+    firstName
+    lastName
+    email
   }
 }
 fragment ProductDetails on Product {
@@ -34409,6 +34440,11 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
     postalCode
     streetAddress1
     streetAddress2
+  }
+  user {
+    firstName
+    lastName
+    email
   }
 }
 fragment ProductDetails on Product {

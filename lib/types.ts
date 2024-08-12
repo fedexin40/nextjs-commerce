@@ -125,6 +125,9 @@ export type VercelCommerceCart = {
         streetAddress2: string | undefined;
       }
     | undefined;
+  userEmail?: string;
+  lastName?: string;
+  firstName?: string;
 };
 
 export type VercelCommerceCollection = {

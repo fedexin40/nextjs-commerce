@@ -53,4 +53,9 @@ fragment Checkout on Checkout {
     streetAddress1
     streetAddress2
   }
+  user {
+    firstName
+    lastName
+    email
+  }
 }
