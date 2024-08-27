@@ -6,15 +6,17 @@ export default async function UserShoppings() {
   const orders = me.orders || [];
 
   return (
-    <div className="px-5 pt-5 text-center text-sm tracking-wider dark:text-[#c9aa9e] md:pt-10 md:text-left">
-      <div className="hidden text-sm uppercase md:block">Historial de Compras</div>
-      <div className="mt-3">
+    <div className="px-5 text-center text-sm tracking-wider dark:text-[#c9aa9e] md:text-left">
+      <div>
         {orders?.length > 0 ? (
-          <div className="pt-5">
+          <div>
             {orders.map((order) => (
               <div key={order.id}>
                 {order.lines.map((line) => (
-                  <div key={line.id} className="m-3 border p-3 text-xs">
+                  <div
+                    key={line.id}
+                    className="m-3 border-2 border-neutral-300 p-3 text-xs dark:border-[#c9aa9e]"
+                  >
                     <div className="flex flex-row justify-around	gap-3">
                       <div className="relative h-14 w-14">
                         <Image className="object-contain" alt="" src={line.urlImage} fill />
