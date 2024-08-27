@@ -58,4 +58,10 @@ fragment Checkout on Checkout {
     lastName
     email
   }
+  transactions {
+    events {
+      type
+      createdAt
+    }
+  }
 }

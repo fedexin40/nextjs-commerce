@@ -5,7 +5,7 @@ import Snackbar from '@mui/material/Snackbar';
 import clsx from 'clsx';
 import { shippingAddressUpdate } from 'components/shipping/actions';
 import { useShipping } from 'components/shipping/store';
-import { useUser } from 'components/user/after-login/store';
+import { useUser } from 'components/user-details/store';
 import { billingAddressCheckoutUpdate } from 'lib/saleor';
 import { CurrentPerson } from 'lib/types';
 import { useState, useTransition } from 'react';

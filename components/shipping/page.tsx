@@ -1,7 +1,7 @@
 'use client';
 
 import Skeleton from '@mui/material/Skeleton';
-import { useUser } from 'components/user/after-login/store';
+import { useUser } from 'components/user-details/store';
 import { CurrentPerson } from 'lib/types';
 import { useEffect, useState, useTransition } from 'react';
 import { shippingAddressUpdate, shippingMethodsAction } from './actions';

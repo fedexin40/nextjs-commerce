@@ -4,18 +4,16 @@ import { Alert, Snackbar } from '@mui/material';
 import clsx from 'clsx';
 import { CurrentPerson, countryAreaChoices as countryAreaChoicesType } from 'lib/types';
 import { useState, useTransition } from 'react';
-import { useUser } from '../store';
 import { updateAddress } from './actions';
 import AddressInput from './address-form';
+import { useUser } from './store';
 
 export default function Address({
   user,
   countryAreaChoices,
-  black,
 }: {
   user: CurrentPerson;
   countryAreaChoices: countryAreaChoicesType;
-  black?: boolean;
 }) {
   const [isError, setError] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState('');
@@ -62,36 +60,27 @@ export default function Address({
               </Alert>
             </Snackbar>
           </div>
-          <div>
+          <div className="pb-8">
             <AddressInput user={user} countryAreaChoices={countryAreaChoices} />
           </div>
-          <div onClick={() => saveAddress()}>
-            <div
-              className={clsx(
-                'h-[36px] w-1/2 self-end p-2 text-center uppercase text-white lg:w-1/3',
-                {
-                  hidden: isPending,
-                  'bg-[hsl(28,30%,59%)] ': !black,
-                  'bg-black': black,
-                },
-              )}
-            >
-              <div>Guardar</div>
-            </div>
-            <div
-              className={clsx(
-                'flex h-[36px] w-1/2 items-center justify-center space-x-3 self-end p-2 tracking-wider text-white lg:w-1/3',
-                {
-                  hidden: !isPending,
-                  'bg-[hsl(28,30%,59%)] ': !black,
-                  'bg-black': black,
-                },
-              )}
-            >
-              <div className="h-[8px] w-[8px] animate-bounce rounded-full bg-white [animation-delay:-0.3s]"></div>
-              <div className="h-[8px] w-[8px] animate-bounce rounded-full bg-white [animation-delay:-0.15s]"></div>
-              <div className="h-[8px] w-[8px] animate-bounce rounded-full bg-white"></div>
-            </div>
+          <div
+            className={clsx(
+              'flex h-[60px] w-[200px] cursor-pointer items-center justify-center whitespace-nowrap bg-black p-3 font-semibold uppercase text-white hover:opacity-50 dark:bg-[#c9aa9e]',
+              { hidden: isPending },
+            )}
+            onClick={() => saveAddress()}
+          >
+            Guardar
+          </div>
+          <div
+            className={clsx(
+              'relative flex h-[60px] w-[200px] cursor-not-allowed items-center justify-center space-x-6 whitespace-nowrap bg-black p-3 text-center font-semibold text-white dark:bg-[#c9aa9e]',
+              { hidden: !isPending },
+            )}
+          >
+            <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.3s] dark:bg-white"></div>
+            <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.15s] dark:bg-white"></div>
+            <div className="h-4 w-4 animate-bounce rounded-full bg-white dark:bg-white"></div>
           </div>
         </div>
       </form>

@@ -1,3 +1,5 @@
+import { TransactionEventTypeEnum } from './saleor/generated/graphql';
+
 export type Maybe<T> = T | null;
 
 export type Connection<T> = {
@@ -98,6 +100,13 @@ export type SEO = {
   description: string;
 };
 
+export type transaction = {
+  events: {
+    type: string;
+    createdAt: string;
+  }[];
+};
+
 export type VercelCommerceCart = {
   id: string;
   token: string;
@@ -128,6 +137,14 @@ export type VercelCommerceCart = {
   userEmail?: string;
   lastName?: string;
   firstName?: string;
+  transactions?:
+    | {
+        events: {
+          type?: TransactionEventTypeEnum | null;
+          createdAt: string;
+        }[];
+      }[]
+    | null;
 };
 
 export type VercelCommerceCollection = {

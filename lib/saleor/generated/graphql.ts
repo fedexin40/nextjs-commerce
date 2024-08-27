@@ -31843,6 +31843,9 @@ export type CheckoutFragment = {
     streetAddress2: string;
   } | null;
   user?: { firstName: string; lastName: string; email: string } | null;
+  transactions?: Array<{
+    events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
+  }> | null;
 };
 
 export type FeaturedProductFragment = {
@@ -32067,6 +32070,9 @@ export type CheckoutAddLineMutation = {
         streetAddress2: string;
       } | null;
       user?: { firstName: string; lastName: string; email: string } | null;
+      transactions?: Array<{
+        events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
+      }> | null;
     } | null;
   } | null;
 };
@@ -32192,6 +32198,9 @@ export type CheckoutDeleteLineMutation = {
         streetAddress2: string;
       } | null;
       user?: { firstName: string; lastName: string; email: string } | null;
+      transactions?: Array<{
+        events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
+      }> | null;
     } | null;
   } | null;
 };
@@ -32314,6 +32323,9 @@ export type CheckoutUpdateLineMutation = {
         streetAddress2: string;
       } | null;
       user?: { firstName: string; lastName: string; email: string } | null;
+      transactions?: Array<{
+        events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
+      }> | null;
     } | null;
   } | null;
 };
@@ -32413,6 +32425,9 @@ export type CreateCheckoutMutation = {
         streetAddress2: string;
       } | null;
       user?: { firstName: string; lastName: string; email: string } | null;
+      transactions?: Array<{
+        events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
+      }> | null;
     } | null;
   } | null;
 };
@@ -32655,6 +32670,9 @@ export type GetCheckoutByIdQuery = {
       streetAddress2: string;
     } | null;
     user?: { firstName: string; lastName: string; email: string } | null;
+    transactions?: Array<{
+      events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
+    }> | null;
   } | null;
 };
 
@@ -33238,6 +33256,12 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
     lastName
     email
   }
+  transactions {
+    events {
+      type
+      createdAt
+    }
+  }
 }
     fragment ProductDetails on Product {
   id
@@ -33533,6 +33557,12 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
     lastName
     email
   }
+  transactions {
+    events {
+      type
+      createdAt
+    }
+  }
 }
 fragment ProductDetails on Product {
   id
@@ -33727,6 +33757,12 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
     firstName
     lastName
     email
+  }
+  transactions {
+    events {
+      type
+      createdAt
+    }
   }
 }
 fragment ProductDetails on Product {
@@ -33927,6 +33963,12 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
     lastName
     email
   }
+  transactions {
+    events {
+      type
+      createdAt
+    }
+  }
 }
 fragment ProductDetails on Product {
   id
@@ -34083,6 +34125,12 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
     firstName
     lastName
     email
+  }
+  transactions {
+    events {
+      type
+      createdAt
+    }
   }
 }
 fragment ProductDetails on Product {
@@ -34445,6 +34493,12 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
     firstName
     lastName
     email
+  }
+  transactions {
+    events {
+      type
+      createdAt
+    }
   }
 }
 fragment ProductDetails on Product {

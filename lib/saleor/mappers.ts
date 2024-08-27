@@ -168,5 +168,6 @@ export function saleorCheckoutToVercelCart(checkout: CheckoutFragment): Cart {
     userEmail: checkout.user?.email,
     lastName: checkout.user?.lastName,
     firstName: checkout.user?.firstName,
+    transactions: checkout.transactions,
   };
 }

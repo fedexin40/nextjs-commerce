@@ -1,9 +1,6 @@
 import { Me } from 'lib/saleor';
-import { Suspense } from 'react';
-import UserMenuDropDown from './after-login';
-import UserMenuModal from './after-login/modal';
-import UserDetails from './after-login/user-details/page';
-import UserShoppings from './after-login/user-shoppings';
+import Image from 'next/image';
+import Link from 'next/link';
 import Login from './before-login/login';
 import Register from './before-login/register';
 
@@ -19,12 +16,17 @@ export default async function User() {
   }
   return (
     <div className="text-[13px] tracking-widest lg:text-[14.3px]">
-      <Suspense>
-        <UserMenuDropDown />
-      </Suspense>
-      <Suspense>
-        <UserMenuModal UserDetails={<UserDetails />} UserShoppings={<UserShoppings />} />
-      </Suspense>
+      <Link href="/user">
+        <div className="relative h-[27px] w-[27px] opacity-50">
+          <Image
+            className="object-contain"
+            src={'/registro.png'}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
+      </Link>
     </div>
   );
 }

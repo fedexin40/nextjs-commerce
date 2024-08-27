@@ -1,5 +1,5 @@
 import Shipping from 'components/shipping/page';
-import AddressInput from 'components/user/after-login/user-details/address-form';
+import AddressInput from 'components/user-details/address-form';
 import { Me, countryArea, getCart } from 'lib/saleor';
 import Button from './next-button';
 
