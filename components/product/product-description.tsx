@@ -18,7 +18,7 @@ export function ProductDescription({
       <div className="flex flex-col border-b dark:border-neutral-700">
         <h1 className="mb-2 font-medium dark:text-[#c9aa9e]">{product.title}</h1>
         {product.descriptionHtml ? (
-          <div className="pb-2 pt-2 text-justify leading-tight text-gray-500 dark:text-white">
+          <div className="pb-2 pt-2 text-left leading-tight text-gray-500 dark:text-white">
             {ReactHtmlParser(product.descriptionHtml)}
           </div>
         ) : null}
@@ -49,10 +49,10 @@ export function ProductDescription({
           <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
         </Suspense>
       </div>
-      <div className="inline pt-6 leading-tight text-gray-800 dark:text-white">
-        <div className="pb-3">Tiempo de entrega de 2 a 7 dias habiles</div>
-        <div className="pb-3">Envio gratis a la ciudad de Puebla</div>
-        <div className="flex flex-row gap-x-4">
+      <div className="pt-5 text-left leading-tight text-gray-800 dark:text-white">
+        <div className="text-[13px]">Tiempo de entrega de 2 a 7 dias habiles</div>
+        <div className="pt-3 text-[13px]">Envío gratis en compras mayores a $1,500.00</div>
+        <div className="flex flex-row gap-x-4 pt-3 text-[13px]">
           <div>Compartir con</div>
           <Suspense>
             <div className="relative h-[20px] w-[20px]">
