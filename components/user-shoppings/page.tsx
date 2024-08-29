@@ -6,7 +6,7 @@ export default async function UserShoppings() {
   const orders = me.orders || [];
 
   return (
-    <div className="px-5 text-center text-sm tracking-wider dark:text-[#c9aa9e] md:text-left">
+    <div className="text-sm tracking-wider dark:text-[#c9aa9e]">
       <div>
         {orders?.length > 0 ? (
           <div>
@@ -15,7 +15,7 @@ export default async function UserShoppings() {
                 {order.lines.map((line) => (
                   <div
                     key={line.id}
-                    className="m-3 border-2 border-neutral-300 p-3 text-xs dark:border-[#c9aa9e]"
+                    className="my-3 border-2 border-neutral-300 p-3 text-xs dark:border-[#c9aa9e]"
                   >
                     <div className="flex flex-row justify-around	gap-3">
                       <div className="relative h-14 w-14">

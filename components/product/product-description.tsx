@@ -49,10 +49,10 @@ export function ProductDescription({
           <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
         </Suspense>
       </div>
-      <div className="pt-5 text-left leading-tight text-gray-800 dark:text-white">
-        <div className="text-[13px]">Tiempo de entrega de 2 a 7 dias habiles</div>
-        <div className="pt-3 text-[13px]">Envío gratis en compras mayores a $1,500.00</div>
-        <div className="flex flex-row gap-x-4 pt-3 text-[13px]">
+      <div className="pt-5 text-left text-[10px] leading-tight text-gray-800 dark:text-white lg:text-[13px]">
+        <div className="whitespace-nowrap">Tiempo de entrega de 2 a 7 dias habiles</div>
+        <div className="whitespace-nowrap pt-3">Envío gratis en compras mayores a $1,500.00</div>
+        <div className="flex flex-row gap-x-4 whitespace-nowrap pt-3">
           <div>Compartir con</div>
           <Suspense>
             <div className="relative h-[20px] w-[20px]">
