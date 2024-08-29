@@ -92,7 +92,7 @@ export default function UserMenu({
             <div className="relative">
               {openSelect && (
                 <div
-                  className="absolute left-0 top-0 z-50 h-full rounded-sm border-r-2 border-zinc-400 bg-white dark:border-white dark:bg-zinc-700"
+                  className="absolute left-0 top-0 z-50 h-full border-r-2 border-zinc-400 bg-white pt-10 dark:border-white dark:bg-zinc-700"
                   onClick={() => {
                     setOpenSelect(false);
                   }}
