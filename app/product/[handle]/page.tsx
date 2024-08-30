@@ -102,7 +102,7 @@ async function RelatedProducts({ product }: { product: productType }) {
         <div className="bg-[#e6e1e1] dark:bg-zinc-800">
           <div className="flex flex-row gap-x-2 p-5 px-10 tracking-wider md:px-16 lg:px-40">
             <div className="border-b-2 border-[#c9aa9e]">Productos</div>
-            <div>relacionas</div>
+            <div>relacionados</div>
           </div>
         </div>
       </h4>
