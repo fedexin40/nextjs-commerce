@@ -16,9 +16,9 @@ export function ProductDescription({
   return (
     <div className="flex flex-col">
       <div className="flex flex-col border-b dark:border-neutral-700">
-        <h1 className="mb-2 font-medium dark:text-[#c9aa9e]">{product.title}</h1>
+        <div className="mb-2  dark:text-[#c9aa9e]">{product.title}</div>
         {product.descriptionHtml ? (
-          <div className="pb-2 pt-2 text-left leading-tight text-gray-500 dark:text-white">
+          <div className="pb-2 pt-2 text-left text-gray-500 dark:text-white">
             {ReactHtmlParser(product.descriptionHtml)}
           </div>
         ) : null}
@@ -50,7 +50,7 @@ export function ProductDescription({
         </Suspense>
       </div>
       <div className="pt-5 text-left text-[10px] leading-tight text-gray-800 dark:text-white lg:text-[13px]">
-        <div className="whitespace-nowrap">Tiempo de entrega de 2 a 7 dias habiles</div>
+        <div className="whitespace-nowrap">Tiempo de entrega de 2 a 7 dias hábiles</div>
         <div className="whitespace-nowrap pt-3">Envío gratis en compras mayores a $1,500.00</div>
         <div className="flex flex-row gap-x-4 whitespace-nowrap pt-3">
           <div>Compartir con</div>

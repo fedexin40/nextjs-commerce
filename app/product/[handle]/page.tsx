@@ -3,7 +3,7 @@ import { Gallery } from 'components/product/gallery';
 import { ProductDescription } from 'components/product/product-description';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
 import { getCollectionProducts, getProduct } from 'lib/saleor';
-import { Image, Product, ProductVariant } from 'lib/types';
+import { Image, Product as productType, ProductVariant } from 'lib/types';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
@@ -91,7 +91,7 @@ export default async function Product({
   );
 }
 
-async function RelatedProducts({ product }: { product: Product }) {
+async function RelatedProducts({ product }: { product: productType }) {
   const relatedProducts = await getCollectionProducts({ collection: product.category.slug || '' });
 
   if (!relatedProducts.length) return null;
