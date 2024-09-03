@@ -1,12 +1,13 @@
 'use client';
 
+import KeyboardReturnIcon from '@mui/icons-material/KeyboardReturn';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Logout } from 'actions/user';
 import clsx from 'clsx';
 import { ReactNode, useEffect, useRef, useState } from 'react';
 import { useAddressMenu, useHistoryMenu, useMenuActions, useOrderMenu } from 'stores/user';
 
-export function Menu() {
+function Menu() {
   const addressMenu = useAddressMenu();
   const historyMenu = useHistoryMenu();
   const { showAddressMenu } = useMenuActions();
@@ -55,6 +56,7 @@ export default function UserMenu({
   const addressMenu = useAddressMenu();
   const historyMenu = useHistoryMenu();
   const orderMenu = useOrderMenu();
+  const { showHistoryMenu } = useMenuActions();
   const [openSelect, setOpenSelect] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -102,7 +104,17 @@ export default function UserMenu({
         <div className="my-10 basis-[90%] rounded-sm border-l-2 border-zinc-400 px-5 dark:border-white md:basis-3/4 md:pl-[50px] md:pr-[100px] lg:pr-[180px]">
           {addressMenu && UserAddress}
           {historyMenu && UserShoppings}
-          {orderMenu && Order}
+          {orderMenu && (
+            <div className="flex flex-col gap-5">
+              <div
+                className="w-fit rounded-lg bg-zinc-100 p-2 shadow-md shadow-gray-400 hover:cursor-pointer dark:bg-zinc-700 dark:shadow-slate-900"
+                onClick={() => showHistoryMenu()}
+              >
+                <KeyboardReturnIcon />
+              </div>
+              <div>{Order}</div>
+            </div>
+          )}
         </div>
       </div>
     </div>
