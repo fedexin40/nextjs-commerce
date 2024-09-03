@@ -1,41 +1,21 @@
 'use client';
 
 import MenuIcon from '@mui/icons-material/Menu';
+import { Logout } from 'actions/user';
 import clsx from 'clsx';
 import { ReactNode, useEffect, useRef, useState } from 'react';
-import { create } from 'zustand';
-import { Logout } from './actions';
-
-interface menu {
-  addressMenu: boolean;
-  historyMenu: boolean;
-  actions: {
-    showAddressMenu: () => void;
-    showHistoryMenu: () => void;
-  };
-}
-
-const MenuStore = create<menu>()((set) => ({
-  addressMenu: true,
-  historyMenu: false,
-  actions: {
-    showAddressMenu: () => set({ addressMenu: true, historyMenu: false }),
-    showHistoryMenu: () => set({ historyMenu: true, addressMenu: false }),
-  },
-}));
-
-const menuActions = () => MenuStore((state) => state.actions);
-const addressMenu = () => MenuStore((state) => state.addressMenu);
-const historyMenu = () => MenuStore((state) => state.historyMenu);
+import { useAddressMenu, useHistoryMenu, useMenuActions, useOrderMenu } from 'stores/user';
 
 export function Menu() {
-  const { showAddressMenu } = menuActions();
-  const { showHistoryMenu } = menuActions();
+  const addressMenu = useAddressMenu();
+  const historyMenu = useHistoryMenu();
+  const { showAddressMenu } = useMenuActions();
+  const { showHistoryMenu } = useMenuActions();
   return (
     <>
       <div className="flex h-full flex-col gap-10 px-10">
         <div
-          className={clsx('hover:cursor-pointer', { 'opacity-50': addressMenu() })}
+          className={clsx('hover:cursor-pointer', { 'opacity-50': addressMenu })}
           onClick={() => showAddressMenu()}
         >
           <span className="bg:border-white text-ellipsis whitespace-nowrap rounded-sm border-b-2 border-zinc-400 py-2">
@@ -43,7 +23,7 @@ export function Menu() {
           </span>
         </div>
         <div
-          className={clsx('hover:cursor-pointer', { 'opacity-50': historyMenu() })}
+          className={clsx('hover:cursor-pointer', { 'opacity-50': historyMenu })}
           onClick={() => showHistoryMenu()}
         >
           <span className="bg:border-white text-ellipsis whitespace-nowrap rounded-sm border-b-2 border-zinc-400 py-2">
@@ -66,10 +46,15 @@ export function Menu() {
 export default function UserMenu({
   UserAddress,
   UserShoppings,
+  Order,
 }: {
   UserAddress: ReactNode;
   UserShoppings: ReactNode;
+  Order: ReactNode;
 }) {
+  const addressMenu = useAddressMenu();
+  const historyMenu = useHistoryMenu();
+  const orderMenu = useOrderMenu();
   const [openSelect, setOpenSelect] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -115,8 +100,9 @@ export default function UserMenu({
           </div>
         </div>
         <div className="my-10 basis-[90%] rounded-sm border-l-2 border-zinc-400 px-5 dark:border-white md:basis-3/4 md:pl-[50px] md:pr-[100px] lg:pr-[180px]">
-          {addressMenu() && UserAddress}
-          {historyMenu() && UserShoppings}
+          {addressMenu && UserAddress}
+          {historyMenu && UserShoppings}
+          {orderMenu && Order}
         </div>
       </div>
     </div>

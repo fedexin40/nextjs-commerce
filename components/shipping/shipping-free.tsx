@@ -1,7 +1,7 @@
 import { shippingMethod } from 'lib/types';
 import Image from 'next/image';
 import { useEffect } from 'react';
-import { useShippingActions } from './store';
+import { useShippingActions } from 'stores/shipping';
 
 export default function ShippingFree({ ShippingMethods }: { ShippingMethods: shippingMethod[] }) {
   const { setSelectedShippingId } = useShippingActions();

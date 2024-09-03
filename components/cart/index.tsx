@@ -1,4 +1,4 @@
-import { lastCheckout } from './actions';
+import { lastCheckout } from 'actions/cart';
 import CartModal from './modal';
 
 export default async function Cart() {

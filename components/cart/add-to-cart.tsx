@@ -2,12 +2,12 @@
 
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { addItem } from 'actions/cart';
 import clsx from 'clsx';
-import { addItem } from 'components/cart/actions';
 import { ProductVariant } from 'lib/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
-import { cartActions } from './store';
+import { cartActions } from 'stores/cart';
 
 export function AddToCart({
   variants,

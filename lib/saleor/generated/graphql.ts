@@ -31872,6 +31872,39 @@ export type FeaturedProductFragment = {
   }> | null;
 };
 
+export type OrderFragment = {
+  id: string;
+  number: string;
+  created: string;
+  origin: OrderOriginEnum;
+  paymentStatus: PaymentChargeStatusEnum;
+  status: OrderStatus;
+  statusDisplay: string;
+  isPaid: boolean;
+  isShippingRequired: boolean;
+  shippingMethodName?: string | null;
+  lines: Array<{
+    id: string;
+    productName: string;
+    quantity: number;
+    quantityFulfilled: number;
+    quantityToFulfill: number;
+    totalPrice: { gross: { amount: number } };
+    thumbnail?: { url: string } | null;
+  }>;
+  total: { gross: { amount: number } };
+  subtotal: { tax: { amount: number }; net: { amount: number } };
+  shippingPrice: { gross: { amount: number; currency: string } };
+  shippingAddress?: {
+    city: string;
+    countryArea: string;
+    phone?: string | null;
+    postalCode: string;
+    streetAddress1: string;
+    streetAddress2: string;
+  } | null;
+};
+
 export type ProductDetailsFragment = {
   id: string;
   slug: string;
@@ -32816,17 +32849,35 @@ export type GetMeQuery = {
       edges: Array<{
         node: {
           id: string;
-          created: string;
           number: string;
+          created: string;
+          origin: OrderOriginEnum;
+          paymentStatus: PaymentChargeStatusEnum;
+          status: OrderStatus;
           statusDisplay: string;
-          total: { gross: { amount: number } };
+          isPaid: boolean;
+          isShippingRequired: boolean;
+          shippingMethodName?: string | null;
           lines: Array<{
             id: string;
             productName: string;
             quantity: number;
+            quantityFulfilled: number;
+            quantityToFulfill: number;
             totalPrice: { gross: { amount: number } };
             thumbnail?: { url: string } | null;
           }>;
+          total: { gross: { amount: number } };
+          subtotal: { tax: { amount: number }; net: { amount: number } };
+          shippingPrice: { gross: { amount: number; currency: string } };
+          shippingAddress?: {
+            city: string;
+            countryArea: string;
+            phone?: string | null;
+            postalCode: string;
+            streetAddress1: string;
+            streetAddress2: string;
+          } | null;
         };
       }>;
     } | null;
@@ -32901,6 +32952,7 @@ export type GetOrderByIdQuery = {
     statusDisplay: string;
     isPaid: boolean;
     isShippingRequired: boolean;
+    shippingMethodName?: string | null;
     lines: Array<{
       id: string;
       productName: string;
@@ -32911,6 +32963,16 @@ export type GetOrderByIdQuery = {
       thumbnail?: { url: string } | null;
     }>;
     total: { gross: { amount: number } };
+    subtotal: { tax: { amount: number }; net: { amount: number } };
+    shippingPrice: { gross: { amount: number; currency: string } };
+    shippingAddress?: {
+      city: string;
+      countryArea: string;
+      phone?: string | null;
+      postalCode: string;
+      streetAddress1: string;
+      streetAddress2: string;
+    } | null;
   } | null;
 };
 
@@ -33380,6 +33442,62 @@ export const FeaturedProductFragmentDoc = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<FeaturedProductFragment, unknown>;
+export const OrderFragmentDoc = new TypedDocumentString(`
+    fragment Order on Order {
+  id
+  number
+  created
+  origin
+  paymentStatus
+  status
+  statusDisplay
+  lines {
+    id
+    productName
+    quantity
+    quantityFulfilled
+    quantityToFulfill
+    totalPrice {
+      gross {
+        amount
+      }
+    }
+    thumbnail {
+      url
+    }
+  }
+  isPaid
+  isShippingRequired
+  total {
+    gross {
+      amount
+    }
+  }
+  subtotal {
+    tax {
+      amount
+    }
+    net {
+      amount
+    }
+  }
+  shippingMethodName
+  shippingPrice {
+    gross {
+      amount
+      currency
+    }
+  }
+  shippingAddress {
+    city
+    countryArea
+    phone
+    postalCode
+    streetAddress1
+    streetAddress2
+  }
+}
+    `) as unknown as TypedDocumentString<OrderFragment, unknown>;
 export const MenuItemFragmentDoc = new TypedDocumentString(`
     fragment MenuItem on MenuItem {
   id
@@ -34780,35 +34898,67 @@ export const GetMeDocument = new TypedDocumentString(`
     orders(first: 100) {
       edges {
         node {
-          id
-          created
-          number
-          statusDisplay
-          total {
-            gross {
-              amount
-            }
-          }
-          lines {
-            id
-            productName
-            quantity
-            totalPrice {
-              gross {
-                amount
-              }
-            }
-            thumbnail {
-              url
-            }
-          }
+          ...Order
         }
       }
     }
     checkoutIds
   }
 }
-    `) as unknown as TypedDocumentString<GetMeQuery, GetMeQueryVariables>;
+    fragment Order on Order {
+  id
+  number
+  created
+  origin
+  paymentStatus
+  status
+  statusDisplay
+  lines {
+    id
+    productName
+    quantity
+    quantityFulfilled
+    quantityToFulfill
+    totalPrice {
+      gross {
+        amount
+      }
+    }
+    thumbnail {
+      url
+    }
+  }
+  isPaid
+  isShippingRequired
+  total {
+    gross {
+      amount
+    }
+  }
+  subtotal {
+    tax {
+      amount
+    }
+    net {
+      amount
+    }
+  }
+  shippingMethodName
+  shippingPrice {
+    gross {
+      amount
+      currency
+    }
+  }
+  shippingAddress {
+    city
+    countryArea
+    phone
+    postalCode
+    streetAddress1
+    streetAddress2
+  }
+}`) as unknown as TypedDocumentString<GetMeQuery, GetMeQueryVariables>;
 export const GetMenuBySlugDocument = new TypedDocumentString(`
     query GetMenuBySlug($slug: String!) {
   menu(slug: $slug, channel: "proyecto705") {
@@ -34853,38 +35003,63 @@ export const GetMenuBySlugDocument = new TypedDocumentString(`
 export const GetOrderByIdDocument = new TypedDocumentString(`
     query GetOrderById($id: ID!) {
   order(id: $id) {
+    ...Order
+  }
+}
+    fragment Order on Order {
+  id
+  number
+  created
+  origin
+  paymentStatus
+  status
+  statusDisplay
+  lines {
     id
-    number
-    created
-    origin
-    paymentStatus
-    status
-    statusDisplay
-    lines {
-      id
-      productName
-      quantity
-      quantityFulfilled
-      quantityToFulfill
-      totalPrice {
-        gross {
-          amount
-        }
-      }
-      thumbnail {
-        url
-      }
-    }
-    isPaid
-    isShippingRequired
-    total {
+    productName
+    quantity
+    quantityFulfilled
+    quantityToFulfill
+    totalPrice {
       gross {
         amount
       }
     }
+    thumbnail {
+      url
+    }
   }
-}
-    `) as unknown as TypedDocumentString<GetOrderByIdQuery, GetOrderByIdQueryVariables>;
+  isPaid
+  isShippingRequired
+  total {
+    gross {
+      amount
+    }
+  }
+  subtotal {
+    tax {
+      amount
+    }
+    net {
+      amount
+    }
+  }
+  shippingMethodName
+  shippingPrice {
+    gross {
+      amount
+      currency
+    }
+  }
+  shippingAddress {
+    city
+    countryArea
+    phone
+    postalCode
+    streetAddress1
+    streetAddress2
+  }
+}`) as unknown as TypedDocumentString<GetOrderByIdQuery, GetOrderByIdQueryVariables>;
 export const GetPageBySlugDocument = new TypedDocumentString(`
     query GetPageBySlug($slug: String!) {
   page(slug: $slug) {

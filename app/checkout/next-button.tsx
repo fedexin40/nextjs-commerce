@@ -2,14 +2,14 @@
 
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { deliveryMethodUpdate } from 'actions/checkout';
+import { shippingAddressUpdate } from 'actions/shipping';
 import clsx from 'clsx';
-import { shippingAddressUpdate } from 'components/shipping/actions';
-import { useShipping } from 'components/shipping/store';
-import { useUser } from 'components/user-details/store';
 import { billingAddressCheckoutUpdate } from 'lib/saleor';
 import { CurrentPerson } from 'lib/types';
 import { useState, useTransition } from 'react';
-import { deliveryMethodUpdate } from './actions';
+import { useShipping } from 'stores/shipping';
+import { useUser } from 'stores/user';
 
 export default function Button({ checkoutId, user }: { checkoutId: string; user: CurrentPerson }) {
   const [isPending, startTransition] = useTransition();

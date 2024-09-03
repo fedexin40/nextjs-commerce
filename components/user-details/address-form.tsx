@@ -2,7 +2,7 @@
 
 import { Cart, CurrentPerson, countryAreaChoices as countryAreaChoicesType } from 'lib/types';
 import { useEffect } from 'react';
-import { useUser, useUserDetailsActions } from './store';
+import { useUser, useUserDetailsActions } from 'stores/user';
 
 export default function AddressInput({
   cart,

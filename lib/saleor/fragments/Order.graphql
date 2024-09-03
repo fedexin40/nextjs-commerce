@@ -1,0 +1,54 @@
+fragment Order on Order {
+  id
+  number
+  created
+  origin
+  paymentStatus
+  status
+  statusDisplay
+  lines {
+    id
+    productName
+    quantity
+    quantityFulfilled
+    quantityToFulfill
+    totalPrice {
+      gross {
+        amount
+      }
+    }
+    thumbnail {
+      url
+    }
+  }
+  isPaid
+  isShippingRequired
+  total {
+    gross {
+      amount
+    }
+  }
+  subtotal {
+    tax {
+      amount
+    }
+    net {
+      amount
+    }
+  }
+  shippingMethodName
+  shippingPrice {
+    gross {
+      amount
+      currency
+    }
+  }
+  shippingAddress {
+    city
+    countryArea
+    phone
+    postalCode
+    streetAddress1
+    streetAddress2
+  }
+}

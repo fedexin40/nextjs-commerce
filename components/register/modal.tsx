@@ -3,18 +3,12 @@
 import { Dialog, Transition } from '@headlessui/react';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { accountRegister } from 'actions/user';
 import { clsx } from 'clsx';
-import {
-  useError,
-  useErrorMessage,
-  useLoading,
-  usePersonActions,
-  useRegister,
-} from 'components/user/before-login/store';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Fragment, ReactNode, Suspense, useRef } from 'react';
-import { accountRegister } from './actions';
+import { useError, useErrorMessage, useLoading, usePersonActions, useRegister } from 'stores/user';
 import CloseRegister from './close-register';
 
 export default function RegisterModal({ children }: { children: ReactNode }) {

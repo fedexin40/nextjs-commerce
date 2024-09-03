@@ -3,18 +3,12 @@
 import { Dialog, Transition } from '@headlessui/react';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
+import { Login } from 'actions/user';
 import clsx from 'clsx';
-import {
-  useError,
-  useErrorMessage,
-  useLoading,
-  useLogin,
-  usePersonActions,
-} from 'components/user/before-login/store';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Fragment, ReactNode, Suspense, useRef } from 'react';
-import { Login } from './actions';
+import { useError, useErrorMessage, useLoading, useLogin, usePersonActions } from 'stores/user';
 import CloseLogin from './close-login';
 
 export default function LoginModal({ children }: { children: ReactNode }) {

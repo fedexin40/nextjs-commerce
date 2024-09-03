@@ -1,12 +1,12 @@
 'use client';
 
 import { Alert, Snackbar } from '@mui/material';
+import { updateAddress } from 'actions/user';
 import clsx from 'clsx';
 import { CurrentPerson, countryAreaChoices as countryAreaChoicesType } from 'lib/types';
 import { useState, useTransition } from 'react';
-import { updateAddress } from './actions';
+import { useUser } from 'stores/user';
 import AddressInput from './address-form';
-import { useUser } from './store';
 
 export default function Address({
   user,

@@ -371,8 +371,24 @@ export type order = {
   status: string;
   number: string;
   date: string;
-  amount: number;
+  total: number;
+  subtotal: number;
+  taxes: number;
+  shippingMethodName: string;
   lines: orderLines[];
+  shippingPrice: number;
+  shippingAddress:
+    | {
+        city: string | undefined;
+        countryArea?: string | undefined;
+        firstName?: string | undefined;
+        lastName?: string | undefined;
+        phone: string | undefined | null;
+        postalCode: string | undefined;
+        streetAddress1: string | undefined;
+        streetAddress2: string | undefined;
+      }
+    | undefined;
 };
 
 export type countryAreaChoices =

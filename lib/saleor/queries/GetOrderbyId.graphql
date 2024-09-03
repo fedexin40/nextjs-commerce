@@ -1,33 +1,5 @@
 query GetOrderById($id: ID!) {
   order(id: $id) {
-    id
-    number
-    created
-    origin
-    paymentStatus
-    status
-    statusDisplay
-    lines {
-      id
-      productName
-      quantity
-      quantityFulfilled
-      quantityToFulfill
-      totalPrice {
-        gross {
-          amount
-        }
-      }
-      thumbnail {
-        url
-      }
-    }
-    isPaid
-    isShippingRequired
-    total {
-      gross {
-        amount
-      }
-    }
+    ...Order
   }
 }

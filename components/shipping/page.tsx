@@ -1,13 +1,13 @@
 'use client';
 
 import Skeleton from '@mui/material/Skeleton';
-import { useUser } from 'components/user-details/store';
+import { shippingAddressUpdate, shippingMethodsAction } from 'actions/shipping';
 import { CurrentPerson } from 'lib/types';
 import { useEffect, useState, useTransition } from 'react';
-import { shippingAddressUpdate, shippingMethodsAction } from './actions';
+import { useShipping, useShippingActions } from 'stores/shipping';
+import { useUser } from 'stores/user';
 import ShippingMethods from './shipping';
 import ShippingFree from './shipping-free';
-import { useShipping, useShippingActions } from './store';
 
 export default function Shipping({
   checkoutId,

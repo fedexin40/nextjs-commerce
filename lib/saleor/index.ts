@@ -770,8 +770,19 @@ export async function Me(): Promise<CurrentPerson> {
       status: item.node.statusDisplay,
       number: item.node.number,
       date: item.node.created,
-      amount: item.node.total.gross.amount,
+      total: item.node.total.gross.amount,
+      subtotal: item.node.subtotal.net.amount,
+      taxes: item.node.subtotal.tax.amount,
       lines: items,
+      shippingMethodName: item.node.shippingMethodName || '',
+      shippingPrice: item.node.shippingPrice.gross.amount,
+      shippingAddress: {
+        city: item.node.shippingAddress?.city,
+        phone: item.node.shippingAddress?.phone,
+        postalCode: item.node.shippingAddress?.postalCode,
+        streetAddress1: item.node.shippingAddress?.streetAddress1,
+        streetAddress2: item.node.shippingAddress?.streetAddress2,
+      },
     };
     orders.push(order);
   });
@@ -984,9 +995,20 @@ export async function GetOrderById(id: string): Promise<order> {
     status: orderbyID.order?.status || '',
     number: orderbyID.order?.number || '',
     date: orderbyID.order?.created || '',
-    amount: orderbyID.order?.total.gross.amount || 0,
+    total: orderbyID.order?.total.gross.amount || 0,
+    subtotal: orderbyID.order?.subtotal.net.amount || 0,
+    taxes: orderbyID.order?.subtotal.tax.amount || 0,
+    shippingMethodName: orderbyID.order?.shippingMethodName || '',
+    shippingPrice: orderbyID.order?.shippingPrice.gross.amount || 0,
     lines: lines,
     id: orderbyID.order?.id || '',
+    shippingAddress: {
+      city: orderbyID.order?.shippingAddress?.city,
+      phone: orderbyID.order?.shippingAddress?.phone,
+      postalCode: orderbyID.order?.shippingAddress?.postalCode,
+      streetAddress1: orderbyID.order?.shippingAddress?.streetAddress1,
+      streetAddress2: orderbyID.order?.shippingAddress?.streetAddress2,
+    },
   };
 }
 

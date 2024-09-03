@@ -10,11 +10,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Fragment } from 'react';
+import { cartActions, useCartOpen } from 'stores/cart';
 import CloseCart from './close-cart';
 import DeleteItemButton from './delete-item-button';
 import EditItemQuantityButton from './edit-item-quantity-button';
 import OpenCart from './open-cart';
-import { cartActions, useCartOpen } from './store';
 
 type MerchandiseSearchParams = {
   [key: string]: string;

@@ -25,28 +25,7 @@ query GetMe {
     orders(first: 100) {
       edges {
         node {
-          id
-          created
-          number
-          statusDisplay
-          total {
-            gross {
-              amount
-            }
-          }
-          lines {
-            id
-            productName
-            quantity
-            totalPrice {
-              gross {
-                amount
-              }
-            }
-            thumbnail {
-              url
-            }
-          }
+          ...Order
         }
       }
     }

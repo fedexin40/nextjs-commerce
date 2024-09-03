@@ -3,7 +3,7 @@
 import { RadioGroup } from '@headlessui/react';
 import { shippingMethod } from 'lib/types';
 import { useState } from 'react';
-import { useShippingActions } from './store';
+import { useShippingActions } from 'stores/shipping';
 
 export default function ShippingMethods({
   ShippingMethods,

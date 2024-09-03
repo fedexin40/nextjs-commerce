@@ -16,6 +16,8 @@ const documents = {
     types.CheckoutFragmentDoc,
   'fragment FeaturedProduct on Product {\n  id\n  slug\n  name\n  isAvailableForPurchase\n  description\n  seoTitle\n  seoDescription\n  pricing {\n    priceRange {\n      start {\n        gross {\n          currency\n          amount\n        }\n      }\n      stop {\n        gross {\n          currency\n          amount\n        }\n      }\n    }\n  }\n  media {\n    url(size: 1080)\n    type\n    alt\n  }\n  collections {\n    name\n  }\n  updatedAt\n  variants {\n    id\n    name\n    pricing {\n      price {\n        gross {\n          currency\n          amount\n        }\n      }\n    }\n  }\n}':
     types.FeaturedProductFragmentDoc,
+  'fragment Order on Order {\n  id\n  number\n  created\n  origin\n  paymentStatus\n  status\n  statusDisplay\n  lines {\n    id\n    productName\n    quantity\n    quantityFulfilled\n    quantityToFulfill\n    totalPrice {\n      gross {\n        amount\n      }\n    }\n    thumbnail {\n      url\n    }\n  }\n  isPaid\n  isShippingRequired\n  total {\n    gross {\n      amount\n    }\n  }\n  subtotal {\n    tax {\n      amount\n    }\n    net {\n      amount\n    }\n  }\n  shippingMethodName\n  shippingPrice {\n    gross {\n      amount\n      currency\n    }\n  }\n  shippingAddress {\n    city\n    countryArea\n    phone\n    postalCode\n    streetAddress1\n    streetAddress2\n  }\n}':
+    types.OrderFragmentDoc,
   'fragment ProductDetails on Product {\n  id\n  slug\n  name\n  isAvailableForPurchase\n  description\n  seoTitle\n  seoDescription\n  category {\n    name\n    slug\n  }\n  pricing {\n    priceRange {\n      start {\n        gross {\n          currency\n          amount\n        }\n      }\n      stop {\n        gross {\n          currency\n          amount\n        }\n      }\n    }\n  }\n  media {\n    url(size: 1080)\n    type\n    alt\n  }\n  collections {\n    name\n  }\n  updatedAt\n  variants {\n    ...Variant\n  }\n}':
     types.ProductDetailsFragmentDoc,
   'fragment Variant on ProductVariant {\n  id\n  name\n  attributes {\n    attribute {\n      slug\n      name\n      choices(first: 100) {\n        edges {\n          node {\n            name\n          }\n        }\n      }\n    }\n    values {\n      name\n    }\n  }\n  pricing {\n    price {\n      gross {\n        currency\n        amount\n      }\n    }\n  }\n}':
@@ -82,11 +84,11 @@ const documents = {
     types.GetCollectionsDocument,
   'query GetFeaturedProducts($first: Int!) {\n  products(first: $first, channel: "proyecto705") {\n    edges {\n      node {\n        ...FeaturedProduct\n      }\n    }\n  }\n}':
     types.GetFeaturedProductsDocument,
-  'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          id\n          created\n          number\n          statusDisplay\n          total {\n            gross {\n              amount\n            }\n          }\n          lines {\n            id\n            productName\n            quantity\n            totalPrice {\n              gross {\n                amount\n              }\n            }\n            thumbnail {\n              url\n            }\n          }\n        }\n      }\n    }\n    checkoutIds\n  }\n}':
+  'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          ...Order\n        }\n      }\n    }\n    checkoutIds\n  }\n}':
     types.GetMeDocument,
   'fragment MenuItem on MenuItem {\n  id\n  name\n  url\n  collection {\n    slug\n    products(first: 0) {\n      totalCount\n    }\n  }\n  category {\n    slug\n    products(channel: "proyecto705", first: 0) {\n      totalCount\n    }\n  }\n  page {\n    slug\n    content\n  }\n}\n\nquery GetMenuBySlug($slug: String!) {\n  menu(slug: $slug, channel: "proyecto705") {\n    id\n    slug\n    name\n    items {\n      ...MenuItem\n      children {\n        ...MenuItem\n        children {\n          ...MenuItem\n          children {\n            ...MenuItem\n          }\n        }\n      }\n    }\n  }\n}':
     types.MenuItemFragmentDoc,
-  'query GetOrderById($id: ID!) {\n  order(id: $id) {\n    id\n    number\n    created\n    origin\n    paymentStatus\n    status\n    statusDisplay\n    lines {\n      id\n      productName\n      quantity\n      quantityFulfilled\n      quantityToFulfill\n      totalPrice {\n        gross {\n          amount\n        }\n      }\n      thumbnail {\n        url\n      }\n    }\n    isPaid\n    isShippingRequired\n    total {\n      gross {\n        amount\n      }\n    }\n  }\n}':
+  'query GetOrderById($id: ID!) {\n  order(id: $id) {\n    ...Order\n  }\n}':
     types.GetOrderByIdDocument,
   'query GetPageBySlug($slug: String!) {\n  page(slug: $slug) {\n    id\n    title\n    slug\n    content\n    seoTitle\n    seoDescription\n    created\n  }\n}':
     types.GetPageBySlugDocument,
@@ -114,6 +116,12 @@ export function graphql(
 export function graphql(
   source: 'fragment FeaturedProduct on Product {\n  id\n  slug\n  name\n  isAvailableForPurchase\n  description\n  seoTitle\n  seoDescription\n  pricing {\n    priceRange {\n      start {\n        gross {\n          currency\n          amount\n        }\n      }\n      stop {\n        gross {\n          currency\n          amount\n        }\n      }\n    }\n  }\n  media {\n    url(size: 1080)\n    type\n    alt\n  }\n  collections {\n    name\n  }\n  updatedAt\n  variants {\n    id\n    name\n    pricing {\n      price {\n        gross {\n          currency\n          amount\n        }\n      }\n    }\n  }\n}',
 ): typeof import('./graphql').FeaturedProductFragmentDoc;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'fragment Order on Order {\n  id\n  number\n  created\n  origin\n  paymentStatus\n  status\n  statusDisplay\n  lines {\n    id\n    productName\n    quantity\n    quantityFulfilled\n    quantityToFulfill\n    totalPrice {\n      gross {\n        amount\n      }\n    }\n    thumbnail {\n      url\n    }\n  }\n  isPaid\n  isShippingRequired\n  total {\n    gross {\n      amount\n    }\n  }\n  subtotal {\n    tax {\n      amount\n    }\n    net {\n      amount\n    }\n  }\n  shippingMethodName\n  shippingPrice {\n    gross {\n      amount\n      currency\n    }\n  }\n  shippingAddress {\n    city\n    countryArea\n    phone\n    postalCode\n    streetAddress1\n    streetAddress2\n  }\n}',
+): typeof import('./graphql').OrderFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -316,7 +324,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          id\n          created\n          number\n          statusDisplay\n          total {\n            gross {\n              amount\n            }\n          }\n          lines {\n            id\n            productName\n            quantity\n            totalPrice {\n              gross {\n                amount\n              }\n            }\n            thumbnail {\n              url\n            }\n          }\n        }\n      }\n    }\n    checkoutIds\n  }\n}',
+  source: 'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          ...Order\n        }\n      }\n    }\n    checkoutIds\n  }\n}',
 ): typeof import('./graphql').GetMeDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -328,7 +336,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query GetOrderById($id: ID!) {\n  order(id: $id) {\n    id\n    number\n    created\n    origin\n    paymentStatus\n    status\n    statusDisplay\n    lines {\n      id\n      productName\n      quantity\n      quantityFulfilled\n      quantityToFulfill\n      totalPrice {\n        gross {\n          amount\n        }\n      }\n      thumbnail {\n        url\n      }\n    }\n    isPaid\n    isShippingRequired\n    total {\n      gross {\n        amount\n      }\n    }\n  }\n}',
+  source: 'query GetOrderById($id: ID!) {\n  order(id: $id) {\n    ...Order\n  }\n}',
 ): typeof import('./graphql').GetOrderByIdDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

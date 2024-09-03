@@ -2,8 +2,8 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import LoadingDots from 'components/loading-dots';
 import { useRouter } from 'next/navigation';
 
+import { removeItem } from 'actions/cart';
 import clsx from 'clsx';
-import { removeItem } from 'components/cart/actions';
 import type { CartItem } from 'lib/types';
 import { useTransition } from 'react';
 
