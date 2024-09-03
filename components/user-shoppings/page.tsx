@@ -28,7 +28,7 @@ export default async function UserShoppings() {
       <div className="flex flex-col gap-8">
         {periods.map((period) => (
           <div key={period} className="flex flex-col">
-            <div className="text-lg underline underline-offset-4">{period}</div>
+            <div className="underline underline-offset-4 md:text-base">{period}</div>
             {ordersByDate[period]?.map((order) => (
               <div key={order.id}>
                 <Item order={order} />

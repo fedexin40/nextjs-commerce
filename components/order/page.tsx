@@ -16,15 +16,13 @@ export default function Order() {
   return (
     <div className="flex flex-col gap-10">
       <div className="flex flex-col justify-between gap-5 md:flex-row">
-        <div className="flex flex-row gap-5">
+        <div className="flex flex-row gap-2 md:gap-5">
           <div>Número de orden:</div>
-          {order.number}
-          <div></div>
+          <div>{order.number}</div>
         </div>
-        <div className="flex flex-row gap-5">
+        <div className="ºmd:gap-5 flex flex-row gap-2">
           <div>Fecha del pedido:</div>
-          {date}
-          <div></div>
+          <div>{date}</div>
         </div>
       </div>
       <div className="flex flex-col gap-5">
@@ -84,7 +82,7 @@ export default function Order() {
               <div>{line.productName}</div>
             </div>
             <div className="flex flex-col justify-around">
-              <div className="italic">Número de piezas</div>
+              <div className="italic"># de piezas</div>
               <div className="text-center">{line.quantity}</div>
             </div>
           </div>
@@ -96,6 +94,11 @@ export default function Order() {
         <div></div>
         {order.shippingAddress?.phone}
         <div></div>
+      </div>
+      <div className="flex flex-col gap-3 md:flex-row">
+        <div className="hidden md:block">Paquetería:</div>
+        <div className="md:hidden">Paqueteria</div>
+        <div>{order.shippingMethodName}</div>
       </div>
     </div>
   );

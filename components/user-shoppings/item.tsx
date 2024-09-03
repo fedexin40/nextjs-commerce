@@ -14,7 +14,7 @@ export default function Item({ order }: { order: orderType }) {
 
   return (
     <div
-      className="my-5 border-2 border-neutral-300 py-5 hover:cursor-pointer dark:border-[#c9aa9e]"
+      className="my-5 border-2 border-neutral-300 py-5 shadow-sm hover:cursor-pointer dark:border-[#c9aa9e]"
       onClick={() => orderItem(order)}
     >
       <div className="flex flex-row justify-around gap-3">
