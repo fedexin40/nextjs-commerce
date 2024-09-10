@@ -25,6 +25,13 @@ export default function Order() {
           <div>{date}</div>
         </div>
       </div>
+      <div className="flex flex-row">
+        <div>
+          {order.number == 'N/A' && <div>Orden esperando por pago</div>}
+          {order.number != 'N/A' && order.status == 'Unfulfilled' && <div>Preparando envío</div>}
+          {order.number != 'N/A' && order.status == 'Fulfilled' && <div>Orden enviada</div>}
+        </div>
+      </div>
       <div className="flex flex-col gap-5">
         <div>Resumen de la orden</div>
         <div className="grid grid-cols-[40%_60%] grid-rows-3 gap-3 md:grid-cols-[20%_80%]">
@@ -95,11 +102,20 @@ export default function Order() {
         {order.shippingAddress?.phone}
         <div></div>
       </div>
-      <div className="flex flex-col gap-3 md:flex-row">
-        <div className="hidden md:block">Paquetería:</div>
-        <div className="md:hidden">Paqueteria</div>
-        <div>{order.shippingMethodName}</div>
-      </div>
+      {order.shippingMethodName && (
+        <div className="flex flex-col gap-3 md:flex-row">
+          <div className="hidden md:block">Paquetería:</div>
+          <div className="md:hidden">Paquetería</div>
+          <div>{order.shippingMethodName}</div>
+        </div>
+      )}
+      {order.trackingNumber && (
+        <div className="flex flex-col gap-3 md:flex-row">
+          <div className="hidden md:block">Número de rastreo:</div>
+          <div className="md:hidden">Número de rastreo</div>
+          <div>{order.trackingNumber}</div>
+        </div>
+      )}
     </div>
   );
 }

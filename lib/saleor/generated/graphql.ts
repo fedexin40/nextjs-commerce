@@ -31770,6 +31770,7 @@ export type CheckoutFragment = {
   id: string;
   token: string;
   updatedAt: string;
+  created: string;
   quantity: number;
   chargeStatus: CheckoutChargeStatusEnum;
   authorizeStatus: CheckoutAuthorizeStatusEnum;
@@ -31820,6 +31821,7 @@ export type CheckoutFragment = {
           }>;
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         }> | null;
+        thumbnail?: { url: string } | null;
       };
       attributes: Array<{
         attribute: {
@@ -31831,6 +31833,7 @@ export type CheckoutFragment = {
       }>;
       pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
     };
+    totalPrice: { gross: { amount: number } };
   }>;
   shippingAddress?: {
     city: string;
@@ -31846,6 +31849,8 @@ export type CheckoutFragment = {
   transactions?: Array<{
     events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
   }> | null;
+  deliveryMethod?: { name: string } | {} | null;
+  shippingPrice: { gross: { amount: number } };
 };
 
 export type FeaturedProductFragment = {
@@ -31875,6 +31880,7 @@ export type FeaturedProductFragment = {
 export type OrderFragment = {
   id: string;
   number: string;
+  updatedAt: string;
   created: string;
   origin: OrderOriginEnum;
   paymentStatus: PaymentChargeStatusEnum;
@@ -31903,6 +31909,7 @@ export type OrderFragment = {
     streetAddress1: string;
     streetAddress2: string;
   } | null;
+  fulfillments: Array<{ trackingNumber: string }>;
 };
 
 export type ProductDetailsFragment = {
@@ -31936,6 +31943,7 @@ export type ProductDetailsFragment = {
     }>;
     pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
   }> | null;
+  thumbnail?: { url: string } | null;
 };
 
 export type VariantFragment = {
@@ -32030,6 +32038,7 @@ export type CheckoutAddLineMutation = {
       id: string;
       token: string;
       updatedAt: string;
+      created: string;
       quantity: number;
       chargeStatus: CheckoutChargeStatusEnum;
       authorizeStatus: CheckoutAuthorizeStatusEnum;
@@ -32080,6 +32089,7 @@ export type CheckoutAddLineMutation = {
               }>;
               pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
             }> | null;
+            thumbnail?: { url: string } | null;
           };
           attributes: Array<{
             attribute: {
@@ -32091,6 +32101,7 @@ export type CheckoutAddLineMutation = {
           }>;
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         };
+        totalPrice: { gross: { amount: number } };
       }>;
       shippingAddress?: {
         city: string;
@@ -32106,6 +32117,8 @@ export type CheckoutAddLineMutation = {
       transactions?: Array<{
         events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
       }> | null;
+      deliveryMethod?: { name: string } | {} | null;
+      shippingPrice: { gross: { amount: number } };
     } | null;
   } | null;
 };
@@ -32158,6 +32171,7 @@ export type CheckoutDeleteLineMutation = {
       id: string;
       token: string;
       updatedAt: string;
+      created: string;
       quantity: number;
       chargeStatus: CheckoutChargeStatusEnum;
       authorizeStatus: CheckoutAuthorizeStatusEnum;
@@ -32208,6 +32222,7 @@ export type CheckoutDeleteLineMutation = {
               }>;
               pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
             }> | null;
+            thumbnail?: { url: string } | null;
           };
           attributes: Array<{
             attribute: {
@@ -32219,6 +32234,7 @@ export type CheckoutDeleteLineMutation = {
           }>;
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         };
+        totalPrice: { gross: { amount: number } };
       }>;
       shippingAddress?: {
         city: string;
@@ -32234,6 +32250,8 @@ export type CheckoutDeleteLineMutation = {
       transactions?: Array<{
         events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
       }> | null;
+      deliveryMethod?: { name: string } | {} | null;
+      shippingPrice: { gross: { amount: number } };
     } | null;
   } | null;
 };
@@ -32283,6 +32301,7 @@ export type CheckoutUpdateLineMutation = {
       id: string;
       token: string;
       updatedAt: string;
+      created: string;
       quantity: number;
       chargeStatus: CheckoutChargeStatusEnum;
       authorizeStatus: CheckoutAuthorizeStatusEnum;
@@ -32333,6 +32352,7 @@ export type CheckoutUpdateLineMutation = {
               }>;
               pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
             }> | null;
+            thumbnail?: { url: string } | null;
           };
           attributes: Array<{
             attribute: {
@@ -32344,6 +32364,7 @@ export type CheckoutUpdateLineMutation = {
           }>;
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         };
+        totalPrice: { gross: { amount: number } };
       }>;
       shippingAddress?: {
         city: string;
@@ -32359,6 +32380,8 @@ export type CheckoutUpdateLineMutation = {
       transactions?: Array<{
         events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
       }> | null;
+      deliveryMethod?: { name: string } | {} | null;
+      shippingPrice: { gross: { amount: number } };
     } | null;
   } | null;
 };
@@ -32385,6 +32408,7 @@ export type CreateCheckoutMutation = {
       id: string;
       token: string;
       updatedAt: string;
+      created: string;
       quantity: number;
       chargeStatus: CheckoutChargeStatusEnum;
       authorizeStatus: CheckoutAuthorizeStatusEnum;
@@ -32435,6 +32459,7 @@ export type CreateCheckoutMutation = {
               }>;
               pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
             }> | null;
+            thumbnail?: { url: string } | null;
           };
           attributes: Array<{
             attribute: {
@@ -32446,6 +32471,7 @@ export type CreateCheckoutMutation = {
           }>;
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         };
+        totalPrice: { gross: { amount: number } };
       }>;
       shippingAddress?: {
         city: string;
@@ -32461,6 +32487,8 @@ export type CreateCheckoutMutation = {
       transactions?: Array<{
         events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
       }> | null;
+      deliveryMethod?: { name: string } | {} | null;
+      shippingPrice: { gross: { amount: number } };
     } | null;
   } | null;
 };
@@ -32630,6 +32658,7 @@ export type GetCheckoutByIdQuery = {
     id: string;
     token: string;
     updatedAt: string;
+    created: string;
     quantity: number;
     chargeStatus: CheckoutChargeStatusEnum;
     authorizeStatus: CheckoutAuthorizeStatusEnum;
@@ -32680,6 +32709,7 @@ export type GetCheckoutByIdQuery = {
             }>;
             pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
           }> | null;
+          thumbnail?: { url: string } | null;
         };
         attributes: Array<{
           attribute: {
@@ -32691,6 +32721,7 @@ export type GetCheckoutByIdQuery = {
         }>;
         pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
       };
+      totalPrice: { gross: { amount: number } };
     }>;
     shippingAddress?: {
       city: string;
@@ -32706,6 +32737,8 @@ export type GetCheckoutByIdQuery = {
     transactions?: Array<{
       events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
     }> | null;
+    deliveryMethod?: { name: string } | {} | null;
+    shippingPrice: { gross: { amount: number } };
   } | null;
 };
 
@@ -32850,6 +32883,7 @@ export type GetMeQuery = {
         node: {
           id: string;
           number: string;
+          updatedAt: string;
           created: string;
           origin: OrderOriginEnum;
           paymentStatus: PaymentChargeStatusEnum;
@@ -32878,6 +32912,99 @@ export type GetMeQuery = {
             streetAddress1: string;
             streetAddress2: string;
           } | null;
+          fulfillments: Array<{ trackingNumber: string }>;
+        };
+      }>;
+    } | null;
+    checkouts?: {
+      edges: Array<{
+        node: {
+          id: string;
+          token: string;
+          updatedAt: string;
+          created: string;
+          quantity: number;
+          chargeStatus: CheckoutChargeStatusEnum;
+          authorizeStatus: CheckoutAuthorizeStatusEnum;
+          totalPrice: {
+            gross: { currency: string; amount: number };
+            net: { currency: string; amount: number };
+            tax: { currency: string; amount: number };
+          };
+          subtotalPrice: {
+            gross: { currency: string; amount: number };
+            net: { currency: string; amount: number };
+            tax: { currency: string; amount: number };
+          };
+          lines: Array<{
+            id: string;
+            quantity: number;
+            variant: {
+              id: string;
+              name: string;
+              product: {
+                id: string;
+                slug: string;
+                name: string;
+                isAvailableForPurchase?: boolean | null;
+                description?: string | null;
+                seoTitle?: string | null;
+                seoDescription?: string | null;
+                updatedAt: string;
+                category?: { name: string; slug: string } | null;
+                pricing?: {
+                  priceRange?: {
+                    start?: { gross: { currency: string; amount: number } } | null;
+                    stop?: { gross: { currency: string; amount: number } } | null;
+                  } | null;
+                } | null;
+                media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
+                collections?: Array<{ name: string }> | null;
+                variants?: Array<{
+                  id: string;
+                  name: string;
+                  attributes: Array<{
+                    attribute: {
+                      slug?: string | null;
+                      name?: string | null;
+                      choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
+                    };
+                    values: Array<{ name?: string | null }>;
+                  }>;
+                  pricing?: {
+                    price?: { gross: { currency: string; amount: number } } | null;
+                  } | null;
+                }> | null;
+                thumbnail?: { url: string } | null;
+              };
+              attributes: Array<{
+                attribute: {
+                  slug?: string | null;
+                  name?: string | null;
+                  choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
+                };
+                values: Array<{ name?: string | null }>;
+              }>;
+              pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
+            };
+            totalPrice: { gross: { amount: number } };
+          }>;
+          shippingAddress?: {
+            city: string;
+            countryArea: string;
+            firstName: string;
+            lastName: string;
+            phone?: string | null;
+            postalCode: string;
+            streetAddress1: string;
+            streetAddress2: string;
+          } | null;
+          user?: { firstName: string; lastName: string; email: string } | null;
+          transactions?: Array<{
+            events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
+          }> | null;
+          deliveryMethod?: { name: string } | {} | null;
+          shippingPrice: { gross: { amount: number } };
         };
       }>;
     } | null;
@@ -32945,6 +33072,7 @@ export type GetOrderByIdQuery = {
   order?: {
     id: string;
     number: string;
+    updatedAt: string;
     created: string;
     origin: OrderOriginEnum;
     paymentStatus: PaymentChargeStatusEnum;
@@ -32973,6 +33101,7 @@ export type GetOrderByIdQuery = {
       streetAddress1: string;
       streetAddress2: string;
     } | null;
+    fulfillments: Array<{ trackingNumber: string }>;
   } | null;
 };
 
@@ -33046,6 +33175,7 @@ export type GetProductBySlugQuery = {
       }>;
       pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
     }> | null;
+    thumbnail?: { url: string } | null;
   } | null;
 };
 
@@ -33228,6 +33358,9 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(`
   variants {
     ...Variant
   }
+  thumbnail {
+    url
+  }
 }
     fragment Variant on ProductVariant {
   id
@@ -33262,6 +33395,7 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
   id
   token
   updatedAt
+  created
   totalPrice {
     gross {
       currency
@@ -33300,6 +33434,11 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
         ...ProductDetails
       }
     }
+    totalPrice {
+      gross {
+        amount
+      }
+    }
   }
   chargeStatus
   authorizeStatus
@@ -33322,6 +33461,16 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
     events {
       type
       createdAt
+    }
+  }
+  deliveryMethod {
+    ... on ShippingMethod {
+      name
+    }
+  }
+  shippingPrice {
+    gross {
+      amount
     }
   }
 }
@@ -33364,6 +33513,9 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
   updatedAt
   variants {
     ...Variant
+  }
+  thumbnail {
+    url
   }
 }
 fragment Variant on ProductVariant {
@@ -33446,6 +33598,7 @@ export const OrderFragmentDoc = new TypedDocumentString(`
     fragment Order on Order {
   id
   number
+  updatedAt
   created
   origin
   paymentStatus
@@ -33495,6 +33648,9 @@ export const OrderFragmentDoc = new TypedDocumentString(`
     postalCode
     streetAddress1
     streetAddress2
+  }
+  fulfillments {
+    trackingNumber
   }
 }
     `) as unknown as TypedDocumentString<OrderFragment, unknown>;
@@ -33619,6 +33775,7 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
   id
   token
   updatedAt
+  created
   totalPrice {
     gross {
       currency
@@ -33657,6 +33814,11 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
         ...ProductDetails
       }
     }
+    totalPrice {
+      gross {
+        amount
+      }
+    }
   }
   chargeStatus
   authorizeStatus
@@ -33679,6 +33841,16 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
     events {
       type
       createdAt
+    }
+  }
+  deliveryMethod {
+    ... on ShippingMethod {
+      name
+    }
+  }
+  shippingPrice {
+    gross {
+      amount
     }
   }
 }
@@ -33721,6 +33893,9 @@ fragment ProductDetails on Product {
   updatedAt
   variants {
     ...Variant
+  }
+  thumbnail {
+    url
   }
 }
 fragment Variant on ProductVariant {
@@ -33820,6 +33995,7 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
   id
   token
   updatedAt
+  created
   totalPrice {
     gross {
       currency
@@ -33858,6 +34034,11 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
         ...ProductDetails
       }
     }
+    totalPrice {
+      gross {
+        amount
+      }
+    }
   }
   chargeStatus
   authorizeStatus
@@ -33880,6 +34061,16 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
     events {
       type
       createdAt
+    }
+  }
+  deliveryMethod {
+    ... on ShippingMethod {
+      name
+    }
+  }
+  shippingPrice {
+    gross {
+      amount
     }
   }
 }
@@ -33922,6 +34113,9 @@ fragment ProductDetails on Product {
   updatedAt
   variants {
     ...Variant
+  }
+  thumbnail {
+    url
   }
 }
 fragment Variant on ProductVariant {
@@ -34025,6 +34219,7 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
   id
   token
   updatedAt
+  created
   totalPrice {
     gross {
       currency
@@ -34063,6 +34258,11 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
         ...ProductDetails
       }
     }
+    totalPrice {
+      gross {
+        amount
+      }
+    }
   }
   chargeStatus
   authorizeStatus
@@ -34085,6 +34285,16 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
     events {
       type
       createdAt
+    }
+  }
+  deliveryMethod {
+    ... on ShippingMethod {
+      name
+    }
+  }
+  shippingPrice {
+    gross {
+      amount
     }
   }
 }
@@ -34127,6 +34337,9 @@ fragment ProductDetails on Product {
   updatedAt
   variants {
     ...Variant
+  }
+  thumbnail {
+    url
   }
 }
 fragment Variant on ProductVariant {
@@ -34188,6 +34401,7 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
   id
   token
   updatedAt
+  created
   totalPrice {
     gross {
       currency
@@ -34226,6 +34440,11 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
         ...ProductDetails
       }
     }
+    totalPrice {
+      gross {
+        amount
+      }
+    }
   }
   chargeStatus
   authorizeStatus
@@ -34248,6 +34467,16 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
     events {
       type
       createdAt
+    }
+  }
+  deliveryMethod {
+    ... on ShippingMethod {
+      name
+    }
+  }
+  shippingPrice {
+    gross {
+      amount
     }
   }
 }
@@ -34290,6 +34519,9 @@ fragment ProductDetails on Product {
   updatedAt
   variants {
     ...Variant
+  }
+  thumbnail {
+    url
   }
 }
 fragment Variant on ProductVariant {
@@ -34556,6 +34788,7 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
   id
   token
   updatedAt
+  created
   totalPrice {
     gross {
       currency
@@ -34594,6 +34827,11 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
         ...ProductDetails
       }
     }
+    totalPrice {
+      gross {
+        amount
+      }
+    }
   }
   chargeStatus
   authorizeStatus
@@ -34616,6 +34854,16 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
     events {
       type
       createdAt
+    }
+  }
+  deliveryMethod {
+    ... on ShippingMethod {
+      name
+    }
+  }
+  shippingPrice {
+    gross {
+      amount
     }
   }
 }
@@ -34658,6 +34906,9 @@ fragment ProductDetails on Product {
   updatedAt
   variants {
     ...Variant
+  }
+  thumbnail {
+    url
   }
 }
 fragment Variant on ProductVariant {
@@ -34902,12 +35153,103 @@ export const GetMeDocument = new TypedDocumentString(`
         }
       }
     }
+    checkouts(first: 100) {
+      edges {
+        node {
+          ...Checkout
+        }
+      }
+    }
     checkoutIds
   }
 }
-    fragment Order on Order {
+    fragment Checkout on Checkout {
+  id
+  token
+  updatedAt
+  created
+  totalPrice {
+    gross {
+      currency
+      amount
+    }
+    net {
+      currency
+      amount
+    }
+    tax {
+      currency
+      amount
+    }
+  }
+  subtotalPrice {
+    gross {
+      currency
+      amount
+    }
+    net {
+      currency
+      amount
+    }
+    tax {
+      currency
+      amount
+    }
+  }
+  quantity
+  lines {
+    id
+    quantity
+    variant {
+      ...Variant
+      product {
+        ...ProductDetails
+      }
+    }
+    totalPrice {
+      gross {
+        amount
+      }
+    }
+  }
+  chargeStatus
+  authorizeStatus
+  shippingAddress {
+    city
+    countryArea
+    firstName
+    lastName
+    phone
+    postalCode
+    streetAddress1
+    streetAddress2
+  }
+  user {
+    firstName
+    lastName
+    email
+  }
+  transactions {
+    events {
+      type
+      createdAt
+    }
+  }
+  deliveryMethod {
+    ... on ShippingMethod {
+      name
+    }
+  }
+  shippingPrice {
+    gross {
+      amount
+    }
+  }
+}
+fragment Order on Order {
   id
   number
+  updatedAt
   created
   origin
   paymentStatus
@@ -34957,6 +35299,81 @@ export const GetMeDocument = new TypedDocumentString(`
     postalCode
     streetAddress1
     streetAddress2
+  }
+  fulfillments {
+    trackingNumber
+  }
+}
+fragment ProductDetails on Product {
+  id
+  slug
+  name
+  isAvailableForPurchase
+  description
+  seoTitle
+  seoDescription
+  category {
+    name
+    slug
+  }
+  pricing {
+    priceRange {
+      start {
+        gross {
+          currency
+          amount
+        }
+      }
+      stop {
+        gross {
+          currency
+          amount
+        }
+      }
+    }
+  }
+  media {
+    url(size: 1080)
+    type
+    alt
+  }
+  collections {
+    name
+  }
+  updatedAt
+  variants {
+    ...Variant
+  }
+  thumbnail {
+    url
+  }
+}
+fragment Variant on ProductVariant {
+  id
+  name
+  attributes {
+    attribute {
+      slug
+      name
+      choices(first: 100) {
+        edges {
+          node {
+            name
+          }
+        }
+      }
+    }
+    values {
+      name
+    }
+  }
+  pricing {
+    price {
+      gross {
+        currency
+        amount
+      }
+    }
   }
 }`) as unknown as TypedDocumentString<GetMeQuery, GetMeQueryVariables>;
 export const GetMenuBySlugDocument = new TypedDocumentString(`
@@ -35009,6 +35426,7 @@ export const GetOrderByIdDocument = new TypedDocumentString(`
     fragment Order on Order {
   id
   number
+  updatedAt
   created
   origin
   paymentStatus
@@ -35058,6 +35476,9 @@ export const GetOrderByIdDocument = new TypedDocumentString(`
     postalCode
     streetAddress1
     streetAddress2
+  }
+  fulfillments {
+    trackingNumber
   }
 }`) as unknown as TypedDocumentString<GetOrderByIdQuery, GetOrderByIdQueryVariables>;
 export const GetPageBySlugDocument = new TypedDocumentString(`
@@ -35135,6 +35556,9 @@ export const GetProductBySlugDocument = new TypedDocumentString(`
   updatedAt
   variants {
     ...Variant
+  }
+  thumbnail {
+    url
   }
 }
 fragment Variant on ProductVariant {

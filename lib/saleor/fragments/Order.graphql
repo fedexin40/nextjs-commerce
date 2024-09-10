@@ -1,6 +1,7 @@
 fragment Order on Order {
   id
   number
+  updatedAt
   created
   origin
   paymentStatus
@@ -50,5 +51,8 @@ fragment Order on Order {
     postalCode
     streetAddress1
     streetAddress2
+  }
+  fulfillments {
+    trackingNumber
   }
 }

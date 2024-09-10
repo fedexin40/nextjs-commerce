@@ -374,9 +374,10 @@ export type order = {
   total: number;
   subtotal: number;
   taxes: number;
-  shippingMethodName: string;
+  shippingMethodName?: string;
   lines: orderLines[];
   shippingPrice: number;
+  trackingNumber?: string;
   shippingAddress:
     | {
         city: string | undefined;

@@ -29,6 +29,13 @@ query GetMe {
         }
       }
     }
+    checkouts(first: 100) {
+      edges {
+        node {
+          ...Checkout
+        }
+      }
+    }
     checkoutIds
   }
 }

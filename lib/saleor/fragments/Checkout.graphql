@@ -2,6 +2,7 @@ fragment Checkout on Checkout {
   id
   token
   updatedAt
+  created
   totalPrice {
     gross {
       currency
@@ -40,6 +41,11 @@ fragment Checkout on Checkout {
         ...ProductDetails
       }
     }
+    totalPrice {
+      gross {
+        amount
+      }
+    }
   }
   chargeStatus
   authorizeStatus
@@ -62,6 +68,16 @@ fragment Checkout on Checkout {
     events {
       type
       createdAt
+    }
+  }
+  deliveryMethod {
+    ... on ShippingMethod {
+      name
+    }
+  }
+  shippingPrice {
+    gross {
+      amount
     }
   }
 }

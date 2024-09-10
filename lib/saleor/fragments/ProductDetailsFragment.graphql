@@ -38,4 +38,7 @@ fragment ProductDetails on Product {
   variants {
     ...Variant
   }
+  thumbnail {
+    url
+  }
 }

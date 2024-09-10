@@ -21,7 +21,7 @@ export default async function UserShoppings() {
     );
   }
 
-  const periods = Object.keys(ordersByDate);
+  const periods = Object.keys(ordersByDate).sort().reverse();
 
   return (
     <div className="tracking-wider dark:text-[#c9aa9e]">

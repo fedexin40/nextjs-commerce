@@ -2,6 +2,7 @@
 
 import { getServerAuthClient } from 'app/login';
 import { TAGS } from 'lib/constants';
+import { TransactionEventTypeEnum } from 'lib/saleor/generated/graphql';
 import {
   Cart,
   Category,
@@ -769,13 +770,14 @@ export async function Me(): Promise<CurrentPerson> {
       id: item.node.id,
       status: item.node.statusDisplay,
       number: item.node.number,
-      date: item.node.created,
+      date: item.node.updatedAt,
       total: item.node.total.gross.amount,
       subtotal: item.node.subtotal.net.amount,
       taxes: item.node.subtotal.tax.amount,
       lines: items,
       shippingMethodName: item.node.shippingMethodName || '',
       shippingPrice: item.node.shippingPrice.gross.amount,
+      trackingNumber: item.node.fulfillments[0]?.trackingNumber,
       shippingAddress: {
         city: item.node.shippingAddress?.city,
         phone: item.node.shippingAddress?.phone,
@@ -786,6 +788,79 @@ export async function Me(): Promise<CurrentPerson> {
     };
     orders.push(order);
   });
+
+  // When the checkout is waiting for payment
+  // we can consider it as an order waiting for payment
+  // that's why I am reading the checkouts
+  // but filtering by transactions
+  const checkouts: order[] = [];
+  CurrentPerson.me?.checkouts?.edges.forEach((item) => {
+    let is_checkout_waiting_payment;
+    is_checkout_waiting_payment = false;
+    // Read all the lines in the order
+    const items: orderLines[] = [];
+    if (!item.node.transactions) {
+      return;
+    }
+    for (
+      var index_transaction = 0;
+      index_transaction < (item.node.transactions?.length || 0);
+      index_transaction++
+    ) {
+      let charge_action_required_count: number;
+      charge_action_required_count = 0;
+      for (
+        var index_event = 0;
+        index_event < (item.node.transactions[index_transaction]?.events.length || 0);
+        index_event++
+      )
+        if (
+          item.node.transactions[index_transaction]?.events[index_event]?.type ==
+          TransactionEventTypeEnum.ChargeActionRequired
+        ) {
+          charge_action_required_count += 1;
+          // The number of charge_action_required_count events on the same
+          // transaction is equal to 2 this means that the checkout is waiting for payment
+          if (charge_action_required_count == 1) {
+            is_checkout_waiting_payment = true;
+          }
+        }
+    }
+    if (is_checkout_waiting_payment == true) {
+      item.node.lines.forEach((itemLine) => {
+        const line = {
+          id: itemLine.id,
+          productName: itemLine.variant.product.name,
+          quantity: itemLine.quantity,
+          amount: itemLine.totalPrice.gross.amount,
+          urlImage: itemLine.variant?.product.thumbnail?.url || '',
+        };
+        items.push(line);
+        // Add the checkouts
+        const checkout = {
+          id: item.node.id,
+          status: 'N/A',
+          number: 'N/A',
+          date: item.node.created,
+          total: item.node.totalPrice.gross.amount,
+          subtotal: item.node.totalPrice.net.amount,
+          taxes: item.node.totalPrice.tax.amount,
+          lines: items,
+          shippingPrice: item.node.shippingPrice.gross.amount,
+          shippingAddress: {
+            city: item.node.shippingAddress?.city,
+            phone: item.node.shippingAddress?.phone,
+            postalCode: item.node.shippingAddress?.postalCode,
+            streetAddress1: item.node.shippingAddress?.streetAddress1,
+            streetAddress2: item.node.shippingAddress?.streetAddress2,
+          },
+        };
+        checkouts.push(checkout);
+      });
+    }
+  });
+
+  const orders_and_checkouts = [...orders, ...checkouts];
 
   return {
     id: CurrentPerson.me?.id || '',
@@ -805,7 +880,7 @@ export async function Me(): Promise<CurrentPerson> {
       streetAddress2: CurrentPerson.me?.addresses[0]?.streetAddress2 || '',
       phone: CurrentPerson.me?.addresses[0]?.phone || '',
     },
-    orders: orders,
+    orders: orders_and_checkouts,
     lastCheckout: CurrentPerson.me?.checkoutIds ? CurrentPerson.me?.checkoutIds[0] : '',
   };
 }
