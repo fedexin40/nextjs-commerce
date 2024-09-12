@@ -32,9 +32,10 @@ export default function Address({
         streetAddress2: userStore.streetAddress2,
         city: userStore.city,
         postalCode: userStore.postalCode,
-        countryArea: userStore.countryArea,
+        countryArea: userStore.countryArea || user.address.countryArea,
         phone: userStore.phone,
       };
+      console.log(input);
       // Update the address if the user already has one
       const errors = await updateAddress(input);
       if (errors) {

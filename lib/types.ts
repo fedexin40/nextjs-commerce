@@ -93,6 +93,10 @@ export type ProductVariant = {
     value: string;
   }[];
   price: Money;
+  attributes: {
+    name: string | null | undefined;
+    valueRequired: boolean;
+  }[];
 };
 
 export type SEO = {

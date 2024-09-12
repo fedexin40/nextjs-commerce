@@ -44,7 +44,11 @@ export async function updateAddress({
       const field: string = error.message;
       switch (field) {
         case 'postalCode':
-          return 'El codigo postal no es correcto';
+          return 'El código postal no es correcto';
+      }
+      switch (field) {
+        case 'countryArea':
+          return 'Debes seleccionar un estado';
       }
       return 'Algo salio mal pero no sabemos que es';
     }

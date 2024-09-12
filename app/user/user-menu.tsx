@@ -75,7 +75,7 @@ export default function UserMenu({
     <div>
       <div className="flex w-full flex-row dark:bg-zinc-700">
         <div className="basis-[10px] py-10 md:basis-1/4">
-          <div className="flex h-full md:hidden" ref={ref}>
+          <div className="flex h-full min-h-[300px] md:hidden" ref={ref}>
             <div className="relative">
               {openSelect && (
                 <div

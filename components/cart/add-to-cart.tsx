@@ -34,6 +34,7 @@ export function AddToCart({
       (option) => option.value === searchParams?.get(option.name.toLowerCase()),
     ),
   );
+
   const selectedVariantId = variant?.id || defaultVariantId;
   const title = !availableForSale
     ? 'Out of stock'
@@ -65,11 +66,17 @@ export function AddToCart({
 
           startTransition(async () => {
             const error = await addItem(selectedVariantId);
-
+            if (!variant) {
+              // Trigger the error boundary in the root error.js
+              setErrorMessage('Por favor seleccione el tamaño y los kilates de su producto');
+              openError();
+              return;
+            }
             if (error) {
               // Trigger the error boundary in the root error.js
               setErrorMessage(error.toString());
               openError();
+              return;
             }
             openMenu();
             router.refresh();

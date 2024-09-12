@@ -94,6 +94,12 @@ export function saleorVariantsToVercelVariants(
           amount: variant.pricing?.price?.gross.amount.toString() || '0',
           currencyCode: variant.pricing?.price?.gross.currency || '',
         },
+        attributes: variant.attributes.map((attribute) => {
+          return {
+            name: attribute.values[0]?.name,
+            valueRequired: false,
+          };
+        }),
       };
     }) || []
   );

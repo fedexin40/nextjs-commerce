@@ -491,7 +491,8 @@ export async function addToCart(
   });
 
   if (!saleorCheckout.checkoutLinesAdd?.checkout) {
-    throw new Error(saleorCheckout.checkoutLinesAdd?.errors[0]?.message || '');
+    console.log(saleorCheckout.checkoutLinesAdd?.errors);
+    throw new Error(saleorCheckout.checkoutLinesAdd?.errors[0]?.code || '');
   }
 
   return saleorCheckoutToVercelCart(saleorCheckout.checkoutLinesAdd.checkout);

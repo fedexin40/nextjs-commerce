@@ -12,7 +12,7 @@ export default function Loading() {
         </span>
       </div>
       <div className="absolute">
-        <div className="relative left-2 top-2 hidden h-[47px] w-[47px] dark:block">
+        <div className="relative left-[9.5px] top-2 hidden h-[47px] w-[47px] dark:block">
           <Image
             className="object-contain"
             src={'/logoBlanco.png'}
@@ -21,7 +21,7 @@ export default function Loading() {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
-        <div className="relative left-2 top-2 block h-[47px] w-[47px] dark:hidden">
+        <div className="relative left-[9.5px] top-2 block h-[47px] w-[47px] dark:hidden">
           <Image
             className="object-contain"
             src={'/logoNegro.png'}
