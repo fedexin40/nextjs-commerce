@@ -14,7 +14,7 @@ function Menu() {
   const { showHistoryMenu } = useMenuActions();
   return (
     <>
-      <div className="flex h-full flex-col gap-10 px-10">
+      <div className="flex min-h-[300px] flex-col gap-10 px-10">
         <div
           className={clsx('hover:cursor-pointer', { 'opacity-50': addressMenu })}
           onClick={() => showAddressMenu()}
@@ -75,7 +75,7 @@ export default function UserMenu({
     <div>
       <div className="flex w-full flex-row dark:bg-zinc-700">
         <div className="basis-[10px] py-10 md:basis-1/4">
-          <div className="flex h-full md:hidden">
+          <div className="flex h-full md:hidden" ref={ref}>
             <div className="relative">
               {openSelect && (
                 <div
