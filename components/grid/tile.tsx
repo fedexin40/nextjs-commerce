@@ -1,7 +1,6 @@
 import clsx from 'clsx';
-import Loading from 'components/loading';
+import MyImage from 'components/image';
 import Image from 'next/image';
-import { Suspense } from 'react';
 import Label from '../label';
 
 export function GridTileImage({
@@ -25,17 +24,9 @@ export function GridTileImage({
       })}
     >
       {props.src ? (
-        <Suspense
-          fallback={
-            <>
-              <div className="h-18 flex place-items-center justify-center text-center">
-                <Loading />
-              </div>
-            </>
-          }
-        >
-          <Image className="relative h-full w-full object-cover" {...props} />
-        </Suspense>
+        <div className="relative h-full w-full">
+          <MyImage src={props.src} />
+        </div>
       ) : null}
       {label ? (
         <Label

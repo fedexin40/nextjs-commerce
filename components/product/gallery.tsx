@@ -1,4 +1,5 @@
 'use client';
+import MyImage from 'components/image';
 import Loading from 'components/loading';
 import Image from 'next/image';
 import { Suspense, useState } from 'react';
@@ -13,22 +14,9 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
           <ul className="flex w-full gap-4 overflow-x-auto overflow-y-hidden pt-1">
             {images.map((image) => (
               <li key={image.src} className="aspect-square w-[250px] flex-none">
-                <Suspense
-                  fallback={
-                    <div className="flex h-10 place-items-center justify-center text-center">
-                      <Loading />
-                    </div>
-                  }
-                >
-                  <Image
-                    className="relative h-full w-full object-cover"
-                    src={image.src}
-                    alt={image.altText}
-                    height={100}
-                    width={100}
-                    sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-                  />
-                </Suspense>
+                <div className="relative h-64 w-64">
+                  <MyImage src={image.src} />
+                </div>
               </li>
             ))}
           </ul>
