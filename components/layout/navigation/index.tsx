@@ -24,8 +24,8 @@ export default async function Menu() {
   ];
 
   return (
-    <>
+    <div>
       <MenuDropdown categories={categories} />
-    </>
+    </div>
   );
 }

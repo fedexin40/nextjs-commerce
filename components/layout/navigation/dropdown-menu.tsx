@@ -1,5 +1,6 @@
 'use client';
 
+import MenuIcon from '@mui/icons-material/Menu';
 import { Category } from 'lib/types';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
@@ -33,9 +34,10 @@ export default function MenuDropdown({ categories }: { categories: Category[] })
         onClick={() => {
           setOpenSelect(!openSelect);
         }}
-        className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300"
+        className="flex flex-row items-center gap-2 text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300"
       >
-        Aretes
+        <MenuIcon />
+        <div>Aretes</div>
       </div>
       {openSelect && (
         <div

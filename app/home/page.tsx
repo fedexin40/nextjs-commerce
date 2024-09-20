@@ -14,7 +14,7 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  const products = await getCollectionProducts({ collection: 'hidden-homepage-carousel' });
+  const products = await getCollectionProducts({ collection: 'oro' });
 
   return (
     <>

@@ -17,11 +17,11 @@ function Loading() {
 export default function MyImage({ src }: { src: string | StaticImport }) {
   return (
     <div className="h-full w-full">
-      <div className="absolute z-20 flex h-full w-full items-center justify-center">
+      <div className="absolute z-10 flex h-full w-full items-center justify-center">
         <Loading />
       </div>
       <Image
-        className="absolute z-30 object-cover"
+        className="absolute z-20 object-cover"
         src={src}
         alt=""
         fill

@@ -1,6 +1,7 @@
 import Shipping from 'components/shipping/page';
 import AddressInput from 'components/user-details/address-form';
 import { Me, countryArea, getCart } from 'lib/saleor';
+import { redirect } from 'next/navigation';
 import Button from './next-button';
 
 export default async function Checkout({
@@ -8,9 +9,14 @@ export default async function Checkout({
 }: {
   searchParams?: { [key: string]: string | undefined };
 }) {
+  // If there is no an open session then return to home
+  const me = await Me();
+  if (me.id.length === 0) {
+    redirect('/home');
+  }
+
   let checkout;
   const states = await countryArea();
-  const me = await Me();
 
   if (searchParams) {
     checkout = searchParams['checkout'] || '';

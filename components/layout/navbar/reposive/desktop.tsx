@@ -12,7 +12,7 @@ export default function DesktopNavbar() {
       <nav className="bg-[#f7e7da] text-[13px] tracking-widest lg:text-[14.3px]">
         <div className="grid grid-cols-5 content-center items-center pb-3 uppercase">
           <div className="col-span-2 block">
-            <div className="flex w-full flex-row justify-end gap-x-10">
+            <div className="flex w-full flex-row items-center justify-end gap-x-10">
               <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300">
                 Nosotros
               </div>

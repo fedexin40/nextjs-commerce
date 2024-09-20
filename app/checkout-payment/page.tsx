@@ -1,5 +1,6 @@
 import { StripeComponent } from 'components/stripe/stripe-component';
-import { getCart, transactionInitialize } from 'lib/saleor';
+import { getCart, Me, transactionInitialize } from 'lib/saleor';
+import { redirect } from 'next/navigation';
 import { Suspense } from 'react';
 import Cart from './cart';
 
@@ -8,6 +9,12 @@ export default async function CheckoutPayment({
 }: {
   searchParams?: { [key: string]: string | undefined };
 }) {
+  // If there is no an open session then return to home
+  const me = await Me();
+  if (me.id.length === 0) {
+    redirect('/home');
+  }
+
   let checkout;
   if (searchParams) {
     checkout = searchParams['checkout'] || '';
