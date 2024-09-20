@@ -34,7 +34,7 @@ export default function MenuDropdown({ categories }: { categories: Category[] })
         onClick={() => {
           setOpenSelect(!openSelect);
         }}
-        className="flex flex-row items-center gap-2 text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300"
+        className="flex flex-row items-center gap-1 text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300 md:gap-2"
       >
         <MenuIcon />
         <div>Aretes</div>
