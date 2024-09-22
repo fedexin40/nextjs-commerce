@@ -368,7 +368,7 @@ function flattenMenuItems(menuItems: null | undefined | MenuItemWithChildren[]):
       let data;
       try {
         const content = JSON.parse(item.page?.content || '');
-        data = content['blocks'][0]['data']['items'][0];
+        data = content['blocks'][0]['data']['items'];
       } catch {
         data = '';
       }

@@ -20,7 +20,7 @@ export default function DeleteItemButton({ item }: { item: CartItem }) {
 
           if (error) {
             // Trigger the error boundary in the root error.js
-            throw new Error(error.toString());
+            console.log(error.toString());
           }
 
           router.refresh();

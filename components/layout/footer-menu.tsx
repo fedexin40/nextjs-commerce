@@ -15,26 +15,33 @@ const FooterMenuItem = ({ item }: { item: Menu }) => {
   }, [pathname, item.path]);
 
   return (
-    <div className="text-justify">
-      {item.path ? (
-        <Link
-          href={item.path}
-          className={clsx(
-            'block p-2 text-lg underline-offset-4 hover:text-black hover:underline dark:hover:text-neutral-300 md:inline-block md:text-sm',
-            {
-              'text-black dark:text-neutral-300': active,
-            },
-          )}
-        >
-          {item.title}
+    <div className="flex flex-col gap-5">
+      <div className="text-justify">
+        {item.path ? (
+          <Link
+            href={item.path}
+            className={clsx(
+              'block p-2 text-lg underline-offset-4 hover:text-black hover:underline dark:hover:text-neutral-300 md:inline-block md:text-sm',
+              {
+                'text-black dark:text-neutral-300': active,
+              },
+            )}
+          >
+            {item.title}
+          </Link>
+        ) : null}
+        {item.data ? (
+          <div>
+            <div className="mb-2 uppercase dark:text-[#c9aa9e]">{item.title}</div>
+            <span>{item.data[0]}</span>
+          </div>
+        ) : null}
+      </div>
+      <div className="place-content-end text-right">
+        <Link className="dark:text-[#c9aa9e]" href={'/'}>
+          ... Ver mas
         </Link>
-      ) : null}
-      {item.data ? (
-        <div>
-          <div className="mb-2 uppercase dark:text-[#c9aa9e]">{item.title}</div>
-          <span>{item.data}</span>
-        </div>
-      ) : null}
+      </div>
     </div>
   );
 };

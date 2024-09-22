@@ -1,4 +1,5 @@
 import { AddToCart } from 'components/cart/add-to-cart';
+import { BuyNow } from 'components/cart/buy-now';
 import Price from 'components/price';
 import { Product, ProductVariant } from 'lib/types';
 import Image from 'next/image';
@@ -42,9 +43,7 @@ export function ProductDescription({
         <VariantSelector options={product.options} variants={product.variants} />
       </div>
       <div className="mt-6 flex flex-col gap-5 border-b pb-6 uppercase dark:border-neutral-700">
-        <div className="flex w-full items-center justify-center bg-[#c9aa9e] p-4 text-black hover:opacity-90">
-          Comprar ahora
-        </div>
+        <BuyNow variants={product.variants} availableForSale={product.availableForSale} />
         <Suspense>
           <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
         </Suspense>

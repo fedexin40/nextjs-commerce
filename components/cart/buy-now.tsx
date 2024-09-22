@@ -2,14 +2,13 @@
 
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import { addItem } from 'actions/cart';
+import { addItem, lastCheckout } from 'actions/cart';
 import clsx from 'clsx';
 import { ProductVariant } from 'lib/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
-import { cartActions } from 'stores/cart';
 
-export function AddToCart({
+export function BuyNow({
   variants,
   availableForSale,
 }: {
@@ -21,7 +20,6 @@ export function AddToCart({
   const [isPending, startTransition] = useTransition();
   const [isError, setIsError] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState('');
-  const { openMenu } = cartActions();
   const closeError = () => {
     setIsError(false);
   };
@@ -57,7 +55,7 @@ export function AddToCart({
         </Snackbar>
       </div>
       <button
-        aria-label="Agregar al carrito"
+        aria-label="Comprar ahora"
         disabled={isPending || !availableForSale || !selectedVariantId}
         title={title}
         onClick={() => {
@@ -78,12 +76,13 @@ export function AddToCart({
               openError();
               return;
             }
-            openMenu();
-            router.refresh();
+            // Get cart
+            const cart = await lastCheckout();
+            router.push(cart?.checkoutUrl || '/');
           });
         }}
         className={clsx(
-          'relative flex h-[60px] w-full items-center justify-center  bg-[#f5e1d1] p-4 tracking-wider text-black hover:opacity-90 dark:border-2 dark:border-[#c9aa9e] dark:bg-black dark:text-white',
+          'relative flex h-[60px] w-full items-center justify-center  bg-[#c9aa9e] p-4 tracking-wider text-black hover:opacity-90',
           {
             'cursor-not-allowed opacity-60 hover:opacity-60':
               !availableForSale || !selectedVariantId,
@@ -91,13 +90,11 @@ export function AddToCart({
           },
         )}
       >
-        <span className="uppercase">
-          {availableForSale ? 'Agregar al carrito' : 'Out Of Stock'}
-        </span>
+        <span className="uppercase">{availableForSale ? 'Comprar ahora' : 'Out Of Stock'}</span>
       </button>
       <div
         className={clsx(
-          'relative flex h-[60px] w-full items-center justify-center space-x-6 bg-[#f5e1d1] p-4 tracking-wider dark:border-2 dark:border-[#c9aa9e]  dark:bg-black dark:text-white',
+          'relative flex h-[60px] w-full items-center justify-center space-x-6 bg-[#c9aa9e] p-4 tracking-wider dark:border-2 dark:border-[#c9aa9e] dark:text-white',
           {
             hidden: !isPending,
           },
