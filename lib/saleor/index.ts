@@ -927,6 +927,13 @@ export async function transactionInitialize({
           enabled: true,
         },
         customer: userId,
+        payment_method_options: {
+          card: {
+            installments: {
+              enabled: true,
+            },
+          },
+        },
       },
     },
     withAuth: true,

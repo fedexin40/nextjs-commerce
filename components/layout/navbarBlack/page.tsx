@@ -31,7 +31,7 @@ export default function Navbar() {
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
-          <div>10 dias para cambios & devoluciones</div>
+          <div className="relative -top-1">10 dias para cambios & devoluciones</div>
         </div>
         <div className="flex flex-row gap-2">
           <div className="relative h-[10px] min-h-[10px] w-[10px] min-w-[10px] md:h-[15px] md:min-h-[15px] md:w-[15px] md:min-w-[15px]">
@@ -43,7 +43,7 @@ export default function Navbar() {
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
-          <div>Compra segura</div>
+          <div className="relative -top-1">Compra segura</div>
         </div>
         <div className="flex flex-row gap-2">
           <div className="relative h-[10px] min-h-[10px] w-[10px] min-w-[10px] md:h-[15px] md:min-h-[15px] md:w-[15px] md:min-w-[15px]">
@@ -55,7 +55,7 @@ export default function Navbar() {
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
-          <div>30 dias de garantia asegurada</div>
+          <div className="relative -top-1">30 dias de garantia asegurada</div>
         </div>
         <div className="flex flex-row gap-2">
           <div className="relative h-[10px] min-h-[10px] w-[10px] min-w-[10px] md:h-[15px] md:min-h-[15px] md:w-[15px] md:min-w-[15px]">
@@ -67,7 +67,7 @@ export default function Navbar() {
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
-          <div>Envios gratis en compras superiores a $1,500.00</div>
+          <div className="relative -top-1">Envios gratis en compras superiores a $1,500.00</div>
         </div>
       </div>
     </div>
