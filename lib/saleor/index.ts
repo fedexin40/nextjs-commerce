@@ -924,7 +924,7 @@ export async function transactionInitialize({
       checkoutId: checkoutId,
       data: {
         automatic_payment_methods: {
-          enabled: true,
+          enabled: false,
         },
         customer: userId,
         payment_method_options: {
@@ -934,6 +934,7 @@ export async function transactionInitialize({
             },
           },
         },
+        payment_method_types: ['card', 'oxxo', 'customer_balance', 'link'],
       },
     },
     withAuth: true,
