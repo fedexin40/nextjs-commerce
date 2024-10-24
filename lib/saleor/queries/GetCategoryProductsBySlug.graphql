@@ -2,13 +2,21 @@ query GetCategoryProductsBySlug(
   $slug: String!
   $sortBy: ProductOrderField!
   $sortDirection: OrderDirection!
+  $after: String!
+  $first: Int!
 ) {
   category(slug: $slug) {
     products(
       channel: "proyecto705"
-      first: 100
+      first: $first
+      after: $after
       sortBy: { field: $sortBy, direction: $sortDirection }
     ) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      totalCount
       edges {
         node {
           id

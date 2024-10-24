@@ -2,9 +2,16 @@ query GetCollectionProductsBySlug(
   $slug: String!
   $sortBy: ProductOrderField!
   $sortDirection: OrderDirection!
+  $after: String!
+  $first: Int!
 ) {
   collection(channel: "proyecto705", slug: $slug) {
-    products(first: 100, sortBy: { field: $sortBy, direction: $sortDirection }) {
+    products(after: $after, first: $first, sortBy: { field: $sortBy, direction: $sortDirection }) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      totalCount
       edges {
         node {
           id

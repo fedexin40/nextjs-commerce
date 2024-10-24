@@ -11,6 +11,7 @@ import {
   Menu,
   Page,
   Product,
+  ProductsByPage,
   Token,
   authenticationUrl,
   countryAreaChoices,
@@ -238,16 +239,22 @@ const _getCollectionProducts = async ({
   collection,
   reverse,
   sortKey,
+  cursor,
+  first,
 }: {
   collection: string;
   reverse?: boolean;
   sortKey?: ProductOrderField;
+  cursor?: string;
+  first?: number;
 }) =>
   (
     await saleorFetch({
       query: GetCollectionProductsBySlugDocument,
       variables: {
         slug: collection,
+        after: cursor || '',
+        first: first || 100,
         sortBy:
           sortKey === ProductOrderField.Rank
             ? ProductOrderField.Rating
@@ -261,16 +268,22 @@ const _getCategoryProducts = async ({
   category,
   reverse,
   sortKey,
+  cursor,
+  first,
 }: {
   category: string;
   reverse?: boolean;
   sortKey?: ProductOrderField;
+  cursor?: string;
+  first?: number;
 }) =>
   (
     await saleorFetch({
       query: GetCategoryProductsBySlugDocument,
       variables: {
         slug: category,
+        after: cursor || '',
+        first: first || 100,
         sortBy:
           sortKey === ProductOrderField.Rank
             ? ProductOrderField.Rating
@@ -285,11 +298,15 @@ export async function getCollectionProducts({
   collection,
   reverse,
   sortKey,
+  cursor,
+  first,
 }: {
   collection: string;
   reverse?: boolean;
   sortKey?: ProductOrderField;
-}): Promise<Product[]> {
+  cursor?: string;
+  first?: number;
+}): Promise<ProductsByPage> {
   if (typeof reverse === 'undefined' && typeof sortKey === 'undefined') {
     reverse = true;
     sortKey = ProductOrderField.Name;
@@ -300,22 +317,31 @@ export async function getCollectionProducts({
       collection,
       reverse,
       sortKey,
+      cursor,
+      first,
     })) ||
     (await _getCategoryProducts({
       category: collection,
       reverse,
       sortKey,
+      cursor,
+      first,
     }));
 
   if (!saleorCollectionProducts) {
     throw new Error(`Collection not found: ${collection}`);
   }
 
-  return (
+  const products =
     saleorCollectionProducts.products?.edges.map((product) =>
       saleorProductToVercelProduct(product.node),
-    ) || []
-  );
+    ) || [];
+  return {
+    totalCount: saleorCollectionProducts.products?.totalCount || 1,
+    products: products,
+    cursor: saleorCollectionProducts.products?.pageInfo.endCursor || '',
+    hasNextPage: saleorCollectionProducts.products?.pageInfo.hasNextPage || false,
+  };
 }
 
 export async function getMenu(handle: string): Promise<Menu[]> {

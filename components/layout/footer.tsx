@@ -66,7 +66,7 @@ export function Contacto() {
             src={'/whats.png'}
             alt=""
             fill
-            className="fill-current dark:text-white"
+            className="object-contain dark:text-white"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>

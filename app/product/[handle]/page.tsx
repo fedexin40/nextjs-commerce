@@ -92,7 +92,8 @@ export default async function Product({
 }
 
 async function RelatedProducts({ product }: { product: productType }) {
-  const relatedProducts = await getCollectionProducts({ collection: product.category.slug || '' });
+  const productsByPage = await getCollectionProducts({ collection: product.category.slug || '' });
+  const relatedProducts = productsByPage.products;
 
   if (!relatedProducts.length) return null;
 

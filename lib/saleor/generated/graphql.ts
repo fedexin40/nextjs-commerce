@@ -32606,11 +32606,15 @@ export type GetCategoryProductsBySlugQueryVariables = Exact<{
   slug: Scalars['String'];
   sortBy: ProductOrderField;
   sortDirection: OrderDirection;
+  after: Scalars['String'];
+  first: Scalars['Int'];
 }>;
 
 export type GetCategoryProductsBySlugQuery = {
   category?: {
     products?: {
+      totalCount?: number | null;
+      pageInfo: { hasNextPage: boolean; endCursor?: string | null };
       edges: Array<{
         node: {
           id: string;
@@ -32762,11 +32766,15 @@ export type GetCollectionProductsBySlugQueryVariables = Exact<{
   slug: Scalars['String'];
   sortBy: ProductOrderField;
   sortDirection: OrderDirection;
+  after: Scalars['String'];
+  first: Scalars['Int'];
 }>;
 
 export type GetCollectionProductsBySlugQuery = {
   collection?: {
     products?: {
+      totalCount?: number | null;
+      pageInfo: { hasNextPage: boolean; endCursor?: string | null };
       edges: Array<{
         node: {
           id: string;
@@ -34694,13 +34702,19 @@ export const GetCategoryBySlugDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetCategoryBySlugQuery, GetCategoryBySlugQueryVariables>;
 export const GetCategoryProductsBySlugDocument = new TypedDocumentString(`
-    query GetCategoryProductsBySlug($slug: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {
+    query GetCategoryProductsBySlug($slug: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!, $after: String!, $first: Int!) {
   category(slug: $slug) {
     products(
       channel: "proyecto705"
-      first: 100
+      first: $first
+      after: $after
       sortBy: {field: $sortBy, direction: $sortDirection}
     ) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      totalCount
       edges {
         node {
           id
@@ -34962,9 +34976,18 @@ export const GetCollectionBySlugDocument = new TypedDocumentString(`
   GetCollectionBySlugQueryVariables
 >;
 export const GetCollectionProductsBySlugDocument = new TypedDocumentString(`
-    query GetCollectionProductsBySlug($slug: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {
+    query GetCollectionProductsBySlug($slug: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!, $after: String!, $first: Int!) {
   collection(channel: "proyecto705", slug: $slug) {
-    products(first: 100, sortBy: {field: $sortBy, direction: $sortDirection}) {
+    products(
+      after: $after
+      first: $first
+      sortBy: {field: $sortBy, direction: $sortDirection}
+    ) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      totalCount
       edges {
         node {
           id

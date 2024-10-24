@@ -1,6 +1,7 @@
 import CarouselComponent from 'components/carousel/page';
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
+import LoadMore from 'components/loadmore/page';
 import { getCollectionProducts } from 'lib/saleor';
 import { Suspense } from 'react';
 
@@ -14,7 +15,15 @@ export const metadata = {
 };
 
 export default async function HomePage() {
-  const products = await getCollectionProducts({ collection: 'oro' });
+  const collection = 'oro';
+  const first = 48;
+  const productsPagination = await getCollectionProducts({
+    collection: collection,
+    first: first,
+  });
+  const products = productsPagination.products;
+  const totalCount = productsPagination.totalCount;
+  const numbersOfPages = Math.ceil(totalCount / first);
 
   return (
     <>
@@ -48,6 +57,14 @@ export default async function HomePage() {
           ) : null}
         </div>
       </Suspense>
+      <div>
+        <LoadMore
+          numbersOfPages={numbersOfPages}
+          collection={collection}
+          first={first}
+          cursor={productsPagination.cursor}
+        />
+      </div>
     </>
   );
 }
