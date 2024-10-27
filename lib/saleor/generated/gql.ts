@@ -86,7 +86,7 @@ const documents = {
     types.GetFeaturedProductsDocument,
   'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          ...Order\n        }\n      }\n    }\n    checkouts(first: 100) {\n      edges {\n        node {\n          ...Checkout\n        }\n      }\n    }\n    checkoutIds\n  }\n}':
     types.GetMeDocument,
-  'fragment MenuItem on MenuItem {\n  id\n  name\n  url\n  collection {\n    slug\n    products(first: 0) {\n      totalCount\n    }\n  }\n  category {\n    slug\n    products(channel: "proyecto705", first: 0) {\n      totalCount\n    }\n  }\n  page {\n    slug\n    content\n  }\n}\n\nquery GetMenuBySlug($slug: String!) {\n  menu(slug: $slug, channel: "proyecto705") {\n    id\n    slug\n    name\n    items {\n      ...MenuItem\n      children {\n        ...MenuItem\n        children {\n          ...MenuItem\n          children {\n            ...MenuItem\n          }\n        }\n      }\n    }\n  }\n}':
+  'fragment MenuItem on MenuItem {\n  id\n  name\n  url\n  page {\n    id\n    slug\n    content\n    title\n  }\n}\n\nquery GetMenuBySlug($slug: String!) {\n  menu(slug: $slug, channel: "proyecto705") {\n    id\n    slug\n    name\n    items {\n      ...MenuItem\n    }\n  }\n}':
     types.MenuItemFragmentDoc,
   'query GetOrderById($id: ID!) {\n  order(id: $id) {\n    ...Order\n  }\n}':
     types.GetOrderByIdDocument,
@@ -330,7 +330,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'fragment MenuItem on MenuItem {\n  id\n  name\n  url\n  collection {\n    slug\n    products(first: 0) {\n      totalCount\n    }\n  }\n  category {\n    slug\n    products(channel: "proyecto705", first: 0) {\n      totalCount\n    }\n  }\n  page {\n    slug\n    content\n  }\n}\n\nquery GetMenuBySlug($slug: String!) {\n  menu(slug: $slug, channel: "proyecto705") {\n    id\n    slug\n    name\n    items {\n      ...MenuItem\n      children {\n        ...MenuItem\n        children {\n          ...MenuItem\n          children {\n            ...MenuItem\n          }\n        }\n      }\n    }\n  }\n}',
+  source: 'fragment MenuItem on MenuItem {\n  id\n  name\n  url\n  page {\n    id\n    slug\n    content\n    title\n  }\n}\n\nquery GetMenuBySlug($slug: String!) {\n  menu(slug: $slug, channel: "proyecto705") {\n    id\n    slug\n    name\n    items {\n      ...MenuItem\n    }\n  }\n}',
 ): typeof import('./graphql').MenuItemFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

@@ -54,7 +54,6 @@ export type Image = {
 export type Menu = {
   title: string;
   path: string;
-  data: string[];
 };
 
 export type Money = {
@@ -71,6 +70,7 @@ export type Page = {
   seo?: SEO;
   createdAt: string;
   updatedAt: string;
+  slug?: string;
 };
 
 export type Product = Omit<VercelCommerceProduct, 'variants' | 'images'> & {

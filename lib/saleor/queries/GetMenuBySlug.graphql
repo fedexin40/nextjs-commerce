@@ -2,21 +2,11 @@ fragment MenuItem on MenuItem {
   id
   name
   url
-  collection {
-    slug
-    products(first: 0) {
-      totalCount
-    }
-  }
-  category {
-    slug
-    products(channel: "proyecto705", first: 0) {
-      totalCount
-    }
-  }
   page {
+    id
     slug
     content
+    title
   }
 }
 
@@ -27,15 +17,6 @@ query GetMenuBySlug($slug: String!) {
     name
     items {
       ...MenuItem
-      children {
-        ...MenuItem
-        children {
-          ...MenuItem
-          children {
-            ...MenuItem
-          }
-        }
-      }
     }
   }
 }

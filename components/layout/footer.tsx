@@ -1,5 +1,5 @@
 import FooterMenu from 'components/layout/footer-menu';
-import { getMenu } from 'lib/saleor';
+import { getPagesByMenu } from 'lib/saleor';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Suspense } from 'react';
@@ -9,17 +9,18 @@ const { COMPANY_NAME, SITE_NAME } = process.env;
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
   const copyrightDate = currentYear;
-  const menu = await getMenu('next-js-frontend-footer-menu');
+  const pages = await getPagesByMenu('next-js-frontend-footer-menu');
   const copyrightName = COMPANY_NAME || SITE_NAME || '';
 
   return (
     <footer className="bg-[#f1f1f1] text-[13px] tracking-widest text-black dark:bg-zinc-800 dark:text-white lg:text-[14.3px]">
       <div className="flex w-full flex-col gap-6 px-6 py-12 md:gap-12 md:px-4 xl:px-10">
-        <div className="grid grid-cols-1 justify-around gap-10 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
+        <div className="grid h-fit grid-cols-1 justify-around gap-10 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
           <Suspense>
-            <FooterMenu menu={menu} />
+            <FooterMenu pages={pages} />
           </Suspense>
-
+        </div>
+        <div className="grid grid-cols-1 justify-around gap-10 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
           <div className="flex flex-col gap-y-5 lg:col-start-2 lg:col-end-3">
             <Contacto />
             <div className="hidden md:mt-3 md:block lg:hidden">

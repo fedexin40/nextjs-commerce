@@ -8,7 +8,6 @@ import {
   Category,
   Collection,
   CurrentPerson,
-  Menu,
   Page,
   Product,
   ProductsByPage,
@@ -57,7 +56,6 @@ import {
   GetPagesDocument,
   GetProductBySlugDocument,
   GetShippingMethodsDocument,
-  MenuItemFragment,
   OrderDirection,
   PaymentGatewayInitializeDocument,
   ProductOrderField,
@@ -344,72 +342,37 @@ export async function getCollectionProducts({
   };
 }
 
-export async function getMenu(handle: string): Promise<Menu[]> {
+export async function getPagesByMenu(handle: string): Promise<Page[]> {
   const handleToSlug: Record<string, string> = {
     'next-js-frontend-footer-menu': 'footer',
     'next-js-frontend-header-menu': 'navbar',
   };
 
-  const saleorMenu = await saleorFetch({
+  const result = await saleorFetch({
     query: GetMenuBySlugDocument,
     variables: {
       slug: handleToSlug[handle] || handle,
     },
   });
 
-  if (!saleorMenu.menu) {
+  if (!result.menu?.items) {
     throw new Error(`Menu not found: ${handle}`);
   }
 
-  const saleorUrl = new URL(endpoint!);
-  saleorUrl.pathname = '';
+  const pages = result.menu?.items?.map((page) => {
+    return {
+      id: page.page?.id || '',
+      title: page.page?.title || '',
+      handle: '',
+      body: '',
+      bodySummary: '',
+      createdAt: '',
+      updatedAt: '',
+      slug: page.page?.slug || '',
+    };
+  });
 
-  const result = flattenMenuItems(saleorMenu.menu.items).map((item) => ({
-    ...item,
-    path: item.path.replace('http://localhost:8000', saleorUrl.toString().slice(0, -1)),
-  }));
-
-  if (handle === 'next-js-frontend-header-menu') {
-    // limit number of items in header to 3
-    return result.slice(0, 3);
-  }
-  return result;
-}
-
-type MenuItemWithChildren = MenuItemFragment & {
-  children?: null | undefined | MenuItemWithChildren[];
-};
-function flattenMenuItems(menuItems: null | undefined | MenuItemWithChildren[]): Menu[] {
-  return (
-    menuItems?.flatMap((item) => {
-      const path =
-        item.url ||
-        (item.collection
-          ? `/search/${item.collection.slug}`
-          : item.category
-          ? `/search/${item.category.slug}`
-          : '');
-
-      // TODO: Is if this the correct way to get the content?
-      let data;
-      try {
-        const content = JSON.parse(item.page?.content || '');
-        data = content['blocks'][0]['data']['items'];
-      } catch {
-        data = '';
-      }
-      return [
-        ...[
-          {
-            path: path,
-            title: item.name,
-            data: data,
-          },
-        ],
-        ...flattenMenuItems(item.children),
-      ];
-    }) || []
-  );
+  return pages;
 }
 
 export async function getProducts({

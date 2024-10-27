@@ -33023,9 +33023,7 @@ export type MenuItemFragment = {
   id: string;
   name: string;
   url?: string | null;
-  collection?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-  category?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-  page?: { slug: string; content?: string | null } | null;
+  page?: { id: string; slug: string; content?: string | null; title: string } | null;
 };
 
 export type GetMenuBySlugQueryVariables = Exact<{
@@ -33041,33 +33039,7 @@ export type GetMenuBySlugQuery = {
       id: string;
       name: string;
       url?: string | null;
-      children?: Array<{
-        id: string;
-        name: string;
-        url?: string | null;
-        children?: Array<{
-          id: string;
-          name: string;
-          url?: string | null;
-          children?: Array<{
-            id: string;
-            name: string;
-            url?: string | null;
-            collection?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-            category?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-            page?: { slug: string; content?: string | null } | null;
-          }> | null;
-          collection?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-          category?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-          page?: { slug: string; content?: string | null } | null;
-        }> | null;
-        collection?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-        category?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-        page?: { slug: string; content?: string | null } | null;
-      }> | null;
-      collection?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-      category?: { slug: string; products?: { totalCount?: number | null } | null } | null;
-      page?: { slug: string; content?: string | null } | null;
+      page?: { id: string; slug: string; content?: string | null; title: string } | null;
     }> | null;
   } | null;
 };
@@ -33667,21 +33639,11 @@ export const MenuItemFragmentDoc = new TypedDocumentString(`
   id
   name
   url
-  collection {
-    slug
-    products(first: 0) {
-      totalCount
-    }
-  }
-  category {
-    slug
-    products(channel: "proyecto705", first: 0) {
-      totalCount
-    }
-  }
   page {
+    id
     slug
     content
+    title
   }
 }
     `) as unknown as TypedDocumentString<MenuItemFragment, unknown>;
@@ -35407,15 +35369,6 @@ export const GetMenuBySlugDocument = new TypedDocumentString(`
     name
     items {
       ...MenuItem
-      children {
-        ...MenuItem
-        children {
-          ...MenuItem
-          children {
-            ...MenuItem
-          }
-        }
-      }
     }
   }
 }
@@ -35423,21 +35376,11 @@ export const GetMenuBySlugDocument = new TypedDocumentString(`
   id
   name
   url
-  collection {
-    slug
-    products(first: 0) {
-      totalCount
-    }
-  }
-  category {
-    slug
-    products(channel: "proyecto705", first: 0) {
-      totalCount
-    }
-  }
   page {
+    id
     slug
     content
+    title
   }
 }`) as unknown as TypedDocumentString<GetMenuBySlugQuery, GetMenuBySlugQueryVariables>;
 export const GetOrderByIdDocument = new TypedDocumentString(`
