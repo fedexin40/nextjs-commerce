@@ -7,12 +7,11 @@ function PageLink({ page }: { page: Page }) {
 
   return (
     <div>
-      <div className="flex flex-col gap-4 capitalize text-[#c9aa9e]">
-        <div>{page.title}</div>
-        <Link href={url}>
-          <div className="underline underline-offset-8">... Ver mas</div>
-        </Link>
-      </div>
+      <Link href={url}>
+        <div className="black:text-[#c9aa9e] flex gap-4 capitalize lg:flex-col">
+          <div className="underline underline-offset-8 ">{page.title}</div>
+        </div>
+      </Link>
     </div>
   );
 }

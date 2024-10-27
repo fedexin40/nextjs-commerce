@@ -14,13 +14,13 @@ export default async function Footer() {
 
   return (
     <footer className="bg-[#f1f1f1] text-[13px] tracking-widest text-black dark:bg-zinc-800 dark:text-white lg:text-[14.3px]">
-      <div className="flex w-full flex-col gap-6 px-6 py-12 md:gap-12 md:px-4 xl:px-10">
-        <div className="grid h-fit grid-cols-1 justify-around gap-10 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
+      <div className="flex w-full flex-col gap-6 px-6 py-12 md:gap-12 md:px-10">
+        <div className="grid h-fit grid-cols-1 justify-around gap-10 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 lg:gap-16">
           <Suspense>
             <FooterMenu pages={pages} />
           </Suspense>
         </div>
-        <div className="grid grid-cols-1 justify-around gap-10 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
+        <div className="grid grid-cols-1 justify-around gap-10 pt-20 md:grid-cols-2 md:pt-6 lg:grid-cols-3 lg:grid-rows-2 lg:pt-6">
           <div className="flex flex-col gap-y-5 lg:col-start-2 lg:col-end-3">
             <Contacto />
             <div className="hidden md:mt-3 md:block lg:hidden">
