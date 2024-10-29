@@ -45,7 +45,7 @@ export default async function HomePage() {
           />
         </Suspense>
       </div>
-      <div className="m-10 grid justify-items-center whitespace-nowrap text-base font-medium tracking-wider text-[#c9aa9e] xl:text-3xl">
+      <div className="m-10 grid justify-items-center whitespace-nowrap text-base font-medium tracking-wider text-black dark:text-[#c9aa9e] xl:text-3xl">
         Encuentra el arete perfecto para ti
       </div>
       <Suspense>

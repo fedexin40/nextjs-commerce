@@ -57,7 +57,6 @@ export function AddToCart({
         </Snackbar>
       </div>
       <button
-        aria-label="Agregar al carrito"
         disabled={isPending || !availableForSale || !selectedVariantId}
         title={title}
         onClick={() => {
