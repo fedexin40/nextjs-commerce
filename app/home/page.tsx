@@ -16,7 +16,7 @@ export const metadata = {
 
 export default async function HomePage() {
   const collection = 'oro';
-  const first = 48;
+  const first = 24;
   const productsPagination = await getCollectionProducts({
     collection: collection,
     first: first,
@@ -45,7 +45,7 @@ export default async function HomePage() {
           />
         </Suspense>
       </div>
-      <div className="m-10 grid justify-items-center whitespace-nowrap text-base font-medium tracking-wider text-[#a8a8a8] dark:text-[#c9aa9e] xl:text-3xl">
+      <div className="m-10 grid justify-items-center whitespace-nowrap text-base font-medium tracking-wider text-[#c9aa9e] xl:text-3xl">
         Encuentra el arete perfecto para ti
       </div>
       <Suspense>
