@@ -8,8 +8,9 @@ function PageLink({ page }: { page: Page }) {
   return (
     <div>
       <Link href={url}>
-        <div className="black:text-[#c9aa9e] flex gap-4 capitalize lg:flex-col">
-          <div className="underline underline-offset-8 ">{page.title}</div>
+        <div className="black:text-[#c9aa9e] flex flex-col gap-4 capitalize">
+          <div>... Ver mas</div>
+          <div className="underline underline-offset-8">{page.title}</div>
         </div>
       </Link>
     </div>

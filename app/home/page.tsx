@@ -57,7 +57,7 @@ export default async function HomePage() {
           ) : null}
         </div>
       </Suspense>
-      <div>
+      <div className="pt-2 lg:pt-0">
         <LoadMore
           numbersOfPages={numbersOfPages}
           collection={collection}
