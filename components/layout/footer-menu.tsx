@@ -7,12 +7,9 @@ function PageLink({ page }: { page: Page }) {
 
   return (
     <div>
-      <Link href={url}>
-        <div className="black:text-[#c9aa9e] flex flex-col gap-4 capitalize">
-          <div>... Ver mas</div>
-          <div className="underline underline-offset-8">{page.title}</div>
-        </div>
-      </Link>
+      <div className="flex flex-col gap-4 capitalize">
+        <Link href={url}>{page.title}</Link>
+      </div>
     </div>
   );
 }
@@ -21,12 +18,12 @@ export default function FooterMenu({ pages }: { pages: Page[] }) {
   if (!pages.length) return null;
 
   return (
-    <>
+    <div className="flex flex-col gap-y-6">
       {pages.map((page) => (
-        <div key={page.title}>
+        <span key={page.title}>
           <PageLink page={page} />
-        </div>
+        </span>
       ))}
-    </>
+    </div>
   );
 }

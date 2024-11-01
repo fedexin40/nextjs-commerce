@@ -2,7 +2,6 @@ import FooterMenu from 'components/layout/footer-menu';
 import { getPagesByMenu } from 'lib/saleor';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense } from 'react';
 
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
@@ -15,23 +14,29 @@ export default async function Footer() {
   return (
     <footer className="bg-[#f1f1f1] text-[13px] tracking-widest text-black dark:bg-zinc-800 dark:text-white lg:text-[14.3px]">
       <div className="flex w-full flex-col gap-6 px-6 py-12 md:gap-12 md:px-10">
-        <div className="grid h-fit grid-cols-1 justify-around gap-10 md:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2 lg:gap-16">
-          <Suspense>
-            <FooterMenu pages={pages} />
-          </Suspense>
-        </div>
-        <div className="grid grid-cols-1 justify-around gap-10 pt-20 md:grid-cols-2 md:pt-6 lg:grid-cols-3 lg:grid-rows-2 lg:pt-6">
-          <div className="flex flex-col gap-y-5 lg:col-start-2 lg:col-end-3">
-            <Contacto />
-            <div className="hidden md:mt-3 md:block lg:hidden">
-              <Pagos />
+        <div className="flex flex-col gap-y-10 md:flex-row lg:px-9">
+          <div className="hidden md:block md:basis-1/4 lg:basis-1/3">
+            <div className="relative hidden h-28 w-28 dark:block lg:h-36 lg:w-36">
+              <Link href={'/'}>
+                <Image className="object-contain" src={'/logoBlanco.png'} alt="" fill />
+              </Link>
+            </div>
+            <div className="relative block h-28 w-28 dark:hidden lg:h-36 lg:w-36">
+              <Link href={'/'}>
+                <Image className="object-contain" src={'/logoNegro.png'} alt="" fill />
+              </Link>
             </div>
           </div>
-          <div className="md:hidden lg:block">
-            <Pagos />
+          <div className="md:basis-2/4 lg:basis-1/3">
+            <div className="flex flex-col">
+              <FooterMenu pages={pages} />
+            </div>
+          </div>
+          <div className="pb-5 md:basis-1/4 md:pb-0 lg:basis-1/3">
+            <Contacto />
           </div>
         </div>
-        <div className="border-t-2 border-t-gray-500 py-6 dark:border-t-[#c9aa9e] dark:text-[#c9aa9e] lg:-mt-28">
+        <div className="border-t-2 border-t-gray-500 py-6 dark:border-t-[#c9aa9e] dark:text-[#c9aa9e]">
           <div className="flex w-full flex-row justify-start md:pl-10">
             <p>
               &copy; {copyrightDate} {copyrightName}
@@ -48,40 +53,8 @@ export default async function Footer() {
 export function Contacto() {
   return (
     <>
-      <div className="uppercase dark:text-[#c9aa9e]">Contacto</div>
-      <div className="flex flex-row items-center gap-x-3">
-        <div className="relative h-5 w-5">
-          <Image
-            className="object-contain"
-            src={'/mail.png'}
-            alt=""
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-        </div>
-        <span>contacto@proyecto705.com</span>
-      </div>
-      <div className="-mt-3 flex flex-row items-center gap-x-3 dark:text-white">
-        <div className="relative h-5 w-5 dark:text-white">
-          <Image
-            src={'/whats.png'}
-            alt=""
-            fill
-            className="object-contain dark:text-white"
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
-        </div>
-        <span>22 11 66 44 77</span>
-      </div>
-    </>
-  );
-}
-
-export function Pagos() {
-  return (
-    <>
-      <div className="grid grid-cols-3 items-center gap-y-3 md:h-fit">
-        <div className="flex flex-row gap-x-5 self-end">
+      <div className="flex flex-col gap-y-6 md:text-right">
+        <div className="flex flex-row gap-x-6 md:justify-end">
           <Link className="hover:cursor-pointer" href="">
             <div className="relative h-7 w-7">
               <Image className="object-contain" src={'/facebook.png'} alt="" fill />
@@ -98,38 +71,9 @@ export function Pagos() {
             </div>
           </Link>
         </div>
-        <div className="row-start-2 -mt-3">
-          <div className="relative h-7 w-20">
-            <Image
-              className="object-contain"
-              src={'/americanexpress.png'}
-              alt=""
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          </div>
-        </div>
-        <div className="row-start-2">
-          <div className="relative h-7 w-20">
-            <Image
-              className="object-contain"
-              src={'/visa.png'}
-              alt=""
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          </div>
-        </div>
-        <div className="row-start-2">
-          <div className="relative h-10 w-16">
-            <Image
-              className="object-contain"
-              src={'/mastercard.png'}
-              alt=""
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          </div>
+        <div className="flex flex-col gap-y-3">
+          <div>Tel: 2211664477</div>
+          <div>contacto@proyecto705.com</div>
         </div>
       </div>
     </>
