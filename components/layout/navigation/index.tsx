@@ -1,4 +1,4 @@
-import { getCategories } from 'lib/saleor';
+import { getCategories, getCollections } from 'lib/saleor';
 import { Category } from 'lib/types';
 import MenuDropdown from './dropdown-menu';
 
@@ -13,6 +13,7 @@ export default async function Menu() {
   var categories = (await getCategories()).filter(
     (category: Category) => category.parent.level == 0,
   );
+  var collections = await getCollections();
   categories = [
     ...categories,
     {
@@ -25,7 +26,7 @@ export default async function Menu() {
 
   return (
     <div>
-      <MenuDropdown categories={categories} />
+      <MenuDropdown collections={collections} categories={categories} />
     </div>
   );
 }
