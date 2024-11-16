@@ -81,7 +81,8 @@ export type Product = Omit<VercelCommerceProduct, 'variants' | 'images'> & {
 export type ProductsByPage = {
   products: Product[];
   hasNextPage: Boolean;
-  cursor: string;
+  endCursor: string;
+  startCursor: string;
   totalCount: number;
 };
 

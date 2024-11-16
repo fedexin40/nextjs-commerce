@@ -20,13 +20,15 @@ export default function MyImage({ src }: { src: string | StaticImport }) {
       <div className="absolute z-10 flex h-full w-full items-center justify-center">
         <Loading />
       </div>
-      <Image
-        className="absolute z-20 object-cover"
-        src={src}
-        alt=""
-        fill
-        sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
-      />
+      <div className="relative h-full w-full">
+        <Image
+          className="absolute z-20 object-cover"
+          src={src}
+          alt=""
+          fill
+          sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
+        />
+      </div>
     </div>
   );
 }

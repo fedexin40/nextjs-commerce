@@ -10,6 +10,7 @@ query GetCollectionProductsBySlug(
       pageInfo {
         hasNextPage
         endCursor
+        startCursor
       }
       totalCount
       edges {

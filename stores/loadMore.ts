@@ -4,19 +4,27 @@ import { create } from 'zustand';
 
 interface loadMore {
   currentPageNumber: number;
-  cursor: string;
+  endCursor: string;
+  startCursor: string;
+  sortKey: string;
   actions: {
     increasePageNumber: () => void;
-    setCursor: (cursor: string) => void;
+    setEndCursor: (endCursor: string) => void;
+    setStartCursor: (startCursor: string) => void;
+    setSortKey: (sortKey: string) => void;
   };
 }
 
 const loadMoreStore = create<loadMore>()((set) => ({
   currentPageNumber: 1,
-  cursor: '',
+  endCursor: '',
+  startCursor: '',
+  sortKey: '',
   actions: {
     increasePageNumber: () => set((state) => ({ currentPageNumber: state.currentPageNumber + 1 })),
-    setCursor: (cursor) => set({ cursor: cursor }),
+    setEndCursor: (cursor) => set({ endCursor: cursor }),
+    setStartCursor: (cursor) => set({ startCursor: cursor }),
+    setSortKey: (sortKey) => set({ sortKey: sortKey }),
   },
 }));
 

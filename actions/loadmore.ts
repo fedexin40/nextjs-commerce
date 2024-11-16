@@ -1,24 +1,46 @@
 'use server';
 
-import { getCollectionProducts } from 'lib/saleor';
+import { getCollectionProducts, getProducts as getProductsFunction } from 'lib/saleor';
+import { ProductOrderField } from 'lib/saleor/generated/graphql';
 import { ProductsByPage } from 'lib/types';
 
 export async function loadProducts({
+  endCursor,
   first,
-  cursor,
+  reverse,
+  sortKey,
   collection,
+  query,
+  pageNumber,
 }: {
   first: number;
-  cursor: string;
-  collection: string;
-}): Promise<ProductsByPage> {
+  numbersOfPages: number;
+  pageNumber: number;
+  endCursor: string;
+  reverse?: boolean;
+  sortKey?: ProductOrderField;
+  query?: string;
+  collection?: string;
+}): Promise<ProductsByPage | undefined> {
   let productsPagination;
   try {
-    productsPagination = await getCollectionProducts({
-      cursor: cursor,
-      first: first || 100,
-      collection: collection,
-    });
+    if (query) {
+      productsPagination = await getProductsFunction({
+        cursor: endCursor,
+        first: first || 100,
+        sortKey: sortKey,
+        reverse: reverse,
+        query: query,
+      });
+    } else {
+      productsPagination = await getCollectionProducts({
+        cursor: endCursor,
+        first: first || 100,
+        sortKey: sortKey,
+        reverse: reverse,
+        collection: collection || '',
+      });
+    }
   } catch (error: any) {
     return error.message;
   }

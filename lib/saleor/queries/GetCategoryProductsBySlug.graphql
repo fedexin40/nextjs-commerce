@@ -15,6 +15,7 @@ query GetCategoryProductsBySlug(
       pageInfo {
         hasNextPage
         endCursor
+        startCursor
       }
       totalCount
       edges {

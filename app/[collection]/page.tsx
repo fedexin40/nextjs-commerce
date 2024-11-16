@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import FilterList from 'components/layout/search/filter';
+import LoadMore from 'components/load-more/page';
 import { defaultSort, sorting } from 'lib/constants';
 
 export const runtime = 'edge';
@@ -32,18 +33,23 @@ export default async function CategoryPage({
   params: { collection: string };
   searchParams?: { [key: string]: string | string[] | undefined };
 }) {
-  const { sort } = searchParams as { [key: string]: string };
+  const first = 24;
+  const { sort, q: searchValue } = searchParams as { [key: string]: string };
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
-  const productsByPage = await getCollectionProducts({
+  const getProductsByCollection = {
+    first: first,
     collection: params.collection,
-    sortKey,
-    reverse,
-  });
+    reverse: reverse,
+    sortKey: sortKey,
+  };
+  const productsByPage = await getCollectionProducts(getProductsByCollection);
   const products = productsByPage.products;
+  const totalCount = productsByPage.totalCount;
+  const numbersOfPages = Math.ceil(totalCount / first);
 
   return (
     <>
-      {products.length > 0 ? (
+      {products.length > 0 && (
         <div className="mx-10 mb-24 lg:mx-32 lg:mb-40">
           <div className="flex w-full flex-row-reverse pb-12 pt-12">
             <div>
@@ -54,9 +60,18 @@ export default async function CategoryPage({
             <ProductGridItems products={products} />
           </Grid>
         </div>
-      ) : (
-        <></>
       )}
+      <div className="pt-2 lg:pt-0">
+        <LoadMore
+          numbersOfPages={numbersOfPages}
+          endCursor={productsByPage.endCursor}
+          startCursor={productsByPage.startCursor}
+          first={first}
+          reverse={reverse}
+          sortKey={sortKey}
+          collection={params.collection}
+        />
+      </div>
     </>
   );
 }

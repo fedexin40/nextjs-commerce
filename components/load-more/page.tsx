@@ -4,33 +4,49 @@ import { loadProducts } from 'actions/loadmore';
 import clsx from 'clsx';
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
+import { ProductOrderField } from 'lib/saleor/generated/graphql';
 import { Product } from 'lib/types';
 import { useEffect, useState, useTransition } from 'react';
 import { useLoadMore, useLoadMoreActions } from 'stores/loadMore';
 
 function LoadMoreItem({
-  collection,
-  first,
-  pageNumber,
   numbersOfPages,
+  first,
+  reverse,
+  sortKey,
+  collection,
+  query,
+  pageNumber,
 }: {
-  collection: string;
   first: number;
-  pageNumber: number;
   numbersOfPages: number;
+  pageNumber: number;
+  reverse?: boolean;
+  sortKey?: ProductOrderField;
+  query?: string;
+  collection?: string;
 }) {
-  const [products, setProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<Product[] | undefined>([]);
   const [isPending, startTransition] = useTransition();
   const useLoadMoreProducts = useLoadMore();
-  const { setCursor } = useLoadMoreActions();
+  const { setEndCursor, setStartCursor } = useLoadMoreActions();
   const { increasePageNumber } = useLoadMoreActions();
-  const cursor = useLoadMoreProducts.cursor;
 
   function ProductsLoad() {
     startTransition(async () => {
-      const products = await loadProducts({ first: first, collection: collection, cursor: cursor });
-      setProducts(products.products);
-      setCursor(products.cursor);
+      const products = await loadProducts({
+        first: first,
+        numbersOfPages: numbersOfPages,
+        pageNumber: pageNumber,
+        endCursor: useLoadMoreProducts.endCursor,
+        reverse: reverse,
+        sortKey: sortKey,
+        query: query,
+        collection: collection,
+      });
+      setProducts(products?.products);
+      setEndCursor(products?.endCursor || '');
+      setStartCursor(products?.startCursor || '');
       increasePageNumber();
     });
   }
@@ -39,7 +55,7 @@ function LoadMoreItem({
     <>
       {pageNumber <= useLoadMoreProducts.currentPageNumber && (
         <>
-          {products.length > 0 ? (
+          {products && products.length > 0 ? (
             <div className="mx-10 mb-24 lg:mx-32 lg:mb-40">
               <Grid className="grid-cols-1 gap-y-24 md:grid-cols-3 lg:grid-cols-4 xl:gap-y-40">
                 <ProductGridItems products={products} />
@@ -65,7 +81,7 @@ function LoadMoreItem({
               className={clsx(
                 'my-20 flex w-full items-center justify-center space-x-6 tracking-wider ',
                 {
-                  hidden: !isPending || products.length > 0,
+                  hidden: !isPending || (products && products.length > 0),
                 },
               )}
             >
@@ -81,20 +97,28 @@ function LoadMoreItem({
 }
 
 export default function LoadMore({
-  collection,
-  first,
-  cursor,
   numbersOfPages,
+  endCursor,
+  startCursor,
+  first,
+  reverse,
+  sortKey,
+  collection,
+  query,
 }: {
-  collection: string;
   first: number;
-  cursor: string;
   numbersOfPages: number;
+  endCursor: string;
+  startCursor: string;
+  reverse?: boolean;
+  sortKey?: ProductOrderField;
+  query?: string;
+  collection?: string;
 }) {
-  const { setCursor } = useLoadMoreActions();
-
+  const { setEndCursor, setStartCursor, setSortKey } = useLoadMoreActions();
   useEffect(() => {
-    setCursor(cursor);
+    setEndCursor(endCursor);
+    setStartCursor(startCursor);
   }, []);
 
   const pages = Array.from({ length: numbersOfPages }, (v, i) => i + 1);
@@ -104,9 +128,12 @@ export default function LoadMore({
         <div key={page}>
           <LoadMoreItem
             numbersOfPages={numbersOfPages}
-            pageNumber={page}
-            collection={collection}
             first={first}
+            reverse={reverse}
+            sortKey={sortKey}
+            collection={collection}
+            query={query}
+            pageNumber={page}
           />
         </div>
       ))}

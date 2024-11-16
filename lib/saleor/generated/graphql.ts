@@ -32614,7 +32614,7 @@ export type GetCategoryProductsBySlugQuery = {
   category?: {
     products?: {
       totalCount?: number | null;
-      pageInfo: { hasNextPage: boolean; endCursor?: string | null };
+      pageInfo: { hasNextPage: boolean; endCursor?: string | null; startCursor?: string | null };
       edges: Array<{
         node: {
           id: string;
@@ -32774,7 +32774,7 @@ export type GetCollectionProductsBySlugQuery = {
   collection?: {
     products?: {
       totalCount?: number | null;
-      pageInfo: { hasNextPage: boolean; endCursor?: string | null };
+      pageInfo: { hasNextPage: boolean; endCursor?: string | null; startCursor?: string | null };
       edges: Array<{
         node: {
           id: string;
@@ -33180,10 +33180,14 @@ export type SearchProductsQueryVariables = Exact<{
   search: Scalars['String'];
   sortBy: ProductOrderField;
   sortDirection: OrderDirection;
+  after: Scalars['String'];
+  first: Scalars['Int'];
 }>;
 
 export type SearchProductsQuery = {
   products?: {
+    totalCount?: number | null;
+    pageInfo: { hasNextPage: boolean; endCursor?: string | null; startCursor?: string | null };
     edges: Array<{
       node: {
         id: string;
@@ -34675,6 +34679,7 @@ export const GetCategoryProductsBySlugDocument = new TypedDocumentString(`
       pageInfo {
         hasNextPage
         endCursor
+        startCursor
       }
       totalCount
       edges {
@@ -34948,6 +34953,7 @@ export const GetCollectionProductsBySlugDocument = new TypedDocumentString(`
       pageInfo {
         hasNextPage
         endCursor
+        startCursor
       }
       totalCount
       edges {
@@ -35573,13 +35579,20 @@ export const GetShippingMethodsDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<GetShippingMethodsQuery, GetShippingMethodsQueryVariables>;
 export const SearchProductsDocument = new TypedDocumentString(`
-    query SearchProducts($search: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!) {
+    query SearchProducts($search: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!, $after: String!, $first: Int!) {
   products(
-    first: 100
     channel: "proyecto705"
     sortBy: {field: $sortBy, direction: $sortDirection}
     filter: {search: $search}
+    after: $after
+    first: $first
   ) {
+    pageInfo {
+      hasNextPage
+      endCursor
+      startCursor
+    }
+    totalCount
     edges {
       node {
         id

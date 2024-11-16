@@ -52,7 +52,7 @@ function CollectionItems({ collections }: { collections: Collection[] }) {
           onClick={() => {
             setOpenSelect(false);
           }}
-          className="absolute right-32 top-8 z-50 w-fit rounded-b-md bg-white pb-4 shadow-md dark:bg-black md:-right-28 md:left-32 lg:right-4"
+          className="absolute right-[110px] top-8 z-50 w-fit rounded-b-md bg-white pb-4 shadow-md dark:bg-black md:left-[110px] lg:left-[120px]"
         >
           <div className="flex flex-col place-content-center gap-y-3 capitalize text-black">
             {collections.map((collection: Collection, key: number) => (
@@ -96,7 +96,7 @@ function CategoryItems({ categories }: { categories: Category[] }) {
           onClick={() => {
             setOpenSelect(false);
           }}
-          className="absolute right-32 top-8 z-50 w-fit rounded-b-md bg-white pb-4 shadow-md dark:bg-black md:-right-28 md:left-32 md:top-8"
+          className="absolute right-[110px] top-8 z-50 w-fit rounded-b-md bg-white pb-4 shadow-md dark:bg-black md:left-[110px] lg:left-[120px]"
         >
           <div className="flex flex-col place-content-center gap-y-3 capitalize text-black">
             {categories.map((category: Category, key: number) => (

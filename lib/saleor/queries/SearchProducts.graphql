@@ -2,13 +2,22 @@ query SearchProducts(
   $search: String!
   $sortBy: ProductOrderField!
   $sortDirection: OrderDirection!
+  $after: String!
+  $first: Int!
 ) {
   products(
-    first: 100
     channel: "proyecto705"
     sortBy: { field: $sortBy, direction: $sortDirection }
     filter: { search: $search }
+    after: $after
+    first: $first
   ) {
+    pageInfo {
+      hasNextPage
+      endCursor
+      startCursor
+    }
+    totalCount
     edges {
       node {
         id

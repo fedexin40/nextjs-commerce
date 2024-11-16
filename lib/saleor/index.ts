@@ -142,7 +142,7 @@ export async function getCollections(): Promise<Collection[]> {
             description: edge.node.seoDescription || '',
           },
           updatedAt: edge.node.products?.edges?.[0]?.node.updatedAt || '',
-          path: `/search/${edge.node.slug}`,
+          path: `/${edge.node.slug}`,
         };
       })
       .filter((el) => !el.handle.startsWith(`hidden-`)) ?? []
@@ -337,7 +337,8 @@ export async function getCollectionProducts({
   return {
     totalCount: saleorCollectionProducts.products?.totalCount || 1,
     products: products,
-    cursor: saleorCollectionProducts.products?.pageInfo.endCursor || '',
+    endCursor: saleorCollectionProducts.products?.pageInfo.endCursor || '',
+    startCursor: saleorCollectionProducts.products?.pageInfo.startCursor || '',
     hasNextPage: saleorCollectionProducts.products?.pageInfo.hasNextPage || false,
   };
 }
@@ -379,14 +380,20 @@ export async function getProducts({
   query,
   reverse,
   sortKey,
+  cursor,
+  first,
 }: {
   query?: string;
   reverse?: boolean;
   sortKey?: ProductOrderField;
-}): Promise<Product[]> {
+  cursor?: string;
+  first?: number;
+}): Promise<ProductsByPage> {
   const saleorProducts = await saleorFetch({
     query: SearchProductsDocument,
     variables: {
+      after: cursor || '',
+      first: first || 100,
       search: query || '',
       sortBy: query
         ? sortKey || ProductOrderField.Rank
@@ -398,10 +405,15 @@ export async function getProducts({
     tags: [TAGS.products],
   });
 
-  return (
-    saleorProducts.products?.edges.map((product) => saleorProductToVercelProduct(product.node)) ||
-    []
-  );
+  return {
+    totalCount: saleorProducts.products?.totalCount || 1,
+    products:
+      saleorProducts.products?.edges.map((product) => saleorProductToVercelProduct(product.node)) ||
+      [],
+    endCursor: saleorProducts.products?.pageInfo.endCursor || '',
+    startCursor: saleorProducts.products?.pageInfo.startCursor || '',
+    hasNextPage: saleorProducts.products?.pageInfo.hasNextPage || false,
+  };
 }
 
 export async function getPages(): Promise<Page[]> {
@@ -530,13 +542,12 @@ export async function getCategories(): Promise<Category[]> {
   const SaleorCategories = await saleorFetch({
     query: GetCategoriesDocument,
     variables: {},
-    cache: 'no-store',
   });
 
   return (
     SaleorCategories.categories?.edges.map((category) => {
       const saleorUrl = new URL(baseUrl!);
-      saleorUrl.pathname = '/search' + '/' + category.node.slug;
+      saleorUrl.pathname = '/' + category.node.slug;
       return {
         slug: category.node.slug,
         name: category.node.name,
