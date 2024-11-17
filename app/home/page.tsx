@@ -58,15 +58,17 @@ export default async function HomePage() {
           )}
         </div>
       </Suspense>
-      <div className="pt-2 lg:pt-0">
-        <LoadMore
-          numbersOfPages={numbersOfPages}
-          endCursor={productsPagination.endCursor}
-          startCursor={productsPagination.startCursor}
-          first={first}
-          collection={collection}
-        />
-      </div>
+      {productsPagination.hasNextPage && (
+        <div className="pt-2 lg:pt-0">
+          <LoadMore
+            numbersOfPages={numbersOfPages}
+            endCursor={productsPagination.endCursor}
+            startCursor={productsPagination.startCursor}
+            first={first}
+            collection={collection}
+          />
+        </div>
+      )}
     </>
   );
 }

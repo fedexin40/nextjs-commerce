@@ -23,10 +23,8 @@ export default async function SearchPage({
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
   const productsByPage = await getProducts({ sortKey, reverse, query: searchValue, first: first });
   const products = productsByPage.products;
-  console.log(sortKey);
-
   const totalCount = productsByPage.totalCount;
-  const numbersOfPages = Math.ceil(totalCount / first) + 1;
+  const numbersOfPages = Math.ceil(totalCount / first) - 1;
 
   return (
     <>
@@ -44,16 +42,19 @@ export default async function SearchPage({
       ) : (
         <NotFound query={searchValue || ''} />
       )}
-      <div className="pt-2 lg:pt-0">
-        <LoadMore
-          numbersOfPages={numbersOfPages}
-          endCursor={productsByPage.endCursor}
-          startCursor={productsByPage.startCursor}
-          first={first}
-          reverse={reverse}
-          sortKey={sortKey}
-        />
-      </div>
+      {productsByPage.hasNextPage && (
+        <div className="pt-2 lg:pt-0">
+          <LoadMore
+            numbersOfPages={numbersOfPages}
+            endCursor={productsByPage.endCursor}
+            startCursor={productsByPage.startCursor}
+            first={first}
+            reverse={reverse}
+            sortKey={sortKey}
+            query={searchValue || ''}
+          />
+        </div>
+      )}
     </>
   );
 }

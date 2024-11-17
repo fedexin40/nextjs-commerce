@@ -61,17 +61,19 @@ export default async function CategoryPage({
           </Grid>
         </div>
       )}
-      <div className="pt-2 lg:pt-0">
-        <LoadMore
-          numbersOfPages={numbersOfPages}
-          endCursor={productsByPage.endCursor}
-          startCursor={productsByPage.startCursor}
-          first={first}
-          reverse={reverse}
-          sortKey={sortKey}
-          collection={params.collection}
-        />
-      </div>
+      {productsByPage.hasNextPage && (
+        <div className="pt-2 lg:pt-0">
+          <LoadMore
+            numbersOfPages={numbersOfPages}
+            endCursor={productsByPage.endCursor}
+            startCursor={productsByPage.startCursor}
+            first={first}
+            reverse={reverse}
+            sortKey={sortKey}
+            collection={params.collection}
+          />
+        </div>
+      )}
     </>
   );
 }
