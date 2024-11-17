@@ -24,7 +24,7 @@ export default async function HomePage() {
   });
   const products = productsPagination.products;
   const totalCount = productsPagination.totalCount;
-  const numbersOfPages = Math.ceil(totalCount / first);
+  const numbersOfPages = Math.ceil(totalCount / first) - 1;
 
   return (
     <>

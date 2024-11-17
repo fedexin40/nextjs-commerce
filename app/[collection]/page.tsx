@@ -45,7 +45,7 @@ export default async function CategoryPage({
   const productsByPage = await getCollectionProducts(getProductsByCollection);
   const products = productsByPage.products;
   const totalCount = productsByPage.totalCount;
-  const numbersOfPages = Math.ceil(totalCount / first);
+  const numbersOfPages = Math.ceil(totalCount / first) - 1;
 
   return (
     <>

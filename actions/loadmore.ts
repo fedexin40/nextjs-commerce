@@ -11,17 +11,14 @@ export async function loadProducts({
   sortKey,
   collection,
   query,
-  pageNumber,
 }: {
   first: number;
-  numbersOfPages: number;
-  pageNumber: number;
   endCursor: string;
   reverse?: boolean;
   sortKey?: ProductOrderField;
   query?: string;
   collection?: string;
-}): Promise<ProductsByPage | undefined> {
+}): Promise<ProductsByPage> {
   let productsPagination;
   try {
     if (query) {

@@ -26,7 +26,7 @@ export default async function SearchPage({
   console.log(sortKey);
 
   const totalCount = productsByPage.totalCount;
-  const numbersOfPages = Math.ceil(totalCount / first);
+  const numbersOfPages = Math.ceil(totalCount / first) + 1;
 
   return (
     <>
