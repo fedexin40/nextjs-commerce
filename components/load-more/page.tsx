@@ -63,7 +63,7 @@ function LoadMoreItem({
       <div>
         <div
           className={clsx(
-            'my-20 flex justify-center uppercase underline underline-offset-8 hover:cursor-pointer',
+            'mb-20 flex justify-center uppercase underline underline-offset-8 hover:cursor-pointer',
             {
               hidden: isPending,
             },

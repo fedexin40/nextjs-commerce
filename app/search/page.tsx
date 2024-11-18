@@ -29,7 +29,7 @@ export default async function SearchPage({
   return (
     <>
       {products.length > 0 ? (
-        <div className="mx-10 mb-24 lg:mx-32 lg:mb-40">
+        <div className="mx-10 mb-24 lg:mx-32">
           <div className="flex w-full flex-row-reverse pb-12 pt-12">
             <div>
               <FilterList list={sorting} />
@@ -43,7 +43,7 @@ export default async function SearchPage({
         <NotFound query={searchValue || ''} />
       )}
       {productsByPage.hasNextPage && (
-        <div className="pt-2 lg:pt-0">
+        <div>
           <LoadMore
             numbersOfPages={numbersOfPages}
             endCursor={productsByPage.endCursor}
