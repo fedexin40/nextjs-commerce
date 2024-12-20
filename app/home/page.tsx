@@ -31,7 +31,7 @@ export default async function HomePage() {
       <div className="hidden md:block">
         <Suspense>
           <CarouselComponent
-            images={['/envioGratis.png', '/banner.png']}
+            images={['/EnvioGratisMayores1500.jpeg', '/banner.png']}
             autoPlay={true}
             removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
           />
@@ -40,7 +40,7 @@ export default async function HomePage() {
       <div className="block md:hidden">
         <Suspense>
           <CarouselComponent
-            images={['/envioGratisMobile.png', '/bannerMobile.png']}
+            images={['/EnvioGratisMayores1500Mobile.jpeg', '/bannerMobile.png']}
             autoPlay={true}
             removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
           />
