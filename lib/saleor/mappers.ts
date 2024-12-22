@@ -23,7 +23,9 @@ export function saleorProductToVercelProduct(
     availableForSale: product.isAvailableForPurchase || true,
     title: product.name,
     description: product.description || '',
-    descriptionHtml: product.description ? parseEditorJsToHtml(product.description) : '',
+    descriptionHtml: product.description
+      ? parseEditorJsToHtml(product.description).replace(/<\/?p[^>]*>/g, '')
+      : '',
     options: saleorVariantsToVercelOptions(product.variants),
     category: {
       name: product.category?.name,

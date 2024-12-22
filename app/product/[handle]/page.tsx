@@ -10,6 +10,7 @@ import { notFound } from 'next/navigation';
 import { Suspense } from 'react';
 
 export const runtime = 'edge';
+const { SHOP_PUBLIC_URL } = process.env;
 
 export async function generateMetadata({
   params,
@@ -20,12 +21,10 @@ export async function generateMetadata({
 
   if (!product) return notFound();
 
-  const { url, width, height, altText: alt } = product.featuredImage || {};
+  const { url } = product.featuredImage || {};
   const indexable = !product.tags.includes(HIDDEN_PRODUCT_TAG);
 
   return {
-    title: product.seo.title || product.title,
-    description: product.seo.description || product.description,
     robots: {
       index: indexable,
       follow: indexable,
@@ -34,18 +33,13 @@ export async function generateMetadata({
         follow: indexable,
       },
     },
-    openGraph: url
-      ? {
-          images: [
-            {
-              url,
-              width,
-              height,
-              alt,
-            },
-          ],
-        }
-      : null,
+    openGraph: {
+      title: product.seo.title || product.title,
+      description: product.descriptionHtml || '',
+      url: SHOP_PUBLIC_URL,
+      images: [url],
+      siteName: 'Proyecto 705',
+    },
   };
 }
 
@@ -67,8 +61,32 @@ export default async function Product({
 
   if (!product) return notFound();
 
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    productID: product.handle,
+    name: product.title,
+    description: product.descriptionHtml,
+    url: SHOP_PUBLIC_URL,
+    image: product.featuredImage.url,
+    brands: 'Proyecto 705',
+    offers: [
+      {
+        '@type': 'Offer',
+        price: product.priceRange.maxVariantPrice.amount,
+        priceCurrency: product.priceRange.maxVariantPrice.currencyCode,
+        itemCondition: 'https://schema.org/NewCondition',
+        availability: 'https://schema.org/InStock',
+      },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="mx-auto max-w-screen-2xl dark:bg-black">
         <div className="flex flex-col px-10 md:grid md:grid-cols-3 md:px-16 md:pt-12 lg:px-36 lg:pt-16">
           <div className="md:col-span-2">
