@@ -36,3 +36,18 @@ export const CompleteRegistration = () => {
 
   return null;
 };
+
+export const ProductView = (parameters: { content_ids: [string]; content_type: string }) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    import('react-facebook-pixel')
+      .then((x) => x.default)
+      .then((ReactPixel) => {
+        ReactPixel.track('ViewContent', parameters);
+      });
+  }, [pathname, searchParams]);
+
+  return null;
+};

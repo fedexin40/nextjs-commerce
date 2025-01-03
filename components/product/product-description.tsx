@@ -17,7 +17,9 @@ export function ProductDescription({
   return (
     <div className="flex flex-col">
       <div className="flex flex-col border-b dark:border-neutral-700">
-        <div className="mb-2  dark:text-[#c9aa9e]">{product.title}</div>
+        <div className="mb-2  dark:text-[#c9aa9e]">
+          <h1>{product.title}</h1>
+        </div>
         {product.descriptionHtml ? (
           <div className="pb-2 pt-2 text-left text-gray-500 dark:text-white">
             {ReactHtmlParser(product.descriptionHtml)}

@@ -36,7 +36,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
                 <Image
                   className="object-contain"
                   src={image.src}
-                  alt=""
+                  alt={image.altText}
                   fill
                   onClick={() => setSrc(index)}
                   priority={true}
@@ -58,7 +58,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
               priority={true}
               className="rounded-b-lg object-cover"
               src={images[src]?.src as string}
-              alt=""
+              alt={images[src]?.altText || ''}
               fill
               sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
             />
@@ -70,7 +70,7 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
               <Image
                 className="object-contain"
                 src={image.src}
-                alt=""
+                alt={image.altText}
                 fill
                 onClick={() => setSrc(index)}
                 priority={true}
