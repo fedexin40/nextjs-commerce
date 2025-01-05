@@ -9,18 +9,6 @@ const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
   : 'http://localhost:3000';
 
-export const metadata = {
-  metadataBase: new URL(baseUrl),
-  title: {
-    default: SITE_NAME!,
-    template: `%s | ${SITE_NAME}`,
-  },
-  robots: {
-    follow: true,
-    index: true,
-  },
-};
-
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',

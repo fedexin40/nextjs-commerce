@@ -22,7 +22,6 @@ export async function generateMetadata({
 
   if (!product) return notFound();
 
-  const { url } = product.featuredImage || {};
   const indexable = !product.tags.includes(HIDDEN_PRODUCT_TAG);
 
   return {
@@ -54,6 +53,7 @@ export default async function Product({
   );
 
   if (!product) return notFound();
+
   let url = new URL(
     `Collecciones/${product.featureCollection?.slug}/${product.handle}`,
     SHOP_PUBLIC_URL,

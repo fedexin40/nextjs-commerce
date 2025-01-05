@@ -7,14 +7,6 @@ import { Suspense } from 'react';
 
 export const runtime = 'edge';
 
-export const metadata = {
-  description:
-    'Tienda en linea enfocada en la venta de aretes de oro de 10 kilates, 14 kilates y 18 kilates localizada en la ciudad de Puebla',
-  openGraph: {
-    type: 'website',
-  },
-};
-
 export default async function HomePage() {
   const collection = 'oro';
   const first = 24;
