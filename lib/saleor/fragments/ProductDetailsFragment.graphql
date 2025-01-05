@@ -33,6 +33,7 @@ fragment ProductDetails on Product {
   }
   collections {
     name
+    slug
   }
   updatedAt
   variants {

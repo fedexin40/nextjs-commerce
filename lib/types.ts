@@ -189,6 +189,16 @@ export type VercelCommerceProduct = {
   seo: SEO;
   tags: string[];
   updatedAt: string;
+  collections: {
+    name: string | undefined;
+    slug: string | undefined;
+  }[];
+  featureCollection:
+    | {
+        name: string | undefined;
+        slug: string | undefined;
+      }
+    | undefined;
 };
 
 export type VercelCommerceCartOperation = {

@@ -31807,7 +31807,7 @@ export type CheckoutFragment = {
           } | null;
         } | null;
         media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
-        collections?: Array<{ name: string }> | null;
+        collections?: Array<{ name: string; slug: string }> | null;
         variants?: Array<{
           id: string;
           name: string;
@@ -31929,7 +31929,7 @@ export type ProductDetailsFragment = {
     } | null;
   } | null;
   media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
-  collections?: Array<{ name: string }> | null;
+  collections?: Array<{ name: string; slug: string }> | null;
   variants?: Array<{
     id: string;
     name: string;
@@ -32075,7 +32075,7 @@ export type CheckoutAddLineMutation = {
               } | null;
             } | null;
             media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
-            collections?: Array<{ name: string }> | null;
+            collections?: Array<{ name: string; slug: string }> | null;
             variants?: Array<{
               id: string;
               name: string;
@@ -32208,7 +32208,7 @@ export type CheckoutDeleteLineMutation = {
               } | null;
             } | null;
             media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
-            collections?: Array<{ name: string }> | null;
+            collections?: Array<{ name: string; slug: string }> | null;
             variants?: Array<{
               id: string;
               name: string;
@@ -32338,7 +32338,7 @@ export type CheckoutUpdateLineMutation = {
               } | null;
             } | null;
             media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
-            collections?: Array<{ name: string }> | null;
+            collections?: Array<{ name: string; slug: string }> | null;
             variants?: Array<{
               id: string;
               name: string;
@@ -32445,7 +32445,7 @@ export type CreateCheckoutMutation = {
               } | null;
             } | null;
             media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
-            collections?: Array<{ name: string }> | null;
+            collections?: Array<{ name: string; slug: string }> | null;
             variants?: Array<{
               id: string;
               name: string;
@@ -32633,7 +32633,7 @@ export type GetCategoryProductsBySlugQuery = {
             } | null;
           } | null;
           media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
-          collections?: Array<{ name: string }> | null;
+          collections?: Array<{ name: string; slug: string }> | null;
           variants?: Array<{
             id: string;
             name: string;
@@ -32699,7 +32699,7 @@ export type GetCheckoutByIdQuery = {
             } | null;
           } | null;
           media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
-          collections?: Array<{ name: string }> | null;
+          collections?: Array<{ name: string; slug: string }> | null;
           variants?: Array<{
             id: string;
             name: string;
@@ -32793,7 +32793,7 @@ export type GetCollectionProductsBySlugQuery = {
             } | null;
           } | null;
           media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
-          collections?: Array<{ name: string }> | null;
+          collections?: Array<{ name: string; slug: string }> | null;
           variants?: Array<{
             id: string;
             name: string;
@@ -32967,7 +32967,7 @@ export type GetMeQuery = {
                   } | null;
                 } | null;
                 media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
-                collections?: Array<{ name: string }> | null;
+                collections?: Array<{ name: string; slug: string }> | null;
                 variants?: Array<{
                   id: string;
                   name: string;
@@ -33141,7 +33141,7 @@ export type GetProductBySlugQuery = {
       } | null;
     } | null;
     media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
-    collections?: Array<{ name: string }> | null;
+    collections?: Array<{ name: string; slug: string }> | null;
     variants?: Array<{
       id: string;
       name: string;
@@ -33206,7 +33206,7 @@ export type SearchProductsQuery = {
           } | null;
         } | null;
         media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
-        collections?: Array<{ name: string }> | null;
+        collections?: Array<{ name: string; slug: string }> | null;
         variants?: Array<{
           id: string;
           name: string;
@@ -33337,6 +33337,7 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(`
   }
   collections {
     name
+    slug
   }
   updatedAt
   variants {
@@ -33493,6 +33494,7 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
   }
   collections {
     name
+    slug
   }
   updatedAt
   variants {
@@ -33863,6 +33865,7 @@ fragment ProductDetails on Product {
   }
   collections {
     name
+    slug
   }
   updatedAt
   variants {
@@ -34083,6 +34086,7 @@ fragment ProductDetails on Product {
   }
   collections {
     name
+    slug
   }
   updatedAt
   variants {
@@ -34307,6 +34311,7 @@ fragment ProductDetails on Product {
   }
   collections {
     name
+    slug
   }
   updatedAt
   variants {
@@ -34489,6 +34494,7 @@ fragment ProductDetails on Product {
   }
   collections {
     name
+    slug
   }
   updatedAt
   variants {
@@ -34718,6 +34724,7 @@ export const GetCategoryProductsBySlugDocument = new TypedDocumentString(`
           }
           collections {
             name
+            slug
           }
           updatedAt
           variants {
@@ -34883,6 +34890,7 @@ fragment ProductDetails on Product {
   }
   collections {
     name
+    slug
   }
   updatedAt
   variants {
@@ -34992,6 +35000,7 @@ export const GetCollectionProductsBySlugDocument = new TypedDocumentString(`
           }
           collections {
             name
+            slug
           }
           updatedAt
           variants {
@@ -35330,6 +35339,7 @@ fragment ProductDetails on Product {
   }
   collections {
     name
+    slug
   }
   updatedAt
   variants {
@@ -35524,6 +35534,7 @@ export const GetProductBySlugDocument = new TypedDocumentString(`
   }
   collections {
     name
+    slug
   }
   updatedAt
   variants {
@@ -35629,6 +35640,7 @@ export const SearchProductsDocument = new TypedDocumentString(`
         }
         collections {
           name
+          slug
         }
         updatedAt
         variants {

@@ -54,6 +54,7 @@ query SearchProducts(
         }
         collections {
           name
+          slug
         }
         updatedAt
         variants {

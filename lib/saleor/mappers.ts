@@ -16,6 +16,18 @@ export function saleorProductToVercelProduct(
           height: 2048,
         };
       }) || [];
+  let featureCollection;
+  if (product.collections && product.collections.length > 0) {
+    featureCollection = {
+      name: product.collections[0]?.name,
+      slug: product.collections[0]?.slug,
+    };
+  } else {
+    featureCollection = {
+      name: product.category?.name,
+      slug: product.category?.slug,
+    };
+  }
 
   return {
     id: product.id,
@@ -50,6 +62,14 @@ export function saleorProductToVercelProduct(
     },
     tags: product.collections?.map((c) => c.name) || [],
     updatedAt: product.updatedAt,
+    collections:
+      product.collections?.map((collection) => {
+        return {
+          name: collection.name,
+          slug: collection.slug,
+        };
+      }) || [],
+    featureCollection: featureCollection,
   };
 }
 

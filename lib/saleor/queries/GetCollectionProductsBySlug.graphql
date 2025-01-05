@@ -49,6 +49,7 @@ query GetCollectionProductsBySlug(
           }
           collections {
             name
+            slug
           }
           updatedAt
 

@@ -54,6 +54,7 @@ query GetCategoryProductsBySlug(
           }
           collections {
             name
+            slug
           }
           updatedAt
 
