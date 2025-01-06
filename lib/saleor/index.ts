@@ -142,7 +142,7 @@ export async function getCollections(): Promise<Collection[]> {
             description: edge.node.seoDescription || '',
           },
           updatedAt: edge.node.products?.edges?.[0]?.node.updatedAt || '',
-          path: `/${edge.node.slug}`,
+          path: `/Colecciones/${edge.node.slug}`,
         };
       })
       .filter((el) => !el.handle.startsWith(`hidden-`)) ?? []
@@ -547,7 +547,7 @@ export async function getCategories(): Promise<Category[]> {
   return (
     SaleorCategories.categories?.edges.map((category) => {
       const saleorUrl = new URL(baseUrl!);
-      saleorUrl.pathname = '/' + category.node.slug;
+      saleorUrl.pathname = '/Colecciones/' + category.node.slug;
       return {
         slug: category.node.slug,
         name: category.node.name,

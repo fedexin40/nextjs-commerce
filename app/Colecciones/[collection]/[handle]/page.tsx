@@ -134,7 +134,7 @@ async function RelatedProducts({ product }: { product: productType }) {
             >
               <Link
                 className="relative h-full w-full"
-                href={`/Collecciones/${product.featureCollection?.slug}/${product.handle}`}
+                href={`/Colecciones/${product.featureCollection?.slug}/${product.handle}`}
               >
                 <GridTileImage
                   alt={product.title}
