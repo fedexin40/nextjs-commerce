@@ -17,15 +17,15 @@ export function ProductDescription({
   return (
     <div className="flex flex-col">
       <div className="flex flex-col border-b dark:border-neutral-700">
-        <div className="mb-2  dark:text-[#c9aa9e]">
-          <h1>{product.title}</h1>
+        <div className="mb-2 dark:text-[#c9aa9e]">
+          <h1 className="text-sm tracking-wider">{product.title}</h1>
         </div>
         {product.descriptionHtml ? (
           <div className="pb-2 pt-2 text-left text-gray-500 dark:text-white">
-            {ReactHtmlParser(product.descriptionHtml)}
+            <h2 className="text-sm tracking-wider">{ReactHtmlParser(product.descriptionHtml)}</h2>
           </div>
         ) : null}
-        <div className="mr-auto w-auto p-2 pl-0 dark:text-[#c9aa9e]">
+        <div className="mr-auto w-auto p-2 pl-0 text-sm tracking-wider dark:text-[#c9aa9e]">
           {variant && (
             <Price
               amountMax={variant.price.amount}
