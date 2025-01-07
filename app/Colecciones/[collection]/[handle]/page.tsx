@@ -55,7 +55,7 @@ export default async function Product({
   if (!product) return notFound();
 
   let url = new URL(
-    `Collecciones/${product.featureCollection?.slug}/${product.handle}`,
+    `Colecciones/${product.featureCollection?.slug}/${product.handle}`,
     SHOP_PUBLIC_URL,
   ).toString();
   const jsonLd = {
