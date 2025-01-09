@@ -33,7 +33,7 @@ function Item({ block }: { block: block }) {
         <div>
           {block.data.items.map((item) => {
             return (
-              <li className="pb-4" key={item}>
+              <li className="pb-4 text-left md:text-justify" key={item}>
                 {ReactHtmlParser(item)}
               </li>
             );

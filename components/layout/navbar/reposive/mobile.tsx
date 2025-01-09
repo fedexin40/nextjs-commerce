@@ -30,7 +30,7 @@ export default function MobileNavbar() {
           <div className="grid grid-rows-2 pr-5 pt-5">
             <div className="flex flex-row items-center justify-around gap-4 text-[14px]">
               <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300">
-                Nosotros
+                <Link href="/page/sobre-nosotros">Nosotros</Link>
               </div>
               <div>
                 <Menu />
