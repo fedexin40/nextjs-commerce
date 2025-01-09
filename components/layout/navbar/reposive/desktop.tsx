@@ -14,7 +14,7 @@ export default function DesktopNavbar() {
           <div className="col-span-2 block">
             <div className="flex w-full flex-row items-center justify-end gap-x-10">
               <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300">
-                Nosotros
+                <Link href="/page/sobre-nosotros">Nosotros</Link>
               </div>
               <div className="relative">
                 <Suspense>
