@@ -21,7 +21,7 @@ export function ProductDescription({
         <div className="mb-2 dark:text-[#c9aa9e]">
           <h1 className="text-base font-semibold capitalize tracking-wider">{product.title}</h1>
         </div>
-        <div className="-mt-10">
+        <div>
           <PageItem content={JSON.parse(product.description)} />
         </div>
         <div className="mr-auto w-auto p-2 pl-0 text-sm tracking-wider dark:text-[#c9aa9e]">
