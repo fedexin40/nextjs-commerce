@@ -15,7 +15,7 @@ export default function TabletNavbar() {
           <div className="col-span-2 h-full self-end">
             <div className="flex h-full flex-row place-items-center items-center justify-end gap-x-10">
               <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300">
-                <Link href="/page/sobre-nosotros">Nosotros</Link>
+                <Link href="/sobre-nosotros">Nosotros</Link>
               </div>
               <div className="relative">
                 <Menu />
