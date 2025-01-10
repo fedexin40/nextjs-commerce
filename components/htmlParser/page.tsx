@@ -45,24 +45,30 @@ function Item({ block }: { block: block }) {
     } else if (block.data.items) {
       if (block.data.style == 'ordered') {
         return (
-          <ol className="list-inside list-decimal">
-            {block.data.items.map((item) => {
-              return (
-                <li className="pb-4 text-left md:text-justify" key={item}>
-                  {ReactHtmlParser(item)}
-                </li>
-              );
-            })}
-          </ol>
+          <div className="pl-4">
+            <ol className="list-inside list-decimal">
+              {block.data.items.map((item) => {
+                return (
+                  <li className="pb-4 text-left md:text-justify" key={item}>
+                    {ReactHtmlParser(item)}
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
         );
       }
       return (
         <ul className="list-disc">
           {block.data.items.map((item) => {
             return (
-              <li className="pb-4 text-left md:text-justify" key={item}>
-                {ReactHtmlParser(item)}
-              </li>
+              <div className="pl-4">
+                <ol className="list-disc">
+                  <li className="pb-4 text-left md:text-justify" key={item}>
+                    {ReactHtmlParser(item)}
+                  </li>
+                </ol>
+              </div>
             );
           })}
         </ul>
