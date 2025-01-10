@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 function PageLink({ page }: { page: Page }) {
   const slug = page.slug;
-  const url = `/page/${slug}`;
+  const url = `/${slug}`;
 
   return (
     <div>
