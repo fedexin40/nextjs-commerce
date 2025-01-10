@@ -1,10 +1,10 @@
 import { AddToCart } from 'components/cart/add-to-cart';
 import { BuyNow } from 'components/cart/buy-now';
+import { PageItem } from 'components/htmlParser/page';
 import Price from 'components/price';
 import { Product, ProductVariant } from 'lib/types';
 import Image from 'next/image';
 import { Suspense } from 'react';
-import ReactHtmlParser from 'react-html-parser';
 import { VariantSelector } from './variant-selector';
 
 export function ProductDescription({
@@ -14,17 +14,14 @@ export function ProductDescription({
   product: Product;
   variant: ProductVariant | undefined;
 }) {
+  console.log(product);
   return (
     <div className="flex flex-col">
       <div className="flex flex-col border-b dark:border-neutral-700">
         <div className="mb-2 dark:text-[#c9aa9e]">
           <h1 className="text-sm tracking-wider">{product.title}</h1>
         </div>
-        {product.descriptionHtml ? (
-          <div className="pb-2 pt-2 text-left text-gray-500 dark:text-white">
-            <h2 className="text-sm tracking-wider">{ReactHtmlParser(product.descriptionHtml)}</h2>
-          </div>
-        ) : null}
+        <PageItem content={JSON.parse(product.description)} />
         <div className="mr-auto w-auto p-2 pl-0 text-sm tracking-wider dark:text-[#c9aa9e]">
           {variant && (
             <Price
