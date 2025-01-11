@@ -18,7 +18,12 @@ export async function generateMetadata({
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  const product = await getProduct(params.handle);
+  let product;
+  try {
+    product = await getProduct(params.handle);
+  } catch (error) {
+    notFound();
+  }
 
   if (!product) return notFound();
 
