@@ -18,7 +18,12 @@ export async function generateMetadata({
 }: {
   params: { handle: string };
 }): Promise<Metadata> {
-  const product = await getProduct(params.handle);
+  let product;
+  try {
+    product = await getProduct(params.handle);
+  } catch (error) {
+    notFound();
+  }
 
   if (!product) return notFound();
 
@@ -43,7 +48,12 @@ export default async function Product({
   params: { handle: string };
   searchParams: { [key: string]: string | string[] | undefined };
 }) {
-  const product = await getProduct(params.handle);
+  let product;
+  try {
+    product = await getProduct(params.handle);
+  } catch (error) {
+    notFound();
+  }
   const variants = product?.variants;
 
   const variant = variants?.find((variant: ProductVariant) =>

@@ -24,7 +24,7 @@ export default function Error({ reset }: { reset: () => void }) {
             <div className="mx-10 mb-16 mt-10 flex flex-col justify-center text-center md:mx-20 md:mb-24 md:mt-16 lg:mx-32 lg:mb-40 lg:mt-20">
               <div className="bg-black p-10 text-white">
                 <div>Lo siento mucho pero la pagina que estas buscando no la pudimos encontrar</div>
-                <div className="pt-8 uppercase text-[#d2b6ab]">
+                <div className="pt-8 font-semibold capitalize text-[#d2b6ab]">
                   <Link href={'/'}>Regresar al Inicio</Link>
                 </div>
               </div>
