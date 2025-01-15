@@ -58,7 +58,7 @@ export function saleorProductToVercelProduct(
     featuredImage: images[0]!,
     seo: {
       title: product.seoTitle || product.name,
-      description: parseEditorJsToHtml(product.seoDescription || '').replace(/<\/?p[^>]*>/g, ''),
+      description: product.seoDescription || '',
     },
     tags: product.collections?.map((c) => c.name) || [],
     updatedAt: product.updatedAt,

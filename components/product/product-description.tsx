@@ -14,7 +14,6 @@ export function ProductDescription({
   product: Product;
   variant: ProductVariant | undefined;
 }) {
-  console.log(product);
   return (
     <div className="flex flex-col">
       <div className="flex flex-col border-b dark:border-neutral-700">
