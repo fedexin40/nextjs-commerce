@@ -41,6 +41,10 @@ export async function generateMetadata({
         follow: indexable,
       },
     },
+    openGraph: {
+      title: product.seo.title || product.title,
+      description: product.seo.description || product.description,
+    },
   };
 }
 
