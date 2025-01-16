@@ -70,6 +70,7 @@ export function saleorProductToVercelProduct(
         };
       }) || [],
     featureCollection: featureCollection,
+    metadata: product.metadata,
   };
 }
 

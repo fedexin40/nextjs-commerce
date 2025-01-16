@@ -61,6 +61,10 @@ query GetCategoryProductsBySlug(
           variants {
             ...Variant
           }
+          metadata {
+            key
+            value
+          }
         }
       }
     }

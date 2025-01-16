@@ -193,6 +193,10 @@ export type VercelCommerceProduct = {
     name: string | undefined;
     slug: string | undefined;
   }[];
+  metadata?: {
+    key: string;
+    value: string;
+  }[];
   featureCollection:
     | {
         name: string | undefined;

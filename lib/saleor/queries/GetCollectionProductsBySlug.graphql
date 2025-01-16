@@ -56,6 +56,10 @@ query GetCollectionProductsBySlug(
           variants {
             ...Variant
           }
+          metadata {
+            key
+            value
+          }
         }
       }
     }

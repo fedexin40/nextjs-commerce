@@ -31822,6 +31822,7 @@ export type CheckoutFragment = {
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         }> | null;
         thumbnail?: { url: string } | null;
+        metadata: Array<{ key: string; value: string }>;
       };
       attributes: Array<{
         attribute: {
@@ -31944,6 +31945,7 @@ export type ProductDetailsFragment = {
     pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
   }> | null;
   thumbnail?: { url: string } | null;
+  metadata: Array<{ key: string; value: string }>;
 };
 
 export type VariantFragment = {
@@ -32090,6 +32092,7 @@ export type CheckoutAddLineMutation = {
               pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
             }> | null;
             thumbnail?: { url: string } | null;
+            metadata: Array<{ key: string; value: string }>;
           };
           attributes: Array<{
             attribute: {
@@ -32223,6 +32226,7 @@ export type CheckoutDeleteLineMutation = {
               pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
             }> | null;
             thumbnail?: { url: string } | null;
+            metadata: Array<{ key: string; value: string }>;
           };
           attributes: Array<{
             attribute: {
@@ -32353,6 +32357,7 @@ export type CheckoutUpdateLineMutation = {
               pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
             }> | null;
             thumbnail?: { url: string } | null;
+            metadata: Array<{ key: string; value: string }>;
           };
           attributes: Array<{
             attribute: {
@@ -32460,6 +32465,7 @@ export type CreateCheckoutMutation = {
               pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
             }> | null;
             thumbnail?: { url: string } | null;
+            metadata: Array<{ key: string; value: string }>;
           };
           attributes: Array<{
             attribute: {
@@ -32647,6 +32653,7 @@ export type GetCategoryProductsBySlugQuery = {
             }>;
             pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
           }> | null;
+          metadata: Array<{ key: string; value: string }>;
         };
       }>;
     } | null;
@@ -32714,6 +32721,7 @@ export type GetCheckoutByIdQuery = {
             pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
           }> | null;
           thumbnail?: { url: string } | null;
+          metadata: Array<{ key: string; value: string }>;
         };
         attributes: Array<{
           attribute: {
@@ -32807,6 +32815,7 @@ export type GetCollectionProductsBySlugQuery = {
             }>;
             pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
           }> | null;
+          metadata: Array<{ key: string; value: string }>;
         };
       }>;
     } | null;
@@ -32984,6 +32993,7 @@ export type GetMeQuery = {
                   } | null;
                 }> | null;
                 thumbnail?: { url: string } | null;
+                metadata: Array<{ key: string; value: string }>;
               };
               attributes: Array<{
                 attribute: {
@@ -33156,6 +33166,7 @@ export type GetProductBySlugQuery = {
       pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
     }> | null;
     thumbnail?: { url: string } | null;
+    metadata: Array<{ key: string; value: string }>;
   } | null;
 };
 
@@ -33220,6 +33231,7 @@ export type SearchProductsQuery = {
           }>;
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         }> | null;
+        metadata: Array<{ key: string; value: string }>;
       };
     }>;
   } | null;
@@ -33345,6 +33357,10 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(`
   }
   thumbnail {
     url
+  }
+  metadata {
+    key
+    value
   }
 }
     fragment Variant on ProductVariant {
@@ -33502,6 +33518,10 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
   }
   thumbnail {
     url
+  }
+  metadata {
+    key
+    value
   }
 }
 fragment Variant on ProductVariant {
@@ -33874,6 +33894,10 @@ fragment ProductDetails on Product {
   thumbnail {
     url
   }
+  metadata {
+    key
+    value
+  }
 }
 fragment Variant on ProductVariant {
   id
@@ -34094,6 +34118,10 @@ fragment ProductDetails on Product {
   }
   thumbnail {
     url
+  }
+  metadata {
+    key
+    value
   }
 }
 fragment Variant on ProductVariant {
@@ -34320,6 +34348,10 @@ fragment ProductDetails on Product {
   thumbnail {
     url
   }
+  metadata {
+    key
+    value
+  }
 }
 fragment Variant on ProductVariant {
   id
@@ -34502,6 +34534,10 @@ fragment ProductDetails on Product {
   }
   thumbnail {
     url
+  }
+  metadata {
+    key
+    value
   }
 }
 fragment Variant on ProductVariant {
@@ -34730,6 +34766,10 @@ export const GetCategoryProductsBySlugDocument = new TypedDocumentString(`
           variants {
             ...Variant
           }
+          metadata {
+            key
+            value
+          }
         }
       }
     }
@@ -34899,6 +34939,10 @@ fragment ProductDetails on Product {
   thumbnail {
     url
   }
+  metadata {
+    key
+    value
+  }
 }
 fragment Variant on ProductVariant {
   id
@@ -35005,6 +35049,10 @@ export const GetCollectionProductsBySlugDocument = new TypedDocumentString(`
           updatedAt
           variants {
             ...Variant
+          }
+          metadata {
+            key
+            value
           }
         }
       }
@@ -35348,6 +35396,10 @@ fragment ProductDetails on Product {
   thumbnail {
     url
   }
+  metadata {
+    key
+    value
+  }
 }
 fragment Variant on ProductVariant {
   id
@@ -35543,6 +35595,10 @@ export const GetProductBySlugDocument = new TypedDocumentString(`
   thumbnail {
     url
   }
+  metadata {
+    key
+    value
+  }
 }
 fragment Variant on ProductVariant {
   id
@@ -35645,6 +35701,10 @@ export const SearchProductsDocument = new TypedDocumentString(`
         updatedAt
         variants {
           ...Variant
+        }
+        metadata {
+          key
+          value
         }
       }
     }

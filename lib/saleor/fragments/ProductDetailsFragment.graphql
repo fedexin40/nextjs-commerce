@@ -42,4 +42,8 @@ fragment ProductDetails on Product {
   thumbnail {
     url
   }
+  metadata {
+    key
+    value
+  }
 }

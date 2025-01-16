@@ -60,6 +60,10 @@ query SearchProducts(
         variants {
           ...Variant
         }
+        metadata {
+          key
+          value
+        }
       }
     }
   }

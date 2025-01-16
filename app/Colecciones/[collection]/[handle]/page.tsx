@@ -1,5 +1,6 @@
 import { ProductView } from 'components/FacebookPixel';
 import { GridTileImage } from 'components/grid/tile';
+import { PageItem } from 'components/htmlParser/page';
 import { Gallery } from 'components/product/gallery';
 import { ProductDescription } from 'components/product/product-description';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
@@ -100,17 +101,24 @@ export default async function Product({
         <ProductView content_ids={[product.handle]} content_type="product" />
       </Suspense>
       <div className="mx-auto max-w-screen-2xl dark:bg-black">
-        <div className="flex flex-col px-10 md:grid md:grid-cols-3 md:px-16 md:pt-12 lg:px-36 lg:pt-16">
-          <div className="md:col-span-2">
-            <Gallery
-              images={product.images.map((image: Image) => ({
-                src: image.url,
-                altText: image.altText,
-              }))}
-            />
+        <div className="flex flex-col px-10 md:px-16 md:pt-12 lg:px-36 lg:pt-16">
+          <div className="flex flex-col md:grid md:grid-cols-3">
+            <div className="md:col-span-2">
+              <Gallery
+                images={product.images.map((image: Image) => ({
+                  src: image.url,
+                  altText: image.altText,
+                }))}
+              />
+            </div>
+            <div>
+              <ProductDescription product={product} variant={variant} />
+            </div>
           </div>
-          <div>
-            <ProductDescription product={product} variant={variant} />
+          <div className="flex flex-col md:grid md:grid-cols-3">
+            <div className="md:col-span-2">
+              <PageItem content={JSON.parse(product.description)} />
+            </div>
           </div>
         </div>
         <Suspense>

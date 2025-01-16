@@ -1,6 +1,5 @@
 import { AddToCart } from 'components/cart/add-to-cart';
 import { BuyNow } from 'components/cart/buy-now';
-import { PageItem } from 'components/htmlParser/page';
 import Price from 'components/price';
 import { Product, ProductVariant } from 'lib/types';
 import Image from 'next/image';
@@ -14,15 +13,24 @@ export function ProductDescription({
   product: Product;
   variant: ProductVariant | undefined;
 }) {
+  let description;
+  if (product.metadata?.length) {
+    for (let i = 0; i < product.metadata?.length; i++) {
+      if (product.metadata[i]?.key == 'description') {
+        description = product.metadata[i]?.value;
+      }
+    }
+  } else {
+    description = 'Pequeño broquel de oro, esta es una joya perfecta para regalar';
+  }
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col border-b dark:border-neutral-700">
         <div className="mb-2 dark:text-[#c9aa9e]">
           <h1 className="text-base font-semibold capitalize tracking-wider">{product.title}</h1>
         </div>
-        <div>
-          <PageItem content={JSON.parse(product.description)} />
-        </div>
+        <div>{description}</div>
         <div className="mr-auto w-auto p-2 pl-0 text-sm tracking-wider dark:text-[#c9aa9e]">
           {variant && (
             <Price
