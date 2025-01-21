@@ -1,10 +1,17 @@
 'use client';
+import { PageItem } from 'components/htmlParser/page';
 import MyImage from 'components/image';
 import Loading from 'components/loading';
 import Image from 'next/image';
 import { Suspense, useState } from 'react';
 
-export function Gallery({ images }: { images: { src: string; altText: string }[] }) {
+export function Gallery({
+  images,
+  description,
+}: {
+  images: { src: string; altText: string }[];
+  description: string;
+}) {
   const [src, setSrc] = useState(0);
 
   return (
@@ -79,6 +86,9 @@ export function Gallery({ images }: { images: { src: string; altText: string }[]
             </div>
           ))}
         </div>
+      </div>
+      <div className="hidden pr-10 md:-mt-5 md:block lg:mt-5">
+        <PageItem content={JSON.parse(description)} />
       </div>
     </>
   );

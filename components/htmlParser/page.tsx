@@ -38,10 +38,14 @@ function Item({ block }: { block: block }) {
         </div>
       );
   } else if (block.type == 'paragraph') {
-    return <div className="py-2 text-justify">{ReactHtmlParser(block.data.text)}</div>;
+    return (
+      <div className="py-2 text-justify text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
+        {ReactHtmlParser(block.data.text)}
+      </div>
+    );
   } else if (block.type == 'list') {
     if (block.data.text) {
-      return <div className="text-justify">{ReactHtmlParser(block.data.text)}</div>;
+      return <div className="text-justify tracking-wider">{ReactHtmlParser(block.data.text)}</div>;
     } else if (block.data.items) {
       if (block.data.style == 'ordered') {
         return (

@@ -109,14 +109,15 @@ export default async function Product({
                   src: image.url,
                   altText: image.altText,
                 }))}
+                description={product.description}
               />
             </div>
             <div>
               <ProductDescription product={product} variant={variant} />
             </div>
           </div>
-          <div className="flex flex-col md:grid md:grid-cols-3">
-            <div className="md:col-span-2">
+          <div className="flex flex-col">
+            <div className="md:hidden">
               <PageItem content={JSON.parse(product.description)} />
             </div>
           </div>

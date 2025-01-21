@@ -30,7 +30,9 @@ export function ProductDescription({
         <div className="mb-2 dark:text-[#c9aa9e]">
           <h1 className="text-base font-semibold capitalize tracking-wider">{product.title}</h1>
         </div>
-        <div>{description}</div>
+        <div className="text-justify text-[13.5px] tracking-[1.4px]  lg:text-[14.3px]">
+          {description}
+        </div>
         <div className="mr-auto w-auto p-2 pl-0 text-sm tracking-wider dark:text-[#c9aa9e]">
           {variant && (
             <Price
