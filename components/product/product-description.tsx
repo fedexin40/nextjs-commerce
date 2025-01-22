@@ -30,7 +30,7 @@ export function ProductDescription({
         <div className="mb-2 dark:text-[#c9aa9e]">
           <h1 className="text-base font-semibold capitalize tracking-wider">{product.title}</h1>
         </div>
-        <div className="text-justify text-[13.5px] tracking-[1.4px]  lg:text-[14.3px]">
+        <div className="py-10 text-justify text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
           {description}
         </div>
         <div className="mr-auto w-auto p-2 pl-0 text-sm tracking-wider dark:text-[#c9aa9e]">
@@ -85,6 +85,68 @@ export function ProductDescription({
               />
             </div>
           </Suspense>
+        </div>
+      </div>
+      <div className="flex flex-col pt-14 text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
+        <div className="text-[15px] font-semibold	">Metodos de Pago</div>
+        <div className="pt-10">
+          Tarjeta
+          <div className="flex flex-row gap-5">
+            <Suspense>
+              <div className="relative h-[60px] w-[60px]">
+                <Image
+                  className="object-contain"
+                  src={'/visa2.png'}
+                  alt="Metodo de pago, visa"
+                  fill
+                  sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+                />
+              </div>
+            </Suspense>
+            <Suspense>
+              <div className="relative h-[60px] w-[60px]">
+                <Image
+                  className="object-contain"
+                  src={'/mastercard2.png'}
+                  alt="Metodo de pago, mastercad"
+                  fill
+                  sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+                />
+              </div>
+            </Suspense>
+          </div>
+        </div>
+        <div className="pt-10">
+          Efectivo
+          <div className="flex flex-row gap-5">
+            <Suspense>
+              <div className="relative h-[60px] w-[60px]">
+                <Image
+                  className="object-contain"
+                  src={'/oxxo.png'}
+                  alt="Metodo de pago, oxxo"
+                  fill
+                  sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+                />
+              </div>
+            </Suspense>
+          </div>
+        </div>
+        <div className="pt-10">
+          Transferencia Bancaria
+          <div className="flex flex-row gap-5">
+            <Suspense>
+              <div className="relative h-[60px] w-[60px]">
+                <Image
+                  className="object-contain"
+                  src={'/spei.png'}
+                  alt="Metodo de pago, spei"
+                  fill
+                  sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+                />
+              </div>
+            </Suspense>
+          </div>
         </div>
       </div>
     </div>
