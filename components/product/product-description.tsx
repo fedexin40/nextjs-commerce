@@ -33,7 +33,7 @@ export function ProductDescription({
         <div className="py-10 text-justify text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
           {description}
         </div>
-        <div className="mr-auto w-auto p-2 pl-0 text-sm tracking-wider dark:text-[#c9aa9e]">
+        <div className="mr-auto w-auto p-2 pl-0 text-base font-semibold	 tracking-wider dark:text-[#c9aa9e]">
           {variant && (
             <Price
               amountMax={variant.price.amount}
@@ -58,7 +58,7 @@ export function ProductDescription({
           <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
         </Suspense>
       </div>
-      <div className="pt-5 text-left text-[10px] leading-tight text-gray-800 dark:text-white lg:text-[13px]">
+      <div className="pt-5 text-left text-[12px] leading-tight text-gray-800 dark:text-white lg:text-[14px]">
         <div className="whitespace-nowrap">Tiempo de entrega de 2 a 7 dias hábiles</div>
         <div className="whitespace-nowrap pt-3">Envío gratis en compras mayores a $1,500.00</div>
         <div className="flex flex-row gap-x-4 whitespace-nowrap pt-3">
@@ -89,9 +89,9 @@ export function ProductDescription({
       </div>
       <div className="flex flex-col pt-14 text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
         <div className="text-[15px] font-semibold	">Metodos de Pago</div>
-        <div className="pt-10">
+        <div className="pt-5 md:pt-8">
           Tarjeta
-          <div className="flex flex-row gap-5">
+          <div className="-mt-2 flex flex-row gap-x-5">
             <Suspense>
               <div className="relative h-[60px] w-[60px]">
                 <Image
@@ -116,9 +116,9 @@ export function ProductDescription({
             </Suspense>
           </div>
         </div>
-        <div className="pt-10">
+        <div className="pt-5 md:pt-8">
           Efectivo
-          <div className="flex flex-row gap-5">
+          <div className="-mt-2 flex flex-row gap-x-5">
             <Suspense>
               <div className="relative h-[60px] w-[60px]">
                 <Image
@@ -132,9 +132,9 @@ export function ProductDescription({
             </Suspense>
           </div>
         </div>
-        <div className="pt-10">
+        <div className="pt-5 md:pt-8">
           Transferencia Bancaria
-          <div className="flex flex-row gap-5">
+          <div className="-mt-2 flex flex-row">
             <Suspense>
               <div className="relative h-[60px] w-[60px]">
                 <Image
