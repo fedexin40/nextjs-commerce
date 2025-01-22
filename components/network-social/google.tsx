@@ -4,7 +4,7 @@ import { ExternalProvider } from '@fedexin40/auth-sdk';
 import { useSaleorExternalAuth } from '@fedexin40/auth-sdk/react';
 import clsx from 'clsx';
 import Image from 'next/image';
-import { redirect } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 import { useTransition } from 'react';
 
 export default function Google({
@@ -23,7 +23,7 @@ export default function Google({
 
   function Login() {
     startTransition(() => {
-      redirect(authURL || '');
+      permanentRedirect(authURL || '');
     });
   }
 

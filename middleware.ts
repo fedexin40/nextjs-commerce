@@ -9,7 +9,7 @@ export async function middleware(request: NextRequest) {
   // If there is no an open session then return to home
   const me = await Me();
   if (me.id.length === 0) {
-    return NextResponse.redirect(new URL('/home', request.url));
+    return NextResponse.redirect(new URL('/home', request.url), 308);
   }
   return NextResponse.next();
 }

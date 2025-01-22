@@ -6,7 +6,7 @@ import { Me, accountUpdate, addressCreate, addressUpdate, registerAccount } from
 import { CountryCode } from 'lib/saleor/generated/graphql';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 
 export async function updateAddress({
   streetAddress1,
@@ -81,7 +81,7 @@ export async function Logout() {
   cookies().delete('cartId');
   cookies().delete('token');
   cookies().delete('refreshToken');
-  redirect('/');
+  permanentRedirect('/');
 }
 
 export async function accountRegister({ email, password }: { email: string; password: string }) {

@@ -7,7 +7,7 @@ import {
   updateDeliveryMethod,
 } from 'lib/saleor';
 import { CountryCode } from 'lib/saleor/generated/graphql';
-import { redirect } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 
 export async function deliveryMethodUpdate({
   checkoutId,
@@ -29,7 +29,7 @@ export async function deliveryMethodUpdate({
   } catch (error: any) {
     return error.message;
   }
-  redirect(cart?.checkoutUrlPayment || '');
+  permanentRedirect(cart?.checkoutUrlPayment || '');
 }
 
 export async function addressCheckoutUpdate({
@@ -64,5 +64,5 @@ export async function addressCheckoutUpdate({
   } catch (error) {
     return error;
   }
-  redirect(url);
+  permanentRedirect(url);
 }
