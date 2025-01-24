@@ -3,9 +3,16 @@ import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import LoadMore from 'components/load-more/page';
 import { getCollectionProducts } from 'lib/saleor';
+import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
 export const runtime = 'edge';
+
+export const metadata: Metadata = {
+  title: 'Proyecto 705 Joyeria, aretes y broqueles de oro.',
+  description:
+    'Compra aretes y broqueles de oro de 10 kilates y 14 kilates, ademas tambien tenemos oro amarillo, oro blanco y oro rosa',
+};
 
 export default async function HomePage() {
   const collection = 'oro';
@@ -39,7 +46,7 @@ export default async function HomePage() {
         </Suspense>
       </div>
       <div className="m-10 grid justify-items-center whitespace-nowrap text-base font-medium tracking-wider text-black dark:text-[#c9aa9e] xl:text-3xl">
-        Encuentra el arete perfecto para ti
+        <h1>Encuentra el arete perfecto para ti</h1>
       </div>
       <Suspense>
         <div className="mx-10 mb-24 lg:mx-32 lg:mb-40">
