@@ -57,14 +57,20 @@ export function Contacto() {
         <div className="flex flex-row gap-x-6 md:justify-end">
           <Link className="hover:cursor-pointer" href="">
             <div className="relative h-7 w-7">
-              <Image className="object-contain" src={'/facebook.png'} alt="" fill />
+              <Image
+                className="object-contain"
+                src={'/facebook.png'}
+                alt="Siguenos en Facebook"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
             </div>
           </Link>
           <Link className="hover:cursor-pointer" href="">
             <div className="relative h-7 w-7">
               <Image
                 src={'/instagram.png'}
-                alt=""
+                alt="Siguenos en Instagram"
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
@@ -73,7 +79,9 @@ export function Contacto() {
         </div>
         <div className="flex flex-col gap-y-3">
           <div>Tel: 2211664477</div>
-          <div>contacto@proyecto705.com</div>
+          <div>
+            <a href="mailto:contacto@proyecto705.com">contacto@proyecto705.com</a>
+          </div>
         </div>
       </div>
     </>
