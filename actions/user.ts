@@ -78,9 +78,12 @@ export async function updateAddress({
 
 export async function Logout() {
   await getServerAuthClient().signOut();
-  cookies().delete('cartId');
-  cookies().delete('token');
-  cookies().delete('refreshToken');
+  const cookieStore = cookies();
+
+  // clear the session cookies
+  cookieStore.getAll().forEach((cookie) => {
+    cookieStore.delete(cookie.name);
+  });
   permanentRedirect('/');
 }
 
