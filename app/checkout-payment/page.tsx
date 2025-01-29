@@ -3,6 +3,11 @@ import { getCart, transactionInitialize } from 'lib/saleor';
 import { Suspense } from 'react';
 import Cart from './cart';
 
+/*
+FIX: I am hard coding the stripe key, this is not correct
+*/
+const stripe_secret_key = process.env.STRIPE_SECRET_KEY;
+
 export default async function CheckoutPayment({
   searchParams,
 }: {
@@ -18,12 +23,8 @@ export default async function CheckoutPayment({
   const userEmail = cart?.userEmail;
   const firstName = cart?.firstName;
   const lastName = cart?.lastName;
-  /*
-  FIX: I am hard coding the stripe key, this is not correct
-  */
-  const stripe = require('stripe')(
-    'sk_test_51K2ULRLPhG5Wi083Gv8nLnMHg4c8qwDBraeb4Av33C6su0NgvH2aoXUqxWAfl3oWtjtG617rJAkpQCO48RbMRkXu00y9PNWQg6',
-  );
+
+  const stripe = require('stripe')(stripe_secret_key);
   let user = await stripe.customers.search({
     query: `email:"${userEmail}"`,
   });
@@ -55,11 +56,11 @@ export default async function CheckoutPayment({
   const stripeData = transaction.transactionInitialize?.data as
     | undefined
     | {
-        paymentIntent: {
-          client_secret: string;
-        };
-        publishableKey: string;
+      paymentIntent: {
+        client_secret: string;
       };
+      publishableKey: string;
+    };
 
   if (transaction.transactionInitialize?.errors.length || !stripeData) {
     return (
