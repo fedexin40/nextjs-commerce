@@ -44,7 +44,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
             return (
               <div
                 key={i}
-                className="flex w-full flex-col rounded-md border-2 border-[#acacac] px-3 dark:border-[#c9aa9e]"
+                className="flex w-full flex-col rounded-md border-2 border-[#acacac] px-3 tracking-wide dark:border-[#c9aa9e]"
               >
                 <div className="relative flex w-full flex-row justify-around px-1 py-4">
                   <div className="w-2/3">
@@ -62,9 +62,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
                           />
                         </div>
                         <div className="flex flex-col">
-                          <span className="pb-3 leading-tight">
-                            {item.merchandise.product.title}
-                          </span>
+                          <span className="">{item.merchandise.product.title}</span>
                           {item.merchandise.title !== DEFAULT_OPTION ? (
                             <p className="text-neutral-500 dark:text-neutral-400">
                               {item.merchandise.title}
@@ -101,7 +99,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
         <div className="py-7 text-neutral-500 dark:text-white">
           <div className="mb-2 flex items-center justify-between border-[#acacac] pb-1 pt-5 capitalize text-black dark:border-[#c9aa9e] dark:text-white">
             <p>Envío</p>
-            <p className="text-right text-black dark:text-white">${deliveryPrice}</p>
+            <p className="text-right text-black dark:text-white">${deliveryPrice.toFixed(2)}</p>
           </div>
           <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 capitalize text-black dark:border-[#c9aa9e] dark:text-white">
             <p>Subtotal</p>

@@ -72,7 +72,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
               {!cart || cart.lines.length === 0 ? (
                 <div className="mt-20 flex w-full flex-col items-center justify-center overflow-hidden text-[13px] tracking-widest lg:text-[14.3px]">
                   <ShoppingCartIcon className="h-16" />
-                  <p className="mt-6 text-center text-2xl font-bold">Tu carrito esta vacio.</p>
+                  <p className="mt-6 text-center font-bold">Tu carrito esta vacio.</p>
                 </div>
               ) : (
                 <div className="flex h-full flex-col justify-between overflow-hidden p-1 text-[13px] tracking-widest lg:text-[14.3px]">
@@ -119,11 +119,8 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                               </div>
 
                               <div className="flex flex-1 flex-col">
-                                <span className="leading-tight">
-                                  {item.merchandise.product.title}
-                                </span>
                                 {item.merchandise.title !== DEFAULT_OPTION ? (
-                                  <p className="text-neutral-500 dark:text-neutral-400">
+                                  <p className=" text-[13px] tracking-widest lg:text-[14.3px]">
                                     {item.merchandise.title}
                                   </p>
                                 ) : null}

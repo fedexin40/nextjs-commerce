@@ -3,11 +3,6 @@ import { getCart, transactionInitialize } from 'lib/saleor';
 import { Suspense } from 'react';
 import Cart from './cart';
 
-/*
-FIX: I am hard coding the stripe key, this is not correct
-*/
-const stripe_secret_key = process.env.STRIPE_SECRET_KEY;
-
 export default async function CheckoutPayment({
   searchParams,
 }: {
@@ -23,7 +18,7 @@ export default async function CheckoutPayment({
   const userEmail = cart?.userEmail;
   const firstName = cart?.firstName;
   const lastName = cart?.lastName;
-
+  const stripe_secret_key = process.env.STRIPE_SECRET_KEY;
   const stripe = require('stripe')(stripe_secret_key);
   let user = await stripe.customers.search({
     query: `email:"${userEmail}"`,
@@ -56,11 +51,11 @@ export default async function CheckoutPayment({
   const stripeData = transaction.transactionInitialize?.data as
     | undefined
     | {
-      paymentIntent: {
-        client_secret: string;
+        paymentIntent: {
+          client_secret: string;
+        };
+        publishableKey: string;
       };
-      publishableKey: string;
-    };
 
   if (transaction.transactionInitialize?.errors.length || !stripeData) {
     return (
@@ -75,7 +70,7 @@ export default async function CheckoutPayment({
     <div className="flex flex-col dark:bg-zinc-700 md:flex-row">
       <div className="mx-10 mb-16	pt-16 md:mb-24 md:basis-[52%] lg:mb-40 lg:px-10">
         <div className="flex flex-row space-x-3 bg-[#e4c0b2] p-5 dark:text-black">
-          <span className="uppercase">Proyecto 705:</span>
+          <span className="capitalize">Proyecto 705:</span>
           <span className="uppercase">${cart?.cost.totalAmount.amount}</span>
         </div>
         <div className="border-2 px-5 py-3 pb-20">
