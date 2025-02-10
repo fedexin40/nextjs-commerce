@@ -87,7 +87,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                       });
 
                       const merchandiseUrl = createUrl(
-                        `/product/${item.merchandise.product.handle}`,
+                        `/Colecciones/${item.merchandise.product.featureCollection?.slug}/${item.merchandise.product.handle}`,
                         new URLSearchParams(merchandiseSearchParams),
                       );
 
