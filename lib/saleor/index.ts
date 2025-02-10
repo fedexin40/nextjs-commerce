@@ -923,19 +923,9 @@ export async function transactionInitialize({
     variables: {
       checkoutId: checkoutId,
       data: {
-        automatic_payment_methods: {
-          enabled: false,
-        },
         customer: userId,
-        payment_method_options: {
-          card: {
-            installments: {
-              enabled: true,
-            },
-          },
-        },
-        payment_method_types: ['card', 'oxxo', 'customer_balance', 'link'],
       },
+      funding_type: 'bank_transfer',
     },
     withAuth: true,
     cache: 'no-store',
