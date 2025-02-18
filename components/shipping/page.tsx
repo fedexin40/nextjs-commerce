@@ -2,6 +2,7 @@
 
 import Skeleton from '@mui/material/Skeleton';
 import { shippingAddressUpdate, shippingMethodsAction } from 'actions/shipping';
+import { billingAddressCheckoutUpdate } from 'lib/saleor';
 import { CurrentPerson } from 'lib/types';
 import { useEffect, useState, useTransition } from 'react';
 import { useShipping, useShippingActions } from 'stores/shipping';
@@ -37,9 +38,19 @@ export default function Shipping({
         lastName: userStore.lastName || user.lastName || '',
         phone: userStore.phone || user.address.phone || '',
       };
+      if (!userStore.phone && !user.address.phone) {
+        setError('Por favor ingresa tu número telefónico');
+        return;
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-      const error = await shippingAddressUpdate(input);
+      let error = await shippingAddressUpdate(input);
       if (!error) {
+        error = billingAddressCheckoutUpdate(input);
+        if (!error) {
+          setError(error);
+          console.log('error in updating billing address');
+          return;
+        }
         const shippingMethods = await shippingMethodsAction({ checkoutId });
         setShippingMethods(shippingMethods || []);
         setError('');
@@ -57,6 +68,7 @@ export default function Shipping({
     userStore.streetAddress1,
     userStore.streetAddress2,
     userStore.postalCode,
+    userStore.phone,
   ]);
 
   if (isPending) {

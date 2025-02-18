@@ -3,9 +3,7 @@
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { deliveryMethodUpdate } from 'actions/checkout';
-import { shippingAddressUpdate } from 'actions/shipping';
 import clsx from 'clsx';
-import { billingAddressCheckoutUpdate } from 'lib/saleor';
 import { CurrentPerson } from 'lib/types';
 import { useState, useTransition } from 'react';
 import { useShipping } from 'stores/shipping';
@@ -22,34 +20,9 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
 
   function setupShippingAddress() {
     startTransition(async () => {
-      const input = {
-        checkoutId: checkoutId,
-        streetAddress1: userStore.streetAddress1 || user.address.streetAddress1 || '',
-        streetAddress2: userStore.streetAddress2 || user.address.streetAddress2 || '',
-        city: userStore.city || user.address.city || '',
-        postalCode: userStore.postalCode || user.address.postalCode || '',
-        countryArea: userStore.countryArea || user.address.countryArea || '',
-        firstName: userStore.firstName || user.firstName || '',
-        lastName: userStore.lastName || user.lastName || '',
-        phone: userStore.phone || user.address.phone || '',
-      };
-      if (!userStore.phone && !user.address.phone) {
-        setErrorMessage('Por favor ingresa tu número telefónico');
-        openError();
-        return;
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      const error = await shippingAddressUpdate(input);
-      if (!error) {
-        const errorMethodUpdate = await deliveryMethodUpdate({ checkoutId, deliveryMethodId });
-        if (errorMethodUpdate) {
-          setErrorMessage(errorMethodUpdate);
-          openError();
-        } else {
-          billingAddressCheckoutUpdate(input);
-        }
-      } else {
-        setErrorMessage(error);
+      const errorMethodUpdate = await deliveryMethodUpdate({ checkoutId, deliveryMethodId });
+      if (errorMethodUpdate) {
+        setErrorMessage(errorMethodUpdate);
         openError();
       }
     });
