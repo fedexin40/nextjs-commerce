@@ -2,7 +2,7 @@
 
 import { getServerAuthClient } from 'app/login';
 import { TAGS } from 'lib/constants';
-import { TransactionEventTypeEnum } from 'lib/saleor/generated/graphql';
+import { TransactionEventTypeEnum, UpdateMetadataDocument } from 'lib/saleor/generated/graphql';
 import {
   Cart,
   Category,
@@ -1171,6 +1171,39 @@ export async function checkoutAddPromoCode({ checkoutId }: { checkoutId: string 
   });
   if (checkout.checkoutAddPromoCode?.errors[0]) {
     throw new Error(checkout.checkoutAddPromoCode?.errors[0]?.message || '');
+  }
+}
+
+// Helper function used to update carrierName and shipping cost in checkout metadata
+export async function setCarrierDetails({
+  checkoutId,
+  carrierName,
+  shippingCost,
+}: {
+  checkoutId: string;
+  carrierName: string;
+  shippingCost: number;
+}) {
+  const checkout = await saleorFetch({
+    query: UpdateMetadataDocument,
+    variables: {
+      id: checkoutId,
+      input: [
+        {
+          key: 'shipping_cost',
+          value: shippingCost.toString(),
+        },
+        {
+          key: 'carrier_name',
+          value: carrierName,
+        },
+      ],
+    },
+    cache: 'no-store',
+  });
+
+  if (checkout.updateMetadata?.errors[0]) {
+    throw new Error(checkout.updateMetadata?.errors[0]?.message || '');
   }
 }
 

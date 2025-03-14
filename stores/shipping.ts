@@ -4,9 +4,11 @@ import { create } from 'zustand';
 interface shippingStore {
   shippingMethods: shippingMethod[];
   selectedShippingId: string;
+  CarrierName: string;
+  shippingCost: number;
   actions: {
     // eslint-disable-next-line no-unused-vars
-    setSelectedShippingId: (shippingId: string) => void;
+    setSelectedShippingId: (shippingId: string, CarrierName: string, shippingCost: number) => void;
     // eslint-disable-next-line no-unused-vars
     setShippingMethods: (shippingMethods: shippingMethod[]) => void;
   };
@@ -15,8 +17,15 @@ interface shippingStore {
 const useShippingStore = create<shippingStore>()((set) => ({
   shippingMethods: [],
   selectedShippingId: '',
+  shippingCost: 0,
+  CarrierName: '',
   actions: {
-    setSelectedShippingId: (shippingId) => set({ selectedShippingId: shippingId }),
+    setSelectedShippingId: (shippingId, CarrierName, shippingCost) =>
+      set({
+        selectedShippingId: shippingId,
+        CarrierName: CarrierName,
+        shippingCost: shippingCost,
+      }),
     setShippingMethods: (shippingMethods) => set({ shippingMethods: shippingMethods }),
   },
 }));

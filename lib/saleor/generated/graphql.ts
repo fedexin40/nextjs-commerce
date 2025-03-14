@@ -32576,6 +32576,17 @@ export type TransactionInitializeMutation = {
   } | null;
 };
 
+export type UpdateMetadataMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: Array<MetadataInput> | MetadataInput;
+}>;
+
+export type UpdateMetadataMutation = {
+  updateMetadata?: {
+    errors: Array<{ code: MetadataErrorCode; field?: string | null; message?: string | null }>;
+  } | null;
+};
+
 export type AddressValidationQueryVariables = Exact<{ [key: string]: never }>;
 
 export type AddressValidationQuery = {
@@ -34661,6 +34672,17 @@ export const TransactionInitializeDocument = new TypedDocumentString(`
   TransactionInitializeMutation,
   TransactionInitializeMutationVariables
 >;
+export const UpdateMetadataDocument = new TypedDocumentString(`
+    mutation updateMetadata($id: ID!, $input: [MetadataInput!]!) {
+  updateMetadata(id: $id, input: $input) {
+    errors {
+      code
+      field
+      message
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<UpdateMetadataMutation, UpdateMetadataMutationVariables>;
 export const AddressValidationDocument = new TypedDocumentString(`
     query AddressValidation {
   addressValidationRules(countryCode: MX) {

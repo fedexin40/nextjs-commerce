@@ -1,5 +1,6 @@
 import { StripeComponent } from 'components/stripe/stripe-component';
 import { getCart, transactionInitialize } from 'lib/saleor';
+import { permanentRedirect } from 'next/navigation';
 import { Suspense } from 'react';
 import Cart from './cart';
 
@@ -14,6 +15,9 @@ export default async function CheckoutPayment({
   }
 
   const cart = await getCart(checkout || '');
+  if (!cart) {
+    permanentRedirect('/');
+  }
   const checkoutPayment = new URL('cart/processing', process.env.SHOP_PUBLIC_URL || '').toString();
   const userEmail = cart?.userEmail;
   const firstName = cart?.firstName;

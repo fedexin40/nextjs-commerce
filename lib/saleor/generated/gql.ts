@@ -66,6 +66,8 @@ const documents = {
     types.PaymentGatewayInitializeDocument,
   'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
     types.TransactionInitializeDocument,
+  'mutation updateMetadata($id: ID!, $input: [MetadataInput!]!) {\n  updateMetadata(id: $id, input: $input) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
+    types.UpdateMetadataDocument,
   'query AddressValidation {\n  addressValidationRules(countryCode: MX) {\n    countryAreaChoices {\n      raw\n      verbose\n    }\n  }\n}':
     types.AddressValidationDocument,
   'query GetCategories {\n  categories(first: 100) {\n    edges {\n      node {\n        slug\n        name\n        parent {\n          level\n        }\n      }\n    }\n  }\n}':
@@ -266,6 +268,12 @@ export function graphql(
 export function graphql(
   source: 'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
 ): typeof import('./graphql').TransactionInitializeDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation updateMetadata($id: ID!, $input: [MetadataInput!]!) {\n  updateMetadata(id: $id, input: $input) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}',
+): typeof import('./graphql').UpdateMetadataDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

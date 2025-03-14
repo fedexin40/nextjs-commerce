@@ -13,8 +13,16 @@ export default function ShippingMethods({
   const [selected, setSelected] = useState();
   const { setSelectedShippingId } = useShippingActions();
 
-  function shippingIdSet(shippingId: string) {
-    setSelectedShippingId(shippingId);
+  function shippingIdSet({
+    shippingId,
+    carrierName,
+    shippingCost,
+  }: {
+    shippingId: string;
+    carrierName: string;
+    shippingCost: number;
+  }) {
+    setSelectedShippingId(shippingId, carrierName, shippingCost);
   }
 
   return (
@@ -39,7 +47,11 @@ export default function ShippingMethods({
               <div
                 className="flex w-full items-center justify-between"
                 onClick={() => {
-                  shippingIdSet(ShippingMethod.id);
+                  shippingIdSet({
+                    shippingId: ShippingMethod.id,
+                    carrierName: ShippingMethod.name || '',
+                    shippingCost: ShippingMethod.price,
+                  });
                 }}
               >
                 <div className="text-[13px] tracking-widest lg:text-[14.3px]">

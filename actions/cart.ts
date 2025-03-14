@@ -98,8 +98,8 @@ export const lastCheckout = async () => {
     cart = await getCart(cartId);
   }
 
-  // Below functions is in charge of finding if the lastCheckout
-  // is waiting for a payment to be completed
+  // Below functions is in charge of finding whether the lastCheckout
+  // is waiting for a payment to be completed or not
   // Let's say for example, the user selected a STP payment method, so the
   // the checkout is in waiting status
   // I could not find other way to find this except for checking the number of

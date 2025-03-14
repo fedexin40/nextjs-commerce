@@ -7,12 +7,12 @@ import clsx from 'clsx';
 import { CurrentPerson } from 'lib/types';
 import { useState, useTransition } from 'react';
 import { useShipping } from 'stores/shipping';
-import { useUser } from 'stores/user';
 
 export default function Button({ checkoutId, user }: { checkoutId: string; user: CurrentPerson }) {
   const [isPending, startTransition] = useTransition();
   const deliveryMethodId = useShipping().selectedShippingId;
-  const userStore = useUser();
+  const shippingCost = useShipping().shippingCost;
+  const carrierName = useShipping().CarrierName;
   const [ErrorMessage, setErrorMessage] = useState('');
   const [error, setError] = useState(false);
   const closeError = () => setError(false);
@@ -20,7 +20,12 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
 
   function setupShippingAddress() {
     startTransition(async () => {
-      const errorMethodUpdate = await deliveryMethodUpdate({ checkoutId, deliveryMethodId });
+      const errorMethodUpdate = await deliveryMethodUpdate({
+        checkoutId,
+        deliveryMethodId,
+        shippingCost,
+        carrierName,
+      });
       if (errorMethodUpdate) {
         setErrorMessage(errorMethodUpdate);
         openError();

@@ -1,6 +1,7 @@
 import Shipping from 'components/shipping/page';
 import AddressInput from 'components/user-details/address-form';
 import { countryArea, getCart, Me } from 'lib/saleor';
+import { permanentRedirect } from 'next/navigation';
 import Button from './next-button';
 
 export default async function Checkout({
@@ -17,6 +18,9 @@ export default async function Checkout({
   }
 
   const cart = await getCart(checkout || '');
+  if (!cart) {
+    permanentRedirect('/');
+  }
   const cartTotal = cart?.cost.totalAmount.amount;
 
   return (

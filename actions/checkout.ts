@@ -4,6 +4,7 @@ import {
   billingAddressCheckoutUpdate,
   checkoutAddPromoCode,
   getCart,
+  setCarrierDetails,
   updateDeliveryMethod,
 } from 'lib/saleor';
 import { CountryCode } from 'lib/saleor/generated/graphql';
@@ -12,9 +13,13 @@ import { permanentRedirect } from 'next/navigation';
 export async function deliveryMethodUpdate({
   checkoutId,
   deliveryMethodId,
+  carrierName,
+  shippingCost,
 }: {
   checkoutId: string;
   deliveryMethodId: string;
+  carrierName: string;
+  shippingCost: number;
 }) {
   const cart = await getCart(checkoutId);
   try {
@@ -26,6 +31,7 @@ export async function deliveryMethodUpdate({
         console.log(error.message);
       }
     }
+    setCarrierDetails({ checkoutId, carrierName, shippingCost });
   } catch (error: any) {
     return error.message;
   }

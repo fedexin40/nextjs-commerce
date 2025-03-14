@@ -7,7 +7,11 @@ export default function ShippingFree({ ShippingMethods }: { ShippingMethods: shi
   const { setSelectedShippingId } = useShippingActions();
 
   useEffect(() => {
-    setSelectedShippingId(ShippingMethods[1]?.id || '');
+    setSelectedShippingId(
+      ShippingMethods[1]?.id || '',
+      ShippingMethods[1]?.name || '',
+      ShippingMethods[1]?.price || 0,
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
