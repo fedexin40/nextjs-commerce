@@ -747,7 +747,6 @@ export async function Me(): Promise<CurrentPerson> {
     query: GetMeDocument,
     variables: {},
     withAuth: true,
-    cache: 'no-store',
     tags: [TAGS.user],
   });
 

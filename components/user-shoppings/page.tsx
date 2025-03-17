@@ -13,9 +13,9 @@ export default async function UserShoppings() {
   const me = await Me();
   const orders = me.orders || [];
   const ordersByDate = Object.groupBy(orders, removeDay);
-  if (!orders) {
+  if (!orders || orders.length == 0) {
     return (
-      <div className="h-[300px] min-h-[300px] tracking-wider dark:text-[#c9aa9e]">
+      <div>
         <div>No tienes pedidos aun ...</div>
       </div>
     );

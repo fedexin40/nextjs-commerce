@@ -1,6 +1,10 @@
+import { TAGS } from 'lib/constants';
+import { revalidateTag } from 'next/cache';
 import Link from 'next/link';
 
 export default async function CartProcessing() {
+  revalidateTag(TAGS.user);
+
   return (
     <>
       <div className="mx-10 mb-16 mt-10 flex flex-col justify-center text-center md:mx-20 md:mb-24 md:mt-16 md:tracking-wider lg:mx-32 lg:mb-40 lg:mt-20">
