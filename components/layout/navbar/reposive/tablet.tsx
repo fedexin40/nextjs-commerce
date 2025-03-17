@@ -50,26 +50,30 @@ export default function TabletNavbar() {
                 <Link href="">
                   <div className="relative h-[25px] w-[25px]">
                     <Suspense>
-                      <Image
-                        className="object-contain"
-                        src={'/facebookRosa.png'}
-                        alt=""
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
+                      <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
+                        <Image
+                          className="object-contain"
+                          src={'/facebookRosa.png'}
+                          alt=""
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </Link>
                     </Suspense>
                   </div>
                 </Link>
                 <Link href="">
                   <div className="relative h-[25px] w-[25px]">
                     <Suspense>
-                      <Image
-                        className="object-contain"
-                        src={'/instagramRosa.png'}
-                        alt=""
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      />
+                      <Link href={'https://www.instagram.com/proyecto705/'}>
+                        <Image
+                          className="object-contain"
+                          src={'/instagramRosa.png'}
+                          alt=""
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        />
+                      </Link>
                     </Suspense>
                   </div>
                 </Link>

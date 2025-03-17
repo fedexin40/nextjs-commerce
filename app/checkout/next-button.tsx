@@ -2,9 +2,10 @@
 
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
-import { deliveryMethodUpdate } from 'actions/checkout';
+import { deliveryMethodUpdate, getCartFromCheckout } from 'actions/checkout';
 import clsx from 'clsx';
 import { CurrentPerson } from 'lib/types';
+import { permanentRedirect } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { useShipping } from 'stores/shipping';
 
@@ -29,6 +30,9 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
       if (errorMethodUpdate) {
         setErrorMessage(errorMethodUpdate);
         openError();
+      } else {
+        const cart = await getCartFromCheckout({ checkoutId });
+        permanentRedirect(cart?.checkoutUrlPayment || '');
       }
     });
   }

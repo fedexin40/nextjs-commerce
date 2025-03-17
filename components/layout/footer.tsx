@@ -57,23 +57,27 @@ export function Contacto() {
         <div className="flex flex-row gap-x-6 md:justify-end">
           <Link className="hover:cursor-pointer" href="">
             <div className="relative h-7 w-7">
-              <Image
-                className="object-contain"
-                src={'/facebook.png'}
-                alt="Siguenos en Facebook"
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
+              <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
+                <Image
+                  className="object-contain"
+                  src={'/facebook.png'}
+                  alt="Siguenos en Facebook"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </Link>
             </div>
           </Link>
           <Link className="hover:cursor-pointer" href="">
             <div className="relative h-7 w-7">
-              <Image
-                src={'/instagram.png'}
-                alt="Siguenos en Instagram"
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
+              <Link href={'https://www.instagram.com/proyecto705/'}>
+                <Image
+                  src={'/instagram.png'}
+                  alt="Siguenos en Instagram"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                />
+              </Link>
             </div>
           </Link>
         </div>

@@ -48,13 +48,15 @@ export default function MobileNavbar() {
             <div className="flex justify-center">
               <div className="relative h-[25px] w-[25px]">
                 <Suspense>
-                  <Image
-                    className="object-cover"
-                    src="/facebookRosa.png"
-                    alt=""
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
+                  <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
+                    <Image
+                      className="object-cover"
+                      src="/facebookRosa.png"
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </Link>
                 </Suspense>
               </div>
             </div>
@@ -63,13 +65,15 @@ export default function MobileNavbar() {
             <div className="flex justify-center">
               <Suspense>
                 <div className="relative h-[25px] w-[25px]">
-                  <Image
-                    className="object-cover"
-                    src="/instagramRosa.png"
-                    alt=""
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  />
+                  <Link href={'https://www.instagram.com/proyecto705/'}>
+                    <Image
+                      className="object-cover"
+                      src="/instagramRosa.png"
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </Link>
                 </div>
               </Suspense>
             </div>

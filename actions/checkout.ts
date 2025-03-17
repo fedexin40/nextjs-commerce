@@ -35,7 +35,6 @@ export async function deliveryMethodUpdate({
   } catch (error: any) {
     return error.message;
   }
-  permanentRedirect(cart?.checkoutUrlPayment || '');
 }
 
 export async function addressCheckoutUpdate({
@@ -71,4 +70,9 @@ export async function addressCheckoutUpdate({
     return error;
   }
   permanentRedirect(url);
+}
+
+export async function getCartFromCheckout({ checkoutId }: { checkoutId: string }) {
+  const cart = await getCart(checkoutId);
+  return cart;
 }
