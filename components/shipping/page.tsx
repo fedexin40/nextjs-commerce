@@ -112,7 +112,7 @@ export default function Shipping({
     return <div className="space-y-5 leading-8 md:text-left lg:leading-10">{error}</div>;
   }
 
-  if (shippingMethods.length > 0) {
+  if (shippingMethods && shippingMethods.length > 0) {
     shippingMethods.sort((y, x) => y.price - x.price);
     if (Number(checkoutTotal) > 1500) {
       return <ShippingFree ShippingMethods={shippingMethods} />;
