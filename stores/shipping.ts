@@ -11,6 +11,7 @@ interface shippingStore {
     setSelectedShippingId: (shippingId: string, CarrierName: string, shippingCost: number) => void;
     // eslint-disable-next-line no-unused-vars
     setShippingMethods: (shippingMethods: shippingMethod[]) => void;
+    reset: () => void;
   };
 }
 
@@ -27,6 +28,13 @@ const useShippingStore = create<shippingStore>()((set) => ({
         shippingCost: shippingCost,
       }),
     setShippingMethods: (shippingMethods) => set({ shippingMethods: shippingMethods }),
+    reset: () => {
+      set({
+        selectedShippingId: undefined,
+        CarrierName: undefined,
+        shippingCost: undefined,
+      });
+    },
   },
 }));
 

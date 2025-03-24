@@ -23,11 +23,6 @@ export default function ShippingMethods({
   }) {
     setSelectedShippingId(shippingId, carrierName, shippingCost);
     const selectedShippingId = shipping.selectedShippingId;
-    const CarrierName = shipping.CarrierName;
-    const shippingCost2 = shipping.shippingCost;
-    console.log(selectedShippingId);
-    console.log(CarrierName);
-    console.log(shippingCost2);
   }
 
   return (

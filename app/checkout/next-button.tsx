@@ -6,8 +6,8 @@ import { deliveryMethodUpdate, getCartFromCheckout } from 'actions/checkout';
 import clsx from 'clsx';
 import { CurrentPerson } from 'lib/types';
 import { permanentRedirect } from 'next/navigation';
-import { useState, useTransition } from 'react';
-import { useShipping } from 'stores/shipping';
+import { useEffect, useState, useTransition } from 'react';
+import { useShipping, useShippingActions } from 'stores/shipping';
 
 export default function Button({ checkoutId, user }: { checkoutId: string; user: CurrentPerson }) {
   const [isPending, startTransition] = useTransition();
@@ -18,6 +18,12 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
   const [error, setError] = useState(false);
   const closeError = () => setError(false);
   const openError = () => setError(true);
+  const { reset } = useShippingActions();
+
+  // Delete the shipping states
+  useEffect(() => {
+    reset();
+  }, []);
 
   function setupShippingAddress() {
     startTransition(async () => {
@@ -67,6 +73,7 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
         onClick={() => setupShippingAddress()}
       >
         Siguiente
+        <div className="hidden">{deliveryMethodId}</div>
       </div>
       <div
         className={clsx(

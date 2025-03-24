@@ -75,12 +75,15 @@ export default function Shipping({
     return (
       <div className="w-full">
         <div className="flex flex-col space-y-4 md:space-y-8 lg:space-y-14">
-          <div className="flex flex-row space-x-2">
+          <div>
             <span>Estamos cargando la lista de paqueterías disponibles</span>
-            <div className="flex flex-row space-x-2 self-end">
-              <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black [animation-delay:-0.3s] dark:bg-white lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
-              <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black [animation-delay:-0.15s] dark:bg-white lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
-              <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black dark:bg-white lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
+            <div className="flex flex-row space-x-2">
+              <span>Esto puede tardar algunos minutos </span>
+              <div className="flex flex-row space-x-2 self-end">
+                <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black [animation-delay:-0.3s] dark:bg-white lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
+                <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black [animation-delay:-0.15s] dark:bg-white lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
+                <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black dark:bg-white lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
+              </div>
             </div>
           </div>
           <div className="flex animate-pulse flex-col space-y-2">
