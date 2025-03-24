@@ -44,6 +44,7 @@ export default async function Checkout({
       </div>
       <div className="border-[#acacac] bg-[#d4d4d4] px-10 py-16 dark:border-t-0 dark:border-[#c9aa9e] dark:bg-zinc-800 md:basis-[48%] md:border-l-2 lg:px-10">
         <div className=" flex flex-col">
+          <h1 className="pb-10">Por favor seleccione una paquetería de la lista de abajo</h1>
           <Shipping checkoutTotal={cartTotal} checkoutId={checkout || ''} user={me} />
           <div className="mt-16 block w-full place-self-center dark:bg-[#c9aa9e] md:hidden">
             <Button checkoutId={checkout || ''} user={me} />
