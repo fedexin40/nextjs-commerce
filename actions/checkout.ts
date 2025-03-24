@@ -24,6 +24,10 @@ export async function deliveryMethodUpdate({
   const cart = await getCart(checkoutId);
   try {
     await updateDeliveryMethod({ checkoutId, deliveryMethodId });
+    const deliveryMethod = (await getCart(checkoutId))?.deliveryMethod;
+    if (!deliveryMethod) {
+      return 'Algo fallo con el metodo seleccionado, por favor trata nuevamente';
+    }
     if (Number(cart?.cost.totalAmount.amount) >= 1500) {
       try {
         await checkoutAddPromoCode({ checkoutId });

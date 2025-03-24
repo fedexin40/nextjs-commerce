@@ -157,6 +157,14 @@ export type VercelCommerceCart = {
         }[];
       }[]
     | null;
+  deliveryMethod:
+    | {
+        id: string;
+        name: string;
+      }
+    | null
+    | undefined
+    | {};
 };
 
 export type VercelCommerceCollection = {

@@ -31850,7 +31850,7 @@ export type CheckoutFragment = {
   transactions?: Array<{
     events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
   }> | null;
-  deliveryMethod?: { name: string } | {} | null;
+  deliveryMethod?: { id: string; name: string } | {} | null;
   shippingPrice: { gross: { amount: number } };
 };
 
@@ -32120,7 +32120,7 @@ export type CheckoutAddLineMutation = {
       transactions?: Array<{
         events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
       }> | null;
-      deliveryMethod?: { name: string } | {} | null;
+      deliveryMethod?: { id: string; name: string } | {} | null;
       shippingPrice: { gross: { amount: number } };
     } | null;
   } | null;
@@ -32254,7 +32254,7 @@ export type CheckoutDeleteLineMutation = {
       transactions?: Array<{
         events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
       }> | null;
-      deliveryMethod?: { name: string } | {} | null;
+      deliveryMethod?: { id: string; name: string } | {} | null;
       shippingPrice: { gross: { amount: number } };
     } | null;
   } | null;
@@ -32385,7 +32385,7 @@ export type CheckoutUpdateLineMutation = {
       transactions?: Array<{
         events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
       }> | null;
-      deliveryMethod?: { name: string } | {} | null;
+      deliveryMethod?: { id: string; name: string } | {} | null;
       shippingPrice: { gross: { amount: number } };
     } | null;
   } | null;
@@ -32493,7 +32493,7 @@ export type CreateCheckoutMutation = {
       transactions?: Array<{
         events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
       }> | null;
-      deliveryMethod?: { name: string } | {} | null;
+      deliveryMethod?: { id: string; name: string } | {} | null;
       shippingPrice: { gross: { amount: number } };
     } | null;
   } | null;
@@ -32760,7 +32760,7 @@ export type GetCheckoutByIdQuery = {
     transactions?: Array<{
       events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
     }> | null;
-    deliveryMethod?: { name: string } | {} | null;
+    deliveryMethod?: { id: string; name: string } | {} | null;
     shippingPrice: { gross: { amount: number } };
   } | null;
 };
@@ -33032,7 +33032,7 @@ export type GetMeQuery = {
           transactions?: Array<{
             events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
           }> | null;
-          deliveryMethod?: { name: string } | {} | null;
+          deliveryMethod?: { id: string; name: string } | {} | null;
           shippingPrice: { gross: { amount: number } };
         };
       }>;
@@ -33477,6 +33477,7 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
   }
   deliveryMethod {
     ... on ShippingMethod {
+      id
       name
     }
   }
@@ -33852,6 +33853,7 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
   }
   deliveryMethod {
     ... on ShippingMethod {
+      id
       name
     }
   }
@@ -34077,6 +34079,7 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
   }
   deliveryMethod {
     ... on ShippingMethod {
+      id
       name
     }
   }
@@ -34306,6 +34309,7 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
   }
   deliveryMethod {
     ... on ShippingMethod {
+      id
       name
     }
   }
@@ -34493,6 +34497,7 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
   }
   deliveryMethod {
     ... on ShippingMethod {
+      id
       name
     }
   }
@@ -34908,6 +34913,7 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
   }
   deliveryMethod {
     ... on ShippingMethod {
+      id
       name
     }
   }
@@ -35307,6 +35313,7 @@ export const GetMeDocument = new TypedDocumentString(`
   }
   deliveryMethod {
     ... on ShippingMethod {
+      id
       name
     }
   }

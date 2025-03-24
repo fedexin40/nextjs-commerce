@@ -72,6 +72,7 @@ fragment Checkout on Checkout {
   }
   deliveryMethod {
     ... on ShippingMethod {
+      id
       name
     }
   }
