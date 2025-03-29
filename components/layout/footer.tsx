@@ -84,7 +84,7 @@ export function Contacto() {
         <div className="flex flex-col gap-y-3">
           <div>Tel: 2211664477</div>
           <div>
-            <a href="mailto:contacto@proyecto705.com">contacto@proyecto705.com</a>
+            <a href="mailto:contacto@proyecto705.com.mx">contacto@proyecto705.com.mx</a>
           </div>
         </div>
       </div>
