@@ -2,6 +2,7 @@ import { StripeComponent } from 'components/stripe/stripe-component';
 import { getCart, transactionInitialize } from 'lib/saleor';
 import { permanentRedirect } from 'next/navigation';
 import { Suspense } from 'react';
+import AlertOxxo from './alert';
 import Cart from './cart';
 
 export default async function CheckoutPayment({
@@ -71,27 +72,30 @@ export default async function CheckoutPayment({
   }
 
   return (
-    <div className="flex flex-col dark:bg-zinc-700 md:flex-row">
-      <div className="mx-10 mb-16	pt-16 md:mb-24 md:basis-[52%] lg:mb-40 lg:px-10">
-        <div className="flex flex-row space-x-3 bg-[#e4c0b2] p-5 dark:text-black">
-          <span className="capitalize">Proyecto 705:</span>
-          <span className="uppercase">${cart?.cost.totalAmount.amount}</span>
+    <>
+      <AlertOxxo />
+      <div className="flex flex-col dark:bg-zinc-700 md:flex-row">
+        <div className="mx-10 mb-16	pt-16 md:mb-24 md:basis-[52%] lg:mb-40 lg:px-10">
+          <div className="flex flex-row space-x-3 bg-[#e4c0b2] p-5 dark:text-black">
+            <span className="capitalize">Proyecto 705:</span>
+            <span className="uppercase">${cart?.cost.totalAmount.amount}</span>
+          </div>
+          <div className="border-2 px-5 py-3 pb-20">
+            <Suspense fallback={<div>Loading</div>}>
+              <StripeComponent
+                clientSecret={stripeData.paymentIntent.client_secret}
+                publishableKey={stripeData.publishableKey}
+                returnUrl={checkoutPayment}
+              />
+            </Suspense>
+          </div>
         </div>
-        <div className="border-2 px-5 py-3 pb-20">
-          <Suspense fallback={<div>Loading</div>}>
-            <StripeComponent
-              clientSecret={stripeData.paymentIntent.client_secret}
-              publishableKey={stripeData.publishableKey}
-              returnUrl={checkoutPayment}
-            />
-          </Suspense>
+        <div className="hidden border-[#acacac] bg-[#d4d4d4] px-10 py-16 dark:border-t-0 dark:border-[#c9aa9e] dark:bg-zinc-800 md:flex md:basis-[48%] md:border-l-2 lg:px-10">
+          <div className="w-full">
+            <Cart cart={cart} />
+          </div>
         </div>
       </div>
-      <div className="hidden border-[#acacac] bg-[#d4d4d4] px-10 py-16 dark:border-t-0 dark:border-[#c9aa9e] dark:bg-zinc-800 md:flex md:basis-[48%] md:border-l-2 lg:px-10">
-        <div className="w-full">
-          <Cart cart={cart} />
-        </div>
-      </div>
-    </div>
+    </>
   );
 }
