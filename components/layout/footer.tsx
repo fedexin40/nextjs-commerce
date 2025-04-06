@@ -55,8 +55,8 @@ export function Contacto() {
     <>
       <div className="flex flex-col gap-y-6 md:text-right">
         <div className="flex flex-row gap-x-6 md:justify-end">
-          <Link className="hover:cursor-pointer" href="">
-            <div className="relative h-7 w-7">
+          <div>
+            <div className="relative h-7 w-7 hover:cursor-pointer">
               <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
                 <Image
                   className="object-contain"
@@ -67,9 +67,9 @@ export function Contacto() {
                 />
               </Link>
             </div>
-          </Link>
-          <Link className="hover:cursor-pointer" href="">
-            <div className="relative h-7 w-7">
+          </div>
+          <div>
+            <div className="relative h-7 w-7 hover:cursor-pointer">
               <Link href={'https://www.instagram.com/proyecto705/'}>
                 <Image
                   src={'/instagram.png'}
@@ -79,10 +79,10 @@ export function Contacto() {
                 />
               </Link>
             </div>
-          </Link>
+          </div>
         </div>
         <div className="flex flex-col gap-y-3">
-          <div>Tel: 2211664477</div>
+          <a href="https://api.whatsapp.com/send?phone=522225215239">Whatsapp: 222 521 52 39</a>
           <div>
             <a href="mailto:contacto@proyecto705.com.mx">contacto@proyecto705.com.mx</a>
           </div>
