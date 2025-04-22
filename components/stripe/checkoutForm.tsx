@@ -2,9 +2,18 @@
 /* eslint-disable */
 // @ts-nocheck
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { Purchase } from 'components/FacebookPixel';
 import { useState } from 'react';
 
-export default function CheckoutForm({ returnUrl }: { returnUrl: string }) {
+export default function CheckoutForm({
+  returnUrl,
+  content_ids,
+  value,
+}: {
+  returnUrl: string;
+  content_ids: string[];
+  value: string;
+}) {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -72,6 +81,12 @@ export default function CheckoutForm({ returnUrl }: { returnUrl: string }) {
             ) : (
               'Pagar ahora'
             )}
+            <Purchase
+              currency={'MXN'}
+              content_ids={content_ids}
+              content_type="product"
+              value={value}
+            />
           </div>
         </button>
         {/* Show any error or success messages */}

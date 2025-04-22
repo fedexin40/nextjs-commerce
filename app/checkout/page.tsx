@@ -1,3 +1,4 @@
+import { InitiateCheckout } from 'components/FacebookPixel';
 import Shipping from 'components/shipping/page';
 import AddressInput from 'components/user-details/address-form';
 import { countryArea, getCart, Me } from 'lib/saleor';
@@ -22,6 +23,8 @@ export default async function Checkout({
     permanentRedirect('/');
   }
   const cartTotal = cart?.cost.totalAmount.amount;
+  // Used for facebook pixel
+  const content_ids = cart.lines.map((x) => x.merchandise.product.handle);
 
   return (
     <div className="flex flex-col tracking-wider dark:bg-zinc-700 md:flex-row">
@@ -51,6 +54,12 @@ export default async function Checkout({
           </div>
         </div>
       </div>
+      <InitiateCheckout
+        currency={'MXN'}
+        content_ids={content_ids}
+        content_type="product"
+        value={cartTotal}
+      />
     </div>
   );
 }

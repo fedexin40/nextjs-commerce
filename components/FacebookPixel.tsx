@@ -13,7 +13,7 @@ export const FacebookPixelEvents = () => {
     import('react-facebook-pixel')
       .then((x) => x.default)
       .then((ReactPixel) => {
-        ReactPixel.init(pixel.FB_PIXEL_ID || ''); //don't forget to change this
+        ReactPixel.init(pixel.FB_PIXEL_ID || '');
         ReactPixel.pageView();
       });
   }, [pathname, searchParams]);
@@ -46,6 +46,66 @@ export const ProductView = (parameters: { content_ids: [string]; content_type: s
       .then((x) => x.default)
       .then((ReactPixel) => {
         ReactPixel.track('ViewContent', parameters);
+      });
+  }, [pathname, searchParams]);
+
+  return null;
+};
+
+export const Add2Cart = (parameters: {
+  content_ids: string[] | undefined;
+  content_type: string;
+  currency: string;
+  value: string;
+}) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    import('react-facebook-pixel')
+      .then((x) => x.default)
+      .then((ReactPixel) => {
+        ReactPixel.track('AddToCart', parameters);
+      });
+  }, [pathname, searchParams]);
+
+  return null;
+};
+
+export const Purchase = (parameters: {
+  content_ids: string[] | undefined;
+  content_type: string;
+  currency: string;
+  value: string;
+}) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    import('react-facebook-pixel')
+      .then((x) => x.default)
+      .then((ReactPixel) => {
+        ReactPixel.track('Purchase', parameters);
+      });
+  }, [pathname, searchParams]);
+
+  return null;
+};
+
+export const InitiateCheckout = (parameters: {
+  content_ids: string[] | undefined;
+  content_type: string;
+  currency: string;
+  value: string;
+}) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    import('react-facebook-pixel')
+      .then((x) => x.default)
+      .then((ReactPixel) => {
+        ReactPixel.track('InitiateCheckout', parameters);
       });
   }, [pathname, searchParams]);
 

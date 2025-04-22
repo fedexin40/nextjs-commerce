@@ -2,7 +2,6 @@ import { StripeComponent } from 'components/stripe/stripe-component';
 import { getCart, transactionInitialize } from 'lib/saleor';
 import { permanentRedirect } from 'next/navigation';
 import { Suspense } from 'react';
-import AlertOxxo from './alert';
 import Cart from './cart';
 
 export default async function CheckoutPayment({
@@ -71,9 +70,12 @@ export default async function CheckoutPayment({
     );
   }
 
+  // Used for facebook pixel
+  const content_ids = cart.lines.map((x) => x.merchandise.product.handle);
+  const value = cart.cost.totalAmount.amount;
+
   return (
     <>
-      <AlertOxxo />
       <div className="flex flex-col dark:bg-zinc-700 md:flex-row">
         <div className="mx-10 mb-16	pt-16 md:mb-24 md:basis-[52%] lg:mb-40 lg:px-10">
           <div className="flex flex-row space-x-3 bg-[#e4c0b2] p-5 dark:text-black">
@@ -86,6 +88,8 @@ export default async function CheckoutPayment({
                 clientSecret={stripeData.paymentIntent.client_secret}
                 publishableKey={stripeData.publishableKey}
                 returnUrl={checkoutPayment}
+                content_ids={content_ids}
+                value={value}
               />
             </Suspense>
           </div>
