@@ -46,11 +46,15 @@ export default function LoginModal({ children }: { children: ReactNode }) {
     }
     isNotLoading();
   }
-
   return (
     <div className="z-50">
-      <div onClick={openLogin}>
-        <Image src={'/registro.png'} alt="" width="27" height="27" />
+      <div className="relative h-[32px] w-[32px]" onClick={openLogin}>
+        <Image
+          src={'/registro.png'}
+          alt=""
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        />
       </div>
       <Transition show={isOpen}>
         <Dialog onClose={() => {}} className="relative z-50" initialFocus={initialFocusRef}>

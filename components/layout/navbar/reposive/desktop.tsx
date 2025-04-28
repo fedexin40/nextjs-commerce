@@ -57,7 +57,7 @@ export default function DesktopNavbar() {
               </div>
               <div className="flex w-2/4 justify-end space-x-3 pr-10">
                 <Link href="">
-                  <div className="relative h-[25px] w-[25px]">
+                  <div className="relative h-[32px] w-[32px]">
                     <Suspense>
                       <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
                         <Image
@@ -72,7 +72,7 @@ export default function DesktopNavbar() {
                   </div>
                 </Link>
                 <Link href="">
-                  <div className="relative h-[25px] w-[25px]">
+                  <div className="relative h-[32px] w-[32px]">
                     <Suspense>
                       <Link href={'https://www.instagram.com/proyecto705/'}>
                         <Image
