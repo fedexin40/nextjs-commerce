@@ -17,7 +17,7 @@ export default async function User() {
   return (
     <div className="text-[13px] tracking-widest lg:text-[14.3px]">
       <Link href="/user">
-        <div className="relative h-[32px] w-[32px] opacity-50">
+        <div className="relative h-[27] w-[27px] opacity-50">
           <Image
             className="object-contain"
             src={'/registro.png'}

@@ -4,7 +4,7 @@ import { Suspense } from 'react';
 export default function OpenCart({ quantity }: { quantity?: number }) {
   return (
     <div className="relative">
-      <div className="relative h-[32px] w-[32px]">
+      <div className="relative h-[27px] w-[27px]">
         <Suspense>
           <Image
             className="object-contain"
