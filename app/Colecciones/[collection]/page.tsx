@@ -56,7 +56,7 @@ export default async function CategoryPage({
               <FilterList list={sorting} />
             </div>
           </div>
-          <Grid className="grid-cols-1 gap-y-24 md:grid-cols-3 lg:grid-cols-4 xl:gap-y-40">
+          <Grid className="grid-cols-2 gap-y-24 md:grid-cols-3 lg:grid-cols-4 xl:gap-y-40">
             <ProductGridItems products={products} />
           </Grid>
         </div>
