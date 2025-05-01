@@ -27,6 +27,9 @@ export default function ShippingMethods({
 
   return (
     <div className="w-full">
+      <div className="pb-5">
+        Por favor seleccione una paquetería de la lista de abajo para poder continuar
+      </div>
       <RadioGroup aria-label="shipping method" className="space-y-2">
         <div className="w-full space-y-5 lg:space-y-7">
           {ShippingMethods.map((ShippingMethod) => (

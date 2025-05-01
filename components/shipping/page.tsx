@@ -38,8 +38,26 @@ export default function Shipping({
         lastName: userStore.lastName || user.lastName || '',
         phone: userStore.phone || user.address.phone || '',
       };
-      if (!userStore.phone && !user.address.phone) {
-        setError('Por favor ingresa tu número telefónico');
+      if (!input.phone) {
+        setError('El numero de telefono es un campo obligatorio');
+        return;
+      } else if (!input.city) {
+        setError('La ciudad es un campo obligatorio');
+        return;
+      } else if (!input.postalCode) {
+        setError('El codigo postal es un campo obligatorio');
+        return;
+      } else if (!input.countryArea) {
+        setError('El estado es un campo obligatorio');
+        return;
+      } else if (!input.streetAddress1) {
+        setError('La calle y el numero son campos obligatorios');
+        return;
+      } else if (!input.streetAddress2) {
+        setError('La colonia es un campo obligatorio');
+        return;
+      } else if (!input.firstName || !input.lastName) {
+        setError('El nombre completo es obligatorio');
         return;
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps

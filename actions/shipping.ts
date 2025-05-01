@@ -46,10 +46,17 @@ export async function shippingAddressUpdate({
 export async function shippingMethodsAction({ checkoutId }: { checkoutId: string }) {
   // Get the shippingMethods
   let methodsShipping;
-  try {
+  let index = 0;
+  // No tengo idea exactamente por que
+  // pero me parece tiene algo que ver con el timeout de los webhooks
+  // Entonces lo que hago solo es repetir la misma llamada dos veces si la primera vez
+  // shippingmethods esta vacio
+  while (index < 2) {
     methodsShipping = await getShippingMethods(checkoutId || '');
-  } catch (error: any) {
-    return error.message;
+    if (methodsShipping.length > 0) {
+      break;
+    }
+    index++;
   }
   return methodsShipping;
 }
