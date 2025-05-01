@@ -27,7 +27,7 @@ export default async function Checkout({
   const content_ids = cart.lines.map((x) => x.merchandise.product.handle);
 
   return (
-    <div className="flex flex-col tracking-wider dark:bg-zinc-700 md:flex-row">
+    <div className="flex flex-col text-[13.5px] tracking-[1.4px] tracking-wider dark:bg-zinc-700 md:flex-row lg:text-[14.3px]">
       <div className="mx-10 mb-16	pt-16 md:mb-24 md:basis-[52%] lg:mb-40 lg:px-10">
         <div className="font-medium uppercase dark:text-[#c9aa9e]">Detalles de entrega</div>
         <div className="pt-2 md:hidden">

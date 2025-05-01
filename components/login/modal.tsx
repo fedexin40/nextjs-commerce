@@ -48,7 +48,7 @@ export default function LoginModal({ children }: { children: ReactNode }) {
   }
   return (
     <div className="z-50">
-      <div className="relative h-[32px] w-[32px]" onClick={openLogin}>
+      <div className="relative h-[27px] w-[27px]" onClick={openLogin}>
         <Image
           src={'/registro.png'}
           alt=""

@@ -45,7 +45,7 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
 
   if (!deliveryMethodId) {
     return (
-      <div className="flex h-[60px] w-full cursor-not-allowed items-center justify-center whitespace-nowrap bg-black p-3 font-semibold uppercase text-white opacity-50 dark:bg-[#c9aa9e]">
+      <div className="flex h-[60px] w-full cursor-not-allowed items-center justify-center whitespace-nowrap bg-black p-3 text-[15.5px] font-semibold uppercase tracking-[1.4px] text-white opacity-50 dark:bg-[#c9aa9e] lg:text-[16.3px]">
         Siguiente
       </div>
     );
