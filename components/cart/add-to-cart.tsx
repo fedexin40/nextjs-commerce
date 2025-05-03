@@ -4,6 +4,7 @@ import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { addItem } from 'actions/cart';
 import clsx from 'clsx';
+import { Add2Cart } from 'components/FacebookPixel';
 import { ProductVariant } from 'lib/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
@@ -12,9 +13,13 @@ import { cartActions } from 'stores/cart';
 export function AddToCart({
   variants,
   availableForSale,
+  content_ids,
+  value,
 }: {
   variants: ProductVariant[];
   availableForSale: boolean;
+  content_ids: string[];
+  value: string;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -44,6 +49,7 @@ export function AddToCart({
 
   return (
     <div>
+      <Add2Cart currency={'MXN'} content_ids={content_ids} content_type="product" value={value} />
       <div>
         <Snackbar
           anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
