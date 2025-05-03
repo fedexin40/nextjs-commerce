@@ -1,6 +1,5 @@
 import { AddToCart } from 'components/cart/add-to-cart';
 import { BuyNow } from 'components/cart/buy-now';
-import { Add2Cart } from 'components/FacebookPixel';
 import Price from 'components/price';
 import { Product, ProductVariant } from 'lib/types';
 import Image from 'next/image';
@@ -35,10 +34,25 @@ export function ProductDescription({
         <div className="mb-2 dark:text-[#c9aa9e]">
           <h1 className="text-base font-semibold capitalize tracking-wider">{product.title}</h1>
         </div>
-        <div className="py-10 text-justify text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
+        <div className="mr-auto block w-auto p-2 pl-0 text-[13.5px] font-semibold tracking-[1.4px] dark:text-[#c9aa9e] md:hidden lg:text-[14.3px]">
+          {variant && (
+            <Price
+              amountMax={variant.price.amount}
+              currencyCode={product.priceRange.minVariantPrice.currencyCode}
+            />
+          )}
+          {!variant && (
+            <Price
+              amountMax={product.priceRange.maxVariantPrice.amount}
+              amountMin={product.priceRange.minVariantPrice.amount}
+              currencyCode={product.priceRange.minVariantPrice.currencyCode}
+            />
+          )}
+        </div>
+        <div className="text-justify text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
           {description}
         </div>
-        <div className="mr-auto w-auto p-2 pl-0 text-base font-semibold	 tracking-wider dark:text-[#c9aa9e]">
+        <div className="mr-auto hidden w-auto p-2 pl-0 pt-5 text-[13.5px] font-semibold tracking-[1.4px] dark:text-[#c9aa9e] md:block lg:text-[14.3px]">
           {variant && (
             <Price
               amountMax={variant.price.amount}
@@ -60,13 +74,12 @@ export function ProductDescription({
       <div className="mt-6 flex flex-col gap-5 border-b pb-6 uppercase dark:border-neutral-700">
         <BuyNow variants={product.variants} availableForSale={product.availableForSale} />
         <Suspense>
-          <Add2Cart
-            currency={'MXN'}
+          <AddToCart
+            variants={product.variants}
+            availableForSale={product.availableForSale}
             content_ids={content_ids}
-            content_type="product"
             value={value}
           />
-          <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
         </Suspense>
       </div>
       <div className="pt-5 text-left text-[12px] leading-tight text-gray-800 dark:text-white lg:text-[14px]">
