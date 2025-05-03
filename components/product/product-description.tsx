@@ -49,7 +49,7 @@ export function ProductDescription({
             />
           )}
         </div>
-        <div className="text-justify text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
+        <div className="pb-5 text-justify text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
           {description}
         </div>
         <div className="mr-auto hidden w-auto p-2 pl-0 pt-5 text-[13.5px] font-semibold tracking-[1.4px] dark:text-[#c9aa9e] md:block lg:text-[14.3px]">
