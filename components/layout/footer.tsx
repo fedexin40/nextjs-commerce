@@ -1,3 +1,4 @@
+import Brevo from 'components/brevo/page';
 import FooterMenu from 'components/layout/footer-menu';
 import { getPagesByMenu } from 'lib/saleor';
 import Image from 'next/image';
@@ -13,7 +14,7 @@ export default async function Footer() {
 
   return (
     <footer className="bg-[#f1f1f1] text-[13px] tracking-widest text-black dark:bg-zinc-800 dark:text-white lg:text-[14.3px]">
-      <div className="flex w-full flex-col gap-6 px-6 py-12 md:gap-12 md:px-10">
+      <div className="flex w-full flex-col gap-6 px-6 py-6 md:gap-12 md:px-10 lg:py-12">
         <div className="flex flex-col gap-y-10 md:flex-row lg:px-9">
           <div className="hidden md:block md:basis-1/4 lg:basis-1/3">
             <div className="relative hidden h-28 w-28 dark:block lg:h-36 lg:w-36">
@@ -36,7 +37,7 @@ export default async function Footer() {
             <Contacto />
           </div>
         </div>
-        <div className="border-t-2 border-t-gray-500 py-6 dark:border-t-[#c9aa9e] dark:text-[#c9aa9e]">
+        <div className="border-t-2 border-t-gray-500 pt-6 dark:border-t-[#c9aa9e] dark:text-[#c9aa9e]">
           <div className="flex w-full flex-row justify-start md:pl-10">
             <p>
               &copy; {copyrightDate} {copyrightName}
@@ -46,6 +47,7 @@ export default async function Footer() {
           </div>
         </div>
       </div>
+      <Brevo />
     </footer>
   );
 }

@@ -11,6 +11,10 @@ module.exports = {
         protocol: 'https',
         hostname: 'api.proyecto705.com.mx',
       },
+      {
+        protocol: 'http',
+        hostname: 'localhost',
+      },
     ],
   },
 };
