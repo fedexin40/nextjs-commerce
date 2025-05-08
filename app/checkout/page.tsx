@@ -5,11 +5,10 @@ import { countryArea, getCart, Me } from 'lib/saleor';
 import { permanentRedirect } from 'next/navigation';
 import Button from './next-button';
 
-export default async function Checkout({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | undefined };
+export default async function Checkout(props: {
+  searchParams?: Promise<{ [key: string]: string | undefined }>;
 }) {
+  const searchParams = await props.searchParams;
   let checkout;
   const states = await countryArea();
   const me = await Me();

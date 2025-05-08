@@ -1,7 +1,7 @@
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { FacebookPixelEvents } from 'components/FacebookPixel';
 import { Inter } from 'next/font/google';
-import { ReactNode, Suspense } from 'react';
+import { ReactNode } from 'react';
 import './globals.css';
 
 const { SITE_NAME } = process.env;
@@ -17,14 +17,10 @@ const inter = Inter({
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html>
       <body className="select-none bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
-        <Suspense>
-          <main>{children}</main>
-        </Suspense>
-        <Suspense fallback={null}>
-          <FacebookPixelEvents />
-        </Suspense>
+        <main>{children}</main>
+        <FacebookPixelEvents />
       </body>
       <GoogleAnalytics gaId="G-ZT16CGTNYX" />
     </html>

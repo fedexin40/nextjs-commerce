@@ -3,11 +3,10 @@ import { getCart, transactionInitialize } from 'lib/saleor';
 import { permanentRedirect } from 'next/navigation';
 import Cart from './cart';
 
-export default async function CheckoutPayment({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | undefined };
+export default async function CheckoutPayment(props: {
+  searchParams?: Promise<{ [key: string]: string | undefined }>;
 }) {
+  const searchParams = await props.searchParams;
   let checkout;
   if (searchParams) {
     checkout = searchParams['checkout'] || '';

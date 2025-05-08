@@ -1,11 +1,10 @@
 import { confirmAccount } from 'lib/saleor';
 import Link from 'next/link';
 
-export default async function accountConfirm({
-  searchParams,
-}: {
-  searchParams?: { [key: string]: string | undefined };
+export default async function accountConfirm(props: {
+  searchParams?: Promise<{ [key: string]: string | undefined }>;
 }) {
+  const searchParams = await props.searchParams;
   if (searchParams) {
     const email = searchParams['email'] || '';
     const token = searchParams['token'] || '';

@@ -3,7 +3,6 @@ import Menu from 'components/layout/navigation';
 import User from 'components/user';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense } from 'react';
 import Search from '../search';
 
 export default function DesktopNavbar() {
@@ -17,9 +16,7 @@ export default function DesktopNavbar() {
                 <Link href="/sobre-nosotros">Nosotros</Link>
               </div>
               <div className="relative">
-                <Suspense>
-                  <Menu />
-                </Suspense>
+                <Menu />
               </div>
             </div>
           </div>
@@ -43,49 +40,37 @@ export default function DesktopNavbar() {
           <div className="md:col-span-2">
             <div className="flex flex-row items-center space-x-3">
               <div className="w-1/3">
-                <Suspense>
-                  <Search />
-                </Suspense>
+                <Search />
               </div>
               <div className="hover:cursor-pointer">
-                <Suspense>
-                  <User />
-                </Suspense>
+                <User />
               </div>
               <div className="hover:cursor-pointer">
                 <Cart />
               </div>
               <div className="flex w-2/4 justify-end space-x-3 pr-10">
-                <Link href="">
-                  <div className="relative h-[27px] w-[27px]">
-                    <Suspense>
-                      <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
-                        <Image
-                          className="object-cover"
-                          src={'/facebookRosa.png'}
-                          alt=""
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                      </Link>
-                    </Suspense>
-                  </div>
-                </Link>
-                <Link href="">
-                  <div className="relative h-[27px] w-[27px]">
-                    <Suspense>
-                      <Link href={'https://www.instagram.com/proyecto705/'}>
-                        <Image
-                          className="object-cover"
-                          src={'/instagramRosa.png'}
-                          alt=""
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                      </Link>
-                    </Suspense>
-                  </div>
-                </Link>
+                <div className="relative h-[27px] w-[27px]">
+                  <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
+                    <Image
+                      className="object-cover"
+                      src={'/facebookRosa.png'}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </Link>
+                </div>
+                <div className="relative h-[27px] w-[27px]">
+                  <Link href={'https://www.instagram.com/proyecto705/'}>
+                    <Image
+                      className="object-cover"
+                      src={'/instagramRosa.png'}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>

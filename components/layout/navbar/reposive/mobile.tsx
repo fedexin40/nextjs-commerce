@@ -1,10 +1,8 @@
 import Cart from 'components/cart';
-import OpenCart from 'components/cart/open-cart';
 import Menu from 'components/layout/navigation';
 import User from 'components/user';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense } from 'react';
 import Search from '../search';
 
 export default function MobileNavbar() {
@@ -16,33 +14,25 @@ export default function MobileNavbar() {
             <div className="flex items-center justify-center">
               <Link href="/">
                 <div className="relative h-[120px] w-[120px]">
-                  <Suspense>
-                    <Image
-                      className="object-contain"
-                      src={'/logoNegroMovil.png'}
-                      alt=""
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  </Suspense>
+                  <Image
+                    className="object-contain"
+                    src={'/logoNegroMovil.png'}
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                 </div>
               </Link>
             </div>
             <div className="flex flex-row items-center justify-center gap-4 text-[14px]">
               <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300">
-                <Suspense>
-                  <User />
-                </Suspense>
+                <User />
               </div>
               <div>
-                <Suspense>
-                  <Cart />
-                </Suspense>
+                <Cart />
               </div>
               <div>
-                <Suspense>
-                  <Menu />
-                </Suspense>
+                <Menu />
               </div>
             </div>
           </div>
@@ -58,49 +48,41 @@ export default function MobileNavbar() {
           <div className="w-full border-r-2 border-white p-2">
             <div className="flex justify-center">
               <div className="relative h-[27px] w-[27px]">
-                <Suspense>
-                  <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
-                    <Image
-                      className="object-cover"
-                      src="/facebookRosa.png"
-                      alt=""
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  </Link>
-                </Suspense>
+                <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
+                  <Image
+                    className="object-cover"
+                    src="/facebookRosa.png"
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </Link>
               </div>
             </div>
           </div>
           <div className="w-full border-x-2 border-white  p-2">
             <div className="flex justify-center">
-              <Suspense>
-                <div className="relative h-[27px] w-[27px]">
-                  <Link href={'https://www.instagram.com/proyecto705/'}>
-                    <Image
-                      className="object-cover"
-                      src="/instagramRosa.png"
-                      alt=""
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  </Link>
-                </div>
-              </Suspense>
+              <div className="relative h-[27px] w-[27px]">
+                <Link href={'https://www.instagram.com/proyecto705/'}>
+                  <Image
+                    className="object-cover"
+                    src="/instagramRosa.png"
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </Link>
+              </div>
             </div>
           </div>
           <div className="w-full border-x-2 border-white p-2">
             <div className="flex justify-center">
-              <Suspense>
-                <User />
-              </Suspense>
+              <User />
             </div>
           </div>
           <div className="w-full border-l-2 border-white p-2">
             <div className="flex justify-center hover:cursor-pointer">
-              <Suspense fallback={<OpenCart />}>
-                <Cart />
-              </Suspense>
+              <Cart />
             </div>
           </div>
         </div>

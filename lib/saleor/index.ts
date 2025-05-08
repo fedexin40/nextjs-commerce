@@ -111,7 +111,7 @@ export async function saleorFetch<Result, Variables>({
     ...options,
   };
   const result = withAuth
-    ? await getServerAuthClient().fetchWithAuth(endpoint, input)
+    ? await (await getServerAuthClient()).fetchWithAuth(endpoint, input)
     : await fetch(endpoint, input);
 
   const body = (await result.json()) as GraphQlErrorRespone<Result>;
@@ -1093,7 +1093,7 @@ export async function getProductRecommendations(productId: Product): Promise<Pro
 }
 
 export async function getCheckoutFromCookiesOrRedirect(): Promise<string> {
-  const checkoutId = cookies().get('cartId')?.value;
+  const checkoutId = (await cookies()).get('cartId')?.value;
   return checkoutId || '';
 }
 

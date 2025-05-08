@@ -1,10 +1,8 @@
 import Cart from 'components/cart';
-import OpenCart from 'components/cart/open-cart';
 import Menu from 'components/layout/navigation';
 import User from 'components/user';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense } from 'react';
 import Search from '../search';
 
 export default function TabletNavbar() {
@@ -26,15 +24,13 @@ export default function TabletNavbar() {
             <div className="relative">
               <Link href="/" aria-label="Go back home">
                 <div className="relative h-[140px] w-[140px]">
-                  <Suspense>
-                    <Image
-                      className="object-contain"
-                      src={'/logoNegro.png'}
-                      alt=""
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  </Suspense>
+                  <Image
+                    className="object-contain"
+                    src={'/logoNegro.png'}
+                    alt=""
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
                 </div>
               </Link>
             </div>
@@ -42,41 +38,31 @@ export default function TabletNavbar() {
           <div className="col-span-2 h-full place-items-center self-end">
             <div className="-mb-2 flex h-full flex-row place-items-center justify-center">
               <div>
-                <Suspense>
-                  <Search />
-                </Suspense>
+                <Search />
               </div>
               <div className="flex w-2/4 justify-end gap-6 pr-10">
-                <Link href="">
-                  <div className="relative h-[25px] w-[25px]">
-                    <Suspense>
-                      <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
-                        <Image
-                          className="object-contain"
-                          src={'/facebookRosa.png'}
-                          alt=""
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                      </Link>
-                    </Suspense>
-                  </div>
-                </Link>
-                <Link href="">
-                  <div className="relative h-[25px] w-[25px]">
-                    <Suspense>
-                      <Link href={'https://www.instagram.com/proyecto705/'}>
-                        <Image
-                          className="object-contain"
-                          src={'/instagramRosa.png'}
-                          alt=""
-                          fill
-                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                        />
-                      </Link>
-                    </Suspense>
-                  </div>
-                </Link>
+                <div className="relative h-[25px] w-[25px]">
+                  <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
+                    <Image
+                      className="object-contain"
+                      src={'/facebookRosa.png'}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </Link>
+                </div>
+                <div className="relative h-[25px] w-[25px]">
+                  <Link href={'https://www.instagram.com/proyecto705/'}>
+                    <Image
+                      className="object-contain"
+                      src={'/instagramRosa.png'}
+                      alt=""
+                      fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -84,16 +70,12 @@ export default function TabletNavbar() {
             <div className="grid grid-rows-1 rounded-md bg-[#f7e7da]">
               <div className="border-b-2 border-white p-4">
                 <div className="flex justify-center">
-                  <Suspense>
-                    <User />
-                  </Suspense>
+                  <User />
                 </div>
               </div>
               <div className="p-4">
                 <div className="flex justify-center">
-                  <Suspense fallback={<OpenCart />}>
-                    <Cart />
-                  </Suspense>
+                  <Cart />
                 </div>
               </div>
             </div>

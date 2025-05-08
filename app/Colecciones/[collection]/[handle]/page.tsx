@@ -14,11 +14,10 @@ import { Suspense } from 'react';
 export const runtime = 'edge';
 const { SHOP_PUBLIC_URL } = process.env;
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { handle: string };
+export async function generateMetadata(props: {
+  params: Promise<{ handle: string }>;
 }): Promise<Metadata> {
+  const params = await props.params;
   let product;
   try {
     product = await getProduct(params.handle);
@@ -44,13 +43,12 @@ export async function generateMetadata({
   };
 }
 
-export default async function Product({
-  params,
-  searchParams,
-}: {
-  params: { handle: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+export default async function Product(props: {
+  params: Promise<{ handle: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   let product;
   try {
     product = await getProduct(params.handle);

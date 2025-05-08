@@ -86,14 +86,12 @@ export function PageItem({ content }: { content: pageType }) {
     <>
       {content.blocks.map((block) => {
         return (
-          <>
-            <div
-              className="text flex flex-col whitespace-pre-line text-sm tracking-wider"
-              key={block.id}
-            >
-              <Item block={block} />
-            </div>
-          </>
+          <div
+            className="text flex flex-col whitespace-pre-line text-sm tracking-wider"
+            key={block.id}
+          >
+            <Item block={block} />
+          </div>
         );
       })}
     </>
