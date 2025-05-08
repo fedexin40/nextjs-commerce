@@ -129,42 +129,15 @@
       <form
         id="sib-form"
         method="POST"
-        action="https://sibforms.com/serve/MUIFAOXOXi5DKEkPNpzU127tbq2nwefvEvc819wzhfx9fXEOadR8kKwouEpQ7LOEOvELrHL_1uuQg6G5QArargDSoFXgKzIRRgFaJTUGBcrdqs6mPAs4Z0rmp_yVkVIFUHT4UzXn_1f6kYSHTO9t0e1HBk07FlcKAfbP7-QT9Y7vRlhm-M6SNodEU3FRaSykZDjSD_PIxBXx-_uE"
+        action="https://sibforms.com/serve/MUIFACrrJ5mjPTW8LWRH3B11xdmmOoZlhp6KTIUedckS7xgMrezSJOikfD2andcGJ7xJ5yU-IzpOsNvMMvvyNiJ1fXcpB8kSvNP3FFjX4rqGuoSPm1F3Oz4Cz2zEoe7rXyrwWEbW8newezB4sakrLxXzj05gQc02Q-rRjsABlRjSU6GV99CiC_v-r7pJV4CZcW8TFR-UEqHbzH-K"
         data-type="subscription"
       >
         <div style="padding: 8px 0">
-          <div class="sib-captcha sib-form-block">
-            <div class="form__entry entry_block">
-              <div class="form__label-row form__label-row--horizontal">
-                <script>
-                  function handleCaptchaResponse() {
-                    var event = new Event('captchaChange');
-                    document.getElementById('sib-captcha').dispatchEvent(event);
-                  }
-                </script>
-                <div
-                  class="g-recaptcha sib-visible-recaptcha"
-                  id="sib-captcha"
-                  data-sitekey="6Lf7PCwrAAAAAG3rop1nikzby6I-HjNLNqBEmcy6"
-                  data-callback="handleCaptchaResponse"
-                  style="direction: ltr"
-                ></div>
-              </div>
-              <label
-                class="entry__error entry__error--primary"
-                style="
-                  font-size: 16px;
-                  text-align: left;
-                  font-family: Helvetica, sans-serif;
-                  color: #661d1d;
-                  background-color: #ffeded;
-                  border-radius: 3px;
-                  border-color: #ff4949;
-                "
-              >
-              </label>
-            </div>
-          </div>
+          <div
+            class="g-recaptcha-v3"
+            data-sitekey="6LcEDzIrAAAAAIfeAvRvu34F6ZXY_ICMyb1Sq3gQ-HjNLNqBEmcy6"
+            style="display: none"
+          ></div>
         </div>
         <div style="padding: 8px 0">
           <div
@@ -311,7 +284,11 @@
 
 <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 
-<script src="https://www.google.com/recaptcha/api.js?hl=en"></script>
+<script
+  src="https://www.google.com/recaptcha/api.js?render=6LcEDzIrAAAAAIfeAvRvu34F6ZXY_ICMyb1Sq3gQ-HjNLNqBEmcy6&hl=en"
+  async
+  defer
+></script>
 
 <!-- END - We recommend to place the above code in footer or bottom of your website html  -->
 <!-- End Brevo Form -->
