@@ -1,7 +1,7 @@
 import SocialNetwork from 'components/network-social';
 import RegisterModal from './modal';
 
-export default async function Register() {
+export default function Register() {
   return (
     <div>
       <RegisterModal>

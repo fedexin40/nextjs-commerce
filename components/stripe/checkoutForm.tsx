@@ -2,8 +2,9 @@
 /* eslint-disable */
 // @ts-nocheck
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
+import { refreshUser } from 'actions/user';
 import { Purchase } from 'components/FacebookPixel';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 
 export default function CheckoutForm({
   returnUrl,
@@ -29,6 +30,7 @@ export default function CheckoutForm({
       return;
     }
 
+    refreshUser();
     setIsLoading(true);
 
     const { error } = await stripe.confirmPayment({
@@ -81,12 +83,14 @@ export default function CheckoutForm({
             ) : (
               'Pagar ahora'
             )}
-            <Purchase
-              currency={'MXN'}
-              content_ids={content_ids}
-              content_type="product"
-              value={value}
-            />
+            <Suspense>
+              <Purchase
+                currency={'MXN'}
+                content_ids={content_ids}
+                content_type="product"
+                value={value}
+              />
+            </Suspense>
           </div>
         </button>
         {/* Show any error or success messages */}

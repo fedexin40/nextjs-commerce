@@ -116,7 +116,7 @@ export default async function Product(props: {
           </div>
           <div className="flex flex-col">
             <div className="md:hidden">
-              <PageItem content={JSON.parse(product.description)} />
+              {product.description && <PageItem content={JSON.parse(product.description)} />}
             </div>
           </div>
         </div>

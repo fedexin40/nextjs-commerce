@@ -60,6 +60,9 @@ query GetCollectionProductsBySlug(
             key
             value
           }
+          productType {
+            isShippingRequired
+          }
         }
       }
     }

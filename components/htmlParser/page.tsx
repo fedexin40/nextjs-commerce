@@ -22,25 +22,25 @@ function Item({ block }: { block: block }) {
     if (block.data.level == 1)
       return (
         <div className="py-3 pt-14 text-base font-semibold capitalize">
-          <h1 className="text-left">{ReactHtmlParser(block.data.text)}</h1>
+          <h1 className="text-left">{ReactHtmlParser(block.data.text || '')}</h1>
         </div>
       );
     else if (block.data.level == 2)
       return (
         <div className="py-3 pt-14 text-base font-semibold capitalize">
-          <h2 className="text-left">{ReactHtmlParser(block.data.text)}</h2>
+          <h2 className="text-left">{ReactHtmlParser(block.data.text || '')}</h2>
         </div>
       );
     else if (block.data.level == 3)
       return (
         <div className="py-3 pt-14 text-base font-semibold capitalize">
-          <h3 className="text-left">{ReactHtmlParser(block.data.text)}</h3>
+          <h3 className="text-left">{ReactHtmlParser(block.data.text || '')}</h3>
         </div>
       );
   } else if (block.type == 'paragraph') {
     return (
       <div className="py-2 text-justify text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
-        {ReactHtmlParser(block.data.text)}
+        {ReactHtmlParser(block.data.text || '')}
       </div>
     );
   } else if (block.type == 'list') {

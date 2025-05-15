@@ -88,7 +88,7 @@ export function Gallery({
         </div>
       </div>
       <div className="hidden pr-10 md:-mt-5 md:block lg:mt-5">
-        <PageItem content={JSON.parse(description)} />
+        {description && <PageItem content={JSON.parse(description)} />}
       </div>
     </>
   );

@@ -42,10 +42,12 @@ function LoadMoreItem({
         query: query,
         collection: collection,
       });
-      setProducts(products?.products);
-      setEndCursor(products?.endCursor || '');
-      setStartCursor(products?.startCursor || '');
-      increasePageNumber();
+      startTransition(() => {
+        setProducts(products?.products);
+        setEndCursor(products?.endCursor || '');
+        setStartCursor(products?.startCursor || '');
+        increasePageNumber();
+      });
     });
   }
 

@@ -31823,6 +31823,7 @@ export type CheckoutFragment = {
         }> | null;
         thumbnail?: { url: string } | null;
         metadata: Array<{ key: string; value: string }>;
+        productType: { isShippingRequired: boolean };
       };
       attributes: Array<{
         attribute: {
@@ -31946,6 +31947,7 @@ export type ProductDetailsFragment = {
   }> | null;
   thumbnail?: { url: string } | null;
   metadata: Array<{ key: string; value: string }>;
+  productType: { isShippingRequired: boolean };
 };
 
 export type VariantFragment = {
@@ -32093,6 +32095,7 @@ export type CheckoutAddLineMutation = {
             }> | null;
             thumbnail?: { url: string } | null;
             metadata: Array<{ key: string; value: string }>;
+            productType: { isShippingRequired: boolean };
           };
           attributes: Array<{
             attribute: {
@@ -32227,6 +32230,7 @@ export type CheckoutDeleteLineMutation = {
             }> | null;
             thumbnail?: { url: string } | null;
             metadata: Array<{ key: string; value: string }>;
+            productType: { isShippingRequired: boolean };
           };
           attributes: Array<{
             attribute: {
@@ -32358,6 +32362,7 @@ export type CheckoutUpdateLineMutation = {
             }> | null;
             thumbnail?: { url: string } | null;
             metadata: Array<{ key: string; value: string }>;
+            productType: { isShippingRequired: boolean };
           };
           attributes: Array<{
             attribute: {
@@ -32466,6 +32471,7 @@ export type CreateCheckoutMutation = {
             }> | null;
             thumbnail?: { url: string } | null;
             metadata: Array<{ key: string; value: string }>;
+            productType: { isShippingRequired: boolean };
           };
           attributes: Array<{
             attribute: {
@@ -32665,6 +32671,7 @@ export type GetCategoryProductsBySlugQuery = {
             pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
           }> | null;
           metadata: Array<{ key: string; value: string }>;
+          productType: { isShippingRequired: boolean };
         };
       }>;
     } | null;
@@ -32733,6 +32740,7 @@ export type GetCheckoutByIdQuery = {
           }> | null;
           thumbnail?: { url: string } | null;
           metadata: Array<{ key: string; value: string }>;
+          productType: { isShippingRequired: boolean };
         };
         attributes: Array<{
           attribute: {
@@ -32827,6 +32835,7 @@ export type GetCollectionProductsBySlugQuery = {
             pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
           }> | null;
           metadata: Array<{ key: string; value: string }>;
+          productType: { isShippingRequired: boolean };
         };
       }>;
     } | null;
@@ -33005,6 +33014,7 @@ export type GetMeQuery = {
                 }> | null;
                 thumbnail?: { url: string } | null;
                 metadata: Array<{ key: string; value: string }>;
+                productType: { isShippingRequired: boolean };
               };
               attributes: Array<{
                 attribute: {
@@ -33178,6 +33188,7 @@ export type GetProductBySlugQuery = {
     }> | null;
     thumbnail?: { url: string } | null;
     metadata: Array<{ key: string; value: string }>;
+    productType: { isShippingRequired: boolean };
   } | null;
 };
 
@@ -33243,6 +33254,7 @@ export type SearchProductsQuery = {
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         }> | null;
         metadata: Array<{ key: string; value: string }>;
+        productType: { isShippingRequired: boolean };
       };
     }>;
   } | null;
@@ -33372,6 +33384,9 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(`
   metadata {
     key
     value
+  }
+  productType {
+    isShippingRequired
   }
 }
     fragment Variant on ProductVariant {
@@ -33534,6 +33549,9 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
   metadata {
     key
     value
+  }
+  productType {
+    isShippingRequired
   }
 }
 fragment Variant on ProductVariant {
@@ -33911,6 +33929,9 @@ fragment ProductDetails on Product {
     key
     value
   }
+  productType {
+    isShippingRequired
+  }
 }
 fragment Variant on ProductVariant {
   id
@@ -34136,6 +34157,9 @@ fragment ProductDetails on Product {
   metadata {
     key
     value
+  }
+  productType {
+    isShippingRequired
   }
 }
 fragment Variant on ProductVariant {
@@ -34367,6 +34391,9 @@ fragment ProductDetails on Product {
     key
     value
   }
+  productType {
+    isShippingRequired
+  }
 }
 fragment Variant on ProductVariant {
   id
@@ -34554,6 +34581,9 @@ fragment ProductDetails on Product {
   metadata {
     key
     value
+  }
+  productType {
+    isShippingRequired
   }
 }
 fragment Variant on ProductVariant {
@@ -34797,6 +34827,9 @@ export const GetCategoryProductsBySlugDocument = new TypedDocumentString(`
             key
             value
           }
+          productType {
+            isShippingRequired
+          }
         }
       }
     }
@@ -34971,6 +35004,9 @@ fragment ProductDetails on Product {
     key
     value
   }
+  productType {
+    isShippingRequired
+  }
 }
 fragment Variant on ProductVariant {
   id
@@ -35081,6 +35117,9 @@ export const GetCollectionProductsBySlugDocument = new TypedDocumentString(`
           metadata {
             key
             value
+          }
+          productType {
+            isShippingRequired
           }
         }
       }
@@ -35429,6 +35468,9 @@ fragment ProductDetails on Product {
     key
     value
   }
+  productType {
+    isShippingRequired
+  }
 }
 fragment Variant on ProductVariant {
   id
@@ -35628,6 +35670,9 @@ export const GetProductBySlugDocument = new TypedDocumentString(`
     key
     value
   }
+  productType {
+    isShippingRequired
+  }
 }
 fragment Variant on ProductVariant {
   id
@@ -35734,6 +35779,9 @@ export const SearchProductsDocument = new TypedDocumentString(`
         metadata {
           key
           value
+        }
+        productType {
+          isShippingRequired
         }
       }
     }

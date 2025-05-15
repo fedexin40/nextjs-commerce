@@ -3,6 +3,7 @@ import Shipping from 'components/shipping/page';
 import AddressInput from 'components/user-details/address-form';
 import { countryArea, getCart, Me } from 'lib/saleor';
 import { permanentRedirect } from 'next/navigation';
+import { Suspense } from 'react';
 import Button from './next-button';
 
 export default async function Checkout(props: {
@@ -20,6 +21,9 @@ export default async function Checkout(props: {
   const cart = await getCart(checkout || '');
   if (!cart) {
     permanentRedirect('/');
+  }
+  if (cart.lines.every((x) => x.merchandise.product.isShippingRequired == false)) {
+    permanentRedirect(cart?.checkoutUrlPayment || '');
   }
   const cartTotal = cart?.cost.totalAmount.amount;
   // Used for facebook pixel
@@ -56,12 +60,14 @@ export default async function Checkout(props: {
           </div>
         </div>
       </div>
-      <InitiateCheckout
-        currency={'MXN'}
-        content_ids={content_ids}
-        content_type="product"
-        value={cartTotal}
-      />
+      <Suspense>
+        <InitiateCheckout
+          currency={'MXN'}
+          content_ids={content_ids}
+          content_type="product"
+          value={cartTotal}
+        />
+      </Suspense>
     </div>
   );
 }

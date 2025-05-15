@@ -34,8 +34,10 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
         carrierName,
       });
       if (errorMethodUpdate) {
-        setErrorMessage(errorMethodUpdate);
-        openError();
+        startTransition(() => {
+          setErrorMessage(errorMethodUpdate);
+          openError();
+        });
       } else {
         const cart = await getCartFromCheckout({ checkoutId });
         permanentRedirect(cart?.checkoutUrlPayment || '');

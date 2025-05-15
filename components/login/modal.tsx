@@ -7,7 +7,7 @@ import { Login } from 'actions/user';
 import clsx from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Fragment, ReactNode, Suspense, useRef } from 'react';
+import { Fragment, ReactNode, useRef } from 'react';
 import { useError, useErrorMessage, useLoading, useLogin, usePersonActions } from 'stores/user';
 import CloseLogin from './close-login';
 
@@ -117,14 +117,15 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                     <form action={LoginAction} ref={initialFocusRef}>
                       <div className="mb-4 flex flex-row gap-x-2 border-b-2 border-[#d2b6ab] p-1">
                         <div className="relative grid h-5 w-5 place-content-center">
-                          <Suspense>
+                          <div className="relative h-[20px] w-[20px]">
                             <Image
                               className="object-contain text-center"
                               src="/email.png"
-                              alt=""
+                              alt="email"
                               fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                             />
-                          </Suspense>
+                          </div>
                         </div>
                         <input
                           className="w-full bg-transparent pl-1 focus:ring-0 focus:ring-offset-0"
@@ -135,15 +136,22 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                       </div>
                       <div className="flex flex-row gap-x-2 border-b-2 border-[#d2b6ab] p-1">
                         <div className="relative h-5 w-5 place-content-center">
-                          <Suspense>
-                            <Image className="object-cover" src="/contrasena.png" alt="" fill />
-                          </Suspense>
+                          <div className="relative h-[20px] w-[20px]">
+                            <Image
+                              className="object-cover"
+                              src="/contrasena.png"
+                              alt="password"
+                              fill
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            />
+                          </div>
                         </div>
                         <input
                           className="w-full bg-transparent pl-1 focus:ring-0 focus:ring-offset-0"
                           type="password"
                           name="password"
                           placeholder="Contraseña..."
+                          autoComplete="on"
                         />
                       </div>
                       <div className="flex flex-col-reverse place-content-end	 py-5	hover:cursor-pointer hover:opacity-25">

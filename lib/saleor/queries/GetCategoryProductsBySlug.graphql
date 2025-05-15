@@ -65,6 +65,9 @@ query GetCategoryProductsBySlug(
             key
             value
           }
+          productType {
+            isShippingRequired
+          }
         }
       }
     }

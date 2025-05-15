@@ -211,6 +211,7 @@ export type VercelCommerceProduct = {
         slug: string | undefined;
       }
     | undefined;
+  isShippingRequired: boolean;
 };
 
 export type VercelCommerceCartOperation = {

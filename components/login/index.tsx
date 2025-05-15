@@ -1,7 +1,7 @@
 import SocialNetwork from 'components/network-social';
 import LoginModal from './modal';
 
-export default async function Login() {
+export default function Login() {
   return (
     <>
       <LoginModal>

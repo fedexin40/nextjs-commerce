@@ -65,19 +65,24 @@ export function BuyNow({
           startTransition(async () => {
             if (!variant) {
               // Trigger the error boundary in the root error.js
-              setErrorMessage('Por favor seleccione el tamaño y los kilates de su producto');
-              openError();
+              startTransition(() => {
+                setErrorMessage('Por favor seleccione el tamaño y los kilates de su producto');
+                openError();
+              });
               return;
             }
             const error = await addItem(selectedVariantId);
             if (error) {
               // Trigger the error boundary in the root error.js
-              setErrorMessage(error.toString());
-              openError();
+              startTransition(() => {
+                setErrorMessage(error.toString());
+                openError();
+              });
               return;
             }
             // Get cart
             const cart = await lastCheckout();
+            console.log(cart?.checkoutUrl);
             router.push(cart?.checkoutUrl || '/');
           });
         }}

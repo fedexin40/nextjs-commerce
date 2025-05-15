@@ -65,13 +65,17 @@ export default function Shipping({
       if (!error) {
         error = billingAddressCheckoutUpdate(input);
         if (!error) {
-          setError(error);
+          startTransition(() => {
+            setError(error);
+          });
           console.log('error in updating billing address');
           return;
         }
         const shippingMethods = await shippingMethodsAction({ checkoutId });
-        setShippingMethods(shippingMethods || []);
-        setError('');
+        startTransition(() => {
+          setShippingMethods(shippingMethods || []);
+          setError('');
+        });
       } else {
         setError(error);
       }

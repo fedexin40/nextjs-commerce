@@ -71,6 +71,7 @@ export function saleorProductToVercelProduct(
       }) || [],
     featureCollection: featureCollection,
     metadata: product.metadata,
+    isShippingRequired: product.productType.isShippingRequired || false,
   };
 }
 

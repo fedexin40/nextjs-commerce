@@ -17,6 +17,10 @@ module.exports = {
       },
     ],
   },
+  webpack: (config) => {
+    config.optimization.minimize = false;
+    return config;
+  },
 };
 
 // Injected content via Sentry wizard below

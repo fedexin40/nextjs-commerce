@@ -64,6 +64,9 @@ query SearchProducts(
           key
           value
         }
+        productType {
+          isShippingRequired
+        }
       }
     }
   }

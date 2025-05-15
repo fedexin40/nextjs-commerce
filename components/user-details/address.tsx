@@ -39,8 +39,10 @@ export default function Address({
       // Update the address if the user already has one
       const errors = await updateAddress(input);
       if (errors) {
-        openError();
-        setErrorMessage(errors);
+        startTransition(() => {
+          openError();
+          setErrorMessage(errors);
+        });
       }
     });
   }

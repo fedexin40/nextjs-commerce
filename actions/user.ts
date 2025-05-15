@@ -77,7 +77,7 @@ export async function updateAddress({
 }
 
 export async function Logout() {
-  await getServerAuthClient().signOut();
+  await (await getServerAuthClient()).signOut();
   const cookieStore = await cookies();
 
   // clear the session cookies
@@ -102,4 +102,9 @@ export async function Login({ email, password }: { email: string; password: stri
     await getServerAuthClient()
   ).signIn({ email, password }, { cache: 'no-store' });
   return data;
+}
+
+export async function refreshUser() {
+  revalidateTag(TAGS.user);
+  permanentRedirect('cart/processing');
 }

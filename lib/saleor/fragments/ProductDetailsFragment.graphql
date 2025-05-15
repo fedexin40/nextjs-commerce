@@ -46,4 +46,7 @@ fragment ProductDetails on Product {
     key
     value
   }
+  productType {
+    isShippingRequired
+  }
 }

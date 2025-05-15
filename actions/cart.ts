@@ -99,12 +99,12 @@ export const lastCheckout = async () => {
   }
 
   // Below functions is in charge of finding whether the lastCheckout
-  // is waiting for a payment to be completed or not
-  // Let's say for example, the user selected a STP payment method, so the
-  // the checkout is in waiting status
+  // is waiting for a payment to be completed or not when the payment selected has delay
+  // Let's say for example, the user selected a Oxxo payment method, so the
+  // the checkout can be in waiting for payment status for some days
   // I could not find other way to find this except for checking the number of
   // CHARGE_ACTION_REQUIRED events.
-  // If there are two CHARGE_ACTION_REQUIRED events on the same transaction then
+  // If there are two CHARGE_ACTION_REQUIRED events on the same transaction.event then
   // the checkout is waiting for the payment to be completed
   if (cart) {
     for (
@@ -132,6 +132,13 @@ export const lastCheckout = async () => {
           if (charge_action_required_count == 2) {
             return null;
           }
+        }
+        // This is also necessary in case the payment is process immediately
+        else if (
+          cart.transactions[index_transaction]?.events[index_event]?.type ==
+          TransactionEventTypeEnum.ChargeSuccess
+        ) {
+          return null;
         }
     }
     return cart;
