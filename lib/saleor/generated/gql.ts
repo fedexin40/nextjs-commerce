@@ -12,7 +12,7 @@ import * as types from './graphql';
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  'fragment Checkout on Checkout {\n  id\n  token\n  updatedAt\n  created\n  totalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  subtotalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  quantity\n  lines {\n    id\n    quantity\n    variant {\n      ...Variant\n      product {\n        ...ProductDetails\n      }\n    }\n    totalPrice {\n      gross {\n        amount\n      }\n    }\n  }\n  chargeStatus\n  authorizeStatus\n  shippingAddress {\n    city\n    countryArea\n    firstName\n    lastName\n    phone\n    postalCode\n    streetAddress1\n    streetAddress2\n  }\n  user {\n    firstName\n    lastName\n    email\n  }\n  transactions {\n    events {\n      type\n      createdAt\n    }\n  }\n  deliveryMethod {\n    ... on ShippingMethod {\n      id\n      name\n    }\n  }\n  shippingPrice {\n    gross {\n      amount\n    }\n  }\n}':
+  'fragment Checkout on Checkout {\n  id\n  token\n  updatedAt\n  created\n  totalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  subtotalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  quantity\n  lines {\n    id\n    quantity\n    variant {\n      ...Variant\n      product {\n        ...ProductDetails\n      }\n    }\n    totalPrice {\n      gross {\n        amount\n      }\n    }\n  }\n  chargeStatus\n  authorizeStatus\n  shippingAddress {\n    city\n    countryArea\n    firstName\n    lastName\n    phone\n    postalCode\n    streetAddress1\n    streetAddress2\n  }\n  user {\n    firstName\n    lastName\n    email\n  }\n  transactions {\n    events {\n      type\n      createdAt\n    }\n  }\n  deliveryMethod {\n    ... on ShippingMethod {\n      id\n      name\n    }\n  }\n  shippingPrice {\n    gross {\n      amount\n    }\n  }\n  discount {\n    amount\n    currency\n  }\n}':
     types.CheckoutFragmentDoc,
   'fragment FeaturedProduct on Product {\n  id\n  slug\n  name\n  isAvailableForPurchase\n  description\n  seoTitle\n  seoDescription\n  pricing {\n    priceRange {\n      start {\n        gross {\n          currency\n          amount\n        }\n      }\n      stop {\n        gross {\n          currency\n          amount\n        }\n      }\n    }\n  }\n  media {\n    url(size: 1080)\n    type\n    alt\n  }\n  collections {\n    name\n  }\n  updatedAt\n  variants {\n    id\n    name\n    pricing {\n      price {\n        gross {\n          currency\n          amount\n        }\n      }\n    }\n  }\n}':
     types.FeaturedProductFragmentDoc,
@@ -46,7 +46,7 @@ const documents = {
     types.CheckoutDeleteLineDocument,
   'mutation checkoutPostalCodeUpdate($checkoutId: ID!, $PostalCode: String!) {\n  checkoutShippingAddressUpdate(\n    checkoutId: $checkoutId\n    shippingAddress: {postalCode: $PostalCode, country: MX, countryArea: "Pue.", city: "Puebla", streetAddress1: "fds", streetAddress2: "fds"}\n  ) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
     types.CheckoutPostalCodeUpdateDocument,
-  'mutation CheckoutAddPromoCode($id: ID!) {\n  checkoutAddPromoCode(promoCode: "free-shipping", id: $id) {\n    errors {\n      code\n      field\n      message\n    }\n    checkout {\n      giftCards {\n        code\n      }\n    }\n  }\n}':
+  'mutation CheckoutAddPromoCode($id: ID!, $promoCode: String!) {\n  checkoutAddPromoCode(promoCode: $promoCode, id: $id) {\n    errors {\n      code\n      field\n      message\n    }\n    checkout {\n      giftCards {\n        code\n      }\n    }\n  }\n}':
     types.CheckoutAddPromoCodeDocument,
   'mutation checkoutShippingAddressUpdate($checkoutId: ID!, $shippingAddress: AddressInput!) {\n  checkoutShippingAddressUpdate(\n    checkoutId: $checkoutId\n    shippingAddress: $shippingAddress\n  ) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
     types.CheckoutShippingAddressUpdateDocument,
@@ -64,7 +64,7 @@ const documents = {
     types.ExternalObtainAccessTokensDocument,
   'mutation PaymentGatewayInitialize($checkoutId: ID!) {\n  paymentGatewayInitialize(\n    id: $checkoutId\n    amount: 0\n    paymentGateways: [{id: "app.saleor.stripe"}]\n  ) {\n    gatewayConfigs {\n      id\n      data\n      errors {\n        field\n        message\n        code\n      }\n    }\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
     types.PaymentGatewayInitializeDocument,
-  'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
+  'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe.fede.9", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
     types.TransactionInitializeDocument,
   'mutation updateMetadata($id: ID!, $input: [MetadataInput!]!) {\n  updateMetadata(id: $id, input: $input) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
     types.UpdateMetadataDocument,
@@ -110,7 +110,7 @@ const documents = {
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'fragment Checkout on Checkout {\n  id\n  token\n  updatedAt\n  created\n  totalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  subtotalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  quantity\n  lines {\n    id\n    quantity\n    variant {\n      ...Variant\n      product {\n        ...ProductDetails\n      }\n    }\n    totalPrice {\n      gross {\n        amount\n      }\n    }\n  }\n  chargeStatus\n  authorizeStatus\n  shippingAddress {\n    city\n    countryArea\n    firstName\n    lastName\n    phone\n    postalCode\n    streetAddress1\n    streetAddress2\n  }\n  user {\n    firstName\n    lastName\n    email\n  }\n  transactions {\n    events {\n      type\n      createdAt\n    }\n  }\n  deliveryMethod {\n    ... on ShippingMethod {\n      id\n      name\n    }\n  }\n  shippingPrice {\n    gross {\n      amount\n    }\n  }\n}',
+  source: 'fragment Checkout on Checkout {\n  id\n  token\n  updatedAt\n  created\n  totalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  subtotalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  quantity\n  lines {\n    id\n    quantity\n    variant {\n      ...Variant\n      product {\n        ...ProductDetails\n      }\n    }\n    totalPrice {\n      gross {\n        amount\n      }\n    }\n  }\n  chargeStatus\n  authorizeStatus\n  shippingAddress {\n    city\n    countryArea\n    firstName\n    lastName\n    phone\n    postalCode\n    streetAddress1\n    streetAddress2\n  }\n  user {\n    firstName\n    lastName\n    email\n  }\n  transactions {\n    events {\n      type\n      createdAt\n    }\n  }\n  deliveryMethod {\n    ... on ShippingMethod {\n      id\n      name\n    }\n  }\n  shippingPrice {\n    gross {\n      amount\n    }\n  }\n  discount {\n    amount\n    currency\n  }\n}',
 ): typeof import('./graphql').CheckoutFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -212,7 +212,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation CheckoutAddPromoCode($id: ID!) {\n  checkoutAddPromoCode(promoCode: "free-shipping", id: $id) {\n    errors {\n      code\n      field\n      message\n    }\n    checkout {\n      giftCards {\n        code\n      }\n    }\n  }\n}',
+  source: 'mutation CheckoutAddPromoCode($id: ID!, $promoCode: String!) {\n  checkoutAddPromoCode(promoCode: $promoCode, id: $id) {\n    errors {\n      code\n      field\n      message\n    }\n    checkout {\n      giftCards {\n        code\n      }\n    }\n  }\n}',
 ): typeof import('./graphql').CheckoutAddPromoCodeDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -266,7 +266,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
+  source: 'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe.fede.9", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
 ): typeof import('./graphql').TransactionInitializeDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

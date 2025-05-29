@@ -25,13 +25,6 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
   const { closeMenu } = cartActions();
   const { openMenu } = cartActions();
   const router = useRouter();
-  let total = 0;
-
-  if (cart) {
-    cart.lines.map((item) => {
-      total += Number(item.cost.totalAmount.amount) * Number(item.quantity);
-    });
-  }
 
   return (
     <div className="z-50">
@@ -148,14 +141,14 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                   <div className="py-4 text-neutral-500 dark:text-neutral-400">
                     <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
                       <p>Envio</p>
-                      <p className="text-right">Calculado al momento de pagar</p>
+                      <p className="text-right">Calculado despues</p>
                     </div>
                     <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1 dark:border-neutral-700">
                       <p>Total</p>
                       <Price
                         className="text-right text-black dark:text-white"
-                        amountMax={String(total)}
-                        currencyCode={cart.cost.totalAmount.currencyCode}
+                        amountMax={cart.cost.subtotalAmount.amount}
+                        currencyCode={cart.cost.subtotalAmount.currencyCode}
                       />
                     </div>
                   </div>

@@ -120,6 +120,7 @@ export type transaction = {
 };
 
 export type VercelCommerceCart = {
+  discount: Money;
   id: string;
   token: string;
   updatedAt: string;
@@ -129,6 +130,9 @@ export type VercelCommerceCart = {
     subtotalAmount: Money;
     totalAmount: Money;
     totalTaxAmount: Money;
+    totalAmountBeforeTaxes: Money;
+    subtotalAmountBeforeTaxes: Money;
+    totalShippingAmount: Money;
   };
   lines: Connection<CartItem>;
   totalQuantity: number;

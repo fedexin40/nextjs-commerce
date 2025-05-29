@@ -137,15 +137,27 @@ export function saleorCheckoutToVercelCart(checkout: CheckoutFragment): Cart {
   const checkoutToken = checkout.token.slice(-5);
 
   return {
+    discount: {
+      amount: checkout.discount?.amount.toString() || '',
+      currencyCode: checkout.discount?.currency || '',
+    },
     id: checkout.id,
     token: checkoutToken,
     checkoutUrl: checkoutUrl.toString(),
     checkoutUrlPayment: checkoutUrlPayment.toString(),
     updatedAt: checkout.updatedAt,
     cost: {
-      subtotalAmount: {
+      subtotalAmountBeforeTaxes: {
+        amount: checkout.subtotalPrice.net.amount.toString(),
+        currencyCode: checkout.subtotalPrice.net.currency,
+      },
+      totalAmountBeforeTaxes: {
         amount: checkout.totalPrice.net.amount.toString(),
-        currencyCode: checkout.totalPrice.gross.currency,
+        currencyCode: checkout.totalPrice.net.currency,
+      },
+      subtotalAmount: {
+        amount: checkout.subtotalPrice.gross.amount.toString(),
+        currencyCode: checkout.subtotalPrice.gross.currency,
       },
       totalAmount: {
         amount: checkout.totalPrice.gross.amount.toString(),
@@ -154,6 +166,10 @@ export function saleorCheckoutToVercelCart(checkout: CheckoutFragment): Cart {
       totalTaxAmount: {
         amount: checkout.subtotalPrice.tax.amount.toString(),
         currencyCode: checkout.subtotalPrice.tax.currency,
+      },
+      totalShippingAmount: {
+        amount: String(checkout.totalPrice.gross.amount - checkout.subtotalPrice.gross.amount),
+        currencyCode: checkout.totalPrice.gross.currency,
       },
     },
     lines: checkout.lines.map((line) => {

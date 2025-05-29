@@ -81,4 +81,8 @@ fragment Checkout on Checkout {
       amount
     }
   }
+  discount {
+    amount
+    currency
+  }
 }

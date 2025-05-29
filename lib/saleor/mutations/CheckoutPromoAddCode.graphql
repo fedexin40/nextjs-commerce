@@ -1,5 +1,5 @@
-mutation CheckoutAddPromoCode($id: ID!) {
-  checkoutAddPromoCode(promoCode: "free-shipping", id: $id) {
+mutation CheckoutAddPromoCode($id: ID!, $promoCode: String!) {
+  checkoutAddPromoCode(promoCode: $promoCode, id: $id) {
     errors {
       code
       field

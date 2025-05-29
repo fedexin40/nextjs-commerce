@@ -31853,6 +31853,7 @@ export type CheckoutFragment = {
   }> | null;
   deliveryMethod?: { id: string; name: string } | {} | null;
   shippingPrice: { gross: { amount: number } };
+  discount?: { amount: number; currency: string } | null;
 };
 
 export type FeaturedProductFragment = {
@@ -32125,6 +32126,7 @@ export type CheckoutAddLineMutation = {
       }> | null;
       deliveryMethod?: { id: string; name: string } | {} | null;
       shippingPrice: { gross: { amount: number } };
+      discount?: { amount: number; currency: string } | null;
     } | null;
   } | null;
 };
@@ -32260,6 +32262,7 @@ export type CheckoutDeleteLineMutation = {
       }> | null;
       deliveryMethod?: { id: string; name: string } | {} | null;
       shippingPrice: { gross: { amount: number } };
+      discount?: { amount: number; currency: string } | null;
     } | null;
   } | null;
 };
@@ -32277,6 +32280,7 @@ export type CheckoutPostalCodeUpdateMutation = {
 
 export type CheckoutAddPromoCodeMutationVariables = Exact<{
   id: Scalars['ID'];
+  promoCode: Scalars['String'];
 }>;
 
 export type CheckoutAddPromoCodeMutation = {
@@ -32392,6 +32396,7 @@ export type CheckoutUpdateLineMutation = {
       }> | null;
       deliveryMethod?: { id: string; name: string } | {} | null;
       shippingPrice: { gross: { amount: number } };
+      discount?: { amount: number; currency: string } | null;
     } | null;
   } | null;
 };
@@ -32501,6 +32506,7 @@ export type CreateCheckoutMutation = {
       }> | null;
       deliveryMethod?: { id: string; name: string } | {} | null;
       shippingPrice: { gross: { amount: number } };
+      discount?: { amount: number; currency: string } | null;
     } | null;
   } | null;
 };
@@ -32770,6 +32776,7 @@ export type GetCheckoutByIdQuery = {
     }> | null;
     deliveryMethod?: { id: string; name: string } | {} | null;
     shippingPrice: { gross: { amount: number } };
+    discount?: { amount: number; currency: string } | null;
   } | null;
 };
 
@@ -33044,6 +33051,7 @@ export type GetMeQuery = {
           }> | null;
           deliveryMethod?: { id: string; name: string } | {} | null;
           shippingPrice: { gross: { amount: number } };
+          discount?: { amount: number; currency: string } | null;
         };
       }>;
     } | null;
@@ -33501,6 +33509,10 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
       amount
     }
   }
+  discount {
+    amount
+    currency
+  }
 }
     fragment ProductDetails on Product {
   id
@@ -33880,6 +33892,10 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
       amount
     }
   }
+  discount {
+    amount
+    currency
+  }
 }
 fragment ProductDetails on Product {
   id
@@ -34109,6 +34125,10 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
       amount
     }
   }
+  discount {
+    amount
+    currency
+  }
 }
 fragment ProductDetails on Product {
   id
@@ -34211,8 +34231,8 @@ export const CheckoutPostalCodeUpdateDocument = new TypedDocumentString(`
   CheckoutPostalCodeUpdateMutationVariables
 >;
 export const CheckoutAddPromoCodeDocument = new TypedDocumentString(`
-    mutation CheckoutAddPromoCode($id: ID!) {
-  checkoutAddPromoCode(promoCode: "free-shipping", id: $id) {
+    mutation CheckoutAddPromoCode($id: ID!, $promoCode: String!) {
+  checkoutAddPromoCode(promoCode: $promoCode, id: $id) {
     errors {
       code
       field
@@ -34341,6 +34361,10 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
     gross {
       amount
     }
+  }
+  discount {
+    amount
+    currency
   }
 }
 fragment ProductDetails on Product {
@@ -34533,6 +34557,10 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
       amount
     }
   }
+  discount {
+    amount
+    currency
+  }
 }
 fragment ProductDetails on Product {
   id
@@ -34687,7 +34715,7 @@ export const TransactionInitializeDocument = new TypedDocumentString(`
     mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {
   transactionInitialize(
     id: $checkoutId
-    paymentGateway: {id: "app.saleor.stripe", data: $data}
+    paymentGateway: {id: "app.saleor.stripe.fede.9", data: $data}
   ) {
     transaction {
       id
@@ -34954,6 +34982,10 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
     gross {
       amount
     }
+  }
+  discount {
+    amount
+    currency
   }
 }
 fragment ProductDetails on Product {
@@ -35360,6 +35392,10 @@ export const GetMeDocument = new TypedDocumentString(`
     gross {
       amount
     }
+  }
+  discount {
+    amount
+    currency
   }
 }
 fragment Order on Order {

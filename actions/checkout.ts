@@ -2,7 +2,7 @@
 
 import {
   billingAddressCheckoutUpdate,
-  checkoutAddPromoCode,
+  freeShipping,
   getCart,
   setCarrierDetails,
   updateDeliveryMethod,
@@ -30,7 +30,7 @@ export async function deliveryMethodUpdate({
     }
     if (Number(cart?.cost.totalAmount.amount) >= 1500) {
       try {
-        await checkoutAddPromoCode({ checkoutId });
+        await freeShipping({ checkoutId });
       } catch (error: any) {
         console.log(error.message);
       }

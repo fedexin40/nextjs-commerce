@@ -509,6 +509,7 @@ export async function updateCart(
       checkoutId: cartId,
       lines: lines.map(({ id, quantity }) => ({ lineId: id, quantity })),
     },
+    withAuth: true,
     cache: 'no-store',
   });
 
@@ -527,6 +528,7 @@ export async function removeFromCart(cartId: string, lineIds: string[]): Promise
       checkoutId: cartId,
       lineIds,
     },
+    withAuth: true,
     cache: 'no-store',
   });
 
@@ -1160,11 +1162,26 @@ export async function customerCheckoutAttach({
   }
 }
 
-export async function checkoutAddPromoCode({ checkoutId }: { checkoutId: string }) {
+export async function freeShipping({ checkoutId }: { checkoutId: string }) {
   const checkout = await saleorFetch({
     query: CheckoutAddPromoCodeDocument,
     variables: {
       id: checkoutId,
+      promoCode: 'free-shipping',
+    },
+    cache: 'no-store',
+  });
+  if (checkout.checkoutAddPromoCode?.errors[0]) {
+    throw new Error(checkout.checkoutAddPromoCode?.errors[0]?.message || '');
+  }
+}
+
+export async function discountShopping({ checkoutId }: { checkoutId: string }) {
+  const checkout = await saleorFetch({
+    query: CheckoutAddPromoCodeDocument,
+    variables: {
+      id: checkoutId,
+      promoCode: 'primera-compra',
     },
     cache: 'no-store',
   });
