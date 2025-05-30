@@ -1,4 +1,3 @@
-import { AddToCart } from 'components/cart/add-to-cart';
 import { BuyNow } from 'components/cart/buy-now';
 import Price from 'components/price';
 import { Product, ProductVariant } from 'lib/types';
@@ -72,15 +71,12 @@ export function ProductDescription({
         <VariantSelector options={product.options} variants={product.variants} />
       </div>
       <div className="mt-6 flex flex-col gap-5 border-b pb-6 uppercase dark:border-neutral-700">
-        <BuyNow variants={product.variants} availableForSale={product.availableForSale} />
-        <Suspense>
-          <AddToCart
-            variants={product.variants}
-            availableForSale={product.availableForSale}
-            content_ids={content_ids}
-            value={value}
-          />
-        </Suspense>
+        <BuyNow
+          variants={product.variants}
+          availableForSale={product.availableForSale}
+          content_ids={content_ids}
+          value={value}
+        />
       </div>
       <div className="pt-5 text-left text-[12px] leading-tight text-gray-800 dark:text-white lg:text-[14px]">
         <div className="whitespace-nowrap">Tiempo de entrega de 2 a 7 dias hábiles</div>
