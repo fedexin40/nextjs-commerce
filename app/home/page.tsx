@@ -4,7 +4,6 @@ import ProductGridItems from 'components/layout/product-grid-items';
 import LoadMore from 'components/load-more/page';
 import { getCollectionProducts } from 'lib/saleor';
 import type { Metadata } from 'next';
-import { Suspense } from 'react';
 
 export const runtime = 'edge';
 
@@ -28,35 +27,29 @@ export default async function HomePage() {
   return (
     <>
       <div className="hidden md:block">
-        <Suspense>
-          <CarouselComponent
-            images={['/EnvioGratisMayores1500.jpeg', '/banner.png']}
-            autoPlay={true}
-            removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
-          />
-        </Suspense>
+        <CarouselComponent
+          images={['/EnvioGratisMayores1500.jpeg', '/banner.png']}
+          autoPlay={true}
+          removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
+        />
       </div>
       <div className="block md:hidden">
-        <Suspense>
-          <CarouselComponent
-            images={['/EnvioGratisMayores1500Mobile.jpeg', '/bannerMobile.png']}
-            autoPlay={true}
-            removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
-          />
-        </Suspense>
+        <CarouselComponent
+          images={['/EnvioGratisMayores1500Mobile.jpeg', '/bannerMobile.png']}
+          autoPlay={true}
+          removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
+        />
       </div>
       <div className="m-10 grid justify-items-center whitespace-nowrap text-base font-medium tracking-wider text-black dark:text-[#c9aa9e] xl:text-3xl">
         <h1>Encuentra el arete perfecto para ti</h1>
       </div>
-      <Suspense>
-        <div className="mx-10 mb-24 lg:mx-32 lg:mb-40">
-          {products.length > 0 && (
-            <Grid className="grid-cols-2 gap-y-24 md:grid-cols-3 lg:grid-cols-4 xl:gap-y-40">
-              <ProductGridItems products={products} />
-            </Grid>
-          )}
-        </div>
-      </Suspense>
+      <div className="mx-10 mb-24 lg:mx-32 lg:mb-40">
+        {products.length > 0 && (
+          <Grid className="grid-cols-2 gap-y-24 md:grid-cols-3 lg:grid-cols-4 xl:gap-y-40">
+            <ProductGridItems products={products} />
+          </Grid>
+        )}
+      </div>
       {productsPagination.hasNextPage && (
         <div className="pt-2 lg:pt-0">
           <LoadMore

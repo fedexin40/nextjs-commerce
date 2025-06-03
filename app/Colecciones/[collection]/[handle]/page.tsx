@@ -9,7 +9,6 @@ import { Image, Product as productType, ProductVariant } from 'lib/types';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { Suspense } from 'react';
 
 export const runtime = 'edge';
 const { SHOP_PUBLIC_URL } = process.env;
@@ -95,9 +94,7 @@ export default async function Product(props: {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <Suspense>
-        <ProductView content_ids={[product.handle]} content_type="product" />
-      </Suspense>
+      <ProductView content_ids={[product.handle]} content_type="product" />
       <div className="mx-auto max-w-screen-2xl dark:bg-black">
         <div className="flex flex-col px-10 md:px-16 md:pt-12 lg:px-36 lg:pt-16">
           <div className="flex flex-col md:grid md:grid-cols-3">
@@ -120,9 +117,7 @@ export default async function Product(props: {
             </div>
           </div>
         </div>
-        <Suspense>
-          <RelatedProducts product={product} />
-        </Suspense>
+        <RelatedProducts product={product} />
       </div>
     </>
   );

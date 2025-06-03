@@ -69,7 +69,6 @@ export function BuyNow({
           onClick={() => {
             // Safeguard in case someone messes with `disabled` in devtools.
             if (!availableForSale || !selectedVariantId) return;
-
             startTransitionBuyNow(async () => {
               if (!variant) {
                 // Trigger the error boundary in the root error.js
@@ -90,6 +89,12 @@ export function BuyNow({
               }
               // Get cart
               const cart = await lastCheckout();
+              window.fbq('track', 'AddToCart', {
+                content_ids: content_ids,
+                content_type: 'product',
+                currency: 'MXN',
+                value: value,
+              });
               router.push(cart?.checkoutUrl || '/');
             });
           }}
@@ -143,6 +148,12 @@ export function BuyNow({
                 });
                 return;
               }
+              window.fbq('track', 'AddToCart', {
+                content_ids: content_ids,
+                content_type: 'product',
+                currency: 'MXN',
+                value: value,
+              });
               router.refresh();
               startTransitionAdd2Cart(() => {
                 openMenu();

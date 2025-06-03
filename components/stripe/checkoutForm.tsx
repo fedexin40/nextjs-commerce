@@ -3,8 +3,7 @@
 // @ts-nocheck
 import { PaymentElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import { refreshUser } from 'actions/user';
-import { Purchase } from 'components/FacebookPixel';
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 
 export default function CheckoutForm({
   returnUrl,
@@ -32,7 +31,12 @@ export default function CheckoutForm({
 
     refreshUser();
     setIsLoading(true);
-
+    window.fbq('track', 'Purchase', {
+      content_ids: content_ids,
+      content_type: 'product',
+      currency: 'MXN',
+      value: value,
+    });
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
@@ -51,7 +55,6 @@ export default function CheckoutForm({
     } else {
       setMessage('An unexpected error occurred.');
     }
-
     setIsLoading(false);
   };
 
@@ -83,14 +86,6 @@ export default function CheckoutForm({
             ) : (
               'Pagar ahora'
             )}
-            <Suspense>
-              <Purchase
-                currency={'MXN'}
-                content_ids={content_ids}
-                content_type="product"
-                value={value}
-              />
-            </Suspense>
           </div>
         </button>
         {/* Show any error or success messages */}
