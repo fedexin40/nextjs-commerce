@@ -2,7 +2,6 @@ import { BuyNow } from 'components/cart/buy-now';
 import Price from 'components/price';
 import { Product, ProductVariant } from 'lib/types';
 import Image from 'next/image';
-import { Suspense } from 'react';
 import { VariantSelector } from './variant-selector';
 
 export function ProductDescription({
@@ -83,28 +82,24 @@ export function ProductDescription({
         <div className="whitespace-nowrap pt-3">Envío gratis en compras mayores a $1,500.00</div>
         <div className="flex flex-row gap-x-4 whitespace-nowrap pt-3">
           <div>Compartir con</div>
-          <Suspense>
-            <div className="relative h-[20px] w-[20px]">
-              <Image
-                className="object-contain"
-                src={'/facebook.png'}
-                alt=""
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-              />
-            </div>
-          </Suspense>
-          <Suspense>
-            <div className="relative h-[20px] w-[20px]">
-              <Image
-                className="object-contain"
-                src={'/instagram.png'}
-                alt=""
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-              />
-            </div>
-          </Suspense>
+          <div className="relative h-[20px] w-[20px]">
+            <Image
+              className="object-contain"
+              src={'/facebook.png'}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+            />
+          </div>
+          <div className="relative h-[20px] w-[20px]">
+            <Image
+              className="object-contain"
+              src={'/instagram.png'}
+              alt=""
+              fill
+              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+            />
+          </div>
         </div>
       </div>
       <div className="flex flex-col pt-14 text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
@@ -112,60 +107,52 @@ export function ProductDescription({
         <div className="pt-5 md:pt-8">
           Tarjeta
           <div className="-mt-2 flex flex-row gap-x-5">
-            <Suspense>
-              <div className="relative h-[60px] w-[60px]">
-                <Image
-                  className="object-contain"
-                  src={'/visa2.png'}
-                  alt="Metodo de pago, visa"
-                  fill
-                  sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-                />
-              </div>
-            </Suspense>
-            <Suspense>
-              <div className="relative h-[60px] w-[60px]">
-                <Image
-                  className="object-contain"
-                  src={'/mastercard2.png'}
-                  alt="Metodo de pago, mastercad"
-                  fill
-                  sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-                />
-              </div>
-            </Suspense>
+            <div className="relative h-[60px] w-[60px]">
+              <Image
+                className="object-contain"
+                src={'/visa2.png'}
+                alt="Metodo de pago, visa"
+                fill
+                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+              />
+            </div>
+            <div className="relative h-[60px] w-[60px]">
+              <Image
+                className="object-contain"
+                src={'/mastercard2.png'}
+                alt="Metodo de pago, mastercad"
+                fill
+                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+              />
+            </div>
           </div>
         </div>
         <div className="pt-5 md:pt-8">
           Efectivo
           <div className="-mt-2 flex flex-row gap-x-5">
-            <Suspense>
-              <div className="relative h-[60px] w-[60px]">
-                <Image
-                  className="object-contain"
-                  src={'/oxxo.png'}
-                  alt="Metodo de pago, oxxo"
-                  fill
-                  sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-                />
-              </div>
-            </Suspense>
+            <div className="relative h-[60px] w-[60px]">
+              <Image
+                className="object-contain"
+                src={'/oxxo.png'}
+                alt="Metodo de pago, oxxo"
+                fill
+                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+              />
+            </div>
           </div>
         </div>
         <div className="pt-5 md:pt-8">
           Transferencia Bancaria
           <div className="-mt-2 flex flex-row">
-            <Suspense>
-              <div className="relative h-[60px] w-[60px]">
-                <Image
-                  className="object-contain"
-                  src={'/spei.png'}
-                  alt="Metodo de pago, spei"
-                  fill
-                  sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-                />
-              </div>
-            </Suspense>
+            <div className="relative h-[60px] w-[60px]">
+              <Image
+                className="object-contain"
+                src={'/spei.png'}
+                alt="Metodo de pago, spei"
+                fill
+                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+              />
+            </div>
           </div>
         </div>
       </div>

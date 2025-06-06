@@ -1,9 +1,8 @@
 'use client';
 import { PageItem } from 'components/htmlParser/page';
 import MyImage from 'components/image';
-import Loading from 'components/loading';
 import Image from 'next/image';
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 
 export function Gallery({
   images,
@@ -33,43 +32,27 @@ export function Gallery({
         <div className="hidden gap-y-3 pr-10 lg:flex lg:flex-col">
           {images.map((image: { src: string; altText: string }, index) => (
             <div className="relative lg:h-24 lg:w-24" key={image.src}>
-              <Suspense
-                fallback={
-                  <div className="flex h-10 place-items-center justify-center text-center">
-                    <Loading />
-                  </div>
-                }
-              >
-                <Image
-                  className="object-contain"
-                  src={image.src}
-                  alt={image.altText}
-                  fill
-                  onClick={() => setSrc(index)}
-                  priority={true}
-                  sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-                />
-              </Suspense>
+              <Image
+                className="object-contain"
+                src={image.src}
+                alt={image.altText}
+                fill
+                onClick={() => setSrc(index)}
+                priority={true}
+                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+              />
             </div>
           ))}
         </div>
         <div className="relative mr-10 md:row-span-3 lg:col-span-3">
-          <Suspense
-            fallback={
-              <div className="flex h-10 place-items-center justify-center text-center">
-                <Loading />
-              </div>
-            }
-          >
-            <Image
-              priority={true}
-              className="rounded-b-lg object-cover"
-              src={images[src]?.src as string}
-              alt={images[src]?.altText || ''}
-              fill
-              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-            />
-          </Suspense>
+          <Image
+            priority={true}
+            className="rounded-b-lg object-cover"
+            src={images[src]?.src as string}
+            alt={images[src]?.altText || ''}
+            fill
+            sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+          />
         </div>
         <div className=" mt-3 hidden flex-row gap-x-3 md:flex md:w-[410px] lg:hidden lg:w-[500px]">
           {images.map((image: { src: string; altText: string }, index) => (

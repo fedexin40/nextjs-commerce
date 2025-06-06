@@ -7,7 +7,7 @@ import { accountRegister } from 'actions/user';
 import { clsx } from 'clsx';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { Fragment, ReactNode, Suspense, useRef } from 'react';
+import { Fragment, ReactNode, useRef } from 'react';
 import { useError, useErrorMessage, useLoading, usePersonActions, useRegister } from 'stores/user';
 import CloseRegister from './close-register';
 
@@ -113,15 +113,13 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                     <form action={RegisterAction} ref={initialFocusRef}>
                       <div className="mb-4 flex flex-row gap-x-2 border-b-2 border-[#d2b6ab] p-1">
                         <div className="relative grid h-5 w-5 place-content-center">
-                          <Suspense>
-                            <Image
-                              className="object-contain text-center"
-                              src="/email.png"
-                              alt=""
-                              fill
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                          </Suspense>
+                          <Image
+                            className="object-contain text-center"
+                            src="/email.png"
+                            alt=""
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
                         </div>
                         <input
                           className="w-full bg-transparent pl-1 focus:ring-0 focus:ring-offset-0"
@@ -132,15 +130,13 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                       </div>
                       <div className="mb-4 flex flex-row gap-x-2 border-b-2 border-[#d2b6ab] p-1">
                         <div className="relative h-5 w-5 place-content-center">
-                          <Suspense>
-                            <Image
-                              className="object-cover"
-                              src="/contrasena.png"
-                              alt=""
-                              fill
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                          </Suspense>
+                          <Image
+                            className="object-cover"
+                            src="/contrasena.png"
+                            alt=""
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
                         </div>
                         <input
                           className="w-full bg-transparent pl-1 focus:ring-0 focus:ring-offset-0"
@@ -151,15 +147,13 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                       </div>
                       <div className="mb-4 flex flex-row gap-x-2 border-b-2 border-[#d2b6ab] p-1">
                         <div className="relative h-5 w-5 place-content-center">
-                          <Suspense>
-                            <Image
-                              className="object-cover"
-                              src="/contrasena.png"
-                              alt=""
-                              fill
-                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                            />
-                          </Suspense>
+                          <Image
+                            className="object-cover"
+                            src="/contrasena.png"
+                            alt=""
+                            fill
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                          />
                         </div>
                         <input
                           className="w-full bg-transparent pl-1 focus:ring-0 focus:ring-offset-0"
