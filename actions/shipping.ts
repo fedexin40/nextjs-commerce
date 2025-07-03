@@ -47,15 +47,10 @@ export async function shippingMethodsAction({ checkoutId }: { checkoutId: string
   // Get the shippingMethods
   let methodsShipping;
   let index = 0;
-  // No tengo idea exactamente por que
-  // pero me parece tiene algo que ver con el timeout de los webhooks
-  // Y con que skydropx esta bien menso, a veces envia datos otras veces no
-  // Entonces lo que hago solo es repetir la misma llamada tres veces si la primera vez
-  // shippingmethods esta vacio
   while (index < 3) {
     methodsShipping = await getShippingMethods(checkoutId || '');
     if (methodsShipping.length > 0) {
-      break;
+      return methodsShipping;
     }
     index++;
   }
