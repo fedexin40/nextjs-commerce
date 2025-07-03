@@ -2,8 +2,11 @@ import { InitiateCheckout } from 'components/FacebookPixel';
 import Shipping from 'components/shipping/page';
 import AddressInput from 'components/user-details/address-form';
 import { countryArea, getCart, Me } from 'lib/saleor';
+import { cookies, headers } from 'next/headers';
 import { permanentRedirect } from 'next/navigation';
 import Button from './next-button';
+
+const { SHOP_PUBLIC_URL } = process.env;
 
 export default async function Checkout(props: {
   searchParams?: Promise<{ [key: string]: string | undefined }>;
@@ -24,9 +27,46 @@ export default async function Checkout(props: {
   if (cart.lines.every((x) => x.merchandise.product.isShippingRequired == false)) {
     permanentRedirect(cart?.checkoutUrlPayment || '');
   }
-  const cartTotal = cart?.cost.totalAmount.amount;
   // Used for facebook pixel
+  const cartTotal = cart?.cost.totalAmount.amount;
   const content_ids = cart.lines.map((x) => x.merchandise.product.handle);
+
+  const headersList = await headers();
+  const cookieStore = await cookies();
+  const xForwardedFor = headersList.get('x-forwarded-for');
+  const remoteAddress = headersList.get('remoteAddress');
+  const userAgent = headersList.get('user-agent');
+  const pathname = headersList.get('x-current-path');
+  const fbc = cookieStore.get('_fbc')?.value;
+  const fbp = cookieStore.get('_fbp')?.value;
+
+  let ip;
+  if (xForwardedFor && xForwardedFor.split(',')[0]) {
+    // If x-forwarded-for is present, take the first IP address
+    ip = xForwardedFor.split(',')[0]?.trim();
+  } else if (remoteAddress) {
+    // If x-forwarded-for is not present, use remoteAddress
+    ip = remoteAddress;
+  } else {
+    ip = 'unknown'; // Handle cases where no IP is available
+  }
+
+  const facebookApi = `${SHOP_PUBLIC_URL}/api/facebook`;
+  await fetch(facebookApi, {
+    method: 'POST',
+    body: JSON.stringify({
+      ip: ip,
+      userAgent: userAgent,
+      fbc: fbc,
+      fbp: fbp,
+      eventName: 'InitiateCheckout',
+      email: me.email ?? 'noreplay@noreplay.com',
+      phone: me.address.phone ?? '1234567890',
+      productID: content_ids,
+      value: cartTotal.toString(),
+      eventURL: `${SHOP_PUBLIC_URL}/${pathname}`,
+    }),
+  });
 
   return (
     <div className="flex flex-col text-[13.5px] tracking-[1.4px] dark:bg-zinc-700 md:flex-row lg:text-[14.3px]">

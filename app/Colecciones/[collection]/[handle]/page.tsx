@@ -4,9 +4,10 @@ import { PageItem } from 'components/htmlParser/page';
 import { Gallery } from 'components/product/gallery';
 import { ProductDescription } from 'components/product/product-description';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
-import { getCollectionProducts, getProduct } from 'lib/saleor';
+import { getCollectionProducts, getProduct, Me } from 'lib/saleor';
 import { Image, Product as productType, ProductVariant } from 'lib/types';
 import type { Metadata } from 'next';
+import { cookies, headers } from 'next/headers';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -48,14 +49,56 @@ export default async function Product(props: {
 }) {
   const searchParams = await props.searchParams;
   const params = await props.params;
+  const user = await Me();
+
+  const headersList = await headers();
+  const cookieStore = await cookies();
+  const xForwardedFor = headersList.get('x-forwarded-for');
+  const remoteAddress = headersList.get('remoteAddress');
+  const userAgent = headersList.get('user-agent');
+  const pathname = headersList.get('x-current-path');
+  const fbc = cookieStore.get('_fbc')?.value;
+  const fbp = cookieStore.get('_fbp')?.value;
+
   let product;
   try {
     product = await getProduct(params.handle);
   } catch (error) {
     notFound();
   }
-  const variants = product?.variants;
+  if (!product) {
+    return notFound();
+  }
 
+  let ip;
+  if (xForwardedFor && xForwardedFor.split(',')[0]) {
+    // If x-forwarded-for is present, take the first IP address
+    ip = xForwardedFor.split(',')[0]?.trim();
+  } else if (remoteAddress) {
+    // If x-forwarded-for is not present, use remoteAddress
+    ip = remoteAddress;
+  } else {
+    ip = 'unknown'; // Handle cases where no IP is available
+  }
+
+  const facebookApi = `${SHOP_PUBLIC_URL}/api/facebook`;
+  await fetch(facebookApi, {
+    method: 'POST',
+    body: JSON.stringify({
+      ip: ip,
+      userAgent: userAgent,
+      fbc: fbc,
+      fbp: fbp,
+      eventName: 'ViewContent',
+      email: user.email ?? 'noreplay@noreplay.com',
+      phone: user.address.phone ?? '1234567890',
+      productID: product.handle,
+      value: '0.0',
+      eventURL: `${SHOP_PUBLIC_URL}/${pathname}`,
+    }),
+  });
+
+  const variants = product?.variants;
   const variant = variants?.find((variant: ProductVariant) =>
     variant.selectedOptions.every(
       (option) => option.value === searchParams[option.name.toLowerCase()],

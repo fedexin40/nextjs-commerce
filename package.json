@@ -38,6 +38,7 @@
     "@stripe/stripe-js": "^3.4.0",
     "@vercel/og": "^0.5.4",
     "clsx": "^2.0.0",
+    "facebook-nodejs-business-sdk": "^23.0.0",
     "flowbite-react": "^0.7.2",
     "framer-motion": "^8.5.5",
     "is-empty-iterable": "^3.0.0",
