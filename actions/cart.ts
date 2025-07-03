@@ -112,8 +112,8 @@ export const lastCheckout = async () => {
       index_transaction < (cart.transactions?.length || 0);
       index_transaction++
     ) {
-      if (!cart.transactions) {
-        continue;
+      if (!cart.transactions || cart.transactions.length == 0) {
+        return cart;
       }
       let charge_action_required_count: number;
       charge_action_required_count = 0;
