@@ -77,8 +77,8 @@ export async function updateAddress({
 }
 
 export async function Logout() {
-  await (await getServerAuthClient()).signOut();
-  const cookieStore = await cookies();
+  await getServerAuthClient().signOut();
+  const cookieStore = cookies();
 
   // clear the session cookies
   cookieStore.getAll().forEach((cookie) => {
@@ -98,13 +98,6 @@ export async function accountRegister({ email, password }: { email: string; pass
 }
 
 export async function Login({ email, password }: { email: string; password: string }) {
-  const { data } = await (
-    await getServerAuthClient()
-  ).signIn({ email, password }, { cache: 'no-store' });
+  const { data } = await getServerAuthClient().signIn({ email, password }, { cache: 'no-store' });
   return data;
-}
-
-export async function refreshUser() {
-  revalidateTag(TAGS.user);
-  permanentRedirect('cart/processing');
 }
