@@ -49,8 +49,8 @@ export default function DesktopNavbar() {
                 <Cart />
               </div>
               <div className="flex w-2/4 justify-end space-x-3 pr-10">
-                <div className="relative h-[27px] w-[27px]">
-                  <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
+                <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
+                  <div className="relative h-[27px] w-[27px]">
                     <Image
                       className="object-cover"
                       src={'/facebookRosa.png'}
@@ -58,10 +58,10 @@ export default function DesktopNavbar() {
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                  </Link>
-                </div>
-                <div className="relative h-[27px] w-[27px]">
-                  <Link href={'https://www.instagram.com/proyecto705/'}>
+                  </div>
+                </Link>
+                <Link href={'https://www.instagram.com/proyecto705/'}>
+                  <div className="relative h-[27px] w-[27px]">
                     <Image
                       className="object-cover"
                       src={'/instagramRosa.png'}
@@ -69,8 +69,8 @@ export default function DesktopNavbar() {
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                  </Link>
-                </div>
+                  </div>
+                </Link>
               </div>
             </div>
           </div>
