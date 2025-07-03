@@ -34715,7 +34715,7 @@ export const TransactionInitializeDocument = new TypedDocumentString(`
     mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {
   transactionInitialize(
     id: $checkoutId
-    paymentGateway: {id: "app.saleor.stripe.fede.9", data: $data}
+    paymentGateway: {id: "app.saleor.stripe", data: $data}
   ) {
     transaction {
       id

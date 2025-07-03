@@ -64,7 +64,7 @@ const documents = {
     types.ExternalObtainAccessTokensDocument,
   'mutation PaymentGatewayInitialize($checkoutId: ID!) {\n  paymentGatewayInitialize(\n    id: $checkoutId\n    amount: 0\n    paymentGateways: [{id: "app.saleor.stripe"}]\n  ) {\n    gatewayConfigs {\n      id\n      data\n      errors {\n        field\n        message\n        code\n      }\n    }\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
     types.PaymentGatewayInitializeDocument,
-  'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe.fede.9", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
+  'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
     types.TransactionInitializeDocument,
   'mutation updateMetadata($id: ID!, $input: [MetadataInput!]!) {\n  updateMetadata(id: $id, input: $input) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
     types.UpdateMetadataDocument,
@@ -266,7 +266,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe.fede.9", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
+  source: 'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
 ): typeof import('./graphql').TransactionInitializeDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
