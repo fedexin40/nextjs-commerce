@@ -1,6 +1,6 @@
-import DesktopNavbar from './reposive/desktop';
-import MobileNavbar from './reposive/mobile';
-import TabletNavbar from './reposive/tablet';
+import DesktopNavbar from './responsive/desktop';
+import MobileNavbar from './responsive/mobile';
+import TabletNavbar from './responsive/tablet';
 
 export default async function Navbar() {
   return (
