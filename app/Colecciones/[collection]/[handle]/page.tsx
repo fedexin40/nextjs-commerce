@@ -81,6 +81,8 @@ export default async function Product(props: {
     ip = 'unknown'; // Handle cases where no IP is available
   }
 
+  const now = Date.now();
+  const eventId = `${product.handle}_ViewContent_${now}`;
   const facebookApi = `${SHOP_PUBLIC_URL}/api/facebook`;
   await fetch(facebookApi, {
     method: 'POST',
@@ -90,6 +92,7 @@ export default async function Product(props: {
       fbc: fbc,
       fbp: fbp,
       eventName: 'ViewContent',
+      eventId: eventId,
       email: user.email ?? 'noreplay@noreplay.com',
       phone: user.address.phone ?? '1234567890',
       productID: product.handle,
@@ -137,7 +140,7 @@ export default async function Product(props: {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ProductView content_ids={[product.handle]} content_type="product" />
+      <ProductView content_ids={[product.handle]} content_type="product" eventId={eventId} />
       <div className="mx-auto max-w-screen-2xl dark:bg-black">
         <div className="flex flex-col px-10 md:px-16 md:pt-12 lg:px-36 lg:pt-16">
           <div className="flex flex-col md:grid md:grid-cols-3">

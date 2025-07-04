@@ -21,6 +21,7 @@ export async function POST(req: NextRequest): Promise<Response> {
   const fbc = parameters.fbc;
   const fbp = parameters.fbp;
   const eventName = parameters.eventName;
+  const eventId = parameters.eventId;
   const email = parameters.email;
   const phone = parameters.phone;
   const productID = parameters.productID;
@@ -42,6 +43,7 @@ export async function POST(req: NextRequest): Promise<Response> {
   const customData = new CustomData().setContents([content]).setCurrency('mxn').setValue(value);
 
   const serverEvent = new ServerEvent()
+    .setEventId(eventId)
     .setEventName(eventName)
     .setEventTime(current_timestamp)
     .setUserData(userData)

@@ -31,7 +31,11 @@ export const CompleteRegistration = () => {
   return null;
 };
 
-export const ProductView = (parameters: { content_ids: [string]; content_type: string }) => {
+export const ProductView = (parameters: {
+  content_ids: [string];
+  content_type: string;
+  eventId: string;
+}) => {
   useEffect(() => {
     import('react-facebook-pixel')
       .then((x) => x.default)
