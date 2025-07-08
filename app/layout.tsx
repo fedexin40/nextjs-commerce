@@ -9,6 +9,9 @@ const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
   : 'http://localhost:3000';
 
+const googleTag = process.env.googleTag;
+const googleAnalytics = process.env.googleAnalytics;
+
 const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
@@ -21,8 +24,8 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       <body className="select-none bg-neutral-50 text-black selection:bg-teal-300 dark:bg-neutral-900 dark:text-white dark:selection:bg-pink-500 dark:selection:text-white">
         <main>{children}</main>
         <FacebookPixelEvents />
-        <GoogleTagManager gtmId="GTM-PG54Q952" />
-        <GoogleAnalytics gaId="G-ZT16CGTNYX" />
+        <GoogleTagManager gtmId={googleTag || ''} />
+        <GoogleAnalytics gaId={googleAnalytics || ''} />
       </body>
     </html>
   );
