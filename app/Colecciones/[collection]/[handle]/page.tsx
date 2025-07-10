@@ -57,7 +57,7 @@ export default async function Product(props: {
   const remoteAddress = headersList.get('remoteAddress');
   const userAgent = headersList.get('user-agent');
   const pathname = headersList.get('x-current-path');
-  const fbc = cookieStore.get('_fbc')?.value;
+  const fbc = searchParams['fbclid'] || cookieStore.get('_fbc')?.value;
   const fbp = cookieStore.get('_fbp')?.value;
 
   let product;
@@ -93,10 +93,10 @@ export default async function Product(props: {
       fbp: fbp,
       eventName: 'ViewContent',
       eventId: eventId,
-      email: user.email ?? 'noreplay@noreplay.com',
-      phone: user.address.phone ?? '1234567890',
+      email: user.email || null,
+      phone: user.address.phone || null,
       productID: product.handle,
-      value: '0.0',
+      value: product.priceRange.maxVariantPrice.amount,
       eventURL: `${SHOP_PUBLIC_URL}/${pathname}`,
     }),
   });
