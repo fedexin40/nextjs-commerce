@@ -1,4 +1,4 @@
-import { ProductView } from 'components/FacebookPixel';
+import { FacebookConversionApi, ProductView } from 'components/FacebookPixel';
 import { GridTileImage } from 'components/grid/tile';
 import { PageItem } from 'components/htmlParser/page';
 import { Gallery } from 'components/product/gallery';
@@ -13,6 +13,8 @@ import { notFound } from 'next/navigation';
 
 export const runtime = 'edge';
 const { SHOP_PUBLIC_URL } = process.env;
+const date = new Date().getTime();
+const current_timestamp = Math.floor(date / 1000);
 
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
@@ -57,8 +59,15 @@ export default async function Product(props: {
   const remoteAddress = headersList.get('remoteAddress');
   const userAgent = headersList.get('user-agent');
   const pathname = headersList.get('x-current-path');
-  const fbc = searchParams['fbclid'] || cookieStore.get('_fbc')?.value;
   const fbp = cookieStore.get('_fbp')?.value;
+  const fbclid = searchParams['fbclid'];
+  let updateCookie = false;
+  let fbc = cookieStore.get('_fbc')?.value;
+
+  if (!fbc && fbclid) {
+    fbc = `fb.2.${current_timestamp}.${fbclid}`;
+    updateCookie = true;
+  }
 
   let product;
   try {
@@ -70,6 +79,7 @@ export default async function Product(props: {
     return notFound();
   }
 
+  const eventId = `${product.handle}_ViewContent_${current_timestamp}`;
   let ip;
   if (xForwardedFor && xForwardedFor.split(',')[0]) {
     // If x-forwarded-for is present, take the first IP address
@@ -80,26 +90,6 @@ export default async function Product(props: {
   } else {
     ip = 'unknown'; // Handle cases where no IP is available
   }
-
-  const now = Date.now();
-  const eventId = `${product.handle}_ViewContent_${now}`;
-  const facebookApi = `${SHOP_PUBLIC_URL}/api/facebook`;
-  await fetch(facebookApi, {
-    method: 'POST',
-    body: JSON.stringify({
-      ip: ip,
-      userAgent: userAgent,
-      fbc: fbc,
-      fbp: fbp,
-      eventName: 'ViewContent',
-      eventId: eventId,
-      email: user.email || null,
-      phone: user.address.phone || null,
-      productID: product.handle,
-      value: product.priceRange.maxVariantPrice.amount,
-      eventURL: `${SHOP_PUBLIC_URL}/${pathname}`,
-    }),
-  });
 
   const variants = product?.variants;
   const variant = variants?.find((variant: ProductVariant) =>
@@ -139,6 +129,21 @@ export default async function Product(props: {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <FacebookConversionApi
+        ip={ip}
+        userAgent={userAgent}
+        fbc={fbc}
+        fbp={fbp}
+        eventName="ViewContent"
+        eventId={eventId}
+        email={user.email || null}
+        phone={user.address.phone || null}
+        productID={product.handle}
+        value={product.priceRange.maxVariantPrice.amount}
+        eventURL={`${SHOP_PUBLIC_URL}/${pathname}`}
+        updateCookie={updateCookie}
+        SHOP_PUBLIC_URL={SHOP_PUBLIC_URL || ''}
       />
       <ProductView content_ids={[product.handle]} content_type="product" eventId={eventId} />
       <div className="mx-auto max-w-screen-2xl dark:bg-black">

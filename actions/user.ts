@@ -108,3 +108,8 @@ export async function refreshUser() {
   revalidateTag(TAGS.user);
   permanentRedirect('cart/processing');
 }
+
+export async function SetupCookie({ name, value }: { name: string; value: string }) {
+  const cookieStore = await cookies();
+  cookieStore.set(name, value, { httpOnly: true });
+}
