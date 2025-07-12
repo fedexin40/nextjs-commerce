@@ -100,9 +100,11 @@ export const FacebookConversionApi = (param: {
         }),
       });
     };
-    facebook();
     if (param.updateCookie && param.fbc) {
       SetupCookie({ name: '_fbc', value: param.fbc });
+    }
+    if (param.fbc) {
+      facebook();
     }
   });
   return null;
