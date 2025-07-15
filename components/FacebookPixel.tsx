@@ -112,7 +112,7 @@ export const FacebookConversionApi = (param: {
     if (param.updateCookie && param.fbc) {
       SetupCookie({ name: '_fbc', value: param.fbc });
     }
-    if (param.fbc) {
+    if (param.fbc || param.fbp) {
       facebook();
     }
   });
