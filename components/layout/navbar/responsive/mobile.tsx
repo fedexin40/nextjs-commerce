@@ -47,8 +47,8 @@ export default function MobileNavbar() {
         <div className="grid grid-cols-4 bg-[#f7e7da]">
           <div className="w-full border-r-2 border-white p-2">
             <div className="flex justify-center">
-              <div className="relative h-[27px] w-[27px]">
-                <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
+              <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
+                <div className="relative h-[27px] w-[27px]">
                   <Image
                     className="object-cover"
                     src="/facebookRosa.png"
@@ -56,14 +56,14 @@ export default function MobileNavbar() {
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
-                </Link>
-              </div>
+                </div>
+              </Link>
             </div>
           </div>
           <div className="w-full border-x-2 border-white  p-2">
             <div className="flex justify-center">
-              <div className="relative h-[27px] w-[27px]">
-                <Link href={'https://www.instagram.com/proyecto705/'}>
+              <Link href={'https://www.instagram.com/proyecto705/'}>
+                <div className="relative h-[27px] w-[27px]">
                   <Image
                     className="object-cover"
                     src="/instagramRosa.png"
@@ -71,8 +71,8 @@ export default function MobileNavbar() {
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
-                </Link>
-              </div>
+                </div>
+              </Link>
             </div>
           </div>
           <div className="w-full border-x-2 border-white p-2">

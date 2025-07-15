@@ -41,8 +41,8 @@ export default function TabletNavbar() {
                 <Search />
               </div>
               <div className="flex w-2/4 justify-end gap-6 pr-10">
-                <div className="relative h-[25px] w-[25px]">
-                  <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
+                <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
+                  <div className="relative h-[25px] w-[25px]">
                     <Image
                       className="object-contain"
                       src={'/facebookRosa.png'}
@@ -50,10 +50,10 @@ export default function TabletNavbar() {
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                  </Link>
-                </div>
-                <div className="relative h-[25px] w-[25px]">
-                  <Link href={'https://www.instagram.com/proyecto705/'}>
+                  </div>
+                </Link>
+                <Link href={'https://www.instagram.com/proyecto705/'}>
+                  <div className="relative h-[25px] w-[25px]">
                     <Image
                       className="object-contain"
                       src={'/instagramRosa.png'}
@@ -61,8 +61,8 @@ export default function TabletNavbar() {
                       fill
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     />
-                  </Link>
-                </div>
+                  </div>
+                </Link>
               </div>
             </div>
           </div>

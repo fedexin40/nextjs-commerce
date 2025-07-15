@@ -20,14 +20,26 @@ export default async function Footer() {
             <div className="relative hidden h-28 w-28 dark:block lg:h-36 lg:w-36">
               <Link href={'/'}>
                 <div className="relative h-28 w-28 lg:h-36 lg:w-36">
-                  <Image className="object-contain" src={'/logoBlanco.png'} alt="" fill />
+                  <Image
+                    className="object-contain"
+                    src={'/logoBlanco.png'}
+                    alt=""
+                    fill
+                    priority={true}
+                  />
                 </div>
               </Link>
             </div>
             <div className="relative block h-28 w-28 dark:hidden lg:h-36 lg:w-36">
               <Link href={'/'}>
                 <div className="relative h-28 w-28 lg:h-36 lg:w-36">
-                  <Image className="object-contain" src={'/logoNegro.png'} alt="" fill />
+                  <Image
+                    className="object-contain"
+                    src={'/logoNegro.png'}
+                    alt=""
+                    fill
+                    priority={true}
+                  />
                 </div>
               </Link>
             </div>
