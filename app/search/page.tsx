@@ -20,15 +20,20 @@ export default async function SearchPage(props: {
   const first = 24;
   const { sort, q: searchValue } = searchParams as { [key: string]: string };
   const { sortKey, reverse } = sorting.find((item) => item.slug === sort) || defaultSort;
-  const productsByPage = await getProducts({ sortKey, reverse, query: searchValue, first: first });
-  const products = productsByPage.products;
-  const totalCount = productsByPage.totalCount;
+  const productsPagination = await getProducts({
+    sortKey,
+    reverse,
+    query: searchValue,
+    first: first,
+  });
+  const products = productsPagination.products;
+  const totalCount = productsPagination.totalCount;
   const numbersOfPages = Math.ceil(totalCount / first) - 1;
 
   return (
     <>
       {products.length > 0 ? (
-        <div className="mx-10 mb-24 lg:mx-32">
+        <div className="mx-10 mb-24 lg:mx-32 lg:mb-40">
           <div className="flex w-full flex-row-reverse pb-12 pt-12">
             <div>
               <FilterList list={sorting} />
@@ -41,16 +46,18 @@ export default async function SearchPage(props: {
       ) : (
         <NotFound query={searchValue || ''} />
       )}
-      {productsByPage.hasNextPage && (
-        <div>
+      {productsPagination.hasNextPage && (
+        <div className="pt-2 lg:pt-0">
           <LoadMore
             numbersOfPages={numbersOfPages}
-            endCursor={productsByPage.endCursor}
-            startCursor={productsByPage.startCursor}
+            endCursor={productsPagination.endCursor}
+            startCursor={productsPagination.startCursor}
             first={first}
-            reverse={reverse}
+            collection={'oro'}
+            query={searchValue || undefined}
+            fromSearch={true}
             sortKey={sortKey}
-            query={searchValue || ''}
+            reverse={reverse}
           />
         </div>
       )}

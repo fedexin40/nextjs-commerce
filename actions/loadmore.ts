@@ -11,6 +11,7 @@ export async function loadProducts({
   sortKey,
   collection,
   query,
+  fromSearch,
 }: {
   first: number;
   endCursor: string;
@@ -18,10 +19,11 @@ export async function loadProducts({
   sortKey?: ProductOrderField;
   query?: string;
   collection?: string;
+  fromSearch: boolean;
 }): Promise<ProductsByPage> {
   let productsPagination;
   try {
-    if (query) {
+    if (fromSearch) {
       productsPagination = await getProductsFunction({
         cursor: endCursor,
         first: first || 100,

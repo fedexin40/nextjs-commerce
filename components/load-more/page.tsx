@@ -16,6 +16,7 @@ function LoadMoreItem({
   collection,
   query,
   pageNumber,
+  fromSearch = false,
 }: {
   first: number;
   pageNumber: number;
@@ -23,14 +24,19 @@ function LoadMoreItem({
   sortKey?: ProductOrderField;
   query?: string;
   collection?: string;
+  fromSearch?: boolean;
 }) {
   const [products, setProducts] = useState<Product[] | undefined>([]);
   const [isPending, startTransition] = useTransition();
   const endCursor = useLoadMore().endCursor;
-  const currentSortKey = useLoadMore().sortKey;
   const currentPageNumber = useLoadMore().currentPageNumber;
   const { setEndCursor, setStartCursor, resetPageNumber } = useLoadMoreActions();
   const { increasePageNumber } = useLoadMoreActions();
+
+  useEffect(() => {
+    resetPageNumber();
+    setProducts(undefined);
+  }, [sortKey, reverse]);
 
   function ProductsLoad() {
     startTransition(async () => {
@@ -41,6 +47,7 @@ function LoadMoreItem({
         sortKey: sortKey,
         query: query,
         collection: collection,
+        fromSearch: fromSearch,
       });
       startTransition(() => {
         setProducts(products?.products);
@@ -50,11 +57,6 @@ function LoadMoreItem({
       });
     });
   }
-
-  useEffect(() => {
-    resetPageNumber();
-    setProducts(undefined);
-  }, [sortKey]);
 
   if (pageNumber > currentPageNumber) {
     return;
@@ -76,7 +78,7 @@ function LoadMoreItem({
         </div>
         <div
           className={clsx(
-            'my-20 flex w-full items-center justify-center space-x-6 tracking-wider ',
+            'my-20 mb-20 flex w-full items-center justify-center space-x-6 tracking-wider ',
             {
               hidden: !isPending,
             },
@@ -110,22 +112,25 @@ export default function LoadMore({
   sortKey,
   collection,
   query,
+  fromSearch,
 }: {
-  first: number;
   numbersOfPages: number;
   endCursor: string;
   startCursor: string;
+  first: number;
   reverse?: boolean;
   sortKey?: ProductOrderField;
   query?: string;
   collection?: string;
+  fromSearch?: boolean;
 }) {
-  const { setEndCursor, setStartCursor, setSortKey } = useLoadMoreActions();
+  const { setEndCursor, setStartCursor, setSortKey, resetPageNumber } = useLoadMoreActions();
   useEffect(() => {
     setEndCursor(endCursor);
     setStartCursor(startCursor);
     setSortKey(sortKey || '');
-  }, [sortKey]);
+    resetPageNumber();
+  }, [sortKey, reverse]);
 
   const pages = Array.from({ length: numbersOfPages }, (v, i) => i + 1);
   return (
@@ -139,6 +144,7 @@ export default function LoadMore({
             collection={collection}
             query={query}
             pageNumber={page}
+            fromSearch={fromSearch}
           />
         </div>
       ))}
