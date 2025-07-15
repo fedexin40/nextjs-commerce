@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@bettercart/react-facebook-pixel':
+        specifier: ^2.0.1
+        version: 2.0.1
       '@emotion/react':
         specifier: ^11.11.4
         version: 11.11.4(@types/react@18.2.16)(react@19.1.0)
@@ -74,9 +77,6 @@ importers:
       react-dom:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
-      react-facebook-pixel:
-        specifier: ^1.0.4
-        version: 1.0.4
       react-html-parser:
         specifier: ^2.0.2
         version: 2.0.2(react@19.1.0)
@@ -484,6 +484,9 @@ packages:
   '@babel/types@7.24.0':
     resolution: {integrity: sha512-+j7a5c253RfKh8iABBhywc8NSfP5LURe7Uh4qpsh6jc+aLJguvmIUBdjSdEMQv2bENrCR5MfRdjGo7vzS/ob7w==}
     engines: {node: '>=6.9.0'}
+
+  '@bettercart/react-facebook-pixel@2.0.1':
+    resolution: {integrity: sha512-eRCdfukz1yxal2bBFW/VQiHLisPVmRGYiDVMDaN3iDDwL4TgLhjpJ4SQHHAEuIkLeu1xSdiUg5dzZ5uBjKY4RQ==}
 
   '@contentlayer/cli@0.3.4':
     resolution: {integrity: sha512-vNDwgLuhYNu+m70NZ3XK9kexKNguuxPXg7Yvzj3B34cEilQjjzSrcTY/i+AIQm9V7uT5GGshx9ukzPf+SmoszQ==}
@@ -4481,9 +4484,6 @@ packages:
     peerDependencies:
       react: ^19.1.0
 
-  react-facebook-pixel@1.0.4:
-    resolution: {integrity: sha512-givZY8MS0v/mdbRzvcvouBo/j0TtDiu/93f4gIjJXwDDgwlf6bYUiQvb2qcqjluOOD/hIKUQHNYLNsSOnoEklg==}
-
   react-html-parser@2.0.2:
     resolution: {integrity: sha512-XeerLwCVjTs3njZcgCOeDUqLgNIt/t+6Jgi5/qPsO/krUWl76kWKXMeVs2LhY2gwM6X378DkhLjur0zUQdpz0g==}
     peerDependencies:
@@ -5834,6 +5834,8 @@ snapshots:
       '@babel/helper-string-parser': 7.24.1
       '@babel/helper-validator-identifier': 7.22.20
       to-fast-properties: 2.0.0
+
+  '@bettercart/react-facebook-pixel@2.0.1': {}
 
   '@contentlayer/cli@0.3.4(esbuild@0.20.2)':
     dependencies:
@@ -10755,8 +10757,6 @@ snapshots:
     dependencies:
       react: 19.1.0
       scheduler: 0.26.0
-
-  react-facebook-pixel@1.0.4: {}
 
   react-html-parser@2.0.2(react@19.1.0):
     dependencies:

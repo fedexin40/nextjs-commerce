@@ -8,7 +8,7 @@ const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
 //FACEBOOK INIT
 export const FacebookPixelEvents = () => {
   useEffect(() => {
-    import('react-facebook-pixel')
+    import('@bettercart/react-facebook-pixel')
       .then((x) => x.default)
       .then((ReactPixel) => {
         ReactPixel.init(FB_PIXEL_ID || '');
@@ -22,7 +22,7 @@ export const FacebookPixelEvents = () => {
 //CUSTOM EVENTS
 export const CompleteRegistration = () => {
   useEffect(() => {
-    import('react-facebook-pixel')
+    import('@bettercart/react-facebook-pixel')
       .then((x) => x.default)
       .then((ReactPixel) => {
         ReactPixel.track('CompleteRegistration');
@@ -34,14 +34,23 @@ export const CompleteRegistration = () => {
 
 export const ProductView = (parameters: {
   content_ids: [string];
-  content_type: string;
-  eventId: string;
+  event_id: string;
+  value: string;
 }) => {
   useEffect(() => {
-    import('react-facebook-pixel')
+    import('@bettercart/react-facebook-pixel')
       .then((x) => x.default)
       .then((ReactPixel) => {
-        ReactPixel.track('ViewContent', parameters);
+        ReactPixel.track(
+          'ViewContent',
+          {
+            content_ids: parameters.content_ids,
+            content_type: 'product',
+            currency: 'MXN',
+            value: parameters.value,
+          },
+          { eventID: parameters.event_id },
+        );
       });
   }, []);
 
@@ -55,7 +64,7 @@ export const InitiateCheckout = (parameters: {
   value: string;
 }) => {
   useEffect(() => {
-    import('react-facebook-pixel')
+    import('@bettercart/react-facebook-pixel')
       .then((x) => x.default)
       .then((ReactPixel) => {
         ReactPixel.track('InitiateCheckout', parameters);

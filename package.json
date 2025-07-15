@@ -23,6 +23,7 @@
     "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "@bettercart/react-facebook-pixel": "^2.0.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@fedexin40/auth-sdk": "^1.0.9",
@@ -45,7 +46,6 @@
     "next": "15.3.2",
     "react": "19.1.0",
     "react-dom": "19.1.0",
-    "react-facebook-pixel": "^1.0.4",
     "react-html-parser": "^2.0.2",
     "react-multi-carousel": "^2.8.4",
     "stripe": "^15.7.0",

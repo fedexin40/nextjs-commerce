@@ -145,7 +145,11 @@ export default async function Product(props: {
         updateCookie={updateCookie}
         SHOP_PUBLIC_URL={SHOP_PUBLIC_URL || ''}
       />
-      <ProductView content_ids={[product.handle]} content_type="product" eventId={eventId} />
+      <ProductView
+        content_ids={[product.handle]}
+        event_id={eventId}
+        value={product.priceRange.maxVariantPrice.amount}
+      />
       <div className="mx-auto max-w-screen-2xl dark:bg-black">
         <div className="flex flex-col px-10 md:px-16 md:pt-12 lg:px-36 lg:pt-16">
           <div className="flex flex-col md:grid md:grid-cols-3">
