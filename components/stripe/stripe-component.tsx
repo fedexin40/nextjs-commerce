@@ -22,18 +22,7 @@ export const StripeComponent = ({
 
   return (
     <>
-      <div className="hidden dark:block">
-        <Elements
-          options={{
-            clientSecret,
-            appearance: { theme: 'night', variables: { fontLineHeight: '16px' } },
-          }}
-          stripe={stripePromise}
-        >
-          <CheckoutForm returnUrl={returnUrl} content_ids={content_ids} value={value} />
-        </Elements>
-      </div>
-      <div className="block dark:hidden">
+      <div className="block">
         <Elements
           options={{
             clientSecret,

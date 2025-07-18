@@ -102,9 +102,9 @@ export default function Shipping({
             <div className="flex flex-row space-x-2">
               <span>Esto puede tardar algunos minutos </span>
               <div className="flex flex-row space-x-2 self-end">
-                <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black [animation-delay:-0.3s] dark:bg-white lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
-                <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black [animation-delay:-0.15s] dark:bg-white lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
-                <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black dark:bg-white lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
+                <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black [animation-delay:-0.3s] lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
+                <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black [animation-delay:-0.15s] lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
+                <div className="-mt-1 h-[6px] w-[6px] animate-bounce rounded-full bg-black lg:-mt-3 lg:h-[8px] lg:w-[8px]"></div>
               </div>
             </div>
           </div>

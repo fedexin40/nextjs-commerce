@@ -111,15 +111,15 @@ export function BuyNow({
         </button>
         <div
           className={clsx(
-            'relative flex h-[60px] w-full items-center justify-center space-x-6 bg-[#c9aa9e] p-4 tracking-wider dark:border-2 dark:border-[#c9aa9e] dark:text-white',
+            'relative flex h-[60px] w-full items-center justify-center space-x-6 bg-[#c9aa9e] p-4 tracking-wider',
             {
               hidden: !isPendingBuyNow,
             },
           )}
         >
-          <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] [animation-delay:-0.3s] dark:bg-white"></div>
-          <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] [animation-delay:-0.15s] dark:bg-white"></div>
-          <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] dark:bg-white"></div>
+          <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] [animation-delay:-0.3s]"></div>
+          <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] [animation-delay:-0.15s]"></div>
+          <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)]"></div>
         </div>
       </div>
       <div>
@@ -161,7 +161,7 @@ export function BuyNow({
             });
           }}
           className={clsx(
-            'relative flex h-[60px] w-full items-center justify-center  bg-[#f5e1d1] p-4 tracking-wider text-black hover:opacity-90 dark:border-2 dark:border-[#c9aa9e] dark:bg-black dark:text-white',
+            'relative flex h-[60px] w-full items-center justify-center  bg-[#f5e1d1] p-4 tracking-wider text-black hover:opacity-90',
             {
               'cursor-not-allowed opacity-60 hover:opacity-60':
                 !availableForSale || !selectedVariantId,
@@ -175,15 +175,15 @@ export function BuyNow({
         </button>
         <div
           className={clsx(
-            'relative flex h-[60px] w-full items-center justify-center space-x-6 bg-[#f5e1d1] p-4 tracking-wider dark:border-2 dark:border-[#c9aa9e]  dark:bg-black dark:text-white',
+            'relative flex h-[60px] w-full items-center justify-center space-x-6 bg-[#f5e1d1] p-4 tracking-wider',
             {
               hidden: !isPendingAdd2Cart,
             },
           )}
         >
-          <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] [animation-delay:-0.3s] dark:bg-white"></div>
-          <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] [animation-delay:-0.15s] dark:bg-white"></div>
-          <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] dark:bg-white"></div>
+          <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] [animation-delay:-0.3s]"></div>
+          <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)] [animation-delay:-0.15s]"></div>
+          <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)]"></div>
         </div>
       </div>
     </>

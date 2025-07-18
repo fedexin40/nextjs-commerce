@@ -47,7 +47,7 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
 
   if (!deliveryMethodId) {
     return (
-      <div className="flex h-[60px] w-full cursor-not-allowed items-center justify-center whitespace-nowrap bg-black p-3 text-[15.5px] font-semibold uppercase tracking-[1.4px] text-white opacity-50 dark:bg-[#c9aa9e] lg:text-[16.3px]">
+      <div className="flex h-[60px] w-full cursor-not-allowed items-center justify-center whitespace-nowrap bg-black p-3 text-[15.5px] font-semibold uppercase tracking-[1.4px] text-white opacity-50 lg:text-[16.3px]">
         Siguiente
       </div>
     );
@@ -69,7 +69,7 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
       </div>
       <div
         className={clsx(
-          'flex h-[60px] w-full cursor-pointer items-center justify-center whitespace-nowrap bg-black p-3 font-semibold uppercase text-white hover:opacity-50 dark:bg-[#c9aa9e]',
+          'flex h-[60px] w-full cursor-pointer items-center justify-center whitespace-nowrap bg-black p-3 font-semibold uppercase text-white hover:opacity-50',
           { hidden: isPending },
         )}
         onClick={() => setupShippingAddress()}
@@ -79,13 +79,13 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
       </div>
       <div
         className={clsx(
-          'relative flex h-[60px] w-full cursor-not-allowed items-center justify-center space-x-6 whitespace-nowrap bg-black p-3 text-center font-semibold text-white dark:bg-[#c9aa9e]',
+          'relative flex h-[60px] w-full cursor-not-allowed items-center justify-center space-x-6 whitespace-nowrap bg-black p-3 text-center font-semibold text-white',
           { hidden: !isPending },
         )}
       >
-        <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.3s] dark:bg-white"></div>
-        <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.15s] dark:bg-white"></div>
-        <div className="h-4 w-4 animate-bounce rounded-full bg-white dark:bg-white"></div>
+        <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.3s]"></div>
+        <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.15s]"></div>
+        <div className="h-4 w-4 animate-bounce rounded-full bg-white"></div>
       </div>
     </>
   );

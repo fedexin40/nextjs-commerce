@@ -73,13 +73,13 @@ export default function UserMenu({
 
   return (
     <div>
-      <div className="flex w-full flex-row dark:bg-zinc-700">
+      <div className="flex w-full flex-row">
         <div className="basis-[10px] py-10 md:basis-1/4">
           <div className="flex h-full min-h-[300px] md:hidden" ref={ref}>
             <div className="relative">
               {openSelect && (
                 <div
-                  className="absolute left-0 top-0 z-50 h-full border-r-2 border-zinc-400 bg-white pt-10 dark:border-white dark:bg-zinc-700"
+                  className="absolute left-0 top-0 z-50 h-full border-r-2 border-zinc-400 bg-white pt-10"
                   onClick={() => {
                     setOpenSelect(false);
                   }}
@@ -101,13 +101,13 @@ export default function UserMenu({
             <Menu />
           </div>
         </div>
-        <div className="my-10 basis-[90%] rounded-sm border-l-2 border-zinc-400 px-5 dark:border-white md:basis-3/4 md:pl-[50px] md:pr-[100px] lg:pr-[180px]">
+        <div className="my-10 basis-[90%] rounded-sm border-l-2 border-zinc-400 px-5 md:basis-3/4 md:pl-[50px] md:pr-[100px] lg:pr-[180px]">
           {addressMenu && UserAddress}
           {historyMenu && UserShoppings}
           {orderMenu && (
             <div className="flex flex-col gap-5">
               <div
-                className="w-fit rounded-lg bg-zinc-100 p-2 shadow-md shadow-gray-400 hover:cursor-pointer dark:bg-zinc-700 dark:shadow-slate-900"
+                className="w-fit rounded-lg bg-zinc-100 p-2 shadow-md shadow-gray-400 hover:cursor-pointer"
                 onClick={() => showHistoryMenu()}
               >
                 <KeyboardReturnIcon />

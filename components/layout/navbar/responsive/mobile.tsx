@@ -25,7 +25,7 @@ export default function MobileNavbar() {
               </Link>
             </div>
             <div className="flex flex-row items-center justify-center gap-4 text-[14px]">
-              <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline dark:text-black dark:hover:text-neutral-300">
+              <div className="text-black underline-offset-4 hover:text-neutral-500 hover:underline">
                 <User />
               </div>
               <div>

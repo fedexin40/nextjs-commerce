@@ -81,7 +81,7 @@ export default function LoginModal({ children }: { children: ReactNode }) {
             leaveFrom="-translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <Dialog.Panel className="fixed bottom-0 left-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 text-black backdrop-blur-xl dark:border-neutral-700 dark:bg-black/80 dark:text-white md:w-[390px]">
+            <Dialog.Panel className="fixed bottom-0 left-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 text-black backdrop-blur-xl md:w-[390px]">
               <div>
                 <Snackbar
                   anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -113,7 +113,7 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                   <div className="flex justify-center">
                     <Image src={'/session.png'} alt="" width={60} height={60} />
                   </div>
-                  <div className="mt-4 text-[#a8a8a8] dark:text-white">Iniciar Sesión</div>
+                  <div className="mt-4 text-[#a8a8a8]">Iniciar Sesión</div>
                 </div>
                 <div className="mx-10 mb-10 mt-10 flex flex-col md:my-20 lg:mb-7 lg:mt-7">
                   <div>

@@ -84,9 +84,9 @@ function LoadMoreItem({
             },
           )}
         >
-          <div className="h-4 w-4 animate-bounce rounded-full bg-black [animation-delay:-0.3s] dark:bg-white"></div>
-          <div className="h-4 w-4 animate-bounce rounded-full bg-black [animation-delay:-0.15s] dark:bg-white"></div>
-          <div className="h-4 w-4 animate-bounce rounded-full bg-black dark:bg-white"></div>
+          <div className="h-4 w-4 animate-bounce rounded-full bg-black [animation-delay:-0.3s]"></div>
+          <div className="h-4 w-4 animate-bounce rounded-full bg-black [animation-delay:-0.15s]"></div>
+          <div className="h-4 w-4 animate-bounce rounded-full bg-black"></div>
         </div>
       </div>
     );

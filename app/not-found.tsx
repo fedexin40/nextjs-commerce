@@ -30,7 +30,7 @@ export default function Error({ reset }: { reset: () => void }) {
               </div>
             </div>
           </div>
-          <div className="min-h-10 h-10 w-full bg-zinc-400 dark:bg-[#c9aa9e]" />
+          <div className="min-h-10 h-10 w-full bg-zinc-400" />
           <div className="text-[13px] tracking-widest lg:text-[14.3px]">
             <Footer />
           </div>

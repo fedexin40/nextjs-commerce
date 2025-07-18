@@ -28,11 +28,11 @@ export function ProductDescription({
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-col border-b dark:border-neutral-700">
-        <div className="mb-2 dark:text-[#c9aa9e]">
+      <div className="flex flex-col border-b">
+        <div className="mb-2">
           <h1 className="text-base font-semibold capitalize tracking-wider">{product.title}</h1>
         </div>
-        <div className="mr-auto block w-auto p-2 pl-0 text-[13.5px] font-semibold tracking-[1.4px] dark:text-[#c9aa9e] md:hidden lg:text-[14.3px]">
+        <div className="mr-auto block w-auto p-2 pl-0 text-[13.5px] font-semibold tracking-[1.4px] md:hidden lg:text-[14.3px]">
           {variant && (
             <Price
               amountMax={variant.price.amount}
@@ -50,7 +50,7 @@ export function ProductDescription({
         <div className="pb-5 text-justify text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
           {description}
         </div>
-        <div className="mr-auto hidden w-auto p-2 pl-0 pt-5 text-[13.5px] font-semibold tracking-[1.4px] dark:text-[#c9aa9e] md:block lg:text-[14.3px]">
+        <div className="mr-auto hidden w-auto p-2 pl-0 pt-5 text-[13.5px] font-semibold tracking-[1.4px] md:block lg:text-[14.3px]">
           {variant && (
             <Price
               amountMax={variant.price.amount}
@@ -66,10 +66,10 @@ export function ProductDescription({
           )}
         </div>
       </div>
-      <div className="flex flex-col border-b pb-6 dark:border-neutral-700">
+      <div className="flex flex-col border-b pb-6">
         <VariantSelector options={product.options} variants={product.variants} />
       </div>
-      <div className="mt-6 flex flex-col gap-5 border-b pb-6 uppercase dark:border-neutral-700">
+      <div className="mt-6 flex flex-col gap-5 border-b pb-6 uppercase">
         <BuyNow
           variants={product.variants}
           availableForSale={product.availableForSale}
@@ -77,7 +77,7 @@ export function ProductDescription({
           value={value}
         />
       </div>
-      <div className="pt-5 text-left text-[12px] leading-tight text-gray-800 dark:text-white lg:text-[14px]">
+      <div className="pt-5 text-left text-[12px] leading-tight text-gray-800 lg:text-[14px]">
         <div className="whitespace-nowrap">Tiempo de entrega de 2 a 7 dias hábiles</div>
         <div className="whitespace-nowrap pt-3">Envío gratis en compras mayores a $1,500.00</div>
         <div className="flex flex-row gap-x-4 whitespace-nowrap pt-3">

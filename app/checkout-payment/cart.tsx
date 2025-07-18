@@ -44,7 +44,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
             return (
               <div
                 key={i}
-                className="flex w-full flex-col rounded-md border-2 border-[#acacac] px-3 tracking-wide dark:border-[#c9aa9e]"
+                className="flex w-full flex-col rounded-md border-2 border-[#acacac] px-3 tracking-wide"
               >
                 <div className="relative flex w-full flex-row justify-around px-1 py-4">
                   <div className="w-2/3">
@@ -64,9 +64,7 @@ export default function Cart({ cart }: { cart: CartType | null }) {
                         <div className="flex flex-col">
                           <span className="">{item.merchandise.product.title}</span>
                           {item.merchandise.title !== DEFAULT_OPTION ? (
-                            <p className="text-neutral-500 dark:text-neutral-400">
-                              {item.merchandise.title}
-                            </p>
+                            <p className="text-neutral-500">{item.merchandise.title}</p>
                           ) : null}
                         </div>
                       </div>
@@ -89,42 +87,40 @@ export default function Cart({ cart }: { cart: CartType | null }) {
         </ul>
         <div className="flex w-full flex-row gap-3 pt-7">
           <input
-            className="w-3/4 border-2 border-neutral-300 bg-[#f1f1f1] pl-2 dark:border dark:border-[#c9aa9e]"
+            className="w-3/4 border-2 border-neutral-300 bg-[#f1f1f1] pl-2"
             placeholder="Codigo de cupon..."
           />
-          <div className="w-1/4 bg-neutral-500 p-3 text-center text-white dark:bg-[#c9aa9e] dark:text-black">
-            Aplicar
-          </div>
+          <div className="w-1/4 bg-neutral-500 p-3 text-center text-white">Aplicar</div>
         </div>
-        <div className="py-7 text-neutral-500 dark:text-white">
-          <div className="mb-2 flex items-center justify-between border-[#acacac] pb-1 pt-5 capitalize text-black dark:border-[#c9aa9e] dark:text-white">
+        <div className="py-7 text-neutral-500">
+          <div className="mb-2 flex items-center justify-between border-[#acacac] pb-1 pt-5 capitalize text-black">
             <p>Subtotal</p>
             <Price
-              className="text-black dark:text-white"
+              className="text-black"
               amountMax={cart.cost.subtotalAmountBeforeTaxes.amount}
               currencyCode={cart.cost.subtotalAmountBeforeTaxes.currencyCode}
             />
           </div>
-          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 uppercase text-black dark:border-[#c9aa9e] dark:text-white">
+          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 uppercase text-black">
             <p>Iva (16%)</p>
             <Price
-              className="text-black dark:text-white"
+              className="text-black"
               amountMax={cart.cost.totalTaxAmount.amount}
               currencyCode={cart.cost.totalTaxAmount.currencyCode}
             />
           </div>
-          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 capitalize text-black dark:border-[#c9aa9e] dark:text-white">
+          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 capitalize text-black">
             <p>Envío</p>
             <Price
-              className="text-black dark:text-white"
+              className="text-black"
               amountMax={cart.cost.totalShippingAmount.amount}
               currencyCode={cart.cost.totalShippingAmount.currencyCode}
             />
           </div>
-          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 capitalize text-black dark:border-[#c9aa9e] dark:text-white">
+          <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 capitalize text-black">
             <p>Total</p>
             <Price
-              className="text-black dark:text-white"
+              className="text-black"
               amountMax={cart.cost.totalAmount.amount}
               currencyCode={cart.cost.totalAmount.currencyCode}
             />

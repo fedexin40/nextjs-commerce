@@ -72,7 +72,7 @@ export default function Order() {
       <div className="space-y-5 lg:space-y-7">
         {order.lines.map((line) => (
           <div
-            className="flex w-fit flex-row gap-8 rounded-lg bg-zinc-100 px-5 py-4 shadow-md shadow-gray-400 dark:bg-zinc-700 dark:shadow-slate-900"
+            className="flex w-fit flex-row gap-8 rounded-lg bg-zinc-100 px-5 py-4 shadow-md shadow-gray-400"
             key={line.id}
           >
             <div className="relative h-10 w-10 md:h-16 md:w-16">

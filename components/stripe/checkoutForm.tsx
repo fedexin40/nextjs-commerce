@@ -76,12 +76,12 @@ export default function CheckoutForm({
           disabled={isLoading || !stripe || !elements}
           id="submit"
         >
-          <div className="whitespace-nowrap p-0 text-[15.5px] tracking-[1.4px] dark:text-black lg:text-[16.3px]">
+          <div className="whitespace-nowrap p-0 text-[15.5px] tracking-[1.4px] lg:text-[16.3px]">
             {isLoading ? (
               <div className="flex cursor-not-allowed items-center justify-center space-x-6">
-                <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.3s] dark:bg-white"></div>
-                <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.15s] dark:bg-white"></div>
-                <div className="h-4 w-4 animate-bounce rounded-full bg-white dark:bg-white"></div>
+                <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.3s]"></div>
+                <div className="h-4 w-4 animate-bounce rounded-full bg-white [animation-delay:-0.15s]"></div>
+                <div className="h-4 w-4 animate-bounce rounded-full bg-white"></div>
               </div>
             ) : (
               'Pagar ahora'

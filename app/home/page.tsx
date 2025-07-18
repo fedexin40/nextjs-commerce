@@ -40,7 +40,7 @@ export default async function HomePage() {
           removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
         />
       </div>
-      <div className="m-10 grid justify-items-center whitespace-nowrap text-base font-medium tracking-wider text-black dark:text-[#c9aa9e] xl:text-3xl">
+      <div className="m-10 grid justify-items-center whitespace-nowrap text-base font-medium tracking-wider text-black xl:text-3xl">
         <h1>Encuentra el arete perfecto para ti</h1>
       </div>
       <div className="mx-10 mb-24 lg:mx-32 lg:mb-40">

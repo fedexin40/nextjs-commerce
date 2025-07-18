@@ -150,7 +150,7 @@ export default async function Product(props: {
         event_id={eventId}
         value={product.priceRange.maxVariantPrice.amount}
       />
-      <div className="mx-auto max-w-screen-2xl dark:bg-black">
+      <div className="mx-auto max-w-screen-2xl">
         <div className="flex flex-col px-10 md:px-16 md:pt-12 lg:px-36 lg:pt-16">
           <div className="flex flex-col md:grid md:grid-cols-3">
             <div className="md:col-span-2">
@@ -187,7 +187,7 @@ async function RelatedProducts({ product }: { product: productType }) {
   return (
     <div className="py-10 md:py-20 lg:py-20">
       <h4 className="mb-4 text-2xl font-bold">
-        <div className="bg-[#e6e1e1] dark:bg-zinc-800">
+        <div className="bg-[#e6e1e1]">
           <div className="flex flex-row gap-x-2 p-5 px-10 tracking-wider md:px-16 lg:px-40">
             <div className="border-b-2 border-[#c9aa9e]">Productos</div>
             <div>relacionados</div>

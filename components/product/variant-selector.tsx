@@ -54,7 +54,7 @@ function VariantSelectorDropdown({
         onClick={() => {
           setOpenSelect(!openSelect);
         }}
-        className="flex	rounded border border-black/30 px-4 text-sm dark:border-[#c9aa9e]"
+        className="flex	rounded border border-black/30 px-4 text-sm"
       >
         <div className="min-h-[38px] min-w-[95px] max-w-none p-2">{active}</div>
         <ChevronDownIcon className="h-4 self-center" />
@@ -64,7 +64,7 @@ function VariantSelectorDropdown({
           onClick={() => {
             setOpenSelect(false);
           }}
-          className="absolute z-50 rounded bg-white px-4 py-2 text-sm shadow-md dark:bg-black"
+          className="absolute z-50 rounded bg-white px-4 py-2 text-sm shadow-md"
         >
           {option.values.map((value) => {
             const optionNameLowerCase = option.name.toLowerCase();

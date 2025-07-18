@@ -70,9 +70,9 @@ export default async function CheckoutPayment(props: {
   const value = cart.cost.totalAmount.amount;
   return (
     <>
-      <div className="flex flex-col text-[13.5px] tracking-[1.4px] dark:bg-zinc-700 md:flex-row lg:text-[14.3px]">
+      <div className="flex flex-col text-[13.5px] tracking-[1.4px] md:flex-row lg:text-[14.3px]">
         <div className="mx-10 mb-16	pt-16 md:mb-24 md:basis-[52%] lg:mb-40 lg:px-10">
-          <div className="flex flex-row space-x-3 bg-[#e4c0b2] p-5 dark:text-black">
+          <div className="flex flex-row space-x-3 bg-[#e4c0b2] p-5">
             <span className="capitalize">Proyecto 705:</span>
             <span className="uppercase">${cart?.cost.totalAmount.amount}</span>
           </div>
@@ -86,7 +86,7 @@ export default async function CheckoutPayment(props: {
             />
           </div>
         </div>
-        <div className="hidden border-[#acacac] bg-[#d4d4d4] px-10 py-16 dark:border-t-0 dark:border-[#c9aa9e] dark:bg-zinc-800 md:flex md:basis-[48%] md:border-l-2 lg:px-10">
+        <div className="hidden border-[#acacac] bg-[#d4d4d4] px-10 py-16 md:flex md:basis-[48%] md:border-l-2 lg:px-10">
           <div className="w-full">
             <Cart cart={cart} />
           </div>

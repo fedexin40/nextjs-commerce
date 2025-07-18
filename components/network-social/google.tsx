@@ -40,7 +40,7 @@ export default function Google({
           />
         </div>
         <div
-          className={clsx('content-center whitespace-nowrap text-[#a8a8a8] dark:dark:text-white', {
+          className={clsx('content-center whitespace-nowrap text-[#a8a8a8]', {
             hidden: isPending,
           })}
         >
