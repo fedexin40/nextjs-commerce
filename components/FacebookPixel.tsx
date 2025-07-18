@@ -70,7 +70,6 @@ export const InitiateCheckout = (parameters: {
         ReactPixel.track('InitiateCheckout', parameters);
       });
   }, []);
-
   return null;
 };
 
@@ -113,6 +112,6 @@ export const FacebookConversionApi = (param: {
       SetupCookie({ name: '_fbc', value: param.fbc });
     }
     facebook();
-  });
+  }, []);
   return null;
 };
