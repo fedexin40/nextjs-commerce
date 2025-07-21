@@ -105,8 +105,8 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                     <CloseRegister />
                   </button>
                 </div>
-                <div className="mt-14 w-full text-center text-base font-medium tracking-wide md:mt-20 lg:mt-8">
-                  <div className="mt-4 text-[#a8a8a8]">Registrate</div>
+                <div className="mt-14 w-full text-center text-[13.5px] tracking-[1.4px] md:mt-20 lg:mt-8 lg:text-[14.3px]">
+                  <div className="mt-4">Registrate</div>
                 </div>
                 <div className="mx-10 mb-10 mt-10 flex flex-col md:my-20 lg:mb-7 lg:mt-7">
                   <div className="gap-y-4">
@@ -170,7 +170,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                       <button
                         type="submit"
                         className={clsx(
-                          'h-10 w-full bg-[#d2b6ab] p-2 text-white hover:opacity-60',
+                          'h-10 w-full bg-[#d2b6ab] p-2 text-[13.5px]  tracking-[1.4px] hover:opacity-60 lg:text-[14.3px]',
                           {
                             'cursor-not-allowed opacity-60 hover:opacity-60': Loading,
                           },
@@ -195,7 +195,7 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                       className="top-5 mt-5 flex w-full flex-row place-content-center gap-2 whitespace-nowrap border-2 border-white p-3 hover:cursor-pointer hover:opacity-60 hover:ease-in"
                       onClick={openLogin}
                     >
-                      <div className="text-white">¿Tienes una cuenta?</div>
+                      <div className="text-white ">¿Tienes una cuenta?</div>
                       <div className="text-black">Entrar</div>
                     </div>
                   </div>
