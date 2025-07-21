@@ -1,5 +1,6 @@
 import Login from 'components/login';
 import Register from 'components/register';
+import ResetPassword from 'components/reset-password';
 import { Me } from 'lib/saleor';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -11,6 +12,7 @@ export default async function User() {
       <>
         <Login />
         <Register />
+        <ResetPassword />
       </>
     );
   }

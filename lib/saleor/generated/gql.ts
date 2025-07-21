@@ -64,6 +64,8 @@ const documents = {
     types.ExternalObtainAccessTokensDocument,
   'mutation PaymentGatewayInitialize($checkoutId: ID!) {\n  paymentGatewayInitialize(\n    id: $checkoutId\n    amount: 0\n    paymentGateways: [{id: "app.saleor.stripe"}]\n  ) {\n    gatewayConfigs {\n      id\n      data\n      errors {\n        field\n        message\n        code\n      }\n    }\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
     types.PaymentGatewayInitializeDocument,
+  'mutation ResetPassword($email: String!, $redirectUrl: String!) {\n  requestPasswordReset(email: $email, redirectUrl: $redirectUrl) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
+    types.ResetPasswordDocument,
   'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
     types.TransactionInitializeDocument,
   'mutation updateMetadata($id: ID!, $input: [MetadataInput!]!) {\n  updateMetadata(id: $id, input: $input) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
@@ -262,6 +264,12 @@ export function graphql(
 export function graphql(
   source: 'mutation PaymentGatewayInitialize($checkoutId: ID!) {\n  paymentGatewayInitialize(\n    id: $checkoutId\n    amount: 0\n    paymentGateways: [{id: "app.saleor.stripe"}]\n  ) {\n    gatewayConfigs {\n      id\n      data\n      errors {\n        field\n        message\n        code\n      }\n    }\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
 ): typeof import('./graphql').PaymentGatewayInitializeDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'mutation ResetPassword($email: String!, $redirectUrl: String!) {\n  requestPasswordReset(email: $email, redirectUrl: $redirectUrl) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}',
+): typeof import('./graphql').ResetPasswordDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -32570,6 +32570,17 @@ export type PaymentGatewayInitializeMutation = {
   } | null;
 };
 
+export type ResetPasswordMutationVariables = Exact<{
+  email: Scalars['String'];
+  redirectUrl: Scalars['String'];
+}>;
+
+export type ResetPasswordMutation = {
+  requestPasswordReset?: {
+    errors: Array<{ code: AccountErrorCode; message?: string | null; field?: string | null }>;
+  } | null;
+};
+
 export type TransactionInitializeMutationVariables = Exact<{
   checkoutId: Scalars['ID'];
   data?: InputMaybe<Scalars['JSON']>;
@@ -34711,6 +34722,17 @@ export const PaymentGatewayInitializeDocument = new TypedDocumentString(`
   PaymentGatewayInitializeMutation,
   PaymentGatewayInitializeMutationVariables
 >;
+export const ResetPasswordDocument = new TypedDocumentString(`
+    mutation ResetPassword($email: String!, $redirectUrl: String!) {
+  requestPasswordReset(email: $email, redirectUrl: $redirectUrl) {
+    errors {
+      code
+      message
+      field
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<ResetPasswordMutation, ResetPasswordMutationVariables>;
 export const TransactionInitializeDocument = new TypedDocumentString(`
     mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {
   transactionInitialize(

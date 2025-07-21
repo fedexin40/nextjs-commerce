@@ -18,6 +18,7 @@ export default function LoginModal({ children }: { children: ReactNode }) {
   const { openLogin } = usePersonActions();
   const { openRegister } = usePersonActions();
   const { closeLogin } = usePersonActions();
+  const { openResetPassword } = usePersonActions();
   const { isLoading } = usePersonActions();
   const { isNotLoading } = usePersonActions();
   const { closeError } = usePersonActions();
@@ -157,8 +158,8 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                           autoComplete="on"
                         />
                       </div>
-                      <div className="flex flex-col-reverse place-content-end	 py-5	hover:cursor-pointer hover:opacity-25">
-                        <div className="">¿Olvidaste tu contrasena?</div>
+                      <div className="flex flex-col-reverse place-content-end	py-5	text-[13.5px] tracking-[1.4px] hover:cursor-pointer hover:opacity-25">
+                        <div onClick={openResetPassword}>¿Olvidaste tu contrasena?</div>
                       </div>
                       <button
                         className={clsx(

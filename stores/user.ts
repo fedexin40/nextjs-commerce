@@ -18,6 +18,7 @@ interface menu {
 interface User {
   Login: boolean;
   Register: boolean;
+  ResetPassword: boolean;
   Error: boolean;
   ErrorMessage: string;
   Loading: boolean;
@@ -30,6 +31,8 @@ interface User {
     closeLogin: () => void;
     openRegister: () => void;
     closeRegister: () => void;
+    openResetPassword: () => void;
+    closeResetPassword: () => void;
     isLoading: () => void;
     isNotLoading: () => void;
   };
@@ -99,6 +102,7 @@ const useUserDetails = create<user>()((set) => ({
 const usePersonStore = create<User>()((set) => ({
   Login: false,
   Register: false,
+  ResetPassword: false,
   Error: false,
   ErrorMessage: '',
   Loading: false,
@@ -106,10 +110,12 @@ const usePersonStore = create<User>()((set) => ({
     openError: () => set({ Error: true }),
     closeError: () => set({ Error: false }),
     setErrorMessage: (message) => set({ ErrorMessage: message }),
-    openLogin: () => set({ Login: true, Register: false }),
+    openLogin: () => set({ Login: true, Register: false, ResetPassword: false }),
     closeLogin: () => set({ Login: false }),
-    openRegister: () => set({ Register: true, Login: false }),
+    openRegister: () => set({ Register: true, Login: false, ResetPassword: false }),
     closeRegister: () => set({ Register: false }),
+    openResetPassword: () => set({ Register: false, Login: false, ResetPassword: true }),
+    closeResetPassword: () => set({ ResetPassword: false }),
     isLoading: () => set({ Loading: true }),
     isNotLoading: () => set({ Loading: false }),
   },
@@ -130,6 +136,7 @@ const MenuStore = create<menu>()((set) => ({
 
 export const useLogin = () => usePersonStore((state) => state.Login);
 export const useRegister = () => usePersonStore((state) => state.Register);
+export const useResetPassword = () => usePersonStore((state) => state.ResetPassword);
 export const useError = () => usePersonStore((state) => state.Error);
 export const useErrorMessage = () => usePersonStore((state) => state.ErrorMessage);
 export const useLoading = () => usePersonStore((state) => state.Loading);

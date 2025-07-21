@@ -2,7 +2,11 @@
 
 import { getServerAuthClient } from 'app/login';
 import { TAGS } from 'lib/constants';
-import { TransactionEventTypeEnum, UpdateMetadataDocument } from 'lib/saleor/generated/graphql';
+import {
+  ResetPasswordDocument,
+  TransactionEventTypeEnum,
+  UpdateMetadataDocument,
+} from 'lib/saleor/generated/graphql';
 import {
   Cart,
   Category,
@@ -1224,6 +1228,20 @@ export async function setCarrierDetails({
 
   if (checkout.updateMetadata?.errors[0]) {
     throw new Error(checkout.updateMetadata?.errors[0]?.message || '');
+  }
+}
+
+export async function passwordReset(email: string, redirectUrl: string) {
+  const resetPassword = await saleorFetch({
+    query: ResetPasswordDocument,
+    variables: {
+      email: email,
+      redirectUrl: redirectUrl,
+    },
+  });
+
+  if (resetPassword.requestPasswordReset?.errors[0]) {
+    throw new Error(resetPassword.requestPasswordReset?.errors[0]?.message || '');
   }
 }
 

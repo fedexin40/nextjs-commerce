@@ -2,7 +2,14 @@
 
 import { getServerAuthClient } from 'app/login';
 import { TAGS } from 'lib/constants';
-import { Me, accountUpdate, addressCreate, addressUpdate, registerAccount } from 'lib/saleor';
+import {
+  Me,
+  accountUpdate,
+  addressCreate,
+  addressUpdate,
+  passwordReset,
+  registerAccount,
+} from 'lib/saleor';
 import { CountryCode } from 'lib/saleor/generated/graphql';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
@@ -112,4 +119,14 @@ export async function refreshUser() {
 export async function SetupCookie({ name, value }: { name: string; value: string }) {
   const cookieStore = await cookies();
   cookieStore.set(name, value, { httpOnly: true });
+}
+
+export async function resetPassword({ email }: { email: string }) {
+  const SHOP_PUBLIC_URL = process.env.SHOP_PUBLIC_URL;
+  const url = new URL('reset-password/', SHOP_PUBLIC_URL).toString();
+  try {
+    await passwordReset(email, url);
+  } catch (error: any) {
+    return error.toString();
+  }
 }
