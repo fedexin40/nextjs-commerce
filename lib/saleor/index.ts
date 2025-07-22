@@ -891,7 +891,7 @@ export async function Me(): Promise<CurrentPerson> {
       phone: CurrentPerson.me?.addresses[0]?.phone || '',
     },
     orders: orders_and_checkouts,
-    lastCheckout: checkoutsNoPayment ? checkoutsNoPayment[0]?.id : '',
+    lastCheckout: checkoutsNoPayment ? checkoutsNoPayment[0]?.id : null,
   };
 }
 
