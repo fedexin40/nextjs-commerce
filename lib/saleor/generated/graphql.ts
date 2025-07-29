@@ -32581,6 +32581,18 @@ export type ResetPasswordMutation = {
   } | null;
 };
 
+export type SetPasswordMutationVariables = Exact<{
+  email: Scalars['String'];
+  password: Scalars['String'];
+  token: Scalars['String'];
+}>;
+
+export type SetPasswordMutation = {
+  setPassword?: {
+    errors: Array<{ code: AccountErrorCode; field?: string | null; message?: string | null }>;
+  } | null;
+};
+
 export type TransactionInitializeMutationVariables = Exact<{
   checkoutId: Scalars['ID'];
   data?: InputMaybe<Scalars['JSON']>;
@@ -33225,6 +33237,23 @@ export type GetShippingMethodsQuery = {
       name: string;
       price: { amount: number; currency: string };
     }>;
+  } | null;
+};
+
+export type LastCheckoutQueryVariables = Exact<{ [key: string]: never }>;
+
+export type LastCheckoutQuery = {
+  me?: {
+    checkouts?: {
+      edges: Array<{
+        node: {
+          id: string;
+          transactions?: Array<{
+            events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
+          }> | null;
+        };
+      }>;
+    } | null;
   } | null;
 };
 
@@ -34733,6 +34762,17 @@ export const ResetPasswordDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<ResetPasswordMutation, ResetPasswordMutationVariables>;
+export const SetPasswordDocument = new TypedDocumentString(`
+    mutation SetPassword($email: String!, $password: String!, $token: String!) {
+  setPassword(email: $email, password: $password, token: $token) {
+    errors {
+      code
+      field
+      message
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<SetPasswordMutation, SetPasswordMutationVariables>;
 export const TransactionInitializeDocument = new TypedDocumentString(`
     mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {
   transactionInitialize(
@@ -35777,6 +35817,25 @@ export const GetShippingMethodsDocument = new TypedDocumentString(`
   }
 }
     `) as unknown as TypedDocumentString<GetShippingMethodsQuery, GetShippingMethodsQueryVariables>;
+export const LastCheckoutDocument = new TypedDocumentString(`
+    query LastCheckout {
+  me {
+    checkouts(first: 10) {
+      edges {
+        node {
+          id
+          transactions {
+            events {
+              type
+              createdAt
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<LastCheckoutQuery, LastCheckoutQueryVariables>;
 export const SearchProductsDocument = new TypedDocumentString(`
     query SearchProducts($search: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!, $after: String!, $first: Int!) {
   products(

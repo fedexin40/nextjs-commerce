@@ -7,13 +7,11 @@ import {
   createCart,
   customerCheckoutAttach,
   getCart,
+  getLastCheckout,
   removeFromCart,
   updateCart,
 } from 'lib/saleor';
-import { TransactionEventTypeEnum } from 'lib/saleor/generated/graphql';
 import { revalidateTag } from 'next/cache';
-
-TransactionEventTypeEnum;
 
 export const addItem = async (variantId: string | undefined): Promise<String | undefined> => {
   const user = await Me();
@@ -26,7 +24,6 @@ export const addItem = async (variantId: string | undefined): Promise<String | u
 
   if (!cart) {
     cart = await createCart(userEmail);
-
     await customerCheckoutAttach({ checkoutId: cart.id, customerId: user.id });
     revalidateTag(TAGS.user);
   }
@@ -92,12 +89,10 @@ export const updateItemQuantity = async ({
 
 export const lastCheckout = async () => {
   let cart;
-  const cartId = (await Me()).lastCheckout;
-
+  const cartId = await getLastCheckout();
   if (cartId) {
     cart = await getCart(cartId);
     return cart;
   }
-
   return null;
 };

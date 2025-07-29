@@ -30,7 +30,7 @@ export default function ShippingMethods({
       <div className="pb-5">
         Por favor seleccione una paquetería de la lista de abajo para poder continuar
       </div>
-      <RadioGroup aria-label="shipping method" className="space-y-2">
+      <RadioGroup aria-label="shipping method" className="space-y-2" disabled={shipping.isLoading}>
         <div className="w-full space-y-5 lg:space-y-7">
           {ShippingMethods.map((ShippingMethod) => (
             <RadioGroup.Option
@@ -49,7 +49,7 @@ export default function ShippingMethods({
                   relative flex cursor-pointer rounded-lg bg-zinc-100 px-5 py-4 shadow-md shadow-gray-400 focus:outline-none`
               }
             >
-              <div className="flex w-full items-center justify-between">
+              <div className="flex h-[40px] w-full items-center justify-between lg:h-[50px]">
                 <div className="text-[13px] tracking-widest lg:text-[14.3px]">
                   <p className="pb-2 font-semibold text-black opacity-100">{ShippingMethod.name}</p>
                   <div className="flex justify-center text-black opacity-100">

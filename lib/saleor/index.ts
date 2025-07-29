@@ -3,7 +3,9 @@
 import { getServerAuthClient } from 'app/login';
 import { TAGS } from 'lib/constants';
 import {
+  LastCheckoutDocument,
   ResetPasswordDocument,
+  SetPasswordDocument,
   TransactionEventTypeEnum,
   UpdateMetadataDocument,
 } from 'lib/saleor/generated/graphql';
@@ -1198,6 +1200,63 @@ export async function discountShopping({ checkoutId }: { checkoutId: string }) {
   }
 }
 
+export async function getLastCheckout(): Promise<string | null> {
+  const lastCheckout = await saleorFetch({
+    query: LastCheckoutDocument,
+    variables: {},
+    withAuth: true,
+    cache: 'no-store',
+  });
+
+  // When the checkout is waiting for payment
+  // we can consider it as an order waiting for payment
+  // that's why I am reading the checkouts
+  // but filtering by transactions
+  const checkoutsId: string[] = [];
+  lastCheckout.me?.checkouts?.edges.forEach((item) => {
+    let is_checkout_waiting_payment;
+    is_checkout_waiting_payment = false;
+
+    if (item.node.transactions) {
+      for (
+        var index_transaction = 0;
+        index_transaction < (item.node.transactions?.length || 0);
+        index_transaction++
+      ) {
+        let charge_action_required_count: number;
+        charge_action_required_count = 0;
+        for (
+          var index_event = 0;
+          index_event < (item.node.transactions[index_transaction]?.events.length || 0);
+          index_event++
+        )
+          if (
+            item.node.transactions[index_transaction]?.events[index_event]?.type ==
+            TransactionEventTypeEnum.ChargeActionRequired
+          ) {
+            charge_action_required_count += 1;
+            // The number of charge_action_required_count events on the same
+            // transaction is equal to 2 this means that the checkout is waiting for payment
+            if (charge_action_required_count == 2) {
+              is_checkout_waiting_payment = true;
+            }
+          } else if (
+            item.node.transactions[index_transaction]?.events[index_event]?.type ==
+            TransactionEventTypeEnum.ChargeSuccess
+          ) {
+            is_checkout_waiting_payment = true;
+          }
+      }
+      if (is_checkout_waiting_payment == false) {
+        checkoutsId.push(item.node.id);
+      }
+    } else {
+      checkoutsId.push(item.node.id);
+    }
+  });
+  return checkoutsId[0] ? checkoutsId[0] : null;
+}
+
 // Helper function used to update carrierName and shipping cost in checkout metadata
 export async function setCarrierDetails({
   checkoutId,
@@ -1238,10 +1297,26 @@ export async function passwordReset(email: string, redirectUrl: string) {
       email: email,
       redirectUrl: redirectUrl,
     },
+    cache: 'no-store',
   });
 
   if (resetPassword.requestPasswordReset?.errors[0]) {
     throw new Error(resetPassword.requestPasswordReset?.errors[0]?.message || '');
+  }
+}
+
+export async function passwordSet(email: string, token: string, password: string) {
+  const result = await saleorFetch({
+    query: SetPasswordDocument,
+    variables: {
+      email: email,
+      token: token,
+      password: password,
+    },
+  });
+
+  if (result.setPassword?.errors[0]) {
+    throw new Error(result.setPassword?.errors[0]?.message || '');
   }
 }
 

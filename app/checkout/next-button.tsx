@@ -3,11 +3,13 @@
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { deliveryMethodUpdate, getCartFromCheckout } from 'actions/checkout';
+import { shippingAddressUpdate } from 'actions/shipping';
 import clsx from 'clsx';
 import { CurrentPerson } from 'lib/types';
 import { permanentRedirect } from 'next/navigation';
 import { useEffect, useState, useTransition } from 'react';
 import { useShipping, useShippingActions } from 'stores/shipping';
+import { useUser } from 'stores/user';
 
 export default function Button({ checkoutId, user }: { checkoutId: string; user: CurrentPerson }) {
   const [isPending, startTransition] = useTransition();
@@ -19,14 +21,32 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
   const closeError = () => setError(false);
   const openError = () => setError(true);
   const { reset } = useShippingActions();
+  const { setLoading } = useShippingActions();
+  const { setNoLoading } = useShippingActions();
+  const userStore = useUser();
 
   // Delete the shipping states
   useEffect(() => {
     reset();
+    setNoLoading();
   }, []);
 
   function setupShippingAddress() {
     startTransition(async () => {
+      setLoading();
+      const input = {
+        checkoutId: checkoutId,
+        streetAddress1: userStore.streetAddress1 || user.address.streetAddress1 || '',
+        streetAddress2: userStore.streetAddress2 || user.address.streetAddress2 || '',
+        city: userStore.city || user.address.city || '',
+        postalCode: userStore.postalCode || user.address.postalCode || '',
+        countryArea: userStore.countryArea || user.address.countryArea,
+        firstName: userStore.firstName || user.firstName || '',
+        lastName: userStore.lastName || user.lastName || '',
+        phone: userStore.phone || user.address.phone || '',
+      };
+
+      await shippingAddressUpdate(input);
       const errorMethodUpdate = await deliveryMethodUpdate({
         checkoutId,
         deliveryMethodId,
@@ -42,6 +62,7 @@ export default function Button({ checkoutId, user }: { checkoutId: string; user:
         const cart = await getCartFromCheckout({ checkoutId });
         permanentRedirect(cart?.checkoutUrlPayment || '');
       }
+      setNoLoading();
     });
   }
 

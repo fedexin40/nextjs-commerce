@@ -2,6 +2,7 @@
 
 import { Cart, CurrentPerson, countryAreaChoices as countryAreaChoicesType } from 'lib/types';
 import { useEffect } from 'react';
+import { useShipping } from 'stores/shipping';
 import { useUser, useUserDetailsActions } from 'stores/user';
 
 export default function AddressInput({
@@ -15,6 +16,7 @@ export default function AddressInput({
 }) {
   const userStore = useUser();
   const { setUserDetails } = useUserDetailsActions();
+  const { isLoading } = useShipping();
 
   useEffect(() => {
     setUserDetails({
@@ -48,6 +50,7 @@ export default function AddressInput({
           required={true}
           defaultValue={cart?.shippingAddress?.firstName || user.firstName}
           onChange={handleChange}
+          disabled={isLoading}
         />
         <input
           className="border-2 border-neutral-300 bg-white px-2 py-1 lg:w-1/2"
@@ -57,6 +60,7 @@ export default function AddressInput({
           required={true}
           defaultValue={cart?.shippingAddress?.lastName || user.lastName}
           onChange={handleChange}
+          disabled={isLoading}
         />
       </div>
       <input
@@ -67,6 +71,7 @@ export default function AddressInput({
         required={true}
         defaultValue={cart?.shippingAddress?.streetAddress1 || user.address.streetAddress1}
         onChange={handleChange}
+        disabled={isLoading}
       />
       <div className="flex w-full flex-col gap-3 lg:flex-row">
         <input
@@ -77,6 +82,7 @@ export default function AddressInput({
           required={true}
           defaultValue={cart?.shippingAddress?.streetAddress2 || user.address.streetAddress2}
           onChange={handleChange}
+          disabled={isLoading}
         />
         <input
           className="w-full border-2 border-neutral-300 bg-white px-2 py-1 lg:block lg:w-1/2"
@@ -86,6 +92,7 @@ export default function AddressInput({
           required={true}
           defaultValue={cart?.shippingAddress?.postalCode || user.address.postalCode}
           onChange={handleChange}
+          disabled={isLoading}
         />
       </div>
       <input
@@ -96,6 +103,7 @@ export default function AddressInput({
         required={true}
         defaultValue={cart?.shippingAddress?.city || user.address.city}
         onChange={handleChange}
+        disabled={isLoading}
       />
       <select
         onChange={handleChange}
@@ -103,6 +111,7 @@ export default function AddressInput({
         required={true}
         defaultValue={cart?.shippingAddress?.countryArea || user.address.countryArea}
         className="border-2 border-neutral-300 bg-white px-2 py-1"
+        disabled={isLoading}
       >
         {countryAreaChoices?.map(({ raw, verbose }) => (
           <option className="" key={raw} value={raw || ''}>
@@ -121,6 +130,7 @@ export default function AddressInput({
         required={true}
         defaultValue={cart?.shippingAddress?.phone || user.address.phone}
         onChange={handleChange}
+        disabled={isLoading}
       />
       <div className="border-2	border-neutral-300 bg-white px-2 py-1 hover:cursor-not-allowed">
         {user.email ? user.email : 'Correo electronico...'}

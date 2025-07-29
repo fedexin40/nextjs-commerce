@@ -19,8 +19,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           }
         >
           <Navbar />
-          {children}
-          <Footer />
+          <div className="text-[13px] tracking-widest lg:text-[14.3px]">{children}</div>
+          <div className="text-[13px] tracking-widest lg:text-[14.3px]">
+            <Footer />
+          </div>
         </Suspense>
       </div>
     </>

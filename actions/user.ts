@@ -8,6 +8,7 @@ import {
   addressCreate,
   addressUpdate,
   passwordReset,
+  passwordSet,
   registerAccount,
 } from 'lib/saleor';
 import { CountryCode } from 'lib/saleor/generated/graphql';
@@ -123,9 +124,25 @@ export async function SetupCookie({ name, value }: { name: string; value: string
 
 export async function resetPassword({ email }: { email: string }) {
   const SHOP_PUBLIC_URL = process.env.SHOP_PUBLIC_URL;
-  const url = new URL('reset-password/', SHOP_PUBLIC_URL).toString();
+  const url = new URL('password-reset/', SHOP_PUBLIC_URL).toString();
   try {
     await passwordReset(email, url);
+  } catch (error: any) {
+    return error.toString();
+  }
+}
+
+export async function setPassword({
+  email,
+  password,
+  token,
+}: {
+  email: string;
+  password: string;
+  token: string;
+}) {
+  try {
+    await passwordSet(email, token, password);
   } catch (error: any) {
     return error.toString();
   }

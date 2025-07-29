@@ -91,6 +91,8 @@ export default function Shipping({
     userStore.streetAddress2,
     userStore.postalCode,
     userStore.phone,
+    userStore.firstName,
+    userStore.lastName,
   ]);
 
   if (isPending) {

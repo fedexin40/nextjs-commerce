@@ -1,0 +1,17 @@
+query LastCheckout {
+  me {
+    checkouts(first: 10) {
+      edges {
+        node {
+          id
+          transactions {
+            events {
+              type
+              createdAt
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -66,6 +66,8 @@ const documents = {
     types.PaymentGatewayInitializeDocument,
   'mutation ResetPassword($email: String!, $redirectUrl: String!) {\n  requestPasswordReset(email: $email, redirectUrl: $redirectUrl) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
     types.ResetPasswordDocument,
+  'mutation SetPassword($email: String!, $password: String!, $token: String!) {\n  setPassword(email: $email, password: $password, token: $token) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
+    types.SetPasswordDocument,
   'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
     types.TransactionInitializeDocument,
   'mutation updateMetadata($id: ID!, $input: [MetadataInput!]!) {\n  updateMetadata(id: $id, input: $input) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
@@ -102,6 +104,8 @@ const documents = {
     types.GetProductBySlugDocument,
   'query GetShippingMethods($id: ID!) {\n  checkout(id: $id) {\n    id\n    shippingMethods {\n      description\n      id\n      maximumDeliveryDays\n      name\n      price {\n        amount\n        currency\n      }\n    }\n  }\n}':
     types.GetShippingMethodsDocument,
+  'query LastCheckout {\n  me {\n    checkouts(first: 10) {\n      edges {\n        node {\n          id\n          transactions {\n            events {\n              type\n              createdAt\n            }\n          }\n        }\n      }\n    }\n  }\n}':
+    types.LastCheckoutDocument,
   'query SearchProducts($search: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!, $after: String!, $first: Int!) {\n  products(\n    channel: "proyecto705"\n    sortBy: {field: $sortBy, direction: $sortDirection}\n    filter: {search: $search}\n    after: $after\n    first: $first\n  ) {\n    pageInfo {\n      hasNextPage\n      endCursor\n      startCursor\n    }\n    totalCount\n    edges {\n      node {\n        id\n        slug\n        name\n        isAvailableForPurchase\n        description\n        seoTitle\n        seoDescription\n        category {\n          name\n          slug\n        }\n        pricing {\n          priceRange {\n            start {\n              gross {\n                currency\n                amount\n              }\n            }\n            stop {\n              gross {\n                currency\n                amount\n              }\n            }\n          }\n        }\n        media {\n          url(size: 2160)\n          type\n          alt\n        }\n        collections {\n          name\n          slug\n        }\n        updatedAt\n        variants {\n          ...Variant\n        }\n        metadata {\n          key\n          value\n        }\n        productType {\n          isShippingRequired\n        }\n      }\n    }\n  }\n}':
     types.SearchProductsDocument,
   'subscription WebhookSubscription {\n  event {\n    ... on CategoryCreated {\n      __typename\n      category {\n        id\n        slug\n      }\n    }\n    ... on CategoryDeleted {\n      __typename\n      category {\n        id\n        slug\n      }\n    }\n    ... on CategoryUpdated {\n      __typename\n      category {\n        id\n        slug\n      }\n    }\n    ... on CollectionUpdated {\n      __typename\n      collection {\n        id\n        slug\n      }\n    }\n    ... on CollectionDeleted {\n      __typename\n      collection {\n        id\n        slug\n      }\n    }\n    ... on CollectionCreated {\n      __typename\n      collection {\n        id\n        slug\n      }\n    }\n    ... on ProductCreated {\n      __typename\n      product {\n        id\n        slug\n      }\n    }\n    ... on ProductDeleted {\n      __typename\n      product {\n        id\n        slug\n      }\n    }\n    ... on ProductUpdated {\n      __typename\n      product {\n        id\n        slug\n      }\n    }\n    ... on ProductVariantCreated {\n      __typename\n      productVariant {\n        product {\n          id\n          slug\n        }\n      }\n    }\n    ... on ProductVariantDeleted {\n      __typename\n      productVariant {\n        product {\n          id\n          slug\n        }\n      }\n    }\n    ... on ProductVariantUpdated {\n      __typename\n      productVariant {\n        product {\n          id\n          slug\n        }\n      }\n    }\n  }\n}':
@@ -274,6 +278,12 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
+  source: 'mutation SetPassword($email: String!, $password: String!, $token: String!) {\n  setPassword(email: $email, password: $password, token: $token) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}',
+): typeof import('./graphql').SetPasswordDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
   source: 'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
 ): typeof import('./graphql').TransactionInitializeDocument;
 /**
@@ -378,6 +388,12 @@ export function graphql(
 export function graphql(
   source: 'query GetShippingMethods($id: ID!) {\n  checkout(id: $id) {\n    id\n    shippingMethods {\n      description\n      id\n      maximumDeliveryDays\n      name\n      price {\n        amount\n        currency\n      }\n    }\n  }\n}',
 ): typeof import('./graphql').GetShippingMethodsDocument;
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(
+  source: 'query LastCheckout {\n  me {\n    checkouts(first: 10) {\n      edges {\n        node {\n          id\n          transactions {\n            events {\n              type\n              createdAt\n            }\n          }\n        }\n      }\n    }\n  }\n}',
+): typeof import('./graphql').LastCheckoutDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

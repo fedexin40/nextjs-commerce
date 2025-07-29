@@ -6,12 +6,15 @@ interface shippingStore {
   selectedShippingId: string;
   CarrierName: string;
   shippingCost: number;
+  isLoading: boolean;
   actions: {
     // eslint-disable-next-line no-unused-vars
     setSelectedShippingId: (shippingId: string, CarrierName: string, shippingCost: number) => void;
     // eslint-disable-next-line no-unused-vars
     setShippingMethods: (shippingMethods: shippingMethod[]) => void;
     reset: () => void;
+    setLoading: () => void;
+    setNoLoading: () => void;
   };
 }
 
@@ -20,6 +23,7 @@ const useShippingStore = create<shippingStore>()((set) => ({
   selectedShippingId: '',
   shippingCost: 0,
   CarrierName: '',
+  isLoading: false,
   actions: {
     setSelectedShippingId: (shippingId, CarrierName, shippingCost) =>
       set({
@@ -35,6 +39,8 @@ const useShippingStore = create<shippingStore>()((set) => ({
         shippingCost: undefined,
       });
     },
+    setLoading: () => set({ isLoading: true }),
+    setNoLoading: () => set({ isLoading: false }),
   },
 }));
 
