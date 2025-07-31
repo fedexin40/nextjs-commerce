@@ -101,15 +101,19 @@ export const FacebookConversionApi = (param: {
           name: 'f_external_id',
           value: param.f_external_id,
         });
-      } else if (!param.f_external_id_me && param.f_external_id_cookie && param.user_id) {
-        updateExternalId({
-          id: param.user_id,
-          value: param.f_external_id_cookie,
-        });
       } else if (!param.f_external_id_me && !param.f_external_id_cookie && param.user_id) {
         updateExternalId({
           id: param.user_id,
           value: param.f_external_id,
+        });
+        SetupCookie({
+          name: 'f_external_id',
+          value: param.f_external_id,
+        });
+      } else if (!param.f_external_id_me && param.f_external_id_cookie && param.user_id) {
+        updateExternalId({
+          id: param.user_id,
+          value: param.f_external_id_cookie,
         });
       } else if (param.f_external_id_me && !param.f_external_id_cookie) {
         SetupCookie({
