@@ -27,14 +27,15 @@ export async function POST(req: NextRequest): Promise<Response> {
   const productID = parameters.productID;
   const value = parameters.value || 0.0;
   const eventURL = parameters.eventURL;
-
+  const external_id = parameters.external_id;
   // From https://developers.facebook.com/docs/marketing-api/conversions-api/using-the-api?locale=es_ES
   const userData = new UserData()
     // It is recommended to send Client IP and User Agent for Conversions API Events.
     .setClientIpAddress(ip)
     .setClientUserAgent(userAgent)
     .setFbp(fbp)
-    .setFbc(fbc);
+    .setFbc(fbc)
+    .setExternalId(external_id);
 
   if (email) {
     userData.setEmails([email]);

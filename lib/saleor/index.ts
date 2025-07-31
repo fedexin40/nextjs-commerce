@@ -873,7 +873,6 @@ export async function Me(): Promise<CurrentPerson> {
   });
 
   const orders_and_checkouts = [...orders, ...checkouts];
-
   return {
     id: CurrentPerson.me?.id || '',
     email: CurrentPerson.me?.email || '',
@@ -894,6 +893,7 @@ export async function Me(): Promise<CurrentPerson> {
     },
     orders: orders_and_checkouts,
     lastCheckout: checkoutsNoPayment ? checkoutsNoPayment[0]?.id : null,
+    f_external_id: CurrentPerson.me?.metafields?.f_external_id,
   };
 }
 
@@ -1283,6 +1283,36 @@ export async function setCarrierDetails({
       ],
     },
     cache: 'no-store',
+  });
+
+  if (checkout.updateMetadata?.errors[0]) {
+    throw new Error(checkout.updateMetadata?.errors[0]?.message || '');
+  }
+}
+
+// Helper function used to update metadata
+export async function updateMetaData({
+  id,
+  key,
+  value,
+}: {
+  id: string;
+  key: string;
+  value: string;
+}) {
+  const checkout = await saleorFetch({
+    query: UpdateMetadataDocument,
+    variables: {
+      id: id,
+      input: [
+        {
+          key: key,
+          value: value,
+        },
+      ],
+    },
+    cache: 'no-store',
+    withAuth: true,
   });
 
   if (checkout.updateMetadata?.errors[0]) {

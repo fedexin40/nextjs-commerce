@@ -32932,6 +32932,7 @@ export type GetMeQuery = {
     email: string;
     firstName: string;
     lastName: string;
+    metafields?: Record<string, string> | null;
     checkoutIds?: Array<string> | null;
     avatar?: { url: string; alt?: string | null } | null;
     addresses: Array<{
@@ -35341,6 +35342,7 @@ export const GetMeDocument = new TypedDocumentString(`
       url
       alt
     }
+    metafields(keys: "f_external_id")
     addresses {
       id
       city

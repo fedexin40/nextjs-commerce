@@ -1,6 +1,6 @@
 'use client';
 
-import { SetupCookie } from 'actions/user';
+import { SetupCookie, updateExternalId } from 'actions/user';
 import { useEffect } from 'react';
 
 const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
@@ -78,6 +78,7 @@ export const FacebookConversionApi = (param: {
   userAgent: string | null;
   fbc: string | undefined;
   fbp: string | undefined;
+  fbclid: string | string[] | undefined;
   eventName: string;
   eventId: string;
   email: string | null;
@@ -85,11 +86,43 @@ export const FacebookConversionApi = (param: {
   productID: string;
   value: string;
   eventURL: string;
-  updateCookie: boolean;
   SHOP_PUBLIC_URL: string;
+  f_external_id_cookie: string | undefined | null;
+  f_external_id: string;
+  f_external_id_me: string | undefined | null;
+  current_timestamp: number;
+  user_id: string | null;
 }) => {
   useEffect(() => {
     const facebook = async () => {
+      let fbc = null;
+      if (!param.f_external_id_me && !param.f_external_id_cookie && !param.user_id) {
+        SetupCookie({
+          name: 'f_external_id',
+          value: param.f_external_id,
+        });
+      } else if (!param.f_external_id_me && param.f_external_id_cookie && param.user_id) {
+        updateExternalId({
+          id: param.user_id,
+          value: param.f_external_id_cookie,
+        });
+      } else if (!param.f_external_id_me && !param.f_external_id_cookie && param.user_id) {
+        updateExternalId({
+          id: param.user_id,
+          value: param.f_external_id,
+        });
+      } else if (param.f_external_id_me && !param.f_external_id_cookie) {
+        SetupCookie({
+          name: 'f_external_id',
+          value: param.f_external_id_me,
+        });
+      }
+
+      if (!param.fbc && param.fbclid) {
+        fbc = `fb.2.${param.current_timestamp}.${param.fbclid}`;
+        SetupCookie({ name: '_fbc', value: fbc });
+      }
+
       const facebookApi = `${param.SHOP_PUBLIC_URL}/api/facebook`;
       await fetch(facebookApi, {
         method: 'POST',
@@ -105,12 +138,10 @@ export const FacebookConversionApi = (param: {
           productID: param.productID,
           value: param.value,
           eventURL: param.eventURL,
+          external_id: param.f_external_id_me || param.f_external_id_cookie || param.f_external_id,
         }),
       });
     };
-    if (param.updateCookie && param.fbc) {
-      SetupCookie({ name: '_fbc', value: param.fbc });
-    }
     facebook();
   }, []);
   return null;

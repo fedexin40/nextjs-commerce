@@ -10,6 +10,7 @@ import {
   passwordReset,
   passwordSet,
   registerAccount,
+  updateMetaData,
 } from 'lib/saleor';
 import { CountryCode } from 'lib/saleor/generated/graphql';
 import { revalidateTag } from 'next/cache';
@@ -119,7 +120,16 @@ export async function refreshUser() {
 
 export async function SetupCookie({ name, value }: { name: string; value: string }) {
   const cookieStore = await cookies();
-  cookieStore.set(name, value, { httpOnly: true });
+  cookieStore.set(name, value, { httpOnly: true, maxAge: 25920000 });
+}
+
+export async function updateExternalId({ id, value }: { id: string; value: string }) {
+  await updateMetaData({
+    id: id,
+    key: 'f_external_id',
+    value: value,
+  });
+  revalidateTag(TAGS.user);
 }
 
 export async function resetPassword({ email }: { email: string }) {

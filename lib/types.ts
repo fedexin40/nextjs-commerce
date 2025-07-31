@@ -395,6 +395,7 @@ export type CurrentPerson = {
     streetAddress1: string;
     phone: string;
   };
+  f_external_id?: string | null;
 };
 
 export type orderLines = {

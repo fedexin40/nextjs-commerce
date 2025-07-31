@@ -61,13 +61,10 @@ export default async function Product(props: {
   const pathname = headersList.get('x-current-path');
   const fbp = cookieStore.get('_fbp')?.value;
   const fbclid = searchParams['fbclid'];
-  let updateCookie = false;
-  let fbc = cookieStore.get('_fbc')?.value;
-
-  if (!fbc && fbclid) {
-    fbc = `fb.2.${current_timestamp}.${fbclid}`;
-    updateCookie = true;
-  }
+  const fbc = cookieStore.get('_fbc')?.value;
+  const f_external_id_me = user.f_external_id;
+  const f_external_id_cookie = cookieStore.get('f_external_id')?.value;
+  const f_external_id = Math.random().toString(36).substring(2);
 
   let product;
   try {
@@ -135,6 +132,7 @@ export default async function Product(props: {
         userAgent={userAgent}
         fbc={fbc}
         fbp={fbp}
+        fbclid={fbclid}
         eventName="ViewContent"
         eventId={eventId}
         email={user.email || null}
@@ -142,8 +140,12 @@ export default async function Product(props: {
         productID={product.handle}
         value={product.priceRange.maxVariantPrice.amount}
         eventURL={`${SHOP_PUBLIC_URL}/${pathname}`}
-        updateCookie={updateCookie}
         SHOP_PUBLIC_URL={SHOP_PUBLIC_URL || ''}
+        f_external_id_cookie={f_external_id_cookie}
+        f_external_id={f_external_id}
+        f_external_id_me={f_external_id_me}
+        current_timestamp={current_timestamp}
+        user_id={user.id || null}
       />
       <ProductView
         content_ids={[product.handle]}

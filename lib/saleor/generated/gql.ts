@@ -90,7 +90,7 @@ const documents = {
     types.GetCollectionsDocument,
   'query GetFeaturedProducts($first: Int!) {\n  products(first: $first, channel: "proyecto705") {\n    edges {\n      node {\n        ...FeaturedProduct\n      }\n    }\n  }\n}':
     types.GetFeaturedProductsDocument,
-  'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          ...Order\n        }\n      }\n    }\n    checkouts(first: 100) {\n      edges {\n        node {\n          ...Checkout\n        }\n      }\n    }\n    checkoutIds\n  }\n}':
+  'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    metafields(keys: "f_external_id")\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          ...Order\n        }\n      }\n    }\n    checkouts(first: 100) {\n      edges {\n        node {\n          ...Checkout\n        }\n      }\n    }\n    checkoutIds\n  }\n}':
     types.GetMeDocument,
   'fragment MenuItem on MenuItem {\n  id\n  name\n  url\n  page {\n    id\n    slug\n    content\n    title\n  }\n}\n\nquery GetMenuBySlug($slug: String!) {\n  menu(slug: $slug, channel: "proyecto705") {\n    id\n    slug\n    name\n    items {\n      ...MenuItem\n    }\n  }\n}':
     types.MenuItemFragmentDoc,
@@ -350,7 +350,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          ...Order\n        }\n      }\n    }\n    checkouts(first: 100) {\n      edges {\n        node {\n          ...Checkout\n        }\n      }\n    }\n    checkoutIds\n  }\n}',
+  source: 'query GetMe {\n  me {\n    id\n    email\n    firstName\n    lastName\n    avatar {\n      url\n      alt\n    }\n    metafields(keys: "f_external_id")\n    addresses {\n      id\n      city\n      cityArea\n      countryArea\n      postalCode\n      phone\n      streetAddress1\n      streetAddress2\n      country {\n        code\n        country\n      }\n    }\n    orders(first: 100) {\n      edges {\n        node {\n          ...Order\n        }\n      }\n    }\n    checkouts(first: 100) {\n      edges {\n        node {\n          ...Checkout\n        }\n      }\n    }\n    checkoutIds\n  }\n}',
 ): typeof import('./graphql').GetMeDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
