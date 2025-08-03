@@ -2,6 +2,7 @@ import CarouselComponent from 'components/carousel/page';
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import LoadMore from 'components/load-more/page';
+import Whatsapp from 'components/whatsapp/page';
 import { getCollectionProducts } from 'lib/saleor';
 import type { Metadata } from 'next';
 
@@ -26,6 +27,7 @@ export default async function HomePage() {
 
   return (
     <>
+      <Whatsapp />
       <div className="hidden md:block">
         <CarouselComponent
           images={['/EnvioGratisMayores1500.jpeg', '/banner.png']}

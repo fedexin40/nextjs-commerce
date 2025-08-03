@@ -77,6 +77,9 @@ importers:
       react-dom:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
+      react-floating-whatsapp:
+        specifier: ^5.0.8
+        version: 5.0.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       react-html-parser:
         specifier: ^2.0.2
         version: 2.0.2(react@19.1.0)
@@ -4484,6 +4487,13 @@ packages:
     peerDependencies:
       react: ^19.1.0
 
+  react-floating-whatsapp@5.0.8:
+    resolution: {integrity: sha512-4X485d04u7MoWpn61OpWPO/mL94P3gaFq1L932ztH7bo9eClAFcg5ufIxNKbJo9/1h0xpjWZKEW0KBB0apWzZw==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+
   react-html-parser@2.0.2:
     resolution: {integrity: sha512-XeerLwCVjTs3njZcgCOeDUqLgNIt/t+6Jgi5/qPsO/krUWl76kWKXMeVs2LhY2gwM6X378DkhLjur0zUQdpz0g==}
     peerDependencies:
@@ -8312,7 +8322,7 @@ snapshots:
       eslint: 8.45.0
       eslint-import-resolver-node: 0.3.9
       eslint-import-resolver-typescript: 3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.45.0)(typescript@5.7.0-dev.20240830))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.45.0))(eslint@8.45.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.45.0)(typescript@5.7.0-dev.20240830))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.45.0)(typescript@5.7.0-dev.20240830))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.45.0))(eslint@8.45.0))(eslint@8.45.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.45.0)(typescript@5.7.0-dev.20240830))(eslint-import-resolver-typescript@3.6.1)(eslint@8.45.0)
       eslint-plugin-jsx-a11y: 6.8.0(eslint@8.45.0)
       eslint-plugin-react: 7.34.1(eslint@8.45.0)
       eslint-plugin-react-hooks: 4.6.0(eslint@8.45.0)
@@ -8340,7 +8350,7 @@ snapshots:
       enhanced-resolve: 5.16.0
       eslint: 8.45.0
       eslint-module-utils: 2.8.1(@typescript-eslint/parser@6.21.0(eslint@8.45.0)(typescript@5.7.0-dev.20240830))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.45.0)(typescript@5.7.0-dev.20240830))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.45.0))(eslint@8.45.0))(eslint@8.45.0)
-      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.45.0)(typescript@5.7.0-dev.20240830))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.45.0)(typescript@5.7.0-dev.20240830))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.45.0))(eslint@8.45.0))(eslint@8.45.0)
+      eslint-plugin-import: 2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.45.0)(typescript@5.7.0-dev.20240830))(eslint-import-resolver-typescript@3.6.1)(eslint@8.45.0)
       fast-glob: 3.3.2
       get-tsconfig: 4.7.3
       is-core-module: 2.13.1
@@ -8362,7 +8372,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.45.0)(typescript@5.7.0-dev.20240830))(eslint-import-resolver-typescript@3.6.1(@typescript-eslint/parser@6.21.0(eslint@8.45.0)(typescript@5.7.0-dev.20240830))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.29.1(eslint@8.45.0))(eslint@8.45.0))(eslint@8.45.0):
+  eslint-plugin-import@2.29.1(@typescript-eslint/parser@6.21.0(eslint@8.45.0)(typescript@5.7.0-dev.20240830))(eslint-import-resolver-typescript@3.6.1)(eslint@8.45.0):
     dependencies:
       array-includes: 3.1.8
       array.prototype.findlastindex: 1.2.5
@@ -10757,6 +10767,11 @@ snapshots:
     dependencies:
       react: 19.1.0
       scheduler: 0.26.0
+
+  react-floating-whatsapp@5.0.8(react-dom@19.1.0(react@19.1.0))(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+      react-dom: 19.1.0(react@19.1.0)
 
   react-html-parser@2.0.2(react@19.1.0):
     dependencies:
