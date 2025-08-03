@@ -45,6 +45,16 @@ export default function MobileNavbar() {
       </nav>
       <div className="fixed bottom-0 z-50 w-full">
         <div className="grid grid-cols-4 bg-[#f7e7da]">
+          <div className="w-full border-x-2 border-white p-2">
+            <div className="flex justify-center">
+              <User />
+            </div>
+          </div>
+          <div className="w-full border-l-2 border-white p-2">
+            <div className="flex justify-center hover:cursor-pointer">
+              <Cart />
+            </div>
+          </div>
           <div className="w-full border-r-2 border-white p-2">
             <div className="flex justify-center">
               <Link href={'https://www.facebook.com/profile.php?id=61571068417335'}>
@@ -73,16 +83,6 @@ export default function MobileNavbar() {
                   />
                 </div>
               </Link>
-            </div>
-          </div>
-          <div className="w-full border-x-2 border-white p-2">
-            <div className="flex justify-center">
-              <User />
-            </div>
-          </div>
-          <div className="w-full border-l-2 border-white p-2">
-            <div className="flex justify-center hover:cursor-pointer">
-              <Cart />
             </div>
           </div>
         </div>

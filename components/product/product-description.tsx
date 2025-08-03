@@ -128,6 +128,20 @@ export function ProductDescription({
           </div>
         </div>
         <div className="pt-5 md:pt-8">
+          Meses sin Intereses
+          <div className="mt-2 flex flex-row gap-x-5">
+            <div className="relative h-[70px] w-[70px]">
+              <Image
+                className="object-contain"
+                src={'/msi.png'}
+                alt="Meses sin intereses"
+                fill
+                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="pt-9 md:pt-8">
           Efectivo
           <div className="-mt-2 flex flex-row gap-x-5">
             <div className="relative h-[60px] w-[60px]">

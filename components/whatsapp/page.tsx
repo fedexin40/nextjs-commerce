@@ -10,7 +10,7 @@ export default function Whatsapp() {
       phoneNumber={whatsapp || ''}
       accountName="Joyería Proyecto 705"
       chatMessage="Hola, ¿Como podemos ayudarte?"
-      statusMessage="Prometemos respode lo mas pronto posible"
+      statusMessage="Prometemos respoder lo mas pronto posible"
       darkMode={true}
     />
   );
