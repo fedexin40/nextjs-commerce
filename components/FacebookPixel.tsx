@@ -133,7 +133,7 @@ export const FacebookConversionApi = (param: {
         body: JSON.stringify({
           ip: param.ip,
           userAgent: param.userAgent,
-          fbc: param.fbc,
+          fbc: param.fbc || fbc,
           fbp: param.fbp,
           eventName: param.eventName,
           eventId: param.eventId,
