@@ -30,14 +30,18 @@ export default async function HomePage() {
       <Whatsapp />
       <div className="hidden md:block">
         <CarouselComponent
-          images={['/EnvioGratisMayores1500.jpeg', '/banner.png']}
+          images={['/Meses_sin_intereses.png', '/EnvioGratisMayores1500.jpeg', '/banner.png']}
           autoPlay={true}
           removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
         />
       </div>
       <div className="block md:hidden">
         <CarouselComponent
-          images={['/EnvioGratisMayores1500Mobile.jpeg', '/bannerMobile.png']}
+          images={[
+            '/Meses_sin_intereses_Movil.png',
+            '/EnvioGratisMayores1500Mobile.jpeg',
+            '/bannerMobile.png',
+          ]}
           autoPlay={true}
           removeArrowOnDeviceType={['desktop', 'tablet', 'mobile']}
         />
