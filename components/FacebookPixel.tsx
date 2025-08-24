@@ -143,6 +143,7 @@ export const FacebookConversionApi = (param: {
           value: param.value,
           eventURL: param.eventURL,
           external_id: param.f_external_id_me || param.f_external_id_cookie || param.f_external_id,
+          current_timestamp: param.current_timestamp,
         }),
       });
     };

@@ -11,8 +11,6 @@ const ServerEvent = bizSdk.ServerEvent;
 
 const accessToken = process.env.NEXT_PUBLIC_FACEBOOK_ACCESS_TOKEN;
 const pixelID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
-const date = new Date().getTime();
-const current_timestamp = Math.floor(date / 1000);
 
 export async function POST(req: NextRequest): Promise<Response> {
   const parameters = await req.json();
@@ -28,6 +26,7 @@ export async function POST(req: NextRequest): Promise<Response> {
   const value = parameters.value || 0.0;
   const eventURL = parameters.eventURL;
   const external_id = parameters.external_id;
+  const current_timestamp = parameters.current_timestamp;
   // From https://developers.facebook.com/docs/marketing-api/conversions-api/using-the-api?locale=es_ES
   const userData = new UserData()
     // It is recommended to send Client IP and User Agent for Conversions API Events.
