@@ -1,3 +1,4 @@
+import Paypal from 'components/paypal/page';
 import { StripeComponent } from 'components/stripe/stripe-component';
 import { getCart, transactionInitialize } from 'lib/saleor';
 import Image from 'next/image';
@@ -93,7 +94,7 @@ export default async function CheckoutPayment(props: {
               value={value}
             />
           </div>
-          {/* <Paypal TotalAmount={value} checkoutID={cart.id} /> */}
+          <Paypal TotalAmount={value} checkoutID={cart.id} />
         </div>
         <div className="hidden border-[#acacac] bg-[#d4d4d4] px-10 py-16 md:flex md:basis-[48%] md:border-l-2 lg:px-10">
           <div className="w-full">
