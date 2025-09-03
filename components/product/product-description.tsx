@@ -169,6 +169,20 @@ export function ProductDescription({
             </div>
           </div>
         </div>
+        <div className="pt-5 md:pt-8">
+          PayPal
+          <div className="-ml-7 -mt-4 flex flex-row">
+            <div className="relative h-[120px] w-[120px]">
+              <Image
+                className="object-contain"
+                src={'/paypal.png'}
+                alt="Metodo de pago, paypal"
+                fill
+                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
