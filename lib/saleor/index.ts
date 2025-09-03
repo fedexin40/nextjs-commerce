@@ -804,8 +804,9 @@ export async function Me(): Promise<CurrentPerson> {
   const checkouts: order[] = [];
   const checkoutsNoPayment: order[] = [];
   CurrentPerson.me?.checkouts?.edges.forEach((item) => {
+    let waiting_for_paypal = item.node?.metafields?.completed_with_paypal ? true : false;
     let is_checkout_waiting_payment;
-    is_checkout_waiting_payment = false;
+    is_checkout_waiting_payment = waiting_for_paypal || false;
     // Read all the lines in the order
     const items: orderLines[] = [];
 
@@ -924,19 +925,19 @@ export async function accountUpdate({
 // TODO: Add the type for the return value
 export async function transactionInitialize({
   checkoutId,
-  userId,
+  data,
+  paymentGateway,
 }: {
   checkoutId: string;
-  userId: string;
+  data?: object;
+  paymentGateway: string;
 }) {
   const transaction = await saleorFetch({
     query: TransactionInitializeDocument,
     variables: {
       checkoutId: checkoutId,
-      data: {
-        customer: userId,
-      },
-      funding_type: 'bank_transfer',
+      data: data,
+      paymentGateway: paymentGateway,
     },
     withAuth: true,
     cache: 'no-store',
@@ -1214,8 +1215,8 @@ export async function getLastCheckout(): Promise<string | null> {
   // but filtering by transactions
   const checkoutsId: string[] = [];
   lastCheckout.me?.checkouts?.edges.forEach((item) => {
-    let is_checkout_waiting_payment;
-    is_checkout_waiting_payment = false;
+    let waiting_for_paypal = item.node?.metafields?.completed_with_paypal ? true : false;
+    let is_checkout_waiting_payment = waiting_for_paypal || false;
 
     if (item.node.transactions) {
       for (

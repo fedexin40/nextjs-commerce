@@ -29,7 +29,6 @@ export default function CheckoutForm({
       return;
     }
 
-    refreshUser();
     setIsLoading(true);
     window.fbq('track', 'Purchase', {
       content_ids: content_ids,
@@ -56,6 +55,7 @@ export default function CheckoutForm({
       setMessage('An unexpected error occurred.');
     }
     setIsLoading(false);
+    refreshUser();
   };
 
   const paymentElementOptions = {

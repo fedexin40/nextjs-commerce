@@ -4,6 +4,7 @@ query LastCheckout {
       edges {
         node {
           id
+          metafields(keys: "completed_with_paypal")
           transactions {
             events {
               type

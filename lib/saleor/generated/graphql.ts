@@ -31774,6 +31774,7 @@ export type CheckoutFragment = {
   quantity: number;
   chargeStatus: CheckoutChargeStatusEnum;
   authorizeStatus: CheckoutAuthorizeStatusEnum;
+  metafields?: Record<string, string> | null;
   totalPrice: {
     gross: { currency: string; amount: number };
     net: { currency: string; amount: number };
@@ -32047,6 +32048,7 @@ export type CheckoutAddLineMutation = {
       quantity: number;
       chargeStatus: CheckoutChargeStatusEnum;
       authorizeStatus: CheckoutAuthorizeStatusEnum;
+      metafields?: Record<string, string> | null;
       totalPrice: {
         gross: { currency: string; amount: number };
         net: { currency: string; amount: number };
@@ -32183,6 +32185,7 @@ export type CheckoutDeleteLineMutation = {
       quantity: number;
       chargeStatus: CheckoutChargeStatusEnum;
       authorizeStatus: CheckoutAuthorizeStatusEnum;
+      metafields?: Record<string, string> | null;
       totalPrice: {
         gross: { currency: string; amount: number };
         net: { currency: string; amount: number };
@@ -32317,6 +32320,7 @@ export type CheckoutUpdateLineMutation = {
       quantity: number;
       chargeStatus: CheckoutChargeStatusEnum;
       authorizeStatus: CheckoutAuthorizeStatusEnum;
+      metafields?: Record<string, string> | null;
       totalPrice: {
         gross: { currency: string; amount: number };
         net: { currency: string; amount: number };
@@ -32427,6 +32431,7 @@ export type CreateCheckoutMutation = {
       quantity: number;
       chargeStatus: CheckoutChargeStatusEnum;
       authorizeStatus: CheckoutAuthorizeStatusEnum;
+      metafields?: Record<string, string> | null;
       totalPrice: {
         gross: { currency: string; amount: number };
         net: { currency: string; amount: number };
@@ -32595,7 +32600,8 @@ export type SetPasswordMutation = {
 
 export type TransactionInitializeMutationVariables = Exact<{
   checkoutId: Scalars['ID'];
-  data?: InputMaybe<Scalars['JSON']>;
+  data: Scalars['JSON'];
+  paymentGateway: Scalars['String'];
 }>;
 
 export type TransactionInitializeMutation = {
@@ -32720,6 +32726,7 @@ export type GetCheckoutByIdQuery = {
     quantity: number;
     chargeStatus: CheckoutChargeStatusEnum;
     authorizeStatus: CheckoutAuthorizeStatusEnum;
+    metafields?: Record<string, string> | null;
     totalPrice: {
       gross: { currency: string; amount: number };
       net: { currency: string; amount: number };
@@ -32994,6 +33001,7 @@ export type GetMeQuery = {
           quantity: number;
           chargeStatus: CheckoutChargeStatusEnum;
           authorizeStatus: CheckoutAuthorizeStatusEnum;
+          metafields?: Record<string, string> | null;
           totalPrice: {
             gross: { currency: string; amount: number };
             net: { currency: string; amount: number };
@@ -33249,6 +33257,7 @@ export type LastCheckoutQuery = {
       edges: Array<{
         node: {
           id: string;
+          metafields?: Record<string, string> | null;
           transactions?: Array<{
             events: Array<{ type?: TransactionEventTypeEnum | null; createdAt: string }>;
           }> | null;
@@ -33554,6 +33563,7 @@ export const CheckoutFragmentDoc = new TypedDocumentString(`
     amount
     currency
   }
+  metafields(keys: "completed_with_paypal")
 }
     fragment ProductDetails on Product {
   id
@@ -33937,6 +33947,7 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
     amount
     currency
   }
+  metafields(keys: "completed_with_paypal")
 }
 fragment ProductDetails on Product {
   id
@@ -34170,6 +34181,7 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
     amount
     currency
   }
+  metafields(keys: "completed_with_paypal")
 }
 fragment ProductDetails on Product {
   id
@@ -34407,6 +34419,7 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
     amount
     currency
   }
+  metafields(keys: "completed_with_paypal")
 }
 fragment ProductDetails on Product {
   id
@@ -34602,6 +34615,7 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
     amount
     currency
   }
+  metafields(keys: "completed_with_paypal")
 }
 fragment ProductDetails on Product {
   id
@@ -34730,7 +34744,7 @@ export const PaymentGatewayInitializeDocument = new TypedDocumentString(`
   paymentGatewayInitialize(
     id: $checkoutId
     amount: 0
-    paymentGateways: [{id: "app.saleor.stripe"}]
+    paymentGateways: [{id: "app.saleor.stripe.fede.20"}]
   ) {
     gatewayConfigs {
       id
@@ -34775,10 +34789,10 @@ export const SetPasswordDocument = new TypedDocumentString(`
 }
     `) as unknown as TypedDocumentString<SetPasswordMutation, SetPasswordMutationVariables>;
 export const TransactionInitializeDocument = new TypedDocumentString(`
-    mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {
+    mutation TransactionInitialize($checkoutId: ID!, $data: JSON!, $paymentGateway: String!) {
   transactionInitialize(
     id: $checkoutId
-    paymentGateway: {id: "app.saleor.stripe", data: $data}
+    paymentGateway: {id: $paymentGateway, data: $data}
   ) {
     transaction {
       id
@@ -35050,6 +35064,7 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
     amount
     currency
   }
+  metafields(keys: "completed_with_paypal")
 }
 fragment ProductDetails on Product {
   id
@@ -35461,6 +35476,7 @@ export const GetMeDocument = new TypedDocumentString(`
     amount
     currency
   }
+  metafields(keys: "completed_with_paypal")
 }
 fragment Order on Order {
   id
@@ -35826,6 +35842,7 @@ export const LastCheckoutDocument = new TypedDocumentString(`
       edges {
         node {
           id
+          metafields(keys: "completed_with_paypal")
           transactions {
             events {
               type

@@ -1,5 +1,7 @@
 import { StripeComponent } from 'components/stripe/stripe-component';
 import { getCart, transactionInitialize } from 'lib/saleor';
+import Image from 'next/image';
+import Link from 'next/link';
 import { permanentRedirect } from 'next/navigation';
 import Cart from './cart';
 
@@ -45,8 +47,9 @@ export default async function CheckoutPayment(props: {
     return;
   }
   const transaction = await transactionInitialize({
+    paymentGateway: 'app.saleor.stripe',
     checkoutId: cart.id,
-    userId: userId,
+    data: { customer: userId },
   });
   const stripeData = transaction.transactionInitialize?.data as
     | undefined
@@ -72,11 +75,16 @@ export default async function CheckoutPayment(props: {
     <>
       <div className="flex flex-col text-[13.5px] tracking-[1.4px] md:flex-row lg:text-[14.3px]">
         <div className="mx-10 mb-16	pt-16 md:mb-24 md:basis-[52%] lg:mb-40 lg:px-10">
+          <div className="relative mb-5 h-[50px] w-[180px] hover:cursor-pointer">
+            <Link href="https://stripe.com/mx/newsroom/information">
+              <Image className="object-contain" src={'/stripe.png'} alt="" fill />
+            </Link>
+          </div>
           <div className="flex flex-row space-x-3 bg-[#e4c0b2] p-5">
             <span className="capitalize">Proyecto 705:</span>
             <span className="uppercase">${cart?.cost.totalAmount.amount}</span>
           </div>
-          <div className="border-2 px-5 py-3 pb-20">
+          <div className="border-2 border-[#acacac] px-5 py-3 pb-20">
             <StripeComponent
               clientSecret={stripeData.paymentIntent.client_secret}
               publishableKey={stripeData.publishableKey}
@@ -85,6 +93,7 @@ export default async function CheckoutPayment(props: {
               value={value}
             />
           </div>
+          {/* <Paypal TotalAmount={value} checkoutID={cart.id} /> */}
         </div>
         <div className="hidden border-[#acacac] bg-[#d4d4d4] px-10 py-16 md:flex md:basis-[48%] md:border-l-2 lg:px-10">
           <div className="w-full">

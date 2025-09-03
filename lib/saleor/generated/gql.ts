@@ -12,7 +12,7 @@ import * as types from './graphql';
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-  'fragment Checkout on Checkout {\n  id\n  token\n  updatedAt\n  created\n  totalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  subtotalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  quantity\n  lines {\n    id\n    quantity\n    variant {\n      ...Variant\n      product {\n        ...ProductDetails\n      }\n    }\n    totalPrice {\n      gross {\n        amount\n      }\n    }\n  }\n  chargeStatus\n  authorizeStatus\n  shippingAddress {\n    city\n    countryArea\n    firstName\n    lastName\n    phone\n    postalCode\n    streetAddress1\n    streetAddress2\n  }\n  user {\n    firstName\n    lastName\n    email\n  }\n  transactions {\n    events {\n      type\n      createdAt\n    }\n  }\n  deliveryMethod {\n    ... on ShippingMethod {\n      id\n      name\n    }\n  }\n  shippingPrice {\n    gross {\n      amount\n    }\n  }\n  discount {\n    amount\n    currency\n  }\n}':
+  'fragment Checkout on Checkout {\n  id\n  token\n  updatedAt\n  created\n  totalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  subtotalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  quantity\n  lines {\n    id\n    quantity\n    variant {\n      ...Variant\n      product {\n        ...ProductDetails\n      }\n    }\n    totalPrice {\n      gross {\n        amount\n      }\n    }\n  }\n  chargeStatus\n  authorizeStatus\n  shippingAddress {\n    city\n    countryArea\n    firstName\n    lastName\n    phone\n    postalCode\n    streetAddress1\n    streetAddress2\n  }\n  user {\n    firstName\n    lastName\n    email\n  }\n  transactions {\n    events {\n      type\n      createdAt\n    }\n  }\n  deliveryMethod {\n    ... on ShippingMethod {\n      id\n      name\n    }\n  }\n  shippingPrice {\n    gross {\n      amount\n    }\n  }\n  discount {\n    amount\n    currency\n  }\n  metafields(keys: "completed_with_paypal")\n}':
     types.CheckoutFragmentDoc,
   'fragment FeaturedProduct on Product {\n  id\n  slug\n  name\n  isAvailableForPurchase\n  description\n  seoTitle\n  seoDescription\n  pricing {\n    priceRange {\n      start {\n        gross {\n          currency\n          amount\n        }\n      }\n      stop {\n        gross {\n          currency\n          amount\n        }\n      }\n    }\n  }\n  media {\n    url(size: 1080)\n    type\n    alt\n  }\n  collections {\n    name\n  }\n  updatedAt\n  variants {\n    id\n    name\n    pricing {\n      price {\n        gross {\n          currency\n          amount\n        }\n      }\n    }\n  }\n}':
     types.FeaturedProductFragmentDoc,
@@ -62,13 +62,13 @@ const documents = {
     types.ExternalAuthenticationUrlDocument,
   'mutation externalObtainAccessTokens($pluginId: String!, $input: JSONString!) {\n  externalObtainAccessTokens(input: $input, pluginId: $pluginId) {\n    errors {\n      code\n      message\n    }\n    refreshToken\n    token\n  }\n}':
     types.ExternalObtainAccessTokensDocument,
-  'mutation PaymentGatewayInitialize($checkoutId: ID!) {\n  paymentGatewayInitialize(\n    id: $checkoutId\n    amount: 0\n    paymentGateways: [{id: "app.saleor.stripe"}]\n  ) {\n    gatewayConfigs {\n      id\n      data\n      errors {\n        field\n        message\n        code\n      }\n    }\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
+  'mutation PaymentGatewayInitialize($checkoutId: ID!) {\n  paymentGatewayInitialize(\n    id: $checkoutId\n    amount: 0\n    paymentGateways: [{id: "app.saleor.stripe.fede.20"}]\n  ) {\n    gatewayConfigs {\n      id\n      data\n      errors {\n        field\n        message\n        code\n      }\n    }\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
     types.PaymentGatewayInitializeDocument,
   'mutation ResetPassword($email: String!, $redirectUrl: String!) {\n  requestPasswordReset(email: $email, redirectUrl: $redirectUrl) {\n    errors {\n      code\n      message\n      field\n    }\n  }\n}':
     types.ResetPasswordDocument,
   'mutation SetPassword($email: String!, $password: String!, $token: String!) {\n  setPassword(email: $email, password: $password, token: $token) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
     types.SetPasswordDocument,
-  'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
+  'mutation TransactionInitialize($checkoutId: ID!, $data: JSON!, $paymentGateway: String!) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: $paymentGateway, data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}':
     types.TransactionInitializeDocument,
   'mutation updateMetadata($id: ID!, $input: [MetadataInput!]!) {\n  updateMetadata(id: $id, input: $input) {\n    errors {\n      code\n      field\n      message\n    }\n  }\n}':
     types.UpdateMetadataDocument,
@@ -104,7 +104,7 @@ const documents = {
     types.GetProductBySlugDocument,
   'query GetShippingMethods($id: ID!) {\n  checkout(id: $id) {\n    id\n    shippingMethods {\n      description\n      id\n      maximumDeliveryDays\n      name\n      price {\n        amount\n        currency\n      }\n    }\n  }\n}':
     types.GetShippingMethodsDocument,
-  'query LastCheckout {\n  me {\n    checkouts(first: 10) {\n      edges {\n        node {\n          id\n          transactions {\n            events {\n              type\n              createdAt\n            }\n          }\n        }\n      }\n    }\n  }\n}':
+  'query LastCheckout {\n  me {\n    checkouts(first: 10) {\n      edges {\n        node {\n          id\n          metafields(keys: "completed_with_paypal")\n          transactions {\n            events {\n              type\n              createdAt\n            }\n          }\n        }\n      }\n    }\n  }\n}':
     types.LastCheckoutDocument,
   'query SearchProducts($search: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!, $after: String!, $first: Int!) {\n  products(\n    channel: "proyecto705"\n    sortBy: {field: $sortBy, direction: $sortDirection}\n    filter: {search: $search}\n    after: $after\n    first: $first\n  ) {\n    pageInfo {\n      hasNextPage\n      endCursor\n      startCursor\n    }\n    totalCount\n    edges {\n      node {\n        id\n        slug\n        name\n        isAvailableForPurchase\n        description\n        seoTitle\n        seoDescription\n        category {\n          name\n          slug\n        }\n        pricing {\n          priceRange {\n            start {\n              gross {\n                currency\n                amount\n              }\n            }\n            stop {\n              gross {\n                currency\n                amount\n              }\n            }\n          }\n        }\n        media {\n          url(size: 2160)\n          type\n          alt\n        }\n        collections {\n          name\n          slug\n        }\n        updatedAt\n        variants {\n          ...Variant\n        }\n        metadata {\n          key\n          value\n        }\n        productType {\n          isShippingRequired\n        }\n      }\n    }\n  }\n}':
     types.SearchProductsDocument,
@@ -116,7 +116,7 @@ const documents = {
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'fragment Checkout on Checkout {\n  id\n  token\n  updatedAt\n  created\n  totalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  subtotalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  quantity\n  lines {\n    id\n    quantity\n    variant {\n      ...Variant\n      product {\n        ...ProductDetails\n      }\n    }\n    totalPrice {\n      gross {\n        amount\n      }\n    }\n  }\n  chargeStatus\n  authorizeStatus\n  shippingAddress {\n    city\n    countryArea\n    firstName\n    lastName\n    phone\n    postalCode\n    streetAddress1\n    streetAddress2\n  }\n  user {\n    firstName\n    lastName\n    email\n  }\n  transactions {\n    events {\n      type\n      createdAt\n    }\n  }\n  deliveryMethod {\n    ... on ShippingMethod {\n      id\n      name\n    }\n  }\n  shippingPrice {\n    gross {\n      amount\n    }\n  }\n  discount {\n    amount\n    currency\n  }\n}',
+  source: 'fragment Checkout on Checkout {\n  id\n  token\n  updatedAt\n  created\n  totalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  subtotalPrice {\n    gross {\n      currency\n      amount\n    }\n    net {\n      currency\n      amount\n    }\n    tax {\n      currency\n      amount\n    }\n  }\n  quantity\n  lines {\n    id\n    quantity\n    variant {\n      ...Variant\n      product {\n        ...ProductDetails\n      }\n    }\n    totalPrice {\n      gross {\n        amount\n      }\n    }\n  }\n  chargeStatus\n  authorizeStatus\n  shippingAddress {\n    city\n    countryArea\n    firstName\n    lastName\n    phone\n    postalCode\n    streetAddress1\n    streetAddress2\n  }\n  user {\n    firstName\n    lastName\n    email\n  }\n  transactions {\n    events {\n      type\n      createdAt\n    }\n  }\n  deliveryMethod {\n    ... on ShippingMethod {\n      id\n      name\n    }\n  }\n  shippingPrice {\n    gross {\n      amount\n    }\n  }\n  discount {\n    amount\n    currency\n  }\n  metafields(keys: "completed_with_paypal")\n}',
 ): typeof import('./graphql').CheckoutFragmentDoc;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -266,7 +266,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation PaymentGatewayInitialize($checkoutId: ID!) {\n  paymentGatewayInitialize(\n    id: $checkoutId\n    amount: 0\n    paymentGateways: [{id: "app.saleor.stripe"}]\n  ) {\n    gatewayConfigs {\n      id\n      data\n      errors {\n        field\n        message\n        code\n      }\n    }\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
+  source: 'mutation PaymentGatewayInitialize($checkoutId: ID!) {\n  paymentGatewayInitialize(\n    id: $checkoutId\n    amount: 0\n    paymentGateways: [{id: "app.saleor.stripe.fede.20"}]\n  ) {\n    gatewayConfigs {\n      id\n      data\n      errors {\n        field\n        message\n        code\n      }\n    }\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
 ): typeof import('./graphql').PaymentGatewayInitializeDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -284,7 +284,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'mutation TransactionInitialize($checkoutId: ID!, $data: JSON) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: "app.saleor.stripe", data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
+  source: 'mutation TransactionInitialize($checkoutId: ID!, $data: JSON!, $paymentGateway: String!) {\n  transactionInitialize(\n    id: $checkoutId\n    paymentGateway: {id: $paymentGateway, data: $data}\n  ) {\n    transaction {\n      id\n    }\n    transactionEvent {\n      id\n    }\n    data\n    errors {\n      field\n      message\n      code\n    }\n  }\n}',
 ): typeof import('./graphql').TransactionInitializeDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -392,7 +392,7 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: 'query LastCheckout {\n  me {\n    checkouts(first: 10) {\n      edges {\n        node {\n          id\n          transactions {\n            events {\n              type\n              createdAt\n            }\n          }\n        }\n      }\n    }\n  }\n}',
+  source: 'query LastCheckout {\n  me {\n    checkouts(first: 10) {\n      edges {\n        node {\n          id\n          metafields(keys: "completed_with_paypal")\n          transactions {\n            events {\n              type\n              createdAt\n            }\n          }\n        }\n      }\n    }\n  }\n}',
 ): typeof import('./graphql').LastCheckoutDocument;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.

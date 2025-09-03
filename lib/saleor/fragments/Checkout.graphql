@@ -85,4 +85,5 @@ fragment Checkout on Checkout {
     amount
     currency
   }
+  metafields(keys: "completed_with_paypal")
 }
