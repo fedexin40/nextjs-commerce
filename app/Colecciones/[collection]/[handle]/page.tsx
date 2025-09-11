@@ -14,8 +14,6 @@ import { notFound } from 'next/navigation';
 
 export const runtime = 'edge';
 const { SHOP_PUBLIC_URL } = process.env;
-const date = new Date().getTime();
-const current_timestamp = Math.floor(date / 1000);
 
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
@@ -66,6 +64,8 @@ export default async function Product(props: {
   const f_external_id_me = user.f_external_id;
   const f_external_id_cookie = cookieStore.get('f_external_id')?.value;
   const f_external_id = Math.random().toString(36).substring(2);
+  const date = Date.now();
+  const current_timestamp = Math.floor(date / 1000);
 
   let product;
   try {
