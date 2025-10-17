@@ -13,7 +13,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 export const runtime = 'edge';
-const { SHOP_PUBLIC_URL } = process.env;
+const baseUrl = process.env.SHOP_PUBLIC_URL
+  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
+  : 'http://localhost:3000';
 
 export async function generateMetadata(props: {
   params: Promise<{ handle: string }>;
@@ -28,18 +30,39 @@ export async function generateMetadata(props: {
 
   if (!product) return notFound();
 
-  const indexable = !product.tags.includes(HIDDEN_PRODUCT_TAG);
+  const canonical = new URL(
+    `Colecciones/${product.featureCollection?.slug}/${product.handle}`,
+    baseUrl,
+  ).toString();
+  const title = `${product.title} - Proyecto 705`;
+  const desc = product.description;
 
   return {
-    title: product.seo.title || product.title,
-    description: product.seo.description || product.description,
-    robots: {
-      index: indexable,
-      follow: indexable,
-      googleBot: {
-        index: indexable,
-        follow: indexable,
-      },
+    metadataBase: new URL(baseUrl),
+    title,
+    description: desc,
+    alternates: { canonical },
+    openGraph: {
+      type: 'website',
+      url: canonical,
+      siteName: 'Proyecto 705',
+      title,
+      description: desc,
+      images: [
+        {
+          url: product.featuredImage.url,
+          width: product.featuredImage.width,
+          height: product.featuredImage.height,
+          alt: product.title,
+        },
+      ],
+      locale: 'es_MX',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: desc,
+      images: [product.featuredImage.url],
     },
   };
 }
@@ -100,7 +123,7 @@ export default async function Product(props: {
 
   let url = new URL(
     `Colecciones/${product.featureCollection?.slug}/${product.handle}`,
-    SHOP_PUBLIC_URL,
+    baseUrl,
   ).toString();
   const jsonLd = {
     '@context': 'https://schema.org',
@@ -108,23 +131,22 @@ export default async function Product(props: {
     productID: product.handle,
     name: product.title,
     description: product.descriptionHtml,
-    url: url,
     image: product.featuredImage.url,
-    brands: 'Proyecto 705',
-    offers: [
-      {
-        '@type': 'Offer',
-        price: product.priceRange.maxVariantPrice.amount,
-        priceCurrency: product.priceRange.maxVariantPrice.currencyCode,
-        itemCondition: 'https://schema.org/NewCondition',
-        availability: 'https://schema.org/InStock',
-      },
-    ],
+    brand: { '@type': 'Brand', name: 'Proyecto 705' },
+    offers: {
+      '@type': 'Offer',
+      price: product.priceRange.maxVariantPrice.amount,
+      priceCurrency: product.priceRange.maxVariantPrice.currencyCode,
+      itemCondition: 'https://schema.org/NewCondition',
+      availability: 'https://schema.org/InStock',
+      url: url,
+    },
   };
 
   return (
     <>
       <script
+        id="schema-org-product"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
@@ -140,8 +162,8 @@ export default async function Product(props: {
         phone={user.address.phone || null}
         productID={product.handle}
         value={product.priceRange.maxVariantPrice.amount}
-        eventURL={`${SHOP_PUBLIC_URL}/${pathname}`}
-        SHOP_PUBLIC_URL={SHOP_PUBLIC_URL || ''}
+        eventURL={`${baseUrl}/${pathname}`}
+        SHOP_PUBLIC_URL={baseUrl || ''}
         f_external_id_cookie={f_external_id_cookie}
         f_external_id={f_external_id}
         f_external_id_me={f_external_id_me}

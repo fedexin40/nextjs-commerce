@@ -4,15 +4,8 @@ import ProductGridItems from 'components/layout/product-grid-items';
 import LoadMore from 'components/load-more/page';
 import Whatsapp from 'components/whatsapp/page';
 import { getCollectionProducts } from 'lib/saleor';
-import type { Metadata } from 'next';
 
 export const runtime = 'edge';
-
-export const metadata: Metadata = {
-  title: 'Proyecto 705 Joyeria, aretes y broqueles de oro.',
-  description:
-    'Compra aretes y broqueles de oro de 10 kilates y 14 kilates, ademas tambien tenemos oro amarillo, oro blanco y oro rosa',
-};
 
 export default async function HomePage() {
   const collection = 'oro';
