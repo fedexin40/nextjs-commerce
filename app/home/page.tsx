@@ -21,7 +21,7 @@ export default async function HomePage() {
     <div className="block">
       <Whatsapp />
       <div className="relative h-96 w-full bg-[url(/banner4.png)] bg-cover bg-center bg-no-repeat">
-        <div className="grid h-full w-full grid-cols-2 grid-rows-3 gap-5 border-2 border-white md:grid-cols-3 md:grid-rows-2 lg:grid-cols-4">
+        <div className="grid h-full w-full grid-cols-2 grid-rows-3 gap-5 md:grid-cols-3 md:grid-rows-2 lg:grid-cols-4">
           <div
             className="
               col-start-1 row-start-3 mx-5 my-10 flex

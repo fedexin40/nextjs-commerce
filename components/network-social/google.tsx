@@ -49,8 +49,7 @@ export default function Google({
             hidden: isPending,
           })}
         >
-          <div className="block md:hidden">Usar Google</div>
-          <div className="hidden md:block">Inciar sesion con Google</div>
+          Inciar sesion con Google
         </div>
         <div
           className={clsx(

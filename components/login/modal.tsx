@@ -182,12 +182,12 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                       <div className="col-start-3 border-b-2 border-black	" />
                     </div>
                   </div>
-                  {children}
                 </div>
+                <div className="p-3">{children}</div>
                 <div className="flex h-full place-content-center justify-center bg-[#d2b6ab] pb-10">
-                  <div className="mx-10 w-full">
+                  <div className="w-full p-3">
                     <div
-                      className="top-5 mt-5 flex flex-row gap-2 whitespace-nowrap border-2 border-white p-3 hover:cursor-pointer hover:opacity-60 hover:ease-in"
+                      className="top-5 mt-5 flex w-full flex-row place-content-center gap-2 whitespace-nowrap border-2 border-white p-3 hover:cursor-pointer hover:opacity-60 hover:ease-in"
                       onClick={openRegister}
                     >
                       <div className="text-white">¿No tienes una cuenta?</div>

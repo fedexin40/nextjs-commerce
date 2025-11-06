@@ -293,6 +293,7 @@ function ResultsList() {
     );
   }
 
+  console.log(hits);
   return (
     <ul className="max-h-[60vh] divide-y divide-gray-100 overflow-auto">
       {hits.map((hit) => (
@@ -305,7 +306,7 @@ function ResultsList() {
 }
 
 function ResultItem({ hit }: { hit: any }) {
-  const href = hit.url || (hit.slug ? `/productos/${hit.slug}` : `#${hit.objectID}`);
+  const href = hit.link;
 
   return (
     <Link href={href} className="flex flex-row gap-3 px-2 py-2 hover:bg-gray-50">

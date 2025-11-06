@@ -191,10 +191,10 @@ export default function RegisterModal({ children }: { children: ReactNode }) {
                       <div className="col-start-3 border-b-2 border-black	" />
                     </div>
                   </div>
-                  {children}
                 </div>
-                <div className="flex h-full justify-center bg-[#d2b6ab] pb-10">
-                  <div className="mx-10 w-full">
+                <div className="p-3">{children}</div>
+                <div className="flex h-full place-content-center justify-center bg-[#d2b6ab] pb-10">
+                  <div className="w-full px-3">
                     <div
                       className="top-5 mt-5 flex w-full flex-row place-content-center gap-2 whitespace-nowrap border-2 border-white p-3 hover:cursor-pointer hover:opacity-60 hover:ease-in"
                       onClick={openLogin}

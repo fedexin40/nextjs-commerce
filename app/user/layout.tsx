@@ -19,8 +19,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           }
         >
           <Navbar />
-          <div className="text-[13px] tracking-widest lg:text-[14.3px]">{children}</div>
-          <div className="min-h-10 h-10 w-full bg-zinc-400" />
+          <div className="bg-white text-[13px] tracking-widest lg:text-[14.3px]">{children}</div>
           <div className="text-[13px] tracking-widest lg:text-[14.3px]">
             <Footer />
           </div>

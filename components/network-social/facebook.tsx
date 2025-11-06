@@ -50,8 +50,7 @@ export default function Facebook({
             hidden: isPending,
           })}
         >
-          <div className="block font-semibold md:hidden">Usar Facebook</div>
-          <div className="hidden md:block">Inciar sesion con Facebook</div>
+          Inciar sesion con Facebook
         </div>
         <div
           className={clsx(
