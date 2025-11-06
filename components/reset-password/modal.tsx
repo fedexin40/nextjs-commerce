@@ -54,7 +54,11 @@ export default function ResetPasswordModal({ children }: { children: ReactNode }
   return (
     <div className="z-50">
       <Transition show={isOpen}>
-        <Dialog onClose={() => {}} className="relative z-50" initialFocus={initialFocusRef}>
+        <Dialog
+          onClose={() => closeResetPassword()}
+          className="relative z-50"
+          initialFocus={initialFocusRef}
+        >
           <Transition.Child
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
@@ -75,7 +79,7 @@ export default function ResetPasswordModal({ children }: { children: ReactNode }
             leaveFrom="-translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <Dialog.Panel className="fixed bottom-0 left-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 text-black backdrop-blur-xl md:w-[390px]">
+            <Dialog.Panel className="fixed bottom-0 left-0 top-0 flex h-full w-3/4 flex-col border-l border-neutral-200 bg-white/80 text-black backdrop-blur-xl md:w-[390px]">
               <div>
                 <Snackbar
                   anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -104,7 +108,9 @@ export default function ResetPasswordModal({ children }: { children: ReactNode }
                   </button>
                 </div>
                 <div className="mt-14 w-full text-center text-[13.5px] tracking-[1.4px] md:mt-20 lg:mt-8 lg:text-[14.3px]">
-                  <div className="mt-4">Reiniciar Contraseña</div>
+                  <div className="mt-4 text-[14px] tracking-widest lg:text-[15px]">
+                    Reiniciar Contraseña
+                  </div>
                 </div>
                 <div className="mx-10 mb-28 mt-10 flex flex-col md:my-20 lg:mb-20 lg:mt-7">
                   <div className="gap-y-4">

@@ -77,10 +77,16 @@ export function ProductDescription({
           value={value}
         />
       </div>
-      <div className="pt-5 text-left text-[12px] leading-tight text-gray-800 lg:text-[14px]">
-        <div className="whitespace-nowrap">Tiempo de entrega de 2 a 7 dias hábiles</div>
-        <div className="whitespace-nowrap pt-3">Envío gratis en compras mayores a $1,500.00</div>
-        <div className="flex flex-row gap-x-4 whitespace-nowrap pt-3">
+      <div
+        className="
+          flex flex-col gap-y-4 pt-5
+          text-left text-[12px] leading-[20px]
+          text-gray-800
+        "
+      >
+        <div className="">Tiempo de entrega de 2 a 7 dias hábiles</div>
+        <div>Envío gratis en compras mayores a $1,500.00</div>
+        <div className="flex flex-row gap-x-4">
           <div>Compartir con</div>
           <div className="relative h-[20px] w-[20px]">
             <Image
@@ -103,84 +109,79 @@ export function ProductDescription({
         </div>
       </div>
       <div className="flex flex-col pt-14 text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
-        <div className="text-[15px] font-semibold	">Metodos de Pago</div>
-        <div className="pt-5 md:pt-8">
-          Tarjeta
-          <div className="-mt-2 flex flex-row gap-x-5">
-            <div className="relative h-[60px] w-[60px]">
-              <Image
-                className="object-contain"
-                src={'/visa2.png'}
-                alt="Metodo de pago, visa"
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-              />
-            </div>
-            <div className="relative h-[60px] w-[60px]">
-              <Image
-                className="object-contain"
-                src={'/mastercard2.png'}
-                alt="Metodo de pago, mastercad"
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-              />
-            </div>
+        <div className="text-[15px] font-semibold	">Métodos de Pago</div>
+        <div className="grid grid-cols-4 pt-5 md:grid-cols-3 md:pt-8 lg:grid-cols-4">
+          <div className="relative h-[60px] w-[60px]">
+            <Image
+              className="object-contain"
+              src={'/visa2.png'}
+              alt="Metodo de pago, visa"
+              fill
+              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+            />
           </div>
-        </div>
-        <div className="pt-5 md:pt-8">
-          Meses sin Intereses
-          <div className="mt-2 flex flex-row gap-x-5">
-            <div className="relative h-[70px] w-[70px]">
-              <Image
-                className="object-contain"
-                src={'/msi.png'}
-                alt="Meses sin intereses"
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-              />
-            </div>
+          <div className="relative h-[60px] w-[60px]">
+            <Image
+              className="object-contain"
+              src={'/mastercard2.png'}
+              alt="Metodo de pago, mastercad"
+              fill
+              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+            />
           </div>
-        </div>
-        <div className="pt-9 md:pt-8">
-          Efectivo
-          <div className="-mt-2 flex flex-row gap-x-5">
-            <div className="relative h-[60px] w-[60px]">
-              <Image
-                className="object-contain"
-                src={'/oxxo.png'}
-                alt="Metodo de pago, oxxo"
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-              />
-            </div>
+          <div className="relative h-[70px] w-[70px]">
+            <Image
+              className="object-contain"
+              src={'/msi.png'}
+              alt="Meses sin intereses"
+              fill
+              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+            />
           </div>
-        </div>
-        <div className="pt-5 md:pt-8">
-          Transferencia Bancaria
-          <div className="-mt-2 flex flex-row">
-            <div className="relative h-[60px] w-[60px]">
-              <Image
-                className="object-contain"
-                src={'/spei.png'}
-                alt="Metodo de pago, spei"
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-              />
-            </div>
+          <div className="relative h-[60px] w-[60px]">
+            <Image
+              className="object-contain"
+              src={'/oxxo.png'}
+              alt="Metodo de pago, oxxo"
+              fill
+              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+            />
           </div>
-        </div>
-        <div className="pt-5 md:pt-8">
-          PayPal
-          <div className="-ml-7 -mt-4 flex flex-row">
-            <div className="relative h-[120px] w-[120px]">
-              <Image
-                className="object-contain"
-                src={'/paypal.png'}
-                alt="Metodo de pago, paypal"
-                fill
-                sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-              />
-            </div>
+          <div className="relative h-[60px] w-[60px]">
+            <Image
+              className="object-contain"
+              src={'/spei.png'}
+              alt="Metodo de pago, spei"
+              fill
+              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+            />
+          </div>
+          <div className="relative h-[60px] w-[60px]">
+            <Image
+              className="object-contain"
+              src={'/paypal.png'}
+              alt="Metodo de pago, paypal"
+              fill
+              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+            />
+          </div>
+          <div className="relative h-[65px] w-[65px]">
+            <Image
+              className="object-contain"
+              src={'/apple.jpg'}
+              alt="Metodo de pago, Apple pay"
+              fill
+              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+            />
+          </div>
+          <div className="relative h-[60px] w-[60px]">
+            <Image
+              className="object-contain"
+              src={'/GooglePay.png'}
+              alt="Metodo de pago, Google pay"
+              fill
+              sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+            />
           </div>
         </div>
       </div>

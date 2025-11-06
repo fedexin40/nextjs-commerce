@@ -21,6 +21,82 @@ export function MenuItemCollectionDropdown({ item }: { item: Collection }) {
   );
 }
 
+export default function CollectionDropdown({ collections }: { collections: Collection[] }) {
+  const [openSelect, setOpenSelect] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpenSelect(false);
+      }
+    };
+
+    window.addEventListener('click', handleClickOutside);
+    return () => window.removeEventListener('click', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative" ref={ref}>
+      <div
+        onClick={() => {
+          setOpenSelect(!openSelect);
+        }}
+        className="flex flex-row items-center gap-1 text-black underline-offset-4 hover:text-neutral-500 hover:underline md:gap-2"
+      >
+        <div>Colleciones</div>
+      </div>
+      {openSelect && (
+        <div className="absolute -right-28 z-50 w-fit rounded-b-md bg-white pb-4 shadow-md">
+          <div className="flex flex-col place-content-center gap-y-3 capitalize text-black">
+            {collections.map((collection: Collection, key: number) => (
+              <MenuItemCollectionDropdown item={collection} key={key} />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function CategoryDropdown({ categories }: { categories: Category[] }) {
+  const [openSelect, setOpenSelect] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpenSelect(false);
+      }
+    };
+
+    window.addEventListener('click', handleClickOutside);
+    return () => window.removeEventListener('click', handleClickOutside);
+  }, []);
+
+  return (
+    <div className="relative" ref={ref}>
+      <div
+        onClick={() => {
+          setOpenSelect(!openSelect);
+        }}
+        className="flex flex-row items-center gap-1 text-black underline-offset-4 hover:text-neutral-500 hover:underline md:gap-2"
+      >
+        <div>Categorias</div>
+      </div>
+      {openSelect && (
+        <div className="absolute -right-40 z-50 w-fit rounded-b-md bg-white pb-4 shadow-md">
+          <div className="flex flex-col place-content-center gap-y-5 p-3 capitalize text-black">
+            {categories.map((category: Category, key: number) => (
+              <MenuItemCategoryDropdown item={category} key={key} />
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function CollectionItems({ collections }: { collections: Collection[] }) {
   const [openSelect, setOpenSelect] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -109,7 +185,7 @@ function CategoryItems({ categories }: { categories: Category[] }) {
   );
 }
 
-export default function MenuDropdown({
+export function MenuDropdown({
   categories,
   collections,
 }: {
@@ -144,7 +220,7 @@ export default function MenuDropdown({
         <div className="hidden md:flex">Aretes</div>
       </div>
       {openSelect && (
-        <div className="absolute right-2 top-10 z-50 w-fit rounded-b-md bg-white pb-4 shadow-md md:top-8 lg:right-4 lg:top-8">
+        <div className="absolute right-4 z-50 w-fit rounded-b-md bg-white pb-4 shadow-md md:top-8 lg:right-4 lg:top-8">
           <div className="flex flex-col place-content-center gap-y-5 p-3 capitalize text-black">
             <CategoryItems categories={categories} />
             <CollectionItems collections={collections} />

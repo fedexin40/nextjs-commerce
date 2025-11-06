@@ -4,7 +4,6 @@ import { PageItem } from 'components/htmlParser/page';
 import { Gallery } from 'components/product/gallery';
 import { ProductDescription } from 'components/product/product-description';
 import Whatsapp from 'components/whatsapp/page';
-import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
 import { getCollectionProducts, getProduct, Me } from 'lib/saleor';
 import { Image, Product as productType, ProductVariant } from 'lib/types';
 import type { Metadata } from 'next';
@@ -12,7 +11,6 @@ import { cookies, headers } from 'next/headers';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-export const runtime = 'edge';
 const baseUrl = process.env.SHOP_PUBLIC_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
   : 'http://localhost:3000';
@@ -121,7 +119,7 @@ export default async function Product(props: {
 
   if (!product) return notFound();
 
-  let url = new URL(
+  const url = new URL(
     `Colecciones/${product.featureCollection?.slug}/${product.handle}`,
     baseUrl,
   ).toString();

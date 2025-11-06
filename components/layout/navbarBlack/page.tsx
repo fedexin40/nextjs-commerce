@@ -1,72 +1,81 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import MarqueeText from 'components/text-scroll/page';
 
-export default function Navbar() {
+function Header() {
   return (
-    <div className="grid grid-cols-2 bg-black px-5 text-[10px] text-white md:grid-cols-7 md:px-10 md:text-[13px] md:tracking-widest lg:text-[14.3px]">
-      <div className="flex justify-center md:col-span-1 lg:h-[130px] lg:w-[130px]">
-        <Link href={'/'}>
-          <div className="relative h-[120px] w-[120px]">
-            <Image
-              className="object-contain"
-              src={'/logoBlanco.png'}
-              alt=""
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          </div>
-        </Link>
+    <div
+      className="
+        flex flex-row  justify-around gap-x-10 bg-black px-5  py-4
+      text-[13.5px] tracking-widest text-white md:text-[13px] lg:py-6
+        lg:text-[14.3px]"
+    >
+      <div className="flex flex-row gap-2">
+        <div className="relative top-[5px] h-[10px] min-h-[10px] w-[10px] min-w-[10px] md:top-0 md:h-[15px] md:min-h-[15px] md:w-[15px] md:min-w-[15px]">
+          <Image
+            className="object-contain"
+            src={'/devoluciones.png'}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
+        <div className="relative md:-top-[2px]">10 días para cambios & devoluciones</div>
       </div>
-      <div className="grid grid-cols-2 place-content-between gap-5 py-5 md:col-span-6 md:ml-5 md:flex md:flex-row md:py-8 lg:py-10">
-        <div className="flex flex-row gap-2">
-          <div className="relative h-[10px] min-h-[10px] w-[10px] min-w-[10px] md:h-[15px] md:min-h-[15px] md:w-[15px] md:min-w-[15px]">
-            <Image
-              className="object-contain"
-              src={'/devoluciones.png'}
-              alt=""
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          </div>
-          <div className="relative -top-1">10 dias para cambios & devoluciones</div>
+      <div className="flex flex-row gap-2">
+        <div className="relative top-[5px] h-[10px] min-h-[10px] w-[10px] min-w-[10px] md:top-0 md:h-[15px] md:min-h-[15px] md:w-[15px] md:min-w-[15px]">
+          <Image
+            className="object-contain"
+            src={'/compraSegura.png'}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </div>
-        <div className="flex flex-row gap-2">
-          <div className="relative h-[10px] min-h-[10px] w-[10px] min-w-[10px] md:h-[15px] md:min-h-[15px] md:w-[15px] md:min-w-[15px]">
-            <Image
-              className="object-contain"
-              src={'/compraSegura.png'}
-              alt=""
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          </div>
-          <div className="relative -top-1">Compra segura</div>
+        <div className="relative md:-top-[2px]">Compra segura</div>
+      </div>
+      <div className="flex flex-row gap-2">
+        <div className="relative top-[5px] h-[10px] min-h-[10px] w-[10px] min-w-[10px] md:top-0 md:h-[15px] md:min-h-[15px] md:w-[15px] md:min-w-[15px]">
+          <Image
+            className="object-contain"
+            src={'/garantia.png'}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </div>
-        <div className="flex flex-row gap-2">
-          <div className="relative h-[10px] min-h-[10px] w-[10px] min-w-[10px] md:h-[15px] md:min-h-[15px] md:w-[15px] md:min-w-[15px]">
-            <Image
-              className="object-contain"
-              src={'/garantia.png'}
-              alt=""
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          </div>
-          <div className="relative -top-1">30 dias de garantia asegurada</div>
+        <div className="relative md:-top-[2px]">30 días de garantía asegurada</div>
+      </div>
+      <div className="flex flex-row gap-2">
+        <div className="relative top-[5px] h-[10px] min-h-[10px] w-[10px] min-w-[10px] md:top-0 md:h-[15px] md:min-h-[15px] md:w-[15px] md:min-w-[15px]">
+          <Image
+            className="object-contain"
+            src={'/envio.png'}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </div>
-        <div className="flex flex-row gap-2">
-          <div className="relative h-[10px] min-h-[10px] w-[10px] min-w-[10px] md:h-[15px] md:min-h-[15px] md:w-[15px] md:min-w-[15px]">
-            <Image
-              className="object-contain"
-              src={'/envio.png'}
-              alt=""
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-            />
-          </div>
-          <div className="relative -top-1">Envios gratis en compras superiores a $1,500.00</div>
+        <div className="relative md:-top-[2px]">
+          Envíos gratis en compras superiores a $1,500.00
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Navbar() {
+  return (
+    <>
+      <div className="hidden md:block">
+        <Header />
+      </div>
+      <div className="content-center md:hidden">
+        <MarqueeText>
+          <Header />
+        </MarqueeText>
+        /
+      </div>
+    </>
   );
 }

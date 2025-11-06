@@ -56,6 +56,7 @@ interface userDetails {
   phone: string;
   postalCode: string;
   countryArea: string;
+  password?: string;
 }
 
 interface user extends userDetails {
@@ -83,6 +84,7 @@ const useUserDetails = create<user>()((set) => ({
   email: '',
   phone: '',
   postalCode: '',
+  password: '',
   actions: {
     setUserDetails: (user: userDetails) =>
       set({
@@ -95,6 +97,7 @@ const useUserDetails = create<user>()((set) => ({
         phone: user.phone,
         postalCode: user.postalCode,
         countryArea: user.countryArea,
+        password: user.password,
       }),
   },
 }));

@@ -1,15 +1,12 @@
 query LastCheckout {
   me {
-    checkouts(first: 10) {
+    checkouts(first: 1) {
       edges {
         node {
           id
-          metafields(keys: "completed_with_paypal")
-          transactions {
-            events {
-              type
-              createdAt
-            }
+          metadata {
+            key
+            value
           }
         }
       }

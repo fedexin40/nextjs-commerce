@@ -29,7 +29,12 @@ export default function Google({
 
   return (
     <div onClick={Login}>
-      <div className=" flex h-10 flex-row gap-5 border-2 border-[#a8a8a8] px-5 py-2 text-[13.5px] tracking-[1.4px] hover:cursor-pointer hover:opacity-60 hover:ease-in lg:text-[14.3px]">
+      <div
+        className="
+          flex h-10 flex-row gap-5 border-2 border-[#a8a8a8] px-5 py-2
+          text-[13.5px] tracking-[1.4px] hover:cursor-pointer
+          hover:opacity-60 hover:ease-in lg:text-[14.3px]"
+      >
         <div className="relative h-5 w-5">
           <Image
             className="object-cover"
@@ -44,7 +49,8 @@ export default function Google({
             hidden: isPending,
           })}
         >
-          Inciar sesion con Google
+          <div className="block md:hidden">Usar Google</div>
+          <div className="hidden md:block">Inciar sesion con Google</div>
         </div>
         <div
           className={clsx(

@@ -50,5 +50,17 @@ module.exports = {
         },
       );
     }),
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.no-scrollbar': {
+          '-ms-overflow-style': 'none' /* IE and Edge */,
+          'scrollbar-width': 'none' /* Firefox */,
+          '&::-webkit-scrollbar': {
+            display: 'none' /* Chrome, Safari, Opera */,
+          },
+        },
+      };
+      addUtilities(newUtilities, ['responsive']);
+    },
   ],
 };

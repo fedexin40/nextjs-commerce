@@ -1,6 +1,8 @@
 import { getCategories, getCollections } from 'lib/saleor';
 import { Category } from 'lib/types';
-import MenuDropdown from './dropdown-menu';
+import CollectionDropdown from './dropdown-menu';
+import { CategoryDropdown } from './dropdown-menu';
+import { MenuDropdown } from './dropdown-menu';
 
 const baseUrl = process.env.NEXT_PUBLIC_VERCEL_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
@@ -26,7 +28,13 @@ export default async function Menu() {
 
   return (
     <div>
-      <MenuDropdown collections={collections} categories={categories} />
+      <div className="block md:hidden">
+        <MenuDropdown collections={collections} categories={categories} />
+      </div>
+      <div className="hidden flex-row gap-x-10 md:flex">
+        <CollectionDropdown collections={collections} />
+        <CategoryDropdown categories={categories} />
+      </div>
     </div>
   );
 }

@@ -82,7 +82,7 @@ export async function updateAddress({
     }
   }
   await accountUpdate({ firstName, lastName });
-  revalidateTag(TAGS.user);
+  revalidateTag(TAGS.user, 'max');
 }
 
 export async function Logout() {
@@ -102,7 +102,7 @@ export async function accountRegister({ email, password }: { email: string; pass
   try {
     await registerAccount(email, password, redirectUrl);
   } catch (error: any) {
-    return error.toString();
+    return error.message;
   }
 }
 
@@ -114,7 +114,7 @@ export async function Login({ email, password }: { email: string; password: stri
 }
 
 export async function refreshUser() {
-  revalidateTag(TAGS.user);
+  revalidateTag(TAGS.user, 'max');
   permanentRedirect('cart/processing');
 }
 
@@ -129,7 +129,7 @@ export async function updateExternalId({ id, value }: { id: string; value: strin
     key: 'f_external_id',
     value: value,
   });
-  revalidateTag(TAGS.user);
+  revalidateTag(TAGS.user, 'max');
 }
 
 export async function resetPassword({ email }: { email: string }) {

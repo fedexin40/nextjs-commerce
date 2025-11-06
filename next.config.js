@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
+  cacheComponents: true,
   turbopack: {
     resolveAlias: {
       underscore: 'lodash',
@@ -20,6 +21,10 @@ module.exports = {
       {
         protocol: 'http',
         hostname: 'localhost',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.proyecto705.com',
       },
     ],
   },

@@ -8,8 +8,6 @@ import FilterList from 'components/layout/search/filter';
 import LoadMore from 'components/load-more/page';
 import { defaultSort, sorting } from 'lib/constants';
 
-export const runtime = 'edge';
-
 export async function generateMetadata(props: {
   params: Promise<{ collection: string }>;
 }): Promise<Metadata> {

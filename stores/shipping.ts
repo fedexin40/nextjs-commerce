@@ -34,8 +34,8 @@ const useShippingStore = create<shippingStore>()((set) => ({
     setShippingMethods: (shippingMethods) => set({ shippingMethods: shippingMethods }),
     reset: () => {
       set({
-        selectedShippingId: undefined,
-        CarrierName: undefined,
+        selectedShippingId: '',
+        CarrierName: '',
         shippingCost: undefined,
       });
     },

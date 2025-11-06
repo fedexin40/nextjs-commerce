@@ -3,10 +3,10 @@
 import { getServerAuthClient } from 'app/login';
 import { TAGS } from 'lib/constants';
 import {
+  CheckoutFromCookieDocument,
   LastCheckoutDocument,
   ResetPasswordDocument,
   SetPasswordDocument,
-  TransactionEventTypeEnum,
   UpdateMetadataDocument,
 } from 'lib/saleor/generated/graphql';
 import {
@@ -40,6 +40,7 @@ import {
   CheckoutCompleteDocument,
   CheckoutCustomerAttachDocument,
   CheckoutDeleteLineDocument,
+  CheckoutEmailUpdateDocument,
   CheckoutShippingAddressUpdateDocument,
   CheckoutUpdateLineDocument,
   ConfirmAccountDocument,
@@ -462,7 +463,7 @@ export async function getCart(cartId: string): Promise<Cart | null> {
   return saleorCheckoutToVercelCart(saleorCheckout.checkout);
 }
 
-export async function createCart(email: string): Promise<Cart> {
+export async function createCart(email?: string): Promise<Cart> {
   const saleorCheckout = await saleorFetch({
     query: CreateCheckoutDocument,
     variables: {
@@ -804,38 +805,11 @@ export async function Me(): Promise<CurrentPerson> {
   const checkouts: order[] = [];
   const checkoutsNoPayment: order[] = [];
   CurrentPerson.me?.checkouts?.edges.forEach((item) => {
-    let waiting_for_paypal = item.node?.metafields?.completed_with_paypal ? true : false;
-    let is_checkout_waiting_payment;
-    is_checkout_waiting_payment = waiting_for_paypal || false;
+    const is_checkout_waiting_payment = item.node.metadata?.find(
+      (metadataitem) => metadataitem.key == 'is_checkout_waiting_payment',
+    );
     // Read all the lines in the order
     const items: orderLines[] = [];
-
-    if (item.node.transactions) {
-      for (
-        var index_transaction = 0;
-        index_transaction < (item.node.transactions?.length || 0);
-        index_transaction++
-      ) {
-        let charge_action_required_count: number;
-        charge_action_required_count = 0;
-        for (
-          var index_event = 0;
-          index_event < (item.node.transactions[index_transaction]?.events.length || 0);
-          index_event++
-        )
-          if (
-            item.node.transactions[index_transaction]?.events[index_event]?.type ==
-            TransactionEventTypeEnum.ChargeActionRequired
-          ) {
-            charge_action_required_count += 1;
-            // The number of charge_action_required_count events on the same
-            // transaction is equal to 2 this means that the checkout is waiting for payment
-            if (charge_action_required_count == 2) {
-              is_checkout_waiting_payment = true;
-            }
-          }
-      }
-    }
 
     item.node.lines.forEach((itemLine) => {
       const line = {
@@ -866,7 +840,7 @@ export async function Me(): Promise<CurrentPerson> {
         streetAddress2: item.node.shippingAddress?.streetAddress2,
       },
     };
-    if (is_checkout_waiting_payment == true) {
+    if (is_checkout_waiting_payment) {
       checkouts.push(checkout);
     } else {
       checkoutsNoPayment.push(checkout);
@@ -893,7 +867,6 @@ export async function Me(): Promise<CurrentPerson> {
       phone: CurrentPerson.me?.addresses[0]?.phone || '',
     },
     orders: orders_and_checkouts,
-    lastCheckout: checkoutsNoPayment ? checkoutsNoPayment[0]?.id : null,
     f_external_id: CurrentPerson.me?.metafields?.f_external_id,
   };
 }
@@ -1202,60 +1175,47 @@ export async function discountShopping({ checkoutId }: { checkoutId: string }) {
 }
 
 export async function getLastCheckout(): Promise<string | null> {
-  const lastCheckout = await saleorFetch({
-    query: LastCheckoutDocument,
-    variables: {},
-    withAuth: true,
+  let lastCheckout;
+  const me = await Me();
+  if (me.email) {
+    lastCheckout = await saleorFetch({
+      query: LastCheckoutDocument,
+      variables: {},
+      withAuth: true,
+      cache: 'no-store',
+    });
+    if (!lastCheckout.me?.checkouts?.edges[0]) {
+      return null;
+    }
+    // Check if checkout is waiting for payment
+    const is_checkout_waiting_payment = lastCheckout.me?.checkouts?.edges[0]?.node?.metadata?.find(
+      (metadataitem) => metadataitem.key == 'is_checkout_waiting_payment',
+    );
+    if (is_checkout_waiting_payment) {
+      return null;
+    }
+    return lastCheckout.me?.checkouts?.edges[0]?.node.id || null;
+  }
+  const saleorCheckout = (await cookies()).get('saleorCheckout')?.value;
+  if (!saleorCheckout) {
+    return null;
+  }
+  lastCheckout = await saleorFetch({
+    query: CheckoutFromCookieDocument,
+    variables: { id: saleorCheckout },
+    withAuth: false,
     cache: 'no-store',
   });
-
-  // When the checkout is waiting for payment
-  // we can consider it as an order waiting for payment
-  // that's why I am reading the checkouts
-  // but filtering by transactions
-  const checkoutsId: string[] = [];
-  lastCheckout.me?.checkouts?.edges.forEach((item) => {
-    let waiting_for_paypal = item.node?.metafields?.completed_with_paypal ? true : false;
-    let is_checkout_waiting_payment = waiting_for_paypal || false;
-
-    if (item.node.transactions) {
-      for (
-        var index_transaction = 0;
-        index_transaction < (item.node.transactions?.length || 0);
-        index_transaction++
-      ) {
-        let charge_action_required_count: number;
-        charge_action_required_count = 0;
-        for (
-          var index_event = 0;
-          index_event < (item.node.transactions[index_transaction]?.events.length || 0);
-          index_event++
-        )
-          if (
-            item.node.transactions[index_transaction]?.events[index_event]?.type ==
-            TransactionEventTypeEnum.ChargeActionRequired
-          ) {
-            charge_action_required_count += 1;
-            // The number of charge_action_required_count events on the same
-            // transaction is equal to 2 this means that the checkout is waiting for payment
-            if (charge_action_required_count == 2) {
-              is_checkout_waiting_payment = true;
-            }
-          } else if (
-            item.node.transactions[index_transaction]?.events[index_event]?.type ==
-            TransactionEventTypeEnum.ChargeSuccess
-          ) {
-            is_checkout_waiting_payment = true;
-          }
-      }
-      if (is_checkout_waiting_payment == false) {
-        checkoutsId.push(item.node.id);
-      }
-    } else {
-      checkoutsId.push(item.node.id);
-    }
-  });
-  return checkoutsId[0] ? checkoutsId[0] : null;
+  if (!lastCheckout.checkout) {
+    return null;
+  }
+  const is_checkout_waiting_payment = lastCheckout.checkout?.metadata.find(
+    (metadataitem) => metadataitem.key == 'is_checkout_waiting_payment',
+  );
+  if (is_checkout_waiting_payment) {
+    return null;
+  }
+  return lastCheckout.checkout?.id || null;
 }
 
 // Helper function used to update carrierName and shipping cost in checkout metadata
@@ -1351,6 +1311,19 @@ export async function passwordSet(email: string, token: string, password: string
   }
 }
 
+export async function checkoutEmailUpdate(email: string, checkoutId: string) {
+  const result = await saleorFetch({
+    query: CheckoutEmailUpdateDocument,
+    variables: {
+      email: email,
+      checkoutId: checkoutId,
+    },
+  });
+  if (result.checkoutEmailUpdate?.errors[0]) {
+    throw new Error(result.checkoutEmailUpdate?.errors[0]?.message || '');
+  }
+}
+
 // eslint-disable-next-line no-unused-vars
 export async function revalidate(req: NextRequest): Promise<Response> {
   const json = await verifySignature(req, endpoint!);
@@ -1367,7 +1340,7 @@ export async function revalidate(req: NextRequest): Promise<Response> {
     case 'CollectionUpdated':
     case 'CollectionDeleted':
       console.log(`revalidateTag(TAGS.collections)`);
-      revalidateTag(TAGS.collections);
+      revalidateTag(TAGS.collections, 'max');
       break;
     case 'ProductVariantCreated':
     case 'ProductVariantUpdated':
@@ -1376,7 +1349,7 @@ export async function revalidate(req: NextRequest): Promise<Response> {
     case 'ProductUpdated':
     case 'ProductDeleted':
       console.log(`revalidateTag(TAGS.products)`);
-      revalidateTag(TAGS.products);
+      revalidateTag(TAGS.products, 'max');
       break;
   }
   console.log('Done revalidating');

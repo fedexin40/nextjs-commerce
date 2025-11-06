@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 
-export const runtime = 'edge';
-
 const bizSdk = require('facebook-nodejs-business-sdk');
 const Content = bizSdk.Content;
 const CustomData = bizSdk.CustomData;

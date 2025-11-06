@@ -1,6 +1,11 @@
 'use server';
 
-import { getShippingMethods, shippingAddressCheckoutUpdate } from 'lib/saleor';
+import {
+  billingAddressCheckoutUpdate,
+  checkoutEmailUpdate,
+  getShippingMethods,
+  shippingAddressCheckoutUpdate,
+} from 'lib/saleor';
 import { CountryCode } from 'lib/saleor/generated/graphql';
 
 export async function shippingAddressUpdate({
@@ -38,6 +43,7 @@ export async function shippingAddressUpdate({
   };
   try {
     await shippingAddressCheckoutUpdate(input);
+    await billingAddressCheckoutUpdate(input);
   } catch (error: any) {
     return error.message;
   }
@@ -55,4 +61,18 @@ export async function shippingMethodsAction({ checkoutId }: { checkoutId: string
     index++;
   }
   return methodsShipping;
+}
+
+export async function emailCheckoutUpdate({
+  checkout,
+  email,
+}: {
+  checkout: string;
+  email: string;
+}) {
+  try {
+    await checkoutEmailUpdate(email, checkout);
+  } catch (error: any) {
+    return error.message;
+  }
 }

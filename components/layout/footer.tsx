@@ -6,9 +6,14 @@ import Link from 'next/link';
 
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
-export default async function Footer() {
+async function Year() {
+  'use cache';
   const currentYear = new Date().getFullYear();
   const copyrightDate = currentYear;
+  return <>{copyrightDate}</>;
+}
+
+export default async function Footer() {
   const pages = await getPagesByMenu('next-js-frontend-footer-menu');
   const copyrightName = COMPANY_NAME || SITE_NAME || '';
 
@@ -56,7 +61,7 @@ export default async function Footer() {
         <div className="border-t-2 border-t-gray-500 pt-6">
           <div className="flex w-full flex-row justify-start md:pl-10">
             <p>
-              &copy; {copyrightDate} {copyrightName}
+              &copy; <Year /> {copyrightName}
               {copyrightName.length && !copyrightName.endsWith('.') ? '.' : ''} Todos los derechos
               reservados.
             </p>

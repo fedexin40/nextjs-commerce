@@ -1,0 +1,9 @@
+query CheckoutFromCookie($id: ID!) {
+  checkout(id: $id) {
+    id
+    metadata {
+      key
+      value
+    }
+  }
+}

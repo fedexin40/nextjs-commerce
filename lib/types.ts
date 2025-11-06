@@ -125,6 +125,7 @@ export type VercelCommerceCart = {
   token: string;
   updatedAt: string;
   checkoutUrl: string;
+  checkoutCarrier: string;
   checkoutUrlPayment: string;
   cost: {
     subtotalAmount: Money;
@@ -150,7 +151,7 @@ export type VercelCommerceCart = {
         streetAddress2: string | undefined;
       }
     | undefined;
-  userEmail?: string;
+  userEmail?: string | null;
   lastName?: string;
   firstName?: string;
   transactions?:
@@ -169,6 +170,10 @@ export type VercelCommerceCart = {
     | null
     | undefined
     | {};
+  metadata?: {
+    key: string;
+    value: string;
+  }[];
 };
 
 export type VercelCommerceCollection = {

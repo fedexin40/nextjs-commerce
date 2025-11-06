@@ -1,6 +1,7 @@
 'use client';
 
 import { Dialog, Transition } from '@headlessui/react';
+import PersonIcon from '@mui/icons-material/Person';
 import Alert from '@mui/material/Alert';
 import Snackbar from '@mui/material/Snackbar';
 import { Login } from 'actions/user';
@@ -52,16 +53,17 @@ export default function LoginModal({ children }: { children: ReactNode }) {
   }
   return (
     <div className="z-50">
-      <div className="relative h-[27px] w-[27px]" onClick={openLogin}>
-        <Image
-          src={'/registro.png'}
-          alt=""
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        />
+      <div onClick={openLogin}>
+        <PersonIcon fontSize="large" />
       </div>
       <Transition show={isOpen}>
-        <Dialog onClose={() => {}} className="relative z-50" initialFocus={initialFocusRef}>
+        <Dialog
+          onClose={() => {
+            closeLogin();
+          }}
+          className="relative z-50"
+          initialFocus={initialFocusRef}
+        >
           <Transition.Child
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
@@ -82,7 +84,7 @@ export default function LoginModal({ children }: { children: ReactNode }) {
             leaveFrom="-translate-x-0"
             leaveTo="-translate-x-full"
           >
-            <Dialog.Panel className="fixed bottom-0 left-0 top-0 flex h-full w-full flex-col border-l border-neutral-200 bg-white/80 text-[13.5px] tracking-[1.4px] text-black backdrop-blur-xl md:w-[390px] lg:text-[14.3px]">
+            <Dialog.Panel className="fixed bottom-0 left-0 top-0 flex h-full w-3/4 flex-col border-l border-neutral-200 bg-white/80 text-[13.5px] tracking-[1.4px] text-black backdrop-blur-xl md:w-[390px] lg:text-[14.3px]">
               <div>
                 <Snackbar
                   anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
@@ -114,7 +116,7 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                   <div className="flex justify-center">
                     <Image src={'/session.png'} alt="" width={60} height={60} />
                   </div>
-                  <div className="mt-4">Iniciar Sesión</div>
+                  <div className="mt-4 text-[14px]">Iniciar Sesión</div>
                 </div>
                 <div className="mx-10 mb-10 mt-10 flex flex-col md:my-20 lg:mb-7 lg:mt-7">
                   <div>
@@ -174,7 +176,7 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                     </form>
                     <div className="grid grid-cols-3 grid-rows-2 py-5">
                       <div className="col-start-1 col-end-2 border-b-2 border-black	" />
-                      <div className="max-w-3 col-start-2	col-end-3 row-span-2 place-self-center">
+                      <div className="col-start-2 col-end-3	row-span-2 max-w-3 place-self-center">
                         o
                       </div>
                       <div className="col-start-3 border-b-2 border-black	" />

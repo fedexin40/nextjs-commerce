@@ -1,6 +1,6 @@
 {
   "private": true,
-  "packageManager": "pnpm@8.2.0",
+  "packageManager": "pnpm@7.33.5+sha512.4e499f22fffe5845aa8f9463e1386b2d72c3134e0ebef9409360ad844fef0290e82b479b32eb2ec0f30e56607e1820c22167829fd62656d41a8fd0cc4a0f4267",
   "engines": {
     "node": ">=22",
     "pnpm": ">=7"
@@ -23,6 +23,9 @@
     "*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
+    "@algolia/autocomplete-js": "^1.19.4",
+    "@algolia/autocomplete-plugin-query-suggestions": "^1.19.4",
+    "@algolia/autocomplete-plugin-recent-searches": "^1.19.4",
     "@bettercart/react-facebook-pixel": "^2.0.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
@@ -38,17 +41,20 @@
     "@stripe/react-stripe-js": "^2.7.1",
     "@stripe/stripe-js": "^3.4.0",
     "@vercel/og": "^0.5.4",
+    "algoliasearch": "^5.42.0",
     "clsx": "^2.0.0",
     "facebook-nodejs-business-sdk": "^23.0.0",
     "flowbite-react": "^0.7.2",
     "framer-motion": "^8.5.5",
     "is-empty-iterable": "^3.0.0",
     "jose": "4.14.4",
-    "next": "15.3.2",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "next": "16.0.0",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "react-fast-marquee": "^1.6.5",
     "react-floating-whatsapp": "^5.0.8",
     "react-html-parser": "^2.0.2",
+    "react-instantsearch": "^7.17.0",
     "react-multi-carousel": "^2.8.4",
     "stripe": "^15.7.0",
     "zustand": "^4.5.2"

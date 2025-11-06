@@ -1,6 +1,8 @@
 'use server';
 
 import { TAGS } from 'lib/constants';
+import { refresh } from 'next/cache';
+
 import {
   Me,
   addToCart,
@@ -12,29 +14,41 @@ import {
   updateCart,
 } from 'lib/saleor';
 import { revalidateTag } from 'next/cache';
+import { cookies } from 'next/headers';
 
 export const addItem = async (variantId: string | undefined): Promise<String | undefined> => {
   const user = await Me();
-  const userEmail = user.email;
-  if (!userEmail) {
-    return 'Por favor inicia sesion primero';
+  let checkout;
+
+  checkout = await getLastCheckout();
+  if (!checkout) {
+    if (user?.id) {
+      checkout = (await createCart(user.email)).id;
+      await customerCheckoutAttach({ checkoutId: checkout, customerId: user.id });
+      revalidateTag(TAGS.user, 'max');
+    } else {
+      checkout = (await createCart()).id;
+      const cookieStore = await cookies();
+      cookieStore.set({
+        name: 'saleorCheckout',
+        value: checkout,
+        httpOnly: true,
+        maxAge: 864000,
+      });
+    }
   }
 
-  let cart = await lastCheckout();
-
-  if (!cart) {
-    cart = await createCart(userEmail);
-    await customerCheckoutAttach({ checkoutId: cart.id, customerId: user.id });
-    revalidateTag(TAGS.user);
+  if (!checkout) {
+    return 'Occurió un error inesperado, favor de intentar mas tarde';
   }
-  const cartId = cart.id;
 
   if (!variantId) {
     return 'Missing product variant ID';
   }
 
   try {
-    await addToCart(cartId, [{ merchandiseId: variantId, quantity: 1 }]);
+    await addToCart(checkout, [{ merchandiseId: variantId, quantity: 1 }]);
+    refresh();
   } catch (error: any) {
     const field: string = error.message;
     let error_message: string = 'Hubo un error al añadir el producto';
@@ -47,7 +61,8 @@ export const addItem = async (variantId: string | undefined): Promise<String | u
 };
 
 export const removeItem = async (lineId: string): Promise<String | undefined> => {
-  const cart = await lastCheckout();
+  const checkout = await getLastCheckout();
+  const cart = await getCart(checkout || '');
 
   if (!cart?.id) {
     return 'Missing cart ID';
@@ -88,11 +103,9 @@ export const updateItemQuantity = async ({
 };
 
 export const lastCheckout = async () => {
-  let cart;
-  const cartId = await getLastCheckout();
-  if (cartId) {
-    cart = await getCart(cartId);
-    return cart;
+  const checkout = await getLastCheckout();
+  if (checkout) {
+    return await getCart(checkout);
   }
   return null;
 };

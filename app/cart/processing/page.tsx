@@ -1,6 +1,9 @@
+import { Me } from 'lib/saleor';
 import Link from 'next/link';
 
-export default function CartProcessing() {
+export default async function CartProcessing() {
+  const me = await Me();
+
   return (
     <>
       <div className="mx-10 mb-16 mt-10 flex flex-col justify-center text-center md:mx-20 md:mb-24 md:mt-16 md:tracking-wider lg:mx-32 lg:mb-40 lg:mt-20">
@@ -13,6 +16,11 @@ export default function CartProcessing() {
             <Link href={'/'}>
               <div className="pt-2 font-bold text-[#d2b6ab]">Regresa a la pagina Principal</div>
             </Link>
+            {me.email && (
+              <Link href={'/user'}>
+                <div className="pt-2 font-bold text-[#d2b6ab]">Ver mis compras</div>
+              </Link>
+            )}
           </div>
         </div>
       </div>

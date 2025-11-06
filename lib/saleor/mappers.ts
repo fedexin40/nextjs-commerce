@@ -130,9 +130,11 @@ export function saleorVariantsToVercelVariants(
 }
 
 export function saleorCheckoutToVercelCart(checkout: CheckoutFragment): Cart {
-  const checkoutUrl = new URL('checkout', process.env.SHOP_PUBLIC_URL || '');
+  const checkoutUrl = new URL('checkout-address', process.env.SHOP_PUBLIC_URL || '');
+  const checkoutCarrier = new URL('checkout-carrier', process.env.SHOP_PUBLIC_URL || '');
   const checkoutUrlPayment = new URL('checkout-payment', process.env.SHOP_PUBLIC_URL || '');
   checkoutUrl.searchParams.append('checkout', checkout.id);
+  checkoutCarrier.searchParams.append('checkout', checkout.id);
   checkoutUrlPayment.searchParams.append('checkout', checkout.id);
   const checkoutToken = checkout.token.slice(-5);
 
@@ -144,6 +146,7 @@ export function saleorCheckoutToVercelCart(checkout: CheckoutFragment): Cart {
     id: checkout.id,
     token: checkoutToken,
     checkoutUrl: checkoutUrl.toString(),
+    checkoutCarrier: checkoutCarrier.toString(),
     checkoutUrlPayment: checkoutUrlPayment.toString(),
     updatedAt: checkout.updatedAt,
     cost: {
@@ -211,10 +214,10 @@ export function saleorCheckoutToVercelCart(checkout: CheckoutFragment): Cart {
       streetAddress1: checkout.shippingAddress?.streetAddress1,
       streetAddress2: checkout.shippingAddress?.streetAddress2,
     },
-    userEmail: checkout.user?.email,
+    userEmail: checkout.email,
     lastName: checkout.user?.lastName,
     firstName: checkout.user?.firstName,
-    transactions: checkout.transactions,
     deliveryMethod: checkout.deliveryMethod,
+    metadata: checkout.metadata,
   };
 }

@@ -6,8 +6,6 @@ import NotFound from 'components/product/not-found';
 import { defaultSort, sorting } from 'lib/constants';
 import { getProducts } from 'lib/saleor';
 
-export const runtime = 'edge';
-
 export const metadata = {
   title: 'Search',
   description: 'Search for products in the store.',

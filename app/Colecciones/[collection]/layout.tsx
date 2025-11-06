@@ -6,7 +6,7 @@ import { Suspense } from 'react';
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <div>
+      <div className="flex h-screen flex-col overflow-hidden">
         <Suspense
           fallback={
             <>
@@ -19,8 +19,12 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           }
         >
           <Navbar />
-          {children}
-          <Footer />
+          <div className="flex-1 overflow-y-scroll no-scrollbar">
+            <div className="text-[13px] tracking-widest lg:text-[14.3px]">{children}</div>
+            <div className="text-[13px] tracking-widest lg:text-[14.3px]">
+              <Footer />
+            </div>
+          </div>
         </Suspense>
       </div>
     </>

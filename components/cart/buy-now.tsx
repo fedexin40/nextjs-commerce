@@ -1,7 +1,5 @@
 'use client';
 
-import Alert from '@mui/material/Alert';
-import Snackbar from '@mui/material/Snackbar';
 import { addItem, lastCheckout } from 'actions/cart';
 import clsx from 'clsx';
 import { ProductVariant } from 'lib/types';
@@ -24,15 +22,8 @@ export function BuyNow({
   const searchParams = useSearchParams();
   const [isPendingBuyNow, startTransitionBuyNow] = useTransition();
   const [isPendingAdd2Cart, startTransitionAdd2Cart] = useTransition();
-  const [isError, setIsError] = useState(false);
   const [ErrorMessage, setErrorMessage] = useState('');
   const { openMenu } = cartActions();
-  const closeError = () => {
-    setIsError(false);
-  };
-  const openError = () => {
-    setIsError(true);
-  };
   const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined;
   const variant = variants.find((variant: ProductVariant) =>
     variant.selectedOptions.every(
@@ -50,18 +41,6 @@ export function BuyNow({
   return (
     <>
       <div>
-        <div>
-          <Snackbar
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-            open={isError}
-            autoHideDuration={6000}
-            onClose={closeError}
-          >
-            <Alert onClose={closeError} severity="error" variant="filled" sx={{ width: '100%' }}>
-              {ErrorMessage}
-            </Alert>
-          </Snackbar>
-        </div>
         <button
           aria-label="Comprar ahora"
           disabled={isPendingBuyNow || isPendingAdd2Cart || !availableForSale || !selectedVariantId}
@@ -74,7 +53,6 @@ export function BuyNow({
                 // Trigger the error boundary in the root error.js
                 startTransitionBuyNow(() => {
                   setErrorMessage('Por favor seleccione el tamaño y los kilates de su producto');
-                  openError();
                 });
                 return;
               }
@@ -83,7 +61,6 @@ export function BuyNow({
                 // Trigger the error boundary in the root error.js
                 startTransitionBuyNow(() => {
                   setErrorMessage(error.toString());
-                  openError();
                 });
                 return;
               }
@@ -95,7 +72,7 @@ export function BuyNow({
                 currency: 'MXN',
                 value: value,
               });
-              router.push(cart?.checkoutUrl || '/');
+              router.replace(cart?.checkoutUrl || '/');
             });
           }}
           className={clsx(
@@ -135,7 +112,6 @@ export function BuyNow({
                 // Trigger the error boundary in the root error.js
                 startTransitionAdd2Cart(() => {
                   setErrorMessage('Por favor seleccione el tamaño y los kilates de su producto');
-                  openError();
                 });
                 return;
               }
@@ -144,7 +120,6 @@ export function BuyNow({
                 // Trigger the error boundary in the root error.js
                 startTransitionAdd2Cart(() => {
                   setErrorMessage(error.toString());
-                  openError();
                 });
                 return;
               }
@@ -186,6 +161,7 @@ export function BuyNow({
           <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)]"></div>
         </div>
       </div>
+      {ErrorMessage && <div className="payment-message pt-5 capitalize">{ErrorMessage}</div>}
     </>
   );
 }

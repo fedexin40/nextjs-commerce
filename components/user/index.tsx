@@ -1,8 +1,8 @@
+import PersonIcon from '@mui/icons-material/Person';
 import Login from 'components/login';
 import Register from 'components/register';
 import ResetPassword from 'components/reset-password';
 import { Me } from 'lib/saleor';
-import Image from 'next/image';
 import Link from 'next/link';
 
 export default async function User() {
@@ -19,14 +19,8 @@ export default async function User() {
   return (
     <div className="text-[13px] tracking-widest lg:text-[14.3px]">
       <Link href="/user">
-        <div className="relative h-[27px] w-[27px] opacity-50">
-          <Image
-            className="object-contain"
-            src={'/registro.png'}
-            alt=""
-            fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-          />
+        <div className="opacity-50">
+          <PersonIcon fontSize="large" />
         </div>
       </Link>
     </div>

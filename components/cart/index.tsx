@@ -1,8 +1,12 @@
-import { lastCheckout } from 'actions/cart';
+import { getCart, getLastCheckout } from 'lib/saleor';
 import CartModal from './modal';
 
 export default async function Cart() {
-  const cart = await lastCheckout();
+  let cart = null;
+  const checkout = await getLastCheckout();
+  if (checkout) {
+    cart = await getCart(checkout || '');
+  }
 
   return <CartModal cart={cart} />;
 }

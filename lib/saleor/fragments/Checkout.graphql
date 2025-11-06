@@ -3,6 +3,7 @@ fragment Checkout on Checkout {
   token
   updatedAt
   created
+  email
   totalPrice {
     gross {
       currency
@@ -64,12 +65,6 @@ fragment Checkout on Checkout {
     lastName
     email
   }
-  transactions {
-    events {
-      type
-      createdAt
-    }
-  }
   deliveryMethod {
     ... on ShippingMethod {
       id
@@ -85,5 +80,8 @@ fragment Checkout on Checkout {
     amount
     currency
   }
-  metafields(keys: "completed_with_paypal")
+  metadata {
+    key
+    value
+  }
 }

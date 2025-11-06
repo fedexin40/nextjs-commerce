@@ -26,13 +26,18 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
   const { openMenu } = cartActions();
   const router = useRouter();
 
+  function goToAddress() {
+    closeMenu();
+    router.push(cart?.checkoutUrl || '/');
+  }
+
   return (
     <div className="z-50">
       <div onClick={() => openMenu()}>
         <OpenCart quantity={cart?.totalQuantity} />
       </div>
       <Transition show={isOpen}>
-        <Dialog onClose={() => {}} className="relative z-50">
+        <Dialog onClose={() => closeMenu()} className="relative z-50">
           <Transition.Child
             as={Fragment}
             enter="transition-all ease-in-out duration-300"
@@ -53,10 +58,9 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
             leaveFrom="translate-x-0"
             leaveTo="translate-x-full"
           >
-            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-full flex-col bg-white/80 p-6 text-black backdrop-blur-xl md:w-[390px]">
-              <div className="flex items-center justify-between border-b-2 border-[hsl(28,30%,59%)] pb-2 pt-10 text-[13px] tracking-widest lg:text-[14.3px]">
+            <Dialog.Panel className="fixed bottom-0 right-0 top-0 flex h-full w-3/4 flex-col bg-white/80 p-6 text-black backdrop-blur-xl md:w-[390px]">
+              <div className="flex items-center justify-between border-b-2 border-[hsl(28,30%,59%)] pb-2 pt-10 text-[14px] tracking-widest lg:text-[15px]">
                 <p className="font-semibold">Mi Carrito</p>
-
                 <button className="" aria-label="Cerrar carrito" onClick={() => closeMenu()}>
                   <CloseCart />
                 </button>
@@ -151,7 +155,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                   </div>
                   <div
                     className="block w-full bg-[hsl(28,30%,59%)] p-3 text-center font-medium uppercase text-white opacity-90 hover:opacity-100"
-                    onClick={() => router.push(cart?.checkoutUrl || '/')}
+                    onClick={() => goToAddress()}
                   >
                     Pasar a pagar
                   </div>

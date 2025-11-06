@@ -19,7 +19,8 @@ export default async function CheckoutPayment(props: {
   if (!cart) {
     permanentRedirect('/');
   }
-  const checkoutPayment = new URL('cart/processing', process.env.SHOP_PUBLIC_URL || '').toString();
+  const checkoutPayment = new URL('cart/processing', process.env.SHOP_PUBLIC_URL || '');
+  checkoutPayment.searchParams.append('checkout', cart.id);
   const userEmail = cart?.userEmail;
   const firstName = cart?.firstName;
   const lastName = cart?.lastName;
@@ -89,7 +90,7 @@ export default async function CheckoutPayment(props: {
             <StripeComponent
               clientSecret={stripeData.paymentIntent.client_secret}
               publishableKey={stripeData.publishableKey}
-              returnUrl={checkoutPayment}
+              returnUrl={checkoutPayment.toString()}
               content_ids={content_ids}
               value={value}
             />
