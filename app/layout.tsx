@@ -1,10 +1,10 @@
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { FacebookPixelEvents } from 'components/FacebookPixel';
+import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import { ReactNode } from 'react';
 import './globals.css';
-import type { Metadata } from 'next';
 
 const { SITE_NAME } = process.env;
 const baseUrl = process.env.SHOP_PUBLIC_URL
@@ -95,7 +95,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
   return (
     <html>
-      <body className="select-none bg-neutral-50 text-black selection:bg-teal-300">
+      <body className="select-none text-black">
         <main>{children}</main>
         <FacebookPixelEvents />
         <GoogleAnalytics gaId={googleAnalytics || ''} />
