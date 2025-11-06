@@ -18,7 +18,7 @@ export default async function Footer() {
   const copyrightName = COMPANY_NAME || SITE_NAME || '';
 
   return (
-    <footer className="bg-[#f1f1f1] text-[13px] tracking-widest text-black lg:text-[14.3px]">
+    <footer className="bg-[#5a5454]  text-[13px] tracking-widest text-white lg:text-[14.3px]">
       <div className="flex w-full flex-col gap-6 px-6 py-6 md:gap-12 md:px-10 lg:py-12">
         <div className="flex flex-col gap-y-10 md:flex-row lg:px-9">
           <div className="hidden md:block md:basis-1/4 lg:basis-1/3">
@@ -40,7 +40,7 @@ export default async function Footer() {
                 <div className="relative h-28 w-28 lg:h-36 lg:w-36">
                   <Image
                     className="object-contain"
-                    src={'/logoNegro.png'}
+                    src={'/logoBlanco.png'}
                     alt=""
                     fill
                     priority={true}

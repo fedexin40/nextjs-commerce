@@ -4,6 +4,7 @@ import LoadMore from 'components/load-more/page';
 import MarqueeText from 'components/text-scroll/page';
 import Whatsapp from 'components/whatsapp/page';
 import { getCollectionProducts } from 'lib/saleor';
+import Link from 'next/link';
 
 export default async function HomePage() {
   const collection = 'oro';
@@ -24,10 +25,10 @@ export default async function HomePage() {
           <div
             className="
               col-start-1 row-start-3 mx-5 my-10 flex
-              place-content-center items-center rounded bg-[#f7e7da]/85 py-8 text-[15px] shadow-md md:col-span-1
+              place-content-center items-center rounded bg-[#f7e7da] py-8 text-[15px] shadow-md md:col-span-1
               md:col-start-1 md:row-start-2 md:mx-10 md:my-14 md:text-[18px]"
           >
-            Ver catálogo
+            <Link href={'/search'}>Ver catálogo</Link>
           </div>
         </div>
       </div>
