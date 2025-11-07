@@ -95,7 +95,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
 
   return (
     <html>
-      <body className="select-none text-black">
+      <body className="select-none bg-white text-black">
         <main>{children}</main>
         <FacebookPixelEvents />
         <GoogleAnalytics gaId={googleAnalytics || ''} />
