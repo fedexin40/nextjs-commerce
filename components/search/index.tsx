@@ -3,7 +3,7 @@
 import SearchIcon from '@mui/icons-material/Search';
 import { liteClient as algoliasearch } from 'algoliasearch/lite';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Configure,
@@ -14,6 +14,7 @@ import {
   useRefinementList,
   useSearchBox,
 } from 'react-instantsearch';
+import { searchActions, useSearch } from 'stores/search';
 
 type SearchModalProps = {
   appId?: string;
@@ -79,7 +80,9 @@ export default function SearchModal({
   categoryAttribute = 'category',
   hotkey, // e.g. "/"
 }: SearchModalProps) {
-  const [open, setOpen] = useState(false);
+  const { closeMenu } = searchActions();
+  const { openMenu } = searchActions();
+  const open = useSearch();
 
   // Abrir con hotkey opcional
   useEffect(() => {
@@ -91,11 +94,12 @@ export default function SearchModal({
         target?.tagName === 'INPUT' || target?.tagName === 'TEXTAREA' || target?.isContentEditable;
       if (!typing && e.key === hotkey) {
         e.preventDefault();
-        setOpen(true);
+        openMenu();
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hotkey]);
 
   // Bloquear scroll del body cuando el modal está abierto
@@ -115,7 +119,7 @@ export default function SearchModal({
       {/* Botón de lupa (barra oculta hasta abrir modal) */}
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => openMenu()}
         className="flex items-center"
         aria-label="Abrir búsqueda"
       >
@@ -134,7 +138,7 @@ export default function SearchModal({
           aria-labelledby="search-modal-title"
           onMouseDown={(e) => {
             // cerrar si clic en overlay fuera del panel
-            if (e.target === e.currentTarget) setOpen(false);
+            if (e.target === e.currentTarget) closeMenu();
           }}
         >
           <InstantSearch searchClient={searchClient} indexName={indexName}>
@@ -142,7 +146,7 @@ export default function SearchModal({
 
             <SearchPanel
               placeholder={placeholder}
-              onClose={() => setOpen(false)}
+              onClose={() => closeMenu()}
               recentLimit={recentLimit}
               recentStorageKey={recentStorageKey}
               categoryAttribute={categoryAttribute}
@@ -293,7 +297,6 @@ function ResultsList() {
     );
   }
 
-  console.log(hits);
   return (
     <ul className="max-h-[60vh] divide-y divide-gray-100 overflow-auto">
       {hits.map((hit) => (
@@ -306,10 +309,16 @@ function ResultsList() {
 }
 
 function ResultItem({ hit }: { hit: any }) {
+  const route = useRouter();
+  const { closeMenu } = searchActions();
   const href = hit.link;
+  function link() {
+    closeMenu();
+    route.push(href);
+  }
 
   return (
-    <Link href={href} className="flex flex-row gap-3 px-2 py-2 hover:bg-gray-50">
+    <div onClick={() => link()} className="flex flex-row gap-3 px-2 py-2 hover:bg-gray-50">
       <div className="relative h-[30px] w-[30px]">
         <Image
           className="object-contain"
@@ -332,7 +341,7 @@ function ResultItem({ hit }: { hit: any }) {
           ${hit.price}
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 
