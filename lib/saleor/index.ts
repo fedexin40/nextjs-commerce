@@ -117,9 +117,16 @@ export async function saleorFetch<Result, Variables>({
     }),
     ...options,
   };
-  const result = withAuth
-    ? await (await getServerAuthClient()).fetchWithAuth(endpoint, input)
-    : await fetch(endpoint, input);
+  let result;
+  if (withAuth) {
+    try {
+      result = await (await getServerAuthClient()).fetchWithAuth(endpoint, input);
+    } catch {
+      result = await fetch(endpoint, input);
+    }
+  } else {
+    result = await fetch(endpoint, input);
+  }
 
   const body = (await result.json()) as GraphQlErrorRespone<Result>;
 
