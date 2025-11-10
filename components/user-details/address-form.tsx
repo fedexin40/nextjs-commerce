@@ -40,6 +40,7 @@ export default function AddressInput({
   }
 
   useEffect(() => {
+    setErrorMessage('');
     resetUserDetails();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -71,7 +72,6 @@ export default function AddressInput({
         lastName: userStore.lastName,
         phone: userStore.phone,
       };
-      console.log(input);
       error = await shippingAddressUpdate(input);
       if (error) {
         startTransition(() => {
@@ -186,7 +186,7 @@ export default function AddressInput({
         />
         <input
           className="mb-3 w-full rounded-lg border-2 border-neutral-300 bg-white px-2 py-2"
-          type="text"
+          type="number"
           name="postalCode"
           placeholder="Codigo postal..."
           required={true}
