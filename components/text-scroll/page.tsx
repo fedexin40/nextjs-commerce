@@ -1,7 +1,5 @@
-import React from 'react';
-import Marquee from 'react-fast-marquee';
-import { ReactNode } from 'react';
 import { ReactElement } from 'react';
+import Marquee from 'react-fast-marquee';
 
 export default function MarqueeText({
   direction = 'left',

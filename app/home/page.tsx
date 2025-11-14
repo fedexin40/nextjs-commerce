@@ -18,7 +18,7 @@ export default async function HomePage() {
   const numbersOfPages = Math.ceil(totalCount / first) - 1;
 
   return (
-    <div className="block">
+    <div>
       <Whatsapp />
       <div className="relative h-96 w-full bg-[url(/banner4.png)] bg-cover bg-center bg-no-repeat">
         <div className="grid h-full w-full grid-cols-2 grid-rows-3 gap-5 md:grid-cols-3 md:grid-rows-2 lg:grid-cols-4">
@@ -32,7 +32,7 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
-      <div className="my-10 grid justify-items-center whitespace-nowrap text-base font-medium tracking-[2px] text-black lg:my-14 lg:tracking-[5px] xl:text-3xl">
+      <div className="relative my-10 text-base font-medium tracking-[2px] text-black lg:my-14 lg:tracking-[5px] xl:text-3xl">
         <MarqueeText direction="right" speed={60}>
           <div className="flex flex-row font-medium italic md:font-semibold">
             <div className="mr-28">Encuentra el arete perfecto para ti</div>
