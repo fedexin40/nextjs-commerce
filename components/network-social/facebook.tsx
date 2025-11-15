@@ -2,10 +2,8 @@
 
 import { ExternalProvider } from '@fedexin40/auth-sdk';
 import { useSaleorExternalAuth } from '@fedexin40/auth-sdk/react';
-import clsx from 'clsx';
 import Image from 'next/image';
-import { permanentRedirect } from 'next/navigation';
-import { useTransition } from 'react';
+import Link from 'next/link';
 
 export default function Facebook({
   SALEOR_INSTANCE_URL,
@@ -14,21 +12,14 @@ export default function Facebook({
   redirectURL: string;
   SALEOR_INSTANCE_URL: string;
 }) {
-  const [isPending, startTransition] = useTransition();
   const { authURL } = useSaleorExternalAuth({
     saleorURL: SALEOR_INSTANCE_URL,
     provider: ExternalProvider.OpenIDConnectFacebook,
     redirectURL: redirectURL,
   });
 
-  function Login() {
-    startTransition(() => {
-      permanentRedirect(authURL || '');
-    });
-  }
-
   return (
-    <div onClick={Login}>
+    <Link href={authURL || ''}>
       <div
         className="
           mb-3 flex h-10 flex-row gap-5 border-2
@@ -45,26 +36,13 @@ export default function Facebook({
             sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
           />
         </div>
-        <div
-          className={clsx('content-center whitespace-nowrap text-white', {
-            hidden: isPending,
-          })}
-        >
+        <div className="hidden content-center whitespace-nowrap text-white md:block">
           Inciar sesion con Facebook
         </div>
-        <div
-          className={clsx(
-            'flex w-[180px] cursor-not-allowed items-center justify-center space-x-3 self-end p-1',
-            {
-              hidden: !isPending,
-            },
-          )}
-        >
-          <div className="h-[10px] w-[10px] animate-bounce rounded-full bg-white [animation-delay:-0.3s]"></div>
-          <div className="h-[10px] w-[10px] animate-bounce rounded-full bg-white [animation-delay:-0.15s]"></div>
-          <div className="h-[10px] w-[10px] animate-bounce rounded-full bg-white"></div>
+        <div className="block  content-center whitespace-nowrap text-white md:hidden">
+          Inciar con Facebook
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

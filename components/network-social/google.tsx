@@ -2,10 +2,8 @@
 
 import { ExternalProvider } from '@fedexin40/auth-sdk';
 import { useSaleorExternalAuth } from '@fedexin40/auth-sdk/react';
-import clsx from 'clsx';
 import Image from 'next/image';
-import { permanentRedirect } from 'next/navigation';
-import { useTransition } from 'react';
+import Link from 'next/link';
 
 export default function Google({
   SALEOR_INSTANCE_URL,
@@ -14,21 +12,14 @@ export default function Google({
   SALEOR_INSTANCE_URL: string;
   redirectURL: string;
 }) {
-  const [isPending, startTransition] = useTransition();
   const { authURL } = useSaleorExternalAuth({
     saleorURL: SALEOR_INSTANCE_URL,
     provider: ExternalProvider.OpenIDConnectGoogle,
     redirectURL: redirectURL,
   });
 
-  function Login() {
-    startTransition(() => {
-      permanentRedirect(authURL || '');
-    });
-  }
-
   return (
-    <div onClick={Login}>
+    <Link href={authURL || ''}>
       <div
         className="
           flex h-10 flex-row gap-5 border-2 border-[#a8a8a8] px-5 py-2
@@ -44,26 +35,9 @@ export default function Google({
             sizes="(min-width: 768px) 33vw, (min-width: 640px) 50vw, 100vw"
           />
         </div>
-        <div
-          className={clsx('content-center whitespace-nowrap', {
-            hidden: isPending,
-          })}
-        >
-          Inciar sesion con Google
-        </div>
-        <div
-          className={clsx(
-            'flex w-[180px] cursor-not-allowed items-center justify-center space-x-3 self-end p-1',
-            {
-              hidden: !isPending,
-            },
-          )}
-        >
-          <div className="h-[10px] w-[10px] animate-bounce rounded-full bg-[#a8a8a8] [animation-delay:-0.3s]"></div>
-          <div className="h-[10px] w-[10px] animate-bounce rounded-full bg-[#a8a8a8] [animation-delay:-0.15s]"></div>
-          <div className="h-[10px] w-[10px] animate-bounce rounded-full bg-[#a8a8a8]"></div>
-        </div>
+        <div className="hidden whitespace-nowrap md:block">Inciar sesion con Google</div>
+        <div className="block whitespace-nowrap md:hidden">Inciar con Google</div>
       </div>
-    </div>
+    </Link>
   );
 }
