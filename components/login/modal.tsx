@@ -181,9 +181,9 @@ export default function LoginModal({ children }: { children: ReactNode }) {
                       </div>
                       <div className="col-start-3 border-b-2 border-black	" />
                     </div>
+                    <div>{children}</div>
                   </div>
                 </div>
-                <div className="p-3">{children}</div>
                 <div className="flex h-full place-content-center justify-center bg-[#d2b6ab] pb-10">
                   <div className="w-full p-3">
                     <div

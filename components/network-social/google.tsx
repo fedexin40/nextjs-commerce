@@ -1,7 +1,7 @@
 'use client';
 
-import { ExternalProvider } from '@fedexin40/auth-sdk';
-import { useSaleorExternalAuth } from '@fedexin40/auth-sdk/react';
+import { ExternalProvider } from '@saleor/auth-sdk';
+import { useSaleorExternalAuth } from '@saleor/auth-sdk/react';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -14,7 +14,7 @@ export default function Google({
 }) {
   const { authURL } = useSaleorExternalAuth({
     saleorURL: SALEOR_INSTANCE_URL,
-    provider: ExternalProvider.OpenIDConnectGoogle,
+    provider: ExternalProvider.OpenIDConnect,
     redirectURL: redirectURL,
   });
 
