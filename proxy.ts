@@ -14,13 +14,15 @@ export async function proxy(request: NextRequest) {
     const searchParams = request.nextUrl.searchParams;
     if (searchParams) {
       const checkout = searchParams.get('checkout') || '';
-      const cart = await getCart(checkout || '');
-      if (cart) {
-        updateMetaData({
-          id: cart.id,
-          key: 'is_checkout_waiting_payment',
-          value: 'true',
-        });
+      if (checkout) {
+        const cart = await getCart(checkout || '');
+        if (cart) {
+          updateMetaData({
+            id: cart.id,
+            key: 'is_checkout_waiting_payment',
+            value: 'true',
+          });
+        }
       }
     }
     return NextResponse.next();
