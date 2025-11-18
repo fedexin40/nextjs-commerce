@@ -39,9 +39,6 @@ export default function LoginModal({ children }: { children: ReactNode }) {
       email: rawFormData.email,
       password: rawFormData.password,
     });
-    if (!data) {
-      router.refresh();
-    }
     if (data.tokenCreate?.errors.length > 0) {
       setErrorMessage(data.tokenCreate.errors[0]?.message || '');
       openError();

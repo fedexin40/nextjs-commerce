@@ -110,7 +110,10 @@ export async function Login({ email, password }: { email: string; password: stri
   const { data } = await (
     await getServerAuthClient()
   ).signIn({ email, password }, { cache: 'no-store' });
-  return data;
+  if (data.tokenCreate.errors.length > 0) {
+    return data;
+  }
+  permanentRedirect('/');
 }
 
 export async function refreshUser() {
