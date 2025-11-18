@@ -1,5 +1,5 @@
-import { createSaleorAuthClient } from '@saleor/auth-sdk';
-import { getNextServerCookiesStorageAsync } from '@saleor/auth-sdk/next/server';
+import { createSaleorAuthClient } from '@fedexin40/auth-sdk';
+import { getNextServerCookiesStorageAsync } from '@fedexin40/auth-sdk/next/server';
 
 const saleorApiUrl = process.env.SALEOR_INSTANCE_URL || '';
 

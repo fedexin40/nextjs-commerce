@@ -1,5 +1,5 @@
-import { ExternalProvider, SaleorExternalAuth } from '@saleor/auth-sdk';
-import { createSaleorExternalAuthHandler } from '@saleor/auth-sdk/next';
+import { ExternalProvider, SaleorExternalAuth } from '@fedexin40/auth-sdk';
+import { createSaleorExternalAuthHandler } from '@fedexin40/auth-sdk/next';
 import { invariant } from 'lib/saleor/utils';
 
 const endpoint = process.env.SALEOR_INSTANCE_URL;

@@ -7,6 +7,7 @@ specifiers:
   '@bettercart/react-facebook-pixel': ^2.0.1
   '@emotion/react': ^11.11.4
   '@emotion/styled': ^11.11.5
+  '@fedexin40/auth-sdk': ^1.0.9
   '@graphql-codegen/cli': 3.3.1
   '@graphql-codegen/client-preset': 3.0.1
   '@graphql-typed-document-node/core': 3.2.0
@@ -18,7 +19,6 @@ specifiers:
   '@next/third-parties': ^14.1.3
   '@paypal/react-paypal-js': ^8.8.3
   '@playwright/test': ^1.33.0
-  '@saleor/auth-sdk': ^1.0.3
   '@stripe/react-stripe-js': ^2.7.1
   '@stripe/stripe-js': ^3.4.0
   '@tailwindcss/container-queries': ^0.1.1
@@ -66,6 +66,7 @@ dependencies:
   '@bettercart/react-facebook-pixel': 2.0.1
   '@emotion/react': 11.14.0_2q2t5yjxcbehbde4udrrbryxnm
   '@emotion/styled': 11.14.1_yqtydmbovfiy367kgq6penzhxm
+  '@fedexin40/auth-sdk': 1.0.9_ncyb4nufov6xfnhogj7yg52jcu
   '@graphql-typed-document-node/core': 3.2.0
   '@headlessui/react': 1.7.15_lh6yjnbmlemn4t264xkzt2k63q
   '@heroicons/react': 2.2.0_react@19.2.0
@@ -73,7 +74,6 @@ dependencies:
   '@mui/material': 5.18.0_iv6y5jlpncpvwulxbnvuepvxdq
   '@next/third-parties': 14.2.33_next@16.0.0+react@19.2.0
   '@paypal/react-paypal-js': 8.9.2_lh6yjnbmlemn4t264xkzt2k63q
-  '@saleor/auth-sdk': 1.0.3_ncyb4nufov6xfnhogj7yg52jcu
   '@stripe/react-stripe-js': 2.9.0_fef3sekud3qc2y7nhqnjqekdle
   '@stripe/stripe-js': 3.5.0
   '@vercel/og': 0.5.20
@@ -1135,6 +1135,32 @@ packages:
     resolution: {integrity: sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
+
+  /@fedexin40/auth-sdk/1.0.9_ncyb4nufov6xfnhogj7yg52jcu:
+    resolution: {integrity: sha512-rN8dhwVOqigQCwjGgisRuf9HwF+DMyyfgHptnk9oTMZp3bncFmkKFP2di4X65s/xDw8fCmfBD0aaPO6E8OU6Sg==}
+    engines: {node: '>=18.0.0'}
+    peerDependencies:
+      next: ^13.4.4 || ^14.0.0 || ^15.0.0
+      react: ^18.2.0 || ^19.0.0
+      react-dom: '^18.2.0 || ^19.0.0 '
+      urql: ^4.0.3
+    peerDependenciesMeta:
+      next:
+        optional: true
+      react:
+        optional: true
+      react-dom:
+        optional: true
+      urql:
+        optional: true
+    dependencies:
+      '@graphql-typed-document-node/core': 3.2.0_graphql@16.11.0
+      cookie: 0.6.0
+      graphql: 16.11.0
+      next: 16.0.0_q6f43xhvbblvkp6dxj6byijpyi
+      react: 19.2.0
+      react-dom: 19.2.0_react@19.2.0
+    dev: false
 
   /@floating-ui/core/1.6.0:
     resolution: {integrity: sha512-PcF++MykgmTj3CIyOQbKA/hDzOAiqI3mhuoN44WRCopIs1sgoDoU4oty4Jtqaj/y3oDU6fnVSm4QG0a3t5i0+g==}
@@ -2608,32 +2634,6 @@ packages:
     resolution: {integrity: sha512-WJFej426qe4RWOm9MMtP4V3CV4AucXolQty+GRgAWLgQXmpCuwzs7hEpxxhSc/znXUSxum9d/P/32MW0FlAAlA==}
     dev: true
 
-  /@saleor/auth-sdk/1.0.3_ncyb4nufov6xfnhogj7yg52jcu:
-    resolution: {integrity: sha512-Bz2sDQsTF6+BLjwE1OSVM95PLzzPD6nLtLRl+mOgq+Rc3Slkgo29CLRwyZW4vGgm1EG2DaTyxDIGipjKzU1cVA==}
-    engines: {node: '>=22.14.0'}
-    peerDependencies:
-      next: ^13.4.4 || ^14.0.0 || ^15.0.0
-      react: ^18.2.0 || ^19.0.0
-      react-dom: '^18.2.0 || ^19.0.0 '
-      urql: ^4.0.3 || ^5.0.0
-    peerDependenciesMeta:
-      next:
-        optional: true
-      react:
-        optional: true
-      react-dom:
-        optional: true
-      urql:
-        optional: true
-    dependencies:
-      '@graphql-typed-document-node/core': 3.2.0_graphql@16.11.0
-      cookie: 1.0.2
-      graphql: 16.11.0
-      next: 16.0.0_q6f43xhvbblvkp6dxj6byijpyi
-      react: 19.2.0
-      react-dom: 19.2.0_react@19.2.0
-    dev: false
-
   /@shuding/opentype.js/1.4.0-beta.0:
     resolution: {integrity: sha512-3NgmNyH3l/Hv6EvsWJbsvpcpUba6R8IREQ83nH83cyakCw7uM1arZKNfHwv1Wz6jgqrF/j4x5ELvR6PnK9nTcA==}
     engines: {node: '>= 8.0.0'}
@@ -3853,9 +3853,9 @@ packages:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
     dev: true
 
-  /cookie/1.0.2:
-    resolution: {integrity: sha512-9Kr/j4O16ISv8zBBhJoi4bXOYNTkFLOqSL3UDB0njXxCXNezjeyVrJyGOWtgfs/q2km1gwBcfH8q1yEGoMYunA==}
-    engines: {node: '>=18'}
+  /cookie/0.6.0:
+    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
+    engines: {node: '>= 0.6'}
     dev: false
 
   /core-js/3.46.0:
