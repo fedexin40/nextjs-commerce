@@ -2,7 +2,6 @@ import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import LoadMore from 'components/load-more/page';
 import MarqueeText from 'components/text-scroll/page';
-import Whatsapp from 'components/whatsapp/page';
 import { getCollectionProducts } from 'lib/saleor';
 import Link from 'next/link';
 
@@ -19,7 +18,6 @@ export default async function HomePage() {
 
   return (
     <div>
-      <Whatsapp />
       <div className="relative h-96 w-full bg-[url(/banner4.png)] bg-cover bg-center bg-no-repeat">
         <div className="grid h-full w-full grid-cols-2 grid-rows-3 gap-5 md:grid-cols-3 md:grid-rows-2 lg:grid-cols-4">
           <div

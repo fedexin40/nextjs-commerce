@@ -3,7 +3,6 @@ import { GridTileImage } from 'components/grid/tile';
 import { PageItem } from 'components/htmlParser/page';
 import { Gallery } from 'components/product/gallery';
 import { ProductDescription } from 'components/product/product-description';
-import Whatsapp from 'components/whatsapp/page';
 import { getCollectionProducts, getProduct, Me } from 'lib/saleor';
 import { Image, Product as productType, ProductVariant } from 'lib/types';
 import type { Metadata } from 'next';
@@ -173,7 +172,6 @@ export default async function Product(props: {
         event_id={eventId}
         value={product.priceRange.maxVariantPrice.amount}
       />
-      <Whatsapp />
       <div className="mx-auto max-w-screen-2xl">
         <div className="flex flex-col px-10 md:px-16 md:pt-12 lg:px-36 lg:pt-16">
           <div className="flex flex-col md:grid md:grid-cols-3">
