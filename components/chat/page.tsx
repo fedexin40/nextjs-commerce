@@ -15,9 +15,9 @@ export function SaleorChatWidget() {
           type="button"
           aria-label="Abrir asistente de la tienda"
           onClick={() => setOpen(true)}
-          className="fixed bottom-4 right-4 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-slate-900 bg-slate-900 text-white shadow-lg hover:shadow-xl"
+          className="fixed bottom-4 right-4 z-40 flex h-16 w-16 items-center justify-center rounded-full border border-slate-900 bg-slate-900 text-white shadow-lg hover:shadow-xl"
         >
-          <Bot className="h-6 w-6" />
+          <Bot className="h-9 w-9" />
         </button>
       )}
 
@@ -27,7 +27,7 @@ export function SaleorChatWidget() {
           <div className="flex items-center justify-between border-b bg-slate-50 px-3 py-2">
             <div className="flex items-center gap-2">
               <div className="flex h-7 w-7 items-center justify-center rounded-full bg-slate-900 text-white">
-                <Bot className="h-4 w-4" />
+                <Bot className="h w-4" />
               </div>
               <div className="flex flex-col">
                 <span className="text-xs font-semibold">Asistente de la tienda</span>

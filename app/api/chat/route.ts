@@ -1,7 +1,7 @@
 // app/api/chat/route.ts
 import { google } from '@ai-sdk/google';
 import { experimental_createMCPClient as createMCPClient } from '@ai-sdk/mcp';
-import { convertToModelMessages, streamText, type UIMessage } from 'ai';
+import { convertToModelMessages, stepCountIs, streamText, type UIMessage } from 'ai';
 
 export const maxDuration = 30;
 
@@ -41,8 +41,11 @@ export async function POST(req: Request) {
       model: google('gemini-2.5-flash'), // o gemini-1.5-pro, gemini-3-pro-preview, etc.:contentReference[oaicite:2]{index=2}
       messages: convertToModelMessages(messages),
       tools,
+      // @ts-ignore
+      maxSteps: 5,
+      stopWhen: stepCountIs(5),
       system: `
-Eres el asistente oficial de la joyería en línea PROYECTO 705.
+Eres el asistente oficial de la joyería en línea Proyecto 705.
 
 Contexto del negocio:
 - La tienda vende principalmente broqueles y aretes de oro (amarillo, rosa y blanco) para bebés, niños y adultos.
