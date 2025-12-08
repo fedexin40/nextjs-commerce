@@ -1,7 +1,6 @@
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import LoadMore from 'components/load-more/page';
-import MarqueeText from 'components/text-scroll/page';
 import { getCollectionProducts } from 'lib/saleor';
 import Link from 'next/link';
 
@@ -29,14 +28,6 @@ export default async function HomePage() {
             <Link href={'/search'}>Ver catálogo</Link>
           </div>
         </div>
-      </div>
-      <div className="relative my-10 text-base font-medium tracking-[2px] text-black lg:my-14 lg:tracking-[5px] xl:text-3xl">
-        <MarqueeText direction="right" speed={60}>
-          <div className="flex flex-row font-medium italic md:font-semibold">
-            <div className="mr-28">Encuentra el arete perfecto para ti</div>
-            <div className="mr-28">Aretes de 10 y 14 kilates</div>
-          </div>
-        </MarqueeText>
       </div>
       <div className="mx-10 mb-24 lg:mx-32 lg:mb-40">
         {products.length > 0 && (

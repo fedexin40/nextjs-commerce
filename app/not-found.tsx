@@ -4,7 +4,7 @@ import Loading from 'components/loading';
 import Link from 'next/link';
 import { Suspense } from 'react';
 
-export default function Error({ reset }: { reset: () => void }) {
+export default function Error() {
   return (
     <>
       <div>
@@ -30,7 +30,7 @@ export default function Error({ reset }: { reset: () => void }) {
               </div>
             </div>
           </div>
-          <div className="min-h-10 h-10 w-full bg-zinc-400" />
+          <div className="h-10 min-h-10 w-full bg-zinc-400" />
           <div className="text-[13px] tracking-widest lg:text-[14.3px]">
             <Footer />
           </div>
