@@ -2,6 +2,7 @@ import { BuyNow } from 'components/cart/buy-now';
 import Price from 'components/price';
 import { Product, ProductVariant } from 'lib/types';
 import Image from 'next/image';
+import { Rating } from '../prisma';
 import { VariantSelector } from './variant-selector';
 
 export function ProductDescription({
@@ -46,6 +47,9 @@ export function ProductDescription({
               currencyCode={product.priceRange.minVariantPrice.currencyCode}
             />
           )}
+          <a href="#customer-reviews">
+            <Rating productId={product.id} />
+          </a>
         </div>
         <div className="pb-5 text-justify text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
           {description}
@@ -64,6 +68,9 @@ export function ProductDescription({
               currencyCode={product.priceRange.minVariantPrice.currencyCode}
             />
           )}
+          <a href="#customer-reviews">
+            <Rating productId={product.id} />
+          </a>
         </div>
       </div>
       <div className="flex flex-col border-b pb-6">
@@ -77,13 +84,7 @@ export function ProductDescription({
           value={value}
         />
       </div>
-      <div
-        className="
-          flex flex-col gap-y-4 pt-5
-          text-left text-[12px] leading-[20px]
-          text-gray-800
-        "
-      >
+      <div className="flex flex-col gap-y-4 pt-5 text-left text-[12px] leading-[20px] text-gray-800">
         <div className="">Tiempo de entrega de 2 a 7 dias hábiles</div>
         <div>Envío gratis en compras mayores a $1,500.00</div>
         <div className="flex flex-row gap-x-4">
@@ -109,7 +110,7 @@ export function ProductDescription({
         </div>
       </div>
       <div className="flex flex-col pt-14 text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
-        <div className="text-[15px] font-semibold	">Métodos de Pago</div>
+        <div className="text-[15px] font-semibold">Métodos de Pago</div>
         <div className="grid grid-cols-4 pt-5 md:grid-cols-3 md:pt-8 lg:grid-cols-4">
           <div className="relative h-[60px] w-[60px]">
             <Image

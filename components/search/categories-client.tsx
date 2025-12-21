@@ -265,6 +265,7 @@ function SearchPanel({
       <div className="flex items-center gap-2 border-b p-3">
         <LupaIcon className="h-5 w-5 opacity-70" />
         <SearchBoxLine
+          // @ts-ignore
           inputRef={inputRef}
           placeholder={placeholder}
           recentLimit={recentLimit}

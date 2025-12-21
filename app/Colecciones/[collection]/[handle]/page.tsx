@@ -1,3 +1,4 @@
+import Reviews from '#/components/prisma';
 import { FacebookConversionApi, ProductView } from 'components/FacebookPixel';
 import { GridTileImage } from 'components/grid/tile';
 import { PageItem } from 'components/htmlParser/page';
@@ -71,6 +72,11 @@ export default async function Product(props: {
   const searchParams = await props.searchParams;
   const params = await props.params;
   const user = await Me();
+  const pageReviews =
+    typeof searchParams?.pageReviews === 'string' ? searchParams.pageReviews : undefined;
+
+  const sortReviews =
+    typeof searchParams?.sortReviews === 'string' ? searchParams.sortReviews : undefined;
 
   const headersList = await headers();
   const cookieStore = await cookies();
@@ -193,6 +199,16 @@ export default async function Product(props: {
               {product.description && <PageItem content={JSON.parse(product.description)} />}
             </div>
           </div>
+        </div>
+        <div className="px-10 pt-5 md:px-16 lg:px-36">
+          <Reviews
+            productId={product.id}
+            productSlug={product.handle}
+            basePath={url}
+            pageReviews={pageReviews}
+            sortReviews={sortReviews}
+            searchParams={searchParams}
+          />
         </div>
         <RelatedProducts product={product} />
       </div>

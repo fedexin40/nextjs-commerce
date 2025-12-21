@@ -1,0 +1,30 @@
+generator client {
+  provider               = "prisma-client"
+  output                 = "../generated/prisma"   // cliente se genera en: ./generated/prisma
+  engineType             = "client"
+  runtime                = "nodejs"
+  moduleFormat           = "esm"
+  generatedFileExtension = "ts"
+  importFileExtension    = "ts"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  productId   String
+  productSlug String?
+  rating      Int
+  title       String?
+  message     String
+  userEmail   String?
+  userName    String?
+  avatarColor String?  // opcional, si luego quieres colores distintos por usuario
+  isApproved  Boolean  @default(false) // ← ahora por defecto NO aprobada
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([productId])
+}

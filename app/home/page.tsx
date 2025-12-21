@@ -19,17 +19,12 @@ export default async function HomePage() {
     <div>
       <div className="relative h-96 w-full bg-[url(/banner4.png)] bg-cover bg-center bg-no-repeat">
         <div className="grid h-full w-full grid-cols-2 grid-rows-3 gap-5 md:grid-cols-3 md:grid-rows-2 lg:grid-cols-4">
-          <div
-            className="
-              col-start-1 row-start-3 mx-5 my-10 flex
-              place-content-center items-center rounded bg-[#f7e7da] py-8 text-[15px] shadow-md md:col-span-1
-              md:col-start-1 md:row-start-2 md:mx-10 md:my-14 md:text-[18px]"
-          >
+          <div className="col-start-1 row-start-3 mx-5 my-10 flex place-content-center items-center rounded bg-[#f7e7da] py-8 text-[15px] shadow-md md:col-span-1 md:col-start-1 md:row-start-2 md:mx-10 md:my-14 md:text-[18px]">
             <Link href={'/search'}>Ver catálogo</Link>
           </div>
         </div>
       </div>
-      <div className="mx-10 mb-24 lg:mx-32 lg:mb-40">
+      <div className="mx-10 mb-24 pt-3 lg:mx-32 lg:mb-40">
         {products.length > 0 && (
           <Grid className="grid-cols-2 gap-y-24 md:grid-cols-3 lg:grid-cols-4 xl:gap-y-40">
             <ProductGridItems products={products} />
