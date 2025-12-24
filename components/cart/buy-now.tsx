@@ -41,6 +41,11 @@ export function BuyNow({
   return (
     <>
       <div>
+        {ErrorMessage && (
+          <div className="payment-message pb-5 text-[20px] font-semibold normal-case text-red-700">
+            {ErrorMessage}
+          </div>
+        )}
         <button
           aria-label="Comprar ahora"
           disabled={isPendingBuyNow || isPendingAdd2Cart || !availableForSale}
@@ -159,11 +164,6 @@ export function BuyNow({
           <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)]"></div>
         </div>
       </div>
-      {ErrorMessage && (
-        <div className="payment-message pt-5 font-semibold normal-case text-red-700">
-          {ErrorMessage}
-        </div>
-      )}
     </>
   );
 }
