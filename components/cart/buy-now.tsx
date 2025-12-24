@@ -42,7 +42,7 @@ export function BuyNow({
     <>
       <div>
         {ErrorMessage && (
-          <div className="payment-message pb-5 text-[13px] font-semibold normal-case text-red-700">
+          <div className="payment-message pb-5 font-semibold uppercase text-red-700">
             {ErrorMessage}
           </div>
         )}
