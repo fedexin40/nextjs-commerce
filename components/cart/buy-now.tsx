@@ -35,21 +35,21 @@ export function BuyNow({
   const title = !availableForSale
     ? 'Out of stock'
     : !selectedVariantId
-    ? 'Please select options'
-    : undefined;
+      ? 'Please select options'
+      : undefined;
 
   return (
     <>
       <div>
         <button
           aria-label="Comprar ahora"
-          disabled={isPendingBuyNow || isPendingAdd2Cart || !availableForSale || !selectedVariantId}
+          disabled={isPendingBuyNow || isPendingAdd2Cart || !availableForSale}
           title={title}
           onClick={() => {
             // Safeguard in case someone messes with `disabled` in devtools.
-            if (!availableForSale || !selectedVariantId) return;
+            if (!availableForSale) return;
             startTransitionBuyNow(async () => {
-              if (!variant) {
+              if (!selectedVariantId) {
                 // Trigger the error boundary in the root error.js
                 startTransitionBuyNow(() => {
                   setErrorMessage('Por favor seleccione el tamaño y los kilates de su producto');
@@ -76,10 +76,9 @@ export function BuyNow({
             });
           }}
           className={clsx(
-            'relative flex h-[60px] w-full items-center justify-center  bg-[#c9aa9e] p-4 tracking-wider text-black hover:opacity-90',
+            'relative flex h-[60px] w-full items-center justify-center bg-[#c9aa9e] p-4 tracking-wider text-black hover:opacity-90',
             {
-              'cursor-not-allowed opacity-60 hover:opacity-60':
-                !availableForSale || !selectedVariantId,
+              'cursor-not-allowed opacity-60 hover:opacity-60': !availableForSale,
               hidden: isPendingBuyNow,
             },
           )}
@@ -101,14 +100,14 @@ export function BuyNow({
       </div>
       <div>
         <button
-          disabled={isPendingAdd2Cart || isPendingBuyNow || !availableForSale || !selectedVariantId}
+          disabled={isPendingAdd2Cart || isPendingBuyNow || !availableForSale}
           title={title}
           onClick={() => {
             // Safeguard in case someone messes with `disabled` in devtools.
-            if (!availableForSale || !selectedVariantId) return;
+            if (!availableForSale) return;
 
             startTransitionAdd2Cart(async () => {
-              if (!variant) {
+              if (!selectedVariantId) {
                 // Trigger the error boundary in the root error.js
                 startTransitionAdd2Cart(() => {
                   setErrorMessage('Por favor seleccione el tamaño y los kilates de su producto');
@@ -136,10 +135,9 @@ export function BuyNow({
             });
           }}
           className={clsx(
-            'relative flex h-[60px] w-full items-center justify-center  bg-[#f5e1d1] p-4 tracking-wider text-black hover:opacity-90',
+            'relative flex h-[60px] w-full items-center justify-center bg-[#f5e1d1] p-4 tracking-wider text-black hover:opacity-90',
             {
-              'cursor-not-allowed opacity-60 hover:opacity-60':
-                !availableForSale || !selectedVariantId,
+              'cursor-not-allowed opacity-60 hover:opacity-60': !availableForSale,
               hidden: isPendingAdd2Cart,
             },
           )}
@@ -161,7 +159,11 @@ export function BuyNow({
           <div className="h-4 w-4 animate-bounce rounded-full bg-[hsl(28,30%,59%)]"></div>
         </div>
       </div>
-      {ErrorMessage && <div className="payment-message pt-5 capitalize">{ErrorMessage}</div>}
+      {ErrorMessage && (
+        <div className="payment-message pt-5 font-semibold normal-case text-red-700">
+          {ErrorMessage}
+        </div>
+      )}
     </>
   );
 }
