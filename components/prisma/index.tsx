@@ -7,6 +7,27 @@ const PAGE_SIZE = 5;
 
 type SortKey = 'recent' | 'highest' | 'lowest';
 
+function sanitizeForPostgres(input: unknown, maxLen = 5000): string {
+  const s = String(input ?? '');
+
+  // 1) Quitar null bytes (Postgres no permite \u0000 en text)
+  let out = s.replace(/\u0000/g, '');
+
+  // 2) Re-encode para “limpiar” secuencias inválidas
+  // Buffer.from(str, 'utf8') reemplaza secuencias inválidas por U+FFFD al decodificar.
+  out = Buffer.from(out, 'utf8').toString('utf8');
+
+  // 3) Normalizar unicode (evita combinaciones raras)
+  // NFC suele ser más compatible para búsquedas y display.
+  out = out.normalize('NFC');
+
+  // 4) Recortar a un máximo (previene payloads enormes)
+  if (out.length > maxLen) out = out.slice(0, maxLen);
+
+  // 5) Trim suave (opcional)
+  return out.trim();
+}
+
 function clampInt(v: unknown, fallback: number) {
   const n = typeof v === 'string' ? Number(v) : NaN;
   return Number.isFinite(n) && n > 0 ? Math.floor(n) : fallback;
@@ -85,11 +106,11 @@ export async function createReview(formData: FormData) {
   const productId = String(formData.get('productId') ?? '');
   const productSlug = String(formData.get('productSlug') ?? '');
   const rating = Number(formData.get('rating'));
-  const message = String(formData.get('message') ?? '').trim();
-  const title = String(formData.get('title') ?? '').trim();
-  const userName = String(formData.get('userName') ?? '').trim();
+  const messageRaw = String(formData.get('message') ?? '').trim();
+  const titleRaw = String(formData.get('title') ?? '').trim();
+  const userNameRaw = String(formData.get('userName') ?? '').trim();
 
-  if (!productId || !productSlug || !message || !Number.isFinite(rating)) {
+  if (!productId || !productSlug || !messageRaw || !Number.isFinite(rating)) {
     throw new Error('Missing required fields');
   }
   if (rating < 1 || rating > 5) {
@@ -97,9 +118,13 @@ export async function createReview(formData: FormData) {
   }
 
   // Avatar color simple (determinístico por inicial)
-  const initial = (userName[0] ?? 'C').toUpperCase();
+  const initial = (userNameRaw[0] ?? 'C').toUpperCase();
   const palette = ['#111827', '#0EA5E9', '#22C55E', '#A855F7', '#F59E0B', '#EC4899'];
   const avatarColor = palette[initial.charCodeAt(0) % palette.length];
+
+  const userName = sanitizeForPostgres(userNameRaw, 80) || null;
+  const title = sanitizeForPostgres(titleRaw, 120) || null;
+  const message = sanitizeForPostgres(messageRaw, 5000);
 
   await prisma.review.create({
     data: {
