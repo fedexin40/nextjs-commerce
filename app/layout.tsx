@@ -113,6 +113,13 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
         />
+
+        {/* ahref */}
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="cLG0OcyZWbt9VJrhxqpuaQ"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
