@@ -6,9 +6,16 @@ const CustomData = bizSdk.CustomData;
 const EventRequest = bizSdk.EventRequest;
 const UserData = bizSdk.UserData;
 const ServerEvent = bizSdk.ServerEvent;
+const FacebookAdsApi = bizSdk.FacebookAdsApi;
 
-const accessToken = process.env.NEXT_PUBLIC_FACEBOOK_ACCESS_TOKEN;
-const pixelID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
+const accessToken = process.env.FACEBOOK_ACCESS_TOKEN;
+const pixelID = process.env.FACEBOOK_PIXEL_ID;
+
+type ProductItem = {
+  handle: string;
+  quantity: number;
+  price: number;
+};
 
 export async function POST(req: NextRequest): Promise<Response> {
   const parameters = await req.json();
@@ -20,12 +27,14 @@ export async function POST(req: NextRequest): Promise<Response> {
   const eventId = parameters.eventId;
   const email = parameters.email;
   const phone = parameters.phone;
-  const productID = parameters.productID;
+  const products = parameters.products;
   const value = parameters.value || 0.0;
   const eventURL = parameters.eventURL;
   const external_id = parameters.external_id;
   const current_timestamp = parameters.current_timestamp;
+
   // From https://developers.facebook.com/docs/marketing-api/conversions-api/using-the-api?locale=es_ES
+  FacebookAdsApi.init(accessToken);
   const userData = new UserData()
     // It is recommended to send Client IP and User Agent for Conversions API Events.
     .setClientIpAddress(ip)
@@ -34,17 +43,27 @@ export async function POST(req: NextRequest): Promise<Response> {
     .setFbc(fbc)
     .setExternalId(external_id);
 
-  if (email) {
+  if (email && email.length > 0) {
     userData.setEmails([email]);
   }
 
-  if (phone) {
+  if (phone && phone.length > 0) {
     userData.setPhones([phone]);
   }
 
-  const content = new Content().setId(productID).setQuantity(1);
+  const content = products.map((product: ProductItem) =>
+    new Content()
+      .setId(product.handle)
+      .setQuantity(product.quantity)
+      .setItemPrice(product.price || 0.0),
+  );
 
-  const customData = new CustomData().setContents([content]).setCurrency('mxn').setValue(value);
+  const customData = new CustomData()
+    .setContents(content)
+    .setCurrency('MXN')
+    .setValue(value)
+    .setContentType('product')
+    .setContentIds(products.map((p: ProductItem) => p.handle));
 
   const serverEvent = new ServerEvent()
     .setEventId(eventId)
@@ -55,16 +74,14 @@ export async function POST(req: NextRequest): Promise<Response> {
     .setEventSourceUrl(eventURL)
     .setActionSource('website');
 
-  const eventsData = [serverEvent];
-  const eventRequest = new EventRequest(accessToken, pixelID).setEvents(eventsData);
-
-  eventRequest.execute().then(
-    (response: any) => {
-      console.log('Response: ', response);
-    },
-    (err: any) => {
-      console.error('Error: ', err);
-    },
-  );
-  return NextResponse.json({ status: 200 });
+  const eventRequest = new EventRequest(accessToken, pixelID).setEvents([serverEvent]);
+  try {
+    const response = await eventRequest.execute();
+    return NextResponse.json({ ok: true, response });
+  } catch (err: any) {
+    console.error('CAPI Error:', err);
+    return new Response(JSON.stringify({ ok: false, error: String(err?.message ?? err) }), {
+      status: 500,
+    });
+  }
 }

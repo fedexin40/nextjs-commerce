@@ -82,7 +82,7 @@ export function BuyNow({
                   content_ids: [product.handle],
                   content_type: 'product',
                   currency: 'MXN',
-                  value: variant?.price.amount,
+                  value: variant?.price.amount || product.priceRange.maxVariantPrice.amount,
                 },
                 {
                   eventID: event_id,
@@ -95,7 +95,7 @@ export function BuyNow({
               sendMetaCapiEvent({
                 event_name: 'AddToCart',
                 fbclid: fbclid,
-                value: variant?.price.amount || '00',
+                value: variant?.price.amount || product.priceRange.maxVariantPrice.amount,
                 event_id: event_id,
                 email: currentUser.email,
                 phone: currentUser.address.phone,
@@ -161,7 +161,7 @@ export function BuyNow({
                   content_ids: [product.handle],
                   content_type: 'product',
                   currency: 'MXN',
-                  value: variant?.price.amount,
+                  value: variant?.price.amount || product.priceRange.maxVariantPrice.amount,
                 },
                 {
                   eventID: event_id,
@@ -174,7 +174,7 @@ export function BuyNow({
               sendMetaCapiEvent({
                 event_name: 'AddToCart',
                 fbclid: fbclid,
-                value: variant?.price.amount || '00',
+                value: variant?.price.amount || product.priceRange.maxVariantPrice.amount,
                 event_id: event_id,
                 email: currentUser.email,
                 phone: currentUser.address.phone,
