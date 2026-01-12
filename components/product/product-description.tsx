@@ -1,3 +1,4 @@
+import { Me } from '#/lib/saleor';
 import { BuyNow } from 'components/cart/buy-now';
 import Price from 'components/price';
 import { Product, ProductVariant } from 'lib/types';
@@ -5,7 +6,7 @@ import Image from 'next/image';
 import { Rating } from '../prisma';
 import { VariantSelector } from './variant-selector';
 
-export function ProductDescription({
+export async function ProductDescription({
   product,
   variant,
 }: {
@@ -24,8 +25,7 @@ export function ProductDescription({
   }
 
   // Used for facebook pixel
-  const content_ids = [product.handle];
-  const value = product.priceRange.maxVariantPrice.amount;
+  const currentUser = await Me();
 
   return (
     <div className="flex flex-col">
@@ -78,10 +78,9 @@ export function ProductDescription({
       </div>
       <div className="mt-6 flex flex-col gap-5 border-b pb-6 uppercase">
         <BuyNow
-          variants={product.variants}
+          product={product}
           availableForSale={product.availableForSale}
-          content_ids={content_ids}
-          value={value}
+          currentUser={currentUser}
         />
       </div>
       <div className="flex flex-col gap-y-4 pt-5 text-left text-[12px] leading-[20px] text-gray-800">

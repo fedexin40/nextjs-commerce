@@ -1,5 +1,5 @@
 import Reviews from '#/components/prisma';
-import { FacebookConversionApi, ProductView } from 'components/FacebookPixel';
+import { ProductView } from 'components/FacebookPixel';
 import { GridTileImage } from 'components/grid/tile';
 import { PageItem } from 'components/htmlParser/page';
 import { Gallery } from 'components/product/gallery';
@@ -7,7 +7,6 @@ import { ProductDescription } from 'components/product/product-description';
 import { getCollectionProducts, getProduct, Me } from 'lib/saleor';
 import { Image, Product as productType, ProductVariant } from 'lib/types';
 import type { Metadata } from 'next';
-import { cookies, headers } from 'next/headers';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -71,27 +70,13 @@ export default async function Product(props: {
 }) {
   const searchParams = await props.searchParams;
   const params = await props.params;
+  const fbclid = searchParams['fbclid'];
   const user = await Me();
   const pageReviews =
     typeof searchParams?.pageReviews === 'string' ? searchParams.pageReviews : undefined;
 
   const sortReviews =
     typeof searchParams?.sortReviews === 'string' ? searchParams.sortReviews : undefined;
-
-  const headersList = await headers();
-  const cookieStore = await cookies();
-  const xForwardedFor = headersList.get('x-forwarded-for');
-  const remoteAddress = headersList.get('remoteAddress');
-  const userAgent = headersList.get('user-agent');
-  const pathname = headersList.get('x-current-path');
-  const fbp = cookieStore.get('_fbp')?.value;
-  const fbclid = searchParams['fbclid'];
-  const fbc = cookieStore.get('_fbc')?.value;
-  const f_external_id_me = user.f_external_id;
-  const f_external_id_cookie = cookieStore.get('f_external_id')?.value;
-  const f_external_id = Math.random().toString(36).substring(2);
-  const date = Date.now();
-  const current_timestamp = Math.floor(date / 1000);
 
   let product;
   try {
@@ -101,18 +86,6 @@ export default async function Product(props: {
   }
   if (!product) {
     return notFound();
-  }
-
-  const eventId = `${product.handle}_ViewContent_${current_timestamp}`;
-  let ip;
-  if (xForwardedFor && xForwardedFor.split(',')[0]) {
-    // If x-forwarded-for is present, take the first IP address
-    ip = xForwardedFor.split(',')[0]?.trim();
-  } else if (remoteAddress) {
-    // If x-forwarded-for is not present, use remoteAddress
-    ip = remoteAddress;
-  } else {
-    ip = 'unknown'; // Handle cases where no IP is available
   }
 
   const variants = product?.variants;
@@ -153,30 +126,12 @@ export default async function Product(props: {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <FacebookConversionApi
-        ip={ip}
-        userAgent={userAgent}
-        fbc={fbc}
-        fbp={fbp}
-        fbclid={fbclid}
-        eventName="ViewContent"
-        eventId={eventId}
-        email={user.email || null}
-        phone={user.address.phone || null}
-        productID={product.handle}
-        value={product.priceRange.maxVariantPrice.amount}
-        eventURL={`${baseUrl}/${pathname}`}
-        SHOP_PUBLIC_URL={baseUrl || ''}
-        f_external_id_cookie={f_external_id_cookie}
-        f_external_id={f_external_id}
-        f_external_id_me={f_external_id_me}
-        current_timestamp={current_timestamp}
-        user_id={user.id || null}
-      />
       <ProductView
-        content_ids={[product.handle]}
-        event_id={eventId}
         value={product.priceRange.maxVariantPrice.amount}
+        email={user.email}
+        phone={user.address.phone}
+        product={product}
+        fbclid={fbclid}
       />
       <div className="mx-auto max-w-screen-2xl">
         <div className="flex flex-col px-10 md:px-16 md:pt-12 lg:px-36 lg:pt-16">

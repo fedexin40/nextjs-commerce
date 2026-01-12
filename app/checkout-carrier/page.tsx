@@ -1,6 +1,7 @@
+import { InitiateCheckout } from '#/components/FacebookPixel';
 import { deliveryMethodUpdate } from 'actions/checkout';
 import ShippingMethods from 'components/shipping/shipping';
-import { getCart, getShippingMethods } from 'lib/saleor';
+import { getCart, getShippingMethods, Me } from 'lib/saleor';
 import { shippingMethod } from 'lib/types';
 import { cookies } from 'next/headers';
 import { permanentRedirect, redirect } from 'next/navigation';
@@ -10,9 +11,11 @@ export default async function Checkout(props: {
 }) {
   const searchParams = await props.searchParams;
   let checkout;
+  let fbclid;
 
   if (searchParams) {
     checkout = searchParams['checkout'] || '';
+    fbclid = searchParams['fbclid'] || undefined;
   }
 
   if (!checkout) {
@@ -31,6 +34,8 @@ export default async function Checkout(props: {
   if (cart.lines.every((x) => x.merchandise.product.isShippingRequired == false)) {
     permanentRedirect(cart?.checkoutUrlPayment || '');
   }
+
+  const currentUser = await Me();
 
   let shippingMethods: shippingMethod[] = [];
   let startTime = new Date();
@@ -67,13 +72,22 @@ export default async function Checkout(props: {
   }
 
   return (
-    <div className="flex w-full flex-row justify-center bg-white text-[13.5px] tracking-[1.4px] md:bg-[#d4d4d4] lg:text-[14.3px]">
-      <div className="l:basis-2/4 basis-full bg-white px-10 py-10 md:basis-2/3 md:px-14 md:py-16">
-        <div className="font-medium uppercase">Elige una paquetería</div>
-        <div className="flex flex-col pt-5">
-          <ShippingMethods ShippingMethods={shippingMethods} checkoutid={checkout} />
+    <>
+      <InitiateCheckout
+        value={cart.cost.totalAmount.amount}
+        email={cart.userEmail || undefined}
+        phone={cart.shippingAddress?.phone || undefined}
+        products={cart.lines.map((x) => x.merchandise.product)}
+        fbclid={fbclid}
+      />
+      <div className="flex w-full flex-row justify-center bg-white text-[13.5px] tracking-[1.4px] md:bg-[#d4d4d4] lg:text-[14.3px]">
+        <div className="l:basis-2/4 basis-full bg-white px-10 py-10 md:basis-2/3 md:px-14 md:py-16">
+          <div className="font-medium uppercase">Elige una paquetería</div>
+          <div className="flex flex-col pt-5">
+            <ShippingMethods ShippingMethods={shippingMethods} checkoutid={checkout} />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

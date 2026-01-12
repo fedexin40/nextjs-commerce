@@ -1,35 +1,41 @@
 'use client';
 
+import { sendMetaCapiEvent } from '#/actions/facebook';
 import { addItem, lastCheckout } from 'actions/cart';
 import clsx from 'clsx';
-import { ProductVariant } from 'lib/types';
+import { CurrentPerson, Product, ProductVariant } from 'lib/types';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState, useTransition } from 'react';
 import { cartActions } from 'stores/cart';
+import { generateEventId } from '../FacebookPixel';
 
 export function BuyNow({
-  variants,
+  product,
   availableForSale,
-  content_ids,
-  value,
+  currentUser,
 }: {
-  variants: ProductVariant[];
+  product: Product;
   availableForSale: boolean;
-  content_ids: string[];
-  value: string;
+  currentUser: CurrentPerson;
 }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const fbclid = searchParams?.get('fbclid') || undefined;
   const [isPendingBuyNow, startTransitionBuyNow] = useTransition();
   const [isPendingAdd2Cart, startTransitionAdd2Cart] = useTransition();
   const [ErrorMessage, setErrorMessage] = useState('');
   const { openMenu } = cartActions();
+  const variants = product.variants;
   const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined;
   const variant = variants.find((variant: ProductVariant) =>
     variant.selectedOptions.every(
       (option) => option.value === searchParams?.get(option.name.toLowerCase()),
     ),
   );
+
+  const date = Date.now();
+  const current_timestamp = Math.floor(date / 1000);
+  const event_id = `${generateEventId()}_'AddToCart'_${current_timestamp}`;
 
   const selectedVariantId = variant?.id || defaultVariantId;
   const title = !availableForSale
@@ -69,14 +75,35 @@ export function BuyNow({
                 });
                 return;
               }
+              window.fbq(
+                'track',
+                'AddToCart',
+                {
+                  content_ids: [product.handle],
+                  content_type: 'product',
+                  currency: 'MXN',
+                  value: variant?.price.amount,
+                },
+                {
+                  eventID: event_id,
+                },
+              );
+              const products = {
+                handle: product.handle,
+                quantity: 1,
+              };
+              sendMetaCapiEvent({
+                event_name: 'AddToCart',
+                fbclid: fbclid,
+                value: variant?.price.amount || '00',
+                event_id: event_id,
+                email: currentUser.email,
+                phone: currentUser.address.phone,
+                current_timestamp: current_timestamp,
+                products: [products],
+              });
               // Get cart
               const cart = await lastCheckout();
-              window.fbq('track', 'AddToCart', {
-                content_ids: content_ids,
-                content_type: 'product',
-                currency: 'MXN',
-                value: value,
-              });
               router.replace(cart?.checkoutUrl || '/');
             });
           }}
@@ -127,11 +154,32 @@ export function BuyNow({
                 });
                 return;
               }
-              window.fbq('track', 'AddToCart', {
-                content_ids: content_ids,
-                content_type: 'product',
-                currency: 'MXN',
-                value: value,
+              window.fbq(
+                'track',
+                'AddToCart',
+                {
+                  content_ids: [product.handle],
+                  content_type: 'product',
+                  currency: 'MXN',
+                  value: variant?.price.amount,
+                },
+                {
+                  eventID: event_id,
+                },
+              );
+              const products = {
+                handle: product.handle,
+                quantity: 1,
+              };
+              sendMetaCapiEvent({
+                event_name: 'AddToCart',
+                fbclid: fbclid,
+                value: variant?.price.amount || '00',
+                event_id: event_id,
+                email: currentUser.email,
+                phone: currentUser.address.phone,
+                current_timestamp: current_timestamp,
+                products: [products],
               });
               router.refresh();
               startTransitionAdd2Cart(() => {
