@@ -2,33 +2,40 @@
 
 import { sendMetaCapiEvent } from '#/actions/facebook';
 import { Product } from '#/lib/types';
-import crypto from 'crypto';
+import Script from 'next/script';
 import { useEffect } from 'react';
 
 const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
 
-type ProductItem = {
-  handle: string;
-  quantity: number;
-};
-
 export function generateEventId(): string {
-  return crypto.randomBytes(5).toString('hex'); // 10 chars
+  const bytes = new Uint8Array(5);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
 }
 
-//FACEBOOK INIT
-export const FacebookPixelEvents = () => {
-  useEffect(() => {
-    import('@bettercart/react-facebook-pixel')
-      .then((x) => x.default)
-      .then((ReactPixel) => {
-        ReactPixel.init(FB_PIXEL_ID || '');
-        ReactPixel.pageView();
-      });
-  }, []);
-
-  return null;
-};
+export function FacebookPixelEvents() {
+  if (!FB_PIXEL_ID) return null;
+  return (
+    <Script
+      id="meta-pixel"
+      strategy="afterInteractive"
+      dangerouslySetInnerHTML={{
+        __html: `
+!function(f,b,e,v,n,t,s){
+if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)
+}(window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init','${FB_PIXEL_ID}');
+fbq('track','PageView');
+        `,
+      }}
+    />
+  );
+}
 
 export const ProductView = (parameters: {
   value: string;
@@ -42,20 +49,22 @@ export const ProductView = (parameters: {
   const event_id = `${generateEventId()}_ViewContent_${current_timestamp}`;
   const content_ids = [parameters.product.handle];
   useEffect(() => {
-    import('@bettercart/react-facebook-pixel')
-      .then((x) => x.default)
-      .then((ReactPixel) => {
-        ReactPixel.track(
-          'ViewContent',
-          {
-            content_ids: content_ids,
-            content_type: 'product',
-            currency: 'MXN',
-            value: parameters.value,
-          },
-          { eventID: event_id },
-        );
-      });
+    if (typeof window !== 'undefined' && typeof (window as any).fbq === 'function') {
+      (window as any).fbq(
+        'track',
+        'ViewContent',
+        {
+          content_ids: content_ids,
+          content_type: 'product',
+          currency: 'MXN',
+          value: parameters.value,
+        },
+        { eventID: event_id },
+      );
+    } else {
+      console.warn('[Pixel] fbq no disponible');
+    }
+
     // Server Action → CAPI
     const run = async () => {
       const products = {
@@ -91,20 +100,21 @@ export const InitiateCheckout = (parameters: {
   const event_id = `${generateEventId()}_InitiateCheckout_${current_timestamp}`;
   const content_ids = parameters.products.map((product) => product.handle);
   useEffect(() => {
-    import('@bettercart/react-facebook-pixel')
-      .then((x) => x.default)
-      .then((ReactPixel) => {
-        ReactPixel.track(
-          'InitiateCheckout',
-          {
-            content_ids: content_ids,
-            content_type: 'product',
-            currency: 'MXN',
-            value: parameters.value,
-          },
-          { eventID: event_id },
-        );
-      });
+    if (typeof window !== 'undefined' && typeof (window as any).fbq === 'function') {
+      (window as any).fbq(
+        'track',
+        'InitiateCheckout',
+        {
+          content_ids: content_ids,
+          content_type: 'product',
+          currency: 'MXN',
+          value: parameters.value,
+        },
+        { eventID: event_id },
+      );
+    } else {
+      console.warn('[Pixel] fbq no disponible');
+    }
     // Server Action → CAPI
     const run = async () => {
       const products = parameters.products.map((product) => {
