@@ -100,6 +100,7 @@ export function BuyNow({
                 email: currentUser.email,
                 phone: currentUser.address.phone,
                 current_timestamp: current_timestamp,
+                current_timestamp_miliseconds: date,
                 products: [products],
               });
               // Get cart
@@ -179,6 +180,7 @@ export function BuyNow({
                 email: currentUser.email,
                 phone: currentUser.address.phone,
                 current_timestamp: current_timestamp,
+                current_timestamp_miliseconds: date,
                 products: [products],
               });
               router.refresh();

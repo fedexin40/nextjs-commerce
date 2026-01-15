@@ -39,7 +39,7 @@ export const ProductView = (parameters: {
 }) => {
   const date = Date.now();
   const current_timestamp = Math.floor(date / 1000);
-  const event_id = `${generateEventId()}_'ViewContent'_${current_timestamp}`;
+  const event_id = `${generateEventId()}_ViewContent_${current_timestamp}`;
   const content_ids = [parameters.product.handle];
   useEffect(() => {
     import('@bettercart/react-facebook-pixel')
@@ -70,6 +70,7 @@ export const ProductView = (parameters: {
         email: parameters.email,
         phone: parameters.phone,
         current_timestamp: current_timestamp,
+        current_timestamp_miliseconds: date,
         products: [products],
       });
     };
@@ -87,7 +88,7 @@ export const InitiateCheckout = (parameters: {
 }) => {
   const date = Date.now();
   const current_timestamp = Math.floor(date / 1000);
-  const event_id = `${generateEventId()}_'InitiateCheckout'_${current_timestamp}`;
+  const event_id = `${generateEventId()}_InitiateCheckout_${current_timestamp}`;
   const content_ids = parameters.products.map((product) => product.handle);
   useEffect(() => {
     import('@bettercart/react-facebook-pixel')
@@ -120,6 +121,7 @@ export const InitiateCheckout = (parameters: {
         email: parameters.email,
         phone: parameters.phone,
         current_timestamp: current_timestamp,
+        current_timestamp_miliseconds: date,
         products: products,
       });
     };

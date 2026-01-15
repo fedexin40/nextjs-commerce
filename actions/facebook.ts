@@ -17,6 +17,7 @@ export const sendMetaCapiEvent = async ({
   email,
   phone,
   current_timestamp,
+  current_timestamp_miliseconds,
   products,
 }: {
   fbclid: string | string[] | undefined;
@@ -26,6 +27,7 @@ export const sendMetaCapiEvent = async ({
   email: string | undefined;
   phone: string | undefined;
   current_timestamp: number;
+  current_timestamp_miliseconds: number;
   products: ProductItem[];
 }) => {
   const baseUrl = process.env.SHOP_PUBLIC_URL;
@@ -68,7 +70,7 @@ export const sendMetaCapiEvent = async ({
   }
 
   if (!fbc && fbclid) {
-    fbc = `fb.2.${current_timestamp}.${fbclid}`;
+    fbc = `fb.2.${current_timestamp_miliseconds}.${fbclid}`;
     cookieStore.set('_fbc', fbc, { httpOnly: true, maxAge: 25920000 });
   }
 
