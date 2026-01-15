@@ -1,7 +1,7 @@
 'use client';
 
-import { sendMetaCapiEvent } from '#/actions/facebook';
-import { Product } from '#/lib/types';
+import { facebookMetadata, sendMetaCapiEvent } from '#/actions/facebook';
+import { Cart, Product } from '#/lib/types';
 import Script from 'next/script';
 import { useEffect } from 'react';
 
@@ -133,6 +133,18 @@ export const InitiateCheckout = (parameters: {
         current_timestamp: current_timestamp,
         current_timestamp_miliseconds: date,
         products: products,
+      });
+    };
+    run();
+  }, []);
+  return null;
+};
+
+export const UpdateMetadata = ({ cart }: { cart: Cart }) => {
+  useEffect(() => {
+    const run = async () => {
+      await facebookMetadata({
+        cart: cart,
       });
     };
     run();

@@ -30,12 +30,6 @@ export default function CheckoutForm({
     }
 
     setIsLoading(true);
-    window.fbq('track', 'Purchase', {
-      content_ids: content_ids,
-      content_type: 'product',
-      currency: 'MXN',
-      value: value,
-    });
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {

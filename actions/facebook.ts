@@ -1,6 +1,7 @@
 'use server';
 import { TAGS } from '#/lib/constants';
 import { Me, updateMetaData } from '#/lib/saleor';
+import { Cart } from '#/lib/types';
 import { revalidateTag } from 'next/cache';
 import { cookies, headers } from 'next/headers';
 
@@ -94,4 +95,73 @@ export const sendMetaCapiEvent = async ({
     method: 'POST',
     body: JSON.stringify(body),
   });
+};
+
+export const facebookMetadata = async ({ cart }: { cart: Cart }) => {
+  const cookieStore = await cookies();
+  const headersList = await headers();
+  const baseUrl = process.env.SHOP_PUBLIC_URL;
+  const xForwardedFor = headersList.get('x-forwarded-for');
+  const remoteAddress = headersList.get('remoteAddress');
+  const userAgent = headersList.get('user-agent');
+  const fbp = cookieStore.get('_fbp')?.value;
+  const fbc = cookieStore.get('_fbc')?.value;
+  const f_external_id = cookieStore.get('f_external_id')?.value;
+  const eventURL = `${baseUrl}/cart/processing`;
+
+  let ip;
+  if (xForwardedFor && xForwardedFor.split(',')[0]) {
+    // If x-forwarded-for is present, take the first IP address
+    ip = xForwardedFor.split(',')[0]?.trim();
+  } else if (remoteAddress) {
+    // If x-forwarded-for is not present, use remoteAddress
+    ip = remoteAddress;
+  } else {
+    ip = 'unknown'; // Handle cases where no IP is available
+  }
+
+  try {
+    if (fbc) {
+      await updateMetaData({
+        id: cart.id,
+        key: '_fbc',
+        value: fbc,
+      });
+    }
+    if (fbp) {
+      await updateMetaData({
+        id: cart.id,
+        key: '_fbp',
+        value: fbp,
+      });
+    }
+    if (f_external_id) {
+      await updateMetaData({
+        id: cart.id,
+        key: 'f_external_id',
+        value: f_external_id,
+      });
+    }
+    if (userAgent) {
+      await updateMetaData({
+        id: cart.id,
+        key: 'userAgent',
+        value: userAgent,
+      });
+    }
+    if (ip && ip != 'unknown') {
+      await updateMetaData({
+        id: cart.id,
+        key: 'ip',
+        value: ip,
+      });
+    }
+    await updateMetaData({
+      id: cart.id,
+      key: 'eventURL',
+      value: eventURL,
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };

@@ -1,3 +1,4 @@
+import { UpdateMetadata } from '#/components/FacebookPixel';
 import Paypal from 'components/paypal/page';
 import { StripeComponent } from 'components/stripe/stripe-component';
 import { getCart, transactionInitialize } from 'lib/saleor';
@@ -75,8 +76,9 @@ export default async function CheckoutPayment(props: {
   const value = cart.cost.totalAmount.amount;
   return (
     <>
+      <UpdateMetadata cart={cart} />
       <div className="flex flex-col text-[13.5px] tracking-[1.4px] md:flex-row lg:text-[14.3px]">
-        <div className="mx-10 mb-16	pt-16 md:mb-24 md:basis-[52%] lg:mb-40 lg:px-10">
+        <div className="mx-10 mb-16 pt-16 md:mb-24 md:basis-[52%] lg:mb-40 lg:px-10">
           <div className="relative mb-5 h-[50px] w-[180px] hover:cursor-pointer">
             <Link href="https://stripe.com/mx/newsroom/information">
               <Image className="object-contain" src={'/stripe.png'} alt="" fill />
