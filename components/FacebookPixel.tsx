@@ -7,6 +7,11 @@ import { useEffect } from 'react';
 
 const FB_PIXEL_ID = process.env.NEXT_PUBLIC_FACEBOOK_PIXEL_ID;
 
+type ProductItem = {
+  handle: string;
+  quantity: number;
+};
+
 export function generateEventId(): string {
   const bytes = new Uint8Array(5);
   crypto.getRandomValues(bytes);
@@ -18,7 +23,7 @@ export function FacebookPixelEvents() {
   return (
     <Script
       id="meta-pixel"
-      strategy="afterInteractive"
+      strategy="lazyOnload"
       dangerouslySetInnerHTML={{
         __html: `
 !function(f,b,e,v,n,t,s){
@@ -92,7 +97,7 @@ export const InitiateCheckout = (parameters: {
   value: string;
   email: string | undefined;
   phone: string | undefined;
-  products: Product[];
+  products: ProductItem[];
   fbclid: string | string[] | undefined;
 }) => {
   const date = Date.now();
@@ -117,12 +122,6 @@ export const InitiateCheckout = (parameters: {
     }
     // Server Action → CAPI
     const run = async () => {
-      const products = parameters.products.map((product) => {
-        return {
-          handle: product.handle,
-          quantity: 1,
-        };
-      });
       await sendMetaCapiEvent({
         event_name: 'InitiateCheckout',
         fbclid: parameters.fbclid,
@@ -132,7 +131,7 @@ export const InitiateCheckout = (parameters: {
         phone: parameters.phone,
         current_timestamp: current_timestamp,
         current_timestamp_miliseconds: date,
-        products: products,
+        products: parameters.products,
       });
     };
     run();

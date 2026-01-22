@@ -99,7 +99,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <main>{children}</main>
         <FacebookPixelEvents />
         <GoogleAnalytics gaId={googleAnalytics || ''} />
-        <GoogleAds />
         {/* Schema.org (Organization) */}
         <Script
           id="schema-org-organization"
@@ -113,31 +112,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
         />
-
-        {/* ahref */}
-        <Script
-          src="https://analytics.ahrefs.com/analytics.js"
-          data-key="cLG0OcyZWbt9VJrhxqpuaQ"
-          strategy="afterInteractive"
-        />
       </body>
     </html>
-  );
-}
-
-function GoogleAds() {
-  const source = `https://www.googletagmanager.com/gtag/js?id=${googleTag}`;
-  return (
-    <>
-      <Script src={source} strategy="afterInteractive" />
-      <Script id="google-analytics" strategy="afterInteractive">
-        {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${googleTag}');
-        `}
-      </Script>
-    </>
   );
 }

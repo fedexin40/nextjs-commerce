@@ -77,7 +77,10 @@ export default async function Checkout(props: {
         value={cart.cost.totalAmount.amount}
         email={cart.userEmail || undefined}
         phone={cart.shippingAddress?.phone || undefined}
-        products={cart.lines.map((x) => x.merchandise.product)}
+        products={cart.lines.map((x) => ({
+          quantity: x.quantity,
+          handle: x.merchandise.product.handle,
+        }))}
         fbclid={fbclid}
       />
       <div className="flex w-full flex-row justify-center bg-white text-[13.5px] tracking-[1.4px] md:bg-[#d4d4d4] lg:text-[14.3px]">
