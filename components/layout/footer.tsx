@@ -3,6 +3,7 @@ import FooterMenu from 'components/layout/footer-menu';
 import { getPagesByMenu } from 'lib/saleor';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Suspense } from 'react';
 
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
@@ -18,7 +19,7 @@ export default async function Footer() {
   const copyrightName = COMPANY_NAME || SITE_NAME || '';
 
   return (
-    <footer className="bg-[#5a5454]  text-[13px] tracking-widest text-white lg:text-[14.3px]">
+    <footer className="bg-[#5a5454] text-[13px] tracking-widest text-white lg:text-[14.3px]">
       <div className="flex w-full flex-col gap-6 px-6 py-6 md:gap-12 md:px-10 lg:py-12">
         <div className="flex flex-col gap-y-10 md:flex-row lg:px-9">
           <div className="hidden md:block md:basis-1/4 lg:basis-1/3">
@@ -56,7 +57,9 @@ export default async function Footer() {
           </div>
         </div>
       </div>
-      <Brevo />
+      <Suspense>
+        <Brevo />
+      </Suspense>
     </footer>
   );
 }
