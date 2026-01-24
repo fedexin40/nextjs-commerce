@@ -1,8 +1,6 @@
 'use server';
-import { TAGS } from '#/lib/constants';
 import { Me, updateMetaData } from '#/lib/saleor';
 import { Cart } from '#/lib/types';
-import { revalidateTag } from 'next/cache';
 import { cookies, headers } from 'next/headers';
 
 type ProductItem = {
@@ -59,13 +57,13 @@ export const sendMetaCapiEvent = async ({
 
   if (!f_external_id_me && !f_external_id_cookie) {
     cookieStore.set('f_external_id', f_external_id, { httpOnly: true, maxAge: 25920000 });
-  } else if (!f_external_id_me && f_external_id_cookie && user.id) {
-    await updateMetaData({
-      id: user.id,
-      key: 'f_external_id',
-      value: f_external_id_cookie,
-    });
-    revalidateTag(TAGS.user, 'max');
+    if (user.id) {
+      await updateMetaData({
+        id: user.id,
+        key: 'f_external_id',
+        value: f_external_id,
+      });
+    }
   } else if (f_external_id_me && !f_external_id_cookie) {
     cookieStore.set('f_external_id', f_external_id_me, { httpOnly: true, maxAge: 25920000 });
   }
@@ -88,7 +86,7 @@ export const sendMetaCapiEvent = async ({
     products: products,
     value: value,
     eventURL: eventURL,
-    external_id: f_external_id_me ?? f_external_id_cookie ?? f_external_id,
+    external_id: f_external_id_me || f_external_id_cookie || f_external_id,
     current_timestamp: current_timestamp,
   };
   await fetch(facebookApi, {
