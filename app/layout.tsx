@@ -1,7 +1,6 @@
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { FacebookPixelEvents } from 'components/FacebookPixel';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import Script from 'next/script';
 import { ReactNode } from 'react';
 import './globals.css';
@@ -55,12 +54,6 @@ export const metadata: Metadata = {
     follow: true,
   },
 };
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-});
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
   const orgJsonLd = {
