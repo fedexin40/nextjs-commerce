@@ -84,8 +84,8 @@ export async function ProductDescription({
         />
       </div>
       <div className="flex flex-col gap-y-4 pt-5 text-left text-[12px] leading-[20px] text-gray-800">
-        <div className="">Tiempo de entrega de 2 a 7 dias hábiles</div>
-        <div>Envío gratis en compras mayores a $1,500.00</div>
+        <div>Tiempo de entrega de 2 a 7 dias hábiles</div>
+        <div className="font-medium">Envío gratis en compras mayores a $1,000.00</div>
         <div className="flex flex-row gap-x-4">
           <div>Compartir con</div>
           <div className="relative h-[20px] w-[20px]">

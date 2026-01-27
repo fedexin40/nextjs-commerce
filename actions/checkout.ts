@@ -28,7 +28,7 @@ export async function deliveryMethodUpdate({
     if (!deliveryMethod) {
       return 'Algo fallo con el metodo seleccionado, por favor trata nuevamente';
     }
-    if (Number(cart?.cost.totalAmount.amount) >= 1500) {
+    if (Number(cart?.cost.totalAmount.amount) >= 1000) {
       try {
         await freeShipping({ checkoutId });
       } catch (error: any) {

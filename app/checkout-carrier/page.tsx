@@ -53,15 +53,13 @@ export default async function Checkout(props: {
     return (
       <div className="flex w-full flex-row justify-center bg-white text-[13.5px] tracking-[1.4px] md:bg-[#d4d4d4] lg:text-[14.3px]">
         <div className="l:basis-2/4 basis-full bg-white px-10 py-10 md:basis-2/3 md:px-14 md:py-16">
-          <div className="flex flex-col pt-5">
-            No hay ninguna paquetería en tu zona Lo sentimos, favor de intentar mas tarde
-          </div>
+          <div className="flex flex-col pt-5">Algo salio mal. ¿Podrías intentar mas tarde?</div>
         </div>
       </div>
     );
   }
 
-  if (Number(cart.cost.totalAmount.amount) >= 1500) {
+  if (Number(cart.cost.totalAmount.amount) >= 1000) {
     deliveryMethodUpdate({
       checkoutId: checkout,
       deliveryMethodId: shippingMethods[0]?.id || '',

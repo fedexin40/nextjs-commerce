@@ -1,15 +1,9 @@
-import Image from 'next/image';
-import Link from 'next/link';
 import MarqueeText from 'components/text-scroll/page';
+import Image from 'next/image';
 
 function Header() {
   return (
-    <div
-      className="
-        flex flex-row  justify-around gap-x-10 bg-black px-5  py-4
-      text-[13.5px] tracking-widest text-white md:text-[13px] lg:py-6
-        lg:text-[14.3px]"
-    >
+    <div className="flex flex-row justify-around gap-x-10 bg-black px-5 py-4 text-[13.5px] tracking-widest text-white md:text-[13px] lg:py-6 lg:text-[14.3px]">
       <div className="flex flex-row gap-2">
         <div className="relative top-[5px] h-[10px] min-h-[10px] w-[10px] min-w-[10px] md:top-0 md:h-[15px] md:min-h-[15px] md:w-[15px] md:min-w-[15px]">
           <Image
@@ -57,7 +51,7 @@ function Header() {
           />
         </div>
         <div className="relative md:-top-[2px]">
-          Envíos gratis en compras superiores a $1,500.00
+          Envíos gratis en compras superiores a $1,000.00
         </div>
       </div>
     </div>

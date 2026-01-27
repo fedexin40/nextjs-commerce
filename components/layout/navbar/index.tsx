@@ -12,7 +12,7 @@ export default function Navbar() {
       <div className="text-[13px] tracking-widest lg:text-[14.3px]">
         <MarqueeText>
           <div className="flex flex-row font-medium italic md:font-semibold">
-            <div className="mr-28">Envíos a toda la república, y gratis a partir de $1500 MXN</div>
+            <div className="mr-28">Envíos a toda la república, y gratis a partir de $1000 MXN</div>
             <div className="mr-28">3 y 6 Meses sin intereses</div>
             <div className="mr-28">Envíos desde $85 MXN</div>
             <div className="mr-28">Aretes de 10 y 14 kilates</div>
