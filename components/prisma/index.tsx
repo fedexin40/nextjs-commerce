@@ -1,7 +1,7 @@
 import { prisma } from '#/lib/prisma';
 import { revalidatePath } from 'next/cache';
-import Link from 'next/link';
 import StarRatingInput from './rating';
+import ReviewsCarouselClient from './reviews';
 
 const PAGE_SIZE = 5;
 
@@ -230,10 +230,10 @@ export default async function Reviews({
       {/* Header: Customer Reviews */}
       <div className="flex flex-col justify-center pt-5">
         <div>
-          <h2 className="whitespace-nowrap text-base font-semibold">Reseñas de clientes</h2>
+          <h2 className="text-base tracking-[1.4px]">Que piensas nuestros clientes de nosotros</h2>
 
           {totalApproved > 0 ? (
-            <div className="mt-2 flex flex-col gap-0">
+            <div className="flex flex-col gap-0">
               <div className="flex flex-row gap-3">
                 <Stars value={Math.round(avg)} />
                 <div className="text-sm text-gray-700">
@@ -241,79 +241,27 @@ export default async function Reviews({
                 </div>
               </div>
               <div className="text-sm text-gray-500">Basado en {totalApproved} reseñas</div>
+              {/* Lista de reseñas + Paginación (client) */}
+              <div className="py-10">
+                <ReviewsCarouselClient reviews={reviews} />
+              </div>
             </div>
           ) : (
-            <div className="mt-2 text-gray-500">
+            <div className="my-5 text-gray-500">
               Auno no hay comentarios. Se el primero en escribir una reseña
             </div>
           )}
         </div>
       </div>
 
-      {/* Lista de reseñas */}
-      <div className="mt-4 space-y-4">
-        {reviews.length > 0 &&
-          reviews.map((r) => (
-            <article key={r.id}>
-              <div className="flex items-start gap-3 border-b-[1px] border-b-gray-400 py-5">
-                <Avatar name={r.userName} color={r.avatarColor} />
-
-                <div className="flex-1">
-                  <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <div className="font-semibold capitalize">{r.userName || 'Anónimo'}</div>
-                      <div className="mt-1">
-                        <Stars value={r.rating} />
-                      </div>
-                    </div>
-                    <div className="text-xs text-gray-500">
-                      {new Date(r.createdAt).toLocaleDateString('en-US')}
-                    </div>
-                  </div>
-
-                  <div className="mt-2 text-sm font-medium text-gray-900">
-                    {r.title || 'Review'}
-                  </div>
-                  <p className="mt-1 whitespace-pre-line text-sm text-gray-800">{r.message}</p>
-                </div>
-              </div>
-            </article>
-          ))}
-      </div>
-
-      {/* Paginación */}
-      {totalPages > 1 && (
-        <div className="mt-6 flex flex-col items-center justify-center text-sm">
-          <div className="text-gray-500">
-            Pagina {page} de {totalPages}
-          </div>
-          <div className="flex items-center gap-2">
-            {page > 1 ? (
-              <Link href={prevUrl} className="px-3 py-2">
-                ← Anterior
-              </Link>
-            ) : (
-              <span className="cursor-not-allowed px-3 py-2">← Anterior</span>
-            )}
-            {page < totalPages ? (
-              <Link href={nextUrl} className="px-3 py-2">
-                Siguiente →
-              </Link>
-            ) : (
-              <span className="cursor-not-allowed px-3 py-2">Siguiente →</span>
-            )}
-          </div>
-        </div>
-      )}
-
       {/* Write a review (form) */}
-      <div id="write-a-review" className="mt-5 w-full">
-        <div className="font-semibold text-gray-900">Escribe una reseña</div>
-        <div className="mt-1 text-gray-500">
+      <div id="write-a-review" className="w-full">
+        <div className="text-base">Escribe una reseña</div>
+        <div className="my-5 text-gray-500">
           Tu reseña sera visible solo despues de que sea aprobada.
         </div>
 
-        <form action={createReview} className="mt-4 grid max-w-xl gap-3">
+        <form action={createReview} className="mt-4 grid gap-3">
           <input type="hidden" name="productId" value={productId} />
           <input type="hidden" name="productSlug" value={productSlug} />
 
@@ -349,7 +297,7 @@ export default async function Reviews({
 
           <button
             type="submit"
-            className="justify-self-start rounded bg-[#c9aa9e] p-4 text-sm font-medium text-black"
+            className="relative my-5 flex h-[60px] w-full items-center justify-center bg-[#c9aa9e] p-4 uppercase tracking-wider text-black hover:opacity-90 md:w-1/3"
           >
             Enviar revisión
           </button>
