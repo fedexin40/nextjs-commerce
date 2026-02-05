@@ -5,7 +5,7 @@ import { getCart, transactionInitialize } from 'lib/saleor';
 import Image from 'next/image';
 import Link from 'next/link';
 import { permanentRedirect } from 'next/navigation';
-import Cart from './cart';
+import Cart, { CartMobile } from './cart';
 
 export default async function CheckoutPayment(props: {
   searchParams?: Promise<{ [key: string]: string | undefined }>;
@@ -77,8 +77,11 @@ export default async function CheckoutPayment(props: {
   return (
     <>
       <UpdateMetadata cart={cart} />
-      <div className="flex flex-col text-[13.5px] tracking-[1.4px] md:flex-row lg:text-[14.3px]">
-        <div className="mx-10 mb-16 pt-16 md:mb-24 md:basis-[52%] lg:mb-40 lg:px-10">
+      <div className="flex flex-col text-[16.5px] tracking-[1.4px] md:flex-row lg:text-[14.3px]">
+        <div className="mx-10 mb-16 flex flex-col pt-6 md:mb-24 md:basis-[52%] md:pt-16 lg:mb-40 lg:px-10">
+          <div className="md:hidden">
+            <CartMobile cart={cart} />
+          </div>
           <div className="relative mb-5 h-[50px] w-[180px] hover:cursor-pointer">
             <Link href="https://stripe.com/mx/newsroom/information">
               <Image className="object-contain" src={'/stripe.png'} alt="" fill />

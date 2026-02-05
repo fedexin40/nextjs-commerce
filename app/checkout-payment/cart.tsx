@@ -1,12 +1,15 @@
 'use client';
 
+import { Accordion, AccordionBody, AccordionHeader } from '@material-tailwind/react';
+import KeyboardArrowDownSharpIcon from '@mui/icons-material/KeyboardArrowDownSharp';
+import KeyboardArrowUpSharpIcon from '@mui/icons-material/KeyboardArrowUpSharp';
 import Price from 'components/price';
 import { DEFAULT_OPTION } from 'lib/constants';
 import type { Cart as CartType } from 'lib/types';
 import { createUrl } from 'lib/utils';
 import Image from 'next/image';
 import Link from 'next/link';
-import DeleteItemButton from './delete-item-button';
+import { useState } from 'react';
 
 type MerchandiseSearchParams = {
   [key: string]: string;
@@ -25,8 +28,8 @@ export default function Cart({ cart }: { cart: CartType | null }) {
 
   return (
     <>
-      <div className="flex h-full flex-col justify-between overflow-hidden pb-20">
-        <ul className="flex flex-col gap-3 overflow-auto lg:gap-5">
+      <div className="flex flex-col justify-between overflow-hidden">
+        <ul className="flex-grow py-4">
           {cart.lines.map((item, i) => {
             const merchandiseSearchParams = {} as MerchandiseSearchParams;
 
@@ -37,63 +40,60 @@ export default function Cart({ cart }: { cart: CartType | null }) {
             });
 
             const merchandiseUrl = createUrl(
-              `/product/${item.merchandise.product.handle}`,
+              `/Colecciones/${item.merchandise.product.featureCollection?.slug}/${item.merchandise.product.handle}`,
               new URLSearchParams(merchandiseSearchParams),
             );
 
             return (
-              <div
-                key={i}
-                className="flex w-full flex-col rounded-md border-2 border-[#acacac] px-3 tracking-wide"
-              >
-                <div className="relative flex w-full flex-row justify-around px-1 py-4">
-                  <div className="w-2/3">
-                    <Link href={merchandiseUrl} className="flex flex-row justify-between">
-                      <div className="flex w-full flex-row justify-around space-x-2">
-                        <div className="relative overflow-hidden rounded-md md:h-8 md:w-8 lg:h-16 lg:w-16">
-                          <Image
-                            className="md:object-contain lg:object-cover"
-                            fill
-                            alt={
-                              item.merchandise.product.featuredImage.altText ||
-                              item.merchandise.product.title
-                            }
-                            src={item.merchandise.product.featuredImage.url}
-                          />
-                        </div>
-                        <div className="flex flex-col">
-                          <span className="">{item.merchandise.product.title}</span>
-                          {item.merchandise.title !== DEFAULT_OPTION ? (
-                            <p className="text-neutral-500">{item.merchandise.title}</p>
-                          ) : null}
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                  <div className="flex w-1/3 flex-col justify-between">
+              <li key={i} className="flex w-full flex-col border-b border-neutral-300">
+                <div className="relative flex w-full flex-row justify-between px-1 py-4">
+                  <Link
+                    href={merchandiseUrl}
+                    onClick={() => {}}
+                    className="z-30 flex flex-row space-x-4"
+                  >
+                    <div className="relative h-16 w-16 cursor-pointer overflow-hidden rounded-md border border-neutral-300 bg-neutral-300">
+                      <Image
+                        className="h-full w-full object-cover"
+                        width={64}
+                        height={64}
+                        alt={
+                          item.merchandise.product.featuredImage.altText ||
+                          item.merchandise.product.title
+                        }
+                        src={item.merchandise.product.featuredImage.url}
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col">
+                      {item.merchandise.title !== DEFAULT_OPTION ? (
+                        <p className="text-[13px] tracking-widest lg:text-[14.3px]">
+                          {item.merchandise.title}
+                        </p>
+                      ) : null}
+                    </div>
+                  </Link>
+                  <div className="flex h-16 flex-col justify-between">
                     <Price
                       className="flex justify-end space-y-2 text-right"
                       amountMax={item.cost.totalAmount.amount}
                       currencyCode={item.cost.totalAmount.currencyCode}
                     />
-                    <div className="flex place-content-center hover:cursor-pointer">
-                      <DeleteItemButton item={item} />
+                    <div className="ml-auto flex h-9 flex-row items-center">
+                      <div className="flex flex-row">
+                        <span className="pr-2">Piezas:</span>
+                        <p className="w-6 text-center">
+                          <span className="w-full">{item.quantity}</span>
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </li>
             );
           })}
         </ul>
-        <div className="flex w-full flex-row gap-3 pt-7">
-          <input
-            className="w-3/4 border-2 border-neutral-300 bg-[#f1f1f1] pl-2"
-            placeholder="Codigo de cupon..."
-          />
-          <div className="w-1/4 bg-neutral-500 p-3 text-center text-white">Aplicar</div>
-        </div>
-        <div className="py-7 text-neutral-500">
-          <div className="mb-2 flex items-center justify-between border-[#acacac] pb-1 pt-5 capitalize text-black">
+        <div className="flex flex-col pt-10 text-neutral-500">
+          <div className="mb-2 flex items-center justify-between border-[#acacac] pb-1 capitalize text-black">
             <p>Subtotal</p>
             <Price
               className="text-black"
@@ -127,6 +127,44 @@ export default function Cart({ cart }: { cart: CartType | null }) {
           </div>
         </div>
       </div>
+    </>
+  );
+}
+
+export function CartMobile({ cart }: { cart: CartType | null }) {
+  const [open, setOpen] = useState(0);
+
+  const handleOpen = (value: number) => setOpen(open === value ? 0 : value);
+
+  return (
+    <>
+      <Accordion
+        className="pb-5"
+        open={open === 1}
+        placeholder={undefined}
+        onResize={undefined}
+        onResizeCapture={undefined}
+        onPointerEnterCapture={undefined}
+        onPointerLeaveCapture={undefined}
+      >
+        <AccordionHeader
+          onClick={() => handleOpen(1)}
+          className="text-[13.5px] font-normal tracking-[1.4px]"
+          placeholder={undefined}
+          onResize={undefined}
+          onResizeCapture={undefined}
+          onPointerEnterCapture={undefined}
+          onPointerLeaveCapture={undefined}
+        >
+          <div className="flex flex-row">
+            <div>Resumen de la compra</div>
+            {open == 0 ? <KeyboardArrowDownSharpIcon /> : <KeyboardArrowUpSharpIcon />}
+          </div>
+        </AccordionHeader>
+        <AccordionBody>
+          <Cart cart={cart} />
+        </AccordionBody>
+      </Accordion>
     </>
   );
 }
