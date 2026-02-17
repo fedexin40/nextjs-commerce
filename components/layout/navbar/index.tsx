@@ -9,7 +9,7 @@ import Link from 'next/link';
 export default function Navbar() {
   return (
     <div className="">
-      <div className="text-[13px] tracking-widest lg:text-[14.3px]">
+      <div className="bg-gradient-to-r from-violet-200 to-pink-200 text-[13px] tracking-widest lg:text-[14.3px]">
         <MarqueeText>
           <div className="flex flex-row font-medium italic md:font-semibold">
             <div className="mr-28">Envíos a toda la república, y gratis a partir de $1000 MXN</div>

@@ -11,7 +11,7 @@ export default function MarqueeText({
   speed?: number;
 }) {
   return (
-    <div className="relative flex h-[50px] items-center bg-white bg-opacity-90">
+    <div className="relative flex h-[50px] items-center">
       <Marquee direction={direction} speed={speed}>
         {children}
       </Marquee>

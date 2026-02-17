@@ -14,7 +14,7 @@ function Header() {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         </div>
-        <div className="relative md:-top-[2px]">10 días para cambios & devoluciones</div>
+        <div className="relative md:-top-[2px]">30 días para cambios & devoluciones</div>
       </div>
       <div className="flex flex-row gap-2">
         <div className="relative top-[5px] h-[10px] min-h-[10px] w-[10px] min-w-[10px] md:top-0 md:h-[15px] md:min-h-[15px] md:w-[15px] md:min-w-[15px]">
