@@ -24,7 +24,7 @@ export function ImagesMobile({ images }: { images: { src: string; altText: strin
   return (
     <>
       <Carousel
-        swipeable={false}
+        swipeable={true}
         draggable={false}
         showDots={true}
         responsive={responsive}
