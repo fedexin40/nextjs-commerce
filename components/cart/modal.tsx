@@ -114,7 +114,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
 
                               <div className="flex flex-1 flex-col">
                                 {item.merchandise.title !== DEFAULT_OPTION ? (
-                                  <p className=" text-[13px] tracking-widest lg:text-[14.3px]">
+                                  <p className="text-[13px] tracking-widest lg:text-[14.3px]">
                                     {item.merchandise.title}
                                   </p>
                                 ) : null}
@@ -139,22 +139,30 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                       );
                     })}
                   </ul>
-                  <div className="py-4 text-neutral-500">
-                    <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1">
-                      <p>Envio</p>
-                      <p className="text-right">Calculado despues</p>
-                    </div>
-                    <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1">
-                      <p>Total</p>
-                      <Price
-                        className="text-right text-black"
-                        amountMax={cart.cost.subtotalAmount.amount}
-                        currencyCode={cart.cost.subtotalAmount.currencyCode}
-                      />
+                  <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1">
+                    <p>Total</p>
+                    <Price
+                      className="text-right text-black"
+                      amountMax={cart.cost.subtotalAmount.amount}
+                      currencyCode={cart.cost.subtotalAmount.currencyCode}
+                    />
+                  </div>
+                  <div className="py-4 text-neutral-800">
+                    <div className="mb-3 flex items-center justify-between border-b border-neutral-200 py-1">
+                      <div>
+                        {Number(cart.cost.subtotalAmount.amount) < 1000 ? (
+                          <>
+                            Le faltan ${(1000 - Number(cart.cost.subtotalAmount.amount)).toFixed(2)}{' '}
+                            MXN para el envío gratis
+                          </>
+                        ) : (
+                          <>Tiene envío gratis</>
+                        )}
+                      </div>
                     </div>
                   </div>
                   <div
-                    className="block w-full bg-[hsl(28,30%,59%)] p-3 text-center font-medium uppercase text-white opacity-90 hover:opacity-100"
+                    className="flex h-[60px] w-full items-center justify-center bg-[hsl(28,30%,59%)] text-center font-medium uppercase text-black opacity-90 hover:opacity-100"
                     onClick={() => goToAddress()}
                   >
                     Pasar a pagar

@@ -36,6 +36,7 @@ export function ImagesMobile({ images }: { images: { src: string; altText: strin
         removeArrowOnDeviceType={['tablet', 'mobile']}
         dotListClass="custom-dot-list-style"
         itemClass="carousel-item-padding-40-px"
+        transitionDuration={100}
       >
         {images.map((image) => (
           <div className="relative h-64 w-64">
