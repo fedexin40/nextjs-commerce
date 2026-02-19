@@ -139,7 +139,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                       );
                     })}
                   </ul>
-                  <div className="mb-3 flex items-center justify-between border-b border-neutral-200 pb-1 pt-1">
+                  <div className="mb-3 flex items-center justify-between border-b border-neutral-200 py-1">
                     <p>Total</p>
                     <Price
                       className="text-right text-black"
@@ -162,7 +162,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                     </div>
                   </div>
                   <div
-                    className="flex h-[60px] w-full items-center justify-center bg-[hsl(28,30%,59%)] text-center font-medium uppercase text-black opacity-90 hover:opacity-100"
+                    className="flex h-[60px] w-full items-center justify-center bg-[hsl(28,30%,59%)] text-center uppercase text-black opacity-90 hover:opacity-100"
                     onClick={() => goToAddress()}
                   >
                     Pasar a pagar
