@@ -5,12 +5,10 @@ import Script from 'next/script';
 import { ReactNode } from 'react';
 import './globals.css';
 
-const { SITE_NAME } = process.env;
 const baseUrl = process.env.SHOP_PUBLIC_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
   : 'http://localhost:3000';
 
-const googleTag = process.env.googleTag;
 const googleAnalytics = process.env.googleAnalytics;
 const defaultOgImage = new URL('/logoNegro.png', baseUrl);
 
@@ -21,7 +19,7 @@ export const metadata: Metadata = {
     template: '%s | Proyecto 705',
   },
   description:
-    'Compra broqueles de oro 10k y 14k en Proyecto 705. Envíos gratis en compras mayores a $1,500 MXN y meses sin intereses.',
+    'Venta de broqueles de oro 10k y 14k en Proyecto 705. Envíos gratis en compras mayores a $1,000 MXN y meses sin intereses.',
   alternates: {
     canonical: '/',
   },
@@ -31,7 +29,7 @@ export const metadata: Metadata = {
     siteName: 'Proyecto 705',
     title: 'Proyecto 705 - Broqueles de Oro',
     description:
-      'Tienda en línea de broqueles de oro 10k y 14k. Envíos gratis en compras mayores a $1,500 MXN.',
+      'Tienda en línea de broqueles de oro 10k y 14k. Envíos gratis en compras mayores a $1,000 MXN.',
     images: [
       {
         url: defaultOgImage, // usa URL absoluta si sirves desde CDN
@@ -45,7 +43,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Proyecto 705 - Broqueles de Oro',
-    description: 'Broqueles de oro 10k y 14k. Envíos gratis en compras mayores a $1,500 MXN.',
+    description: 'Broqueles de oro 10k y 14k. Envíos gratis en compras mayores a $1,000 MXN.',
     images: [defaultOgImage],
     creator: '@proyecto705',
   },

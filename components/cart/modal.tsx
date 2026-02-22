@@ -147,7 +147,7 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                       currencyCode={cart.cost.subtotalAmount.currencyCode}
                     />
                   </div>
-                  <div className="py-4 text-neutral-800">
+                  <div className="py-4">
                     <div className="mb-3 flex items-center justify-between border-b border-neutral-200 py-1">
                       <div>
                         {Number(cart.cost.subtotalAmount.amount) < 1000 ? (
