@@ -53,7 +53,7 @@ export async function ProductDescription({
             <Rating productId={product.id} />
           </a>
         </div>
-        <div className="pb-5 text-justify text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
+        <div className="pb-5 text-left text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
           {description}
         </div>
         <div className="mr-auto hidden w-auto p-2 pl-0 pt-5 text-[13.5px] font-semibold tracking-[1.4px] md:block lg:text-[14.3px]">
@@ -191,14 +191,14 @@ export async function ProductDescription({
           </div>
         </div>
       </div>
-      <div className="flex flex-col pt-8 text-justify text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
+      <div className="flex flex-col pt-8 text-left text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
         <div className="text-[15px] font-semibold">Compra protegida por PayPal</div>
-        <div className="py-5 text-[15px] text-gray-600">
+        <div className="py-5 text-gray-600">
           Si compras con PayPal, PayPal garantiza que recibas tu compra o te devuelven tu dinero
         </div>
         <Link href={'https://www.paypal.com/es/digital-wallet/buyer-purchase-protection'}>
-          <div className="cursor-pointer pb-5 text-[15px] text-blue-600 transition-colors duration-200 hover:text-blue-800 hover:underline">
-            Da click aca para cononer mas del programa PayPal Buyer Protection
+          <div className="cursor-pointer pb-5 text-blue-600 transition-colors duration-200 hover:text-blue-800 hover:underline">
+            Da click aca para conocer mas del programa PayPal Buyer Protection...
           </div>
         </Link>
         <div className="relative h-[150px] w-[150px] place-self-center">
