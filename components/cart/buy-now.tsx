@@ -44,6 +44,23 @@ export function BuyNow({
       ? 'Please select options'
       : undefined;
 
+  function Pixel() {
+    if (typeof window === 'undefined' || typeof (window as any)?.fbq !== 'function') return;
+    window.fbq(
+      'track',
+      'AddToCart',
+      {
+        content_ids: [product.handle],
+        content_type: 'product',
+        currency: 'MXN',
+        value: variant?.price.amount || product.priceRange.maxVariantPrice.amount,
+      },
+      {
+        eventID: event_id,
+      },
+    );
+  }
+
   return (
     <>
       <div>
@@ -75,34 +92,26 @@ export function BuyNow({
                 });
                 return;
               }
-              window.fbq(
-                'track',
-                'AddToCart',
-                {
-                  content_ids: [product.handle],
-                  content_type: 'product',
-                  currency: 'MXN',
-                  value: variant?.price.amount || product.priceRange.maxVariantPrice.amount,
-                },
-                {
-                  eventID: event_id,
-                },
-              );
+              Pixel();
               const products = {
                 handle: product.handle,
                 quantity: 1,
               };
-              sendMetaCapiEvent({
-                event_name: 'AddToCart',
-                fbclid: fbclid,
-                value: variant?.price.amount || product.priceRange.maxVariantPrice.amount,
-                event_id: event_id,
-                email: currentUser.email,
-                phone: currentUser.address.phone,
-                current_timestamp: current_timestamp,
-                current_timestamp_miliseconds: date,
-                products: [products],
-              });
+              try {
+                sendMetaCapiEvent({
+                  event_name: 'AddToCart',
+                  fbclid: fbclid,
+                  value: variant?.price.amount || product.priceRange.maxVariantPrice.amount,
+                  event_id: event_id,
+                  email: currentUser.email,
+                  phone: currentUser.address.phone,
+                  current_timestamp: current_timestamp,
+                  current_timestamp_miliseconds: date,
+                  products: [products],
+                });
+              } catch (error) {
+                console.log(error);
+              }
               // Get cart
               const cart = await lastCheckout();
               router.replace(cart?.checkoutUrl || '/');
@@ -155,34 +164,26 @@ export function BuyNow({
                 });
                 return;
               }
-              window.fbq(
-                'track',
-                'AddToCart',
-                {
-                  content_ids: [product.handle],
-                  content_type: 'product',
-                  currency: 'MXN',
-                  value: variant?.price.amount || product.priceRange.maxVariantPrice.amount,
-                },
-                {
-                  eventID: event_id,
-                },
-              );
+              Pixel();
               const products = {
                 handle: product.handle,
                 quantity: 1,
               };
-              sendMetaCapiEvent({
-                event_name: 'AddToCart',
-                fbclid: fbclid,
-                value: variant?.price.amount || product.priceRange.maxVariantPrice.amount,
-                event_id: event_id,
-                email: currentUser.email,
-                phone: currentUser.address.phone,
-                current_timestamp: current_timestamp,
-                current_timestamp_miliseconds: date,
-                products: [products],
-              });
+              try {
+                sendMetaCapiEvent({
+                  event_name: 'AddToCart',
+                  fbclid: fbclid,
+                  value: variant?.price.amount || product.priceRange.maxVariantPrice.amount,
+                  event_id: event_id,
+                  email: currentUser.email,
+                  phone: currentUser.address.phone,
+                  current_timestamp: current_timestamp,
+                  current_timestamp_miliseconds: date,
+                  products: [products],
+                });
+              } catch (error) {
+                console.log(error);
+              }
               router.refresh();
               startTransitionAdd2Cart(() => {
                 openMenu();
