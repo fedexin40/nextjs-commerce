@@ -43,7 +43,6 @@ export function ImagesMobile({ images }: { images: { src: string; altText: strin
           </div>
         ))}
       </Carousel>
-      ;
     </>
   );
 }

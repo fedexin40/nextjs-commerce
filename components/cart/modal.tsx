@@ -152,8 +152,8 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                       <div>
                         {Number(cart.cost.subtotalAmount.amount) < 1000 ? (
                           <>
-                            Le faltan ${(1000 - Number(cart.cost.subtotalAmount.amount)).toFixed(2)}{' '}
-                            MXN para el envío gratis
+                            Agrega ${(1000 - Number(cart.cost.subtotalAmount.amount)).toFixed(2)}{' '}
+                            MXN mas para obtener envío gratis
                           </>
                         ) : (
                           <>Tiene envío gratis</>

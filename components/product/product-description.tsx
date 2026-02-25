@@ -201,7 +201,7 @@ export async function ProductDescription({
             Da click aca para conocer mas del programa PayPal Buyer Protection...
           </div>
         </Link>
-        <div className="relative h-[150px] w-[150px] place-self-center">
+        <div className="place-self-left relative h-[150px] w-[150px]">
           <Image
             className="object-contain"
             src={'/Buyer.jpg'}

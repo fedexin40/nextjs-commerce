@@ -98,6 +98,7 @@ export default async function CheckoutPayment(props: {
               returnUrl={checkoutPayment.toString()}
               content_ids={content_ids}
               value={value}
+              checkoutId={cart.id}
             />
           </div>
           <Paypal TotalAmount={value} checkoutID={cart.id} />
