@@ -20,7 +20,7 @@ export default async function HomePage() {
     <div>
       <div className="relative h-96 w-full overflow-hidden">
         <Image
-          src="/banner4.avif"
+          src="/banner3.avif"
           alt="Banner Proyecto 705"
           fill
           priority
