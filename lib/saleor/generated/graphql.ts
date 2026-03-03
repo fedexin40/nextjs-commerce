@@ -33350,7 +33350,7 @@ export const GetCategoryProductsBySlugDocument = new TypedDocumentString(`
     query GetCategoryProductsBySlug($slug: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!, $after: String!, $first: Int!) {
   category(slug: $slug) {
     products(
-      where: {stocks: {quantity: {gte: 0}}}
+      where: {stockAvailability: IN_STOCK}
       channel: "proyecto705"
       first: $first
       after: $after
@@ -33648,7 +33648,7 @@ export const GetCollectionProductsBySlugDocument = new TypedDocumentString(`
     query GetCollectionProductsBySlug($slug: String!, $sortBy: ProductOrderField!, $sortDirection: OrderDirection!, $after: String!, $first: Int!) {
   collection(channel: "proyecto705", slug: $slug) {
     products(
-      where: {stocks: {quantity: {gte: 0}}}
+      where: {stockAvailability: IN_STOCK}
       after: $after
       first: $first
       sortBy: {field: $sortBy, direction: $sortDirection}

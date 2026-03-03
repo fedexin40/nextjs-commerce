@@ -28,6 +28,9 @@ export async function ProductDescription({
 
   // Used for facebook pixel
   const currentUser = await Me();
+  const availableVariants = product.variants
+    .filter((variant) => variant.quantityAvailable > 0)
+    .sort((a: any, b: any) => a.price.amount - b.price.amount);
 
   return (
     <div className="flex flex-col">
@@ -42,10 +45,16 @@ export async function ProductDescription({
               currencyCode={product.priceRange.minVariantPrice.currencyCode}
             />
           )}
-          {!variant && (
+          {!variant && availableVariants.length > 1 && (
             <Price
-              amountMax={product.priceRange.maxVariantPrice.amount}
-              amountMin={product.priceRange.minVariantPrice.amount}
+              amountMax={availableVariants[availableVariants.length - 1]?.price.amount || '00.00'}
+              amountMin={availableVariants[0]?.price.amount || '00.00'}
+              currencyCode={product.priceRange.minVariantPrice.currencyCode}
+            />
+          )}
+          {!variant && availableVariants.length == 1 && (
+            <Price
+              amountMax={availableVariants[0]?.price.amount || '00.00'}
               currencyCode={product.priceRange.minVariantPrice.currencyCode}
             />
           )}
@@ -63,10 +72,16 @@ export async function ProductDescription({
               currencyCode={product.priceRange.minVariantPrice.currencyCode}
             />
           )}
-          {!variant && (
+          {!variant && availableVariants.length > 1 && (
             <Price
-              amountMax={product.priceRange.maxVariantPrice.amount}
-              amountMin={product.priceRange.minVariantPrice.amount}
+              amountMax={availableVariants[availableVariants.length - 1]?.price.amount || '00.00'}
+              amountMin={availableVariants[0]?.price.amount || '00.00'}
+              currencyCode={product.priceRange.minVariantPrice.currencyCode}
+            />
+          )}
+          {!variant && availableVariants.length == 1 && (
+            <Price
+              amountMax={availableVariants[0]?.price.amount || '00.00'}
               currencyCode={product.priceRange.minVariantPrice.currencyCode}
             />
           )}

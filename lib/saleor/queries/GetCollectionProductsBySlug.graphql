@@ -7,7 +7,7 @@ query GetCollectionProductsBySlug(
 ) {
   collection(channel: "proyecto705", slug: $slug) {
     products(
-      where: { stocks: { quantity: { gte: 0 } } }
+      where: { stockAvailability: IN_STOCK }
       after: $after
       first: $first
       sortBy: { field: $sortBy, direction: $sortDirection }

@@ -25,7 +25,7 @@ export function BuyNow({
   const [isPendingAdd2Cart, startTransitionAdd2Cart] = useTransition();
   const [ErrorMessage, setErrorMessage] = useState('');
   const { openMenu } = cartActions();
-  const variants = product.variants;
+  const variants = product.variants.filter((variant) => variant.quantityAvailable > 0);
   const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined;
   const variant = variants.find((variant: ProductVariant) =>
     variant.selectedOptions.every(
