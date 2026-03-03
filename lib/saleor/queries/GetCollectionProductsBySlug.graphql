@@ -6,7 +6,12 @@ query GetCollectionProductsBySlug(
   $first: Int!
 ) {
   collection(channel: "proyecto705", slug: $slug) {
-    products(after: $after, first: $first, sortBy: { field: $sortBy, direction: $sortDirection }) {
+    products(
+      where: { stocks: { quantity: { gte: 0 } } }
+      after: $after
+      first: $first
+      sortBy: { field: $sortBy, direction: $sortDirection }
+    ) {
       pageInfo {
         hasNextPage
         endCursor

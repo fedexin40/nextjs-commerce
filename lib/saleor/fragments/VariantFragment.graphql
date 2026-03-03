@@ -1,6 +1,7 @@
 fragment Variant on ProductVariant {
   id
   name
+  quantityAvailable
   attributes {
     attribute {
       slug

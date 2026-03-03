@@ -106,6 +106,7 @@ export function saleorVariantsToVercelVariants(
         id: variant.id,
         title: variant.name,
         availableForSale: isAvailableForPurchase || true,
+        quantityAvailable: variant.quantityAvailable || 0,
         selectedOptions: variant.attributes.flatMap((attribute) => {
           return attribute.values.map((value) => {
             return {

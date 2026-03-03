@@ -54,7 +54,7 @@ function VariantSelectorDropdown({
         onClick={() => {
           setOpenSelect(!openSelect);
         }}
-        className="flex	rounded border border-black/30 px-4 text-sm"
+        className="flex rounded border border-black/30 px-4 text-sm"
       >
         <div className="min-h-[38px] min-w-[95px] max-w-none p-2">{active}</div>
         <ChevronDownIcon className="h-4 self-center" />
@@ -141,15 +141,17 @@ export function VariantSelector({
     return null;
   }
 
-  const combinations: Combination[] = variants.map((variant) => ({
-    id: variant.id,
-    availableForSale: variant.availableForSale,
-    // Adds key / value pairs for each variant (ie. "color": "Black" and "size": 'M").
-    ...variant.selectedOptions.reduce(
-      (accumulator, option) => ({ ...accumulator, [option.name.toLowerCase()]: option.value }),
-      {},
-    ),
-  }));
+  const combinations: Combination[] = variants
+    .filter((variant) => variant.quantityAvailable > 0)
+    .map((variant) => ({
+      id: variant.id,
+      availableForSale: variant.availableForSale,
+      // Adds key / value pairs for each variant (ie. "color": "Black" and "size": 'M").
+      ...variant.selectedOptions.reduce(
+        (accumulator, option) => ({ ...accumulator, [option.name.toLowerCase()]: option.value }),
+        {},
+      ),
+    }));
 
   return options.map((option) => (
     <div key={option.id} className="pt-6">

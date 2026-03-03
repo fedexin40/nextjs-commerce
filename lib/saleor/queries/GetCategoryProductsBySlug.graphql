@@ -7,6 +7,7 @@ query GetCategoryProductsBySlug(
 ) {
   category(slug: $slug) {
     products(
+      where: { stocks: { quantity: { gte: 0 } } }
       channel: "proyecto705"
       first: $first
       after: $after
