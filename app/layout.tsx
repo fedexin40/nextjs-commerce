@@ -1,3 +1,4 @@
+import ContactFloating from '#/components/chat/contact';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import { FacebookPixelEvents } from 'components/FacebookPixel';
 import type { Metadata } from 'next';
@@ -100,6 +101,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       <body className="select-none bg-white text-black">
         <main>{children}</main>
         <FacebookPixelEvents />
+        <ContactFloating />
         <GoogleAnalytics gaId={googleAnalytics || ''} />
         {/* Schema.org (Organization) */}
         <Script

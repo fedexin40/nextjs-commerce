@@ -96,7 +96,7 @@ export function Contacto() {
           </div>
         </div>
         <div className="flex flex-col gap-y-3">
-          <a href="https://api.whatsapp.com/send?phone=522225215239">Whatsapp: 222 521 52 39</a>
+          <a href="https://api.whatsapp.com/send?phone=522224224586">Whatsapp: 222 42 24 586</a>
           <div>
             <a href="mailto:contacto@proyecto705.com.mx">contacto@proyecto705.com.mx</a>
           </div>

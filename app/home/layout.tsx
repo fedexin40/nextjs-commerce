@@ -1,4 +1,3 @@
-import { SaleorChatWidget } from '#/components/chat/page';
 import Footer from 'components/layout/footer';
 import Navbar from 'components/layout/navbar';
 import Loading from 'components/loading';
@@ -20,7 +19,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           }
         >
           <Navbar />
-          <SaleorChatWidget />
           <div className="flex-1 overflow-y-scroll no-scrollbar">
             <div className="bg-white text-[13px] tracking-widest lg:text-[14.3px]">{children}</div>
             <div className="text-[13px] tracking-widest lg:text-[14.3px]">
