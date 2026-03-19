@@ -1,5 +1,4 @@
 import ContactFloating from '#/components/chat/contact';
-import { GoogleAnalytics } from '@next/third-parties/google';
 import { FacebookPixelEvents } from 'components/FacebookPixel';
 import type { Metadata } from 'next';
 import Script from 'next/script';
@@ -10,9 +9,7 @@ const baseUrl = process.env.SHOP_PUBLIC_URL
   ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
   : 'http://localhost:3000';
 
-const googleAnalytics = process.env.googleAnalytics;
 const defaultOgImage = new URL('/logoNegro.png', baseUrl);
-
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
@@ -102,7 +99,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <main>{children}</main>
         <FacebookPixelEvents />
         <ContactFloating />
-        <GoogleAnalytics gaId={googleAnalytics || ''} />
         {/* Schema.org (Organization) */}
         <Script
           id="schema-org-organization"

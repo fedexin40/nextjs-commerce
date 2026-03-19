@@ -1,9 +1,12 @@
+import { GoogleAnalytics } from '@next/third-parties/google';
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import LoadMore from 'components/load-more/page';
 import { getCollectionProducts } from 'lib/saleor';
 import Image from 'next/image';
 import Link from 'next/link';
+
+const googleAnalytics = process.env.googleAnalytics;
 
 export default async function HomePage() {
   const collection = 'oro';
@@ -18,6 +21,7 @@ export default async function HomePage() {
 
   return (
     <div>
+      <GoogleAnalytics gaId={googleAnalytics || ''} />
       <div className="relative h-96 w-full overflow-hidden">
         <Image
           src="/banner3.avif"

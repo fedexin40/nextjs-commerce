@@ -1,12 +1,16 @@
 import Brevo from '#/components/brevo/page';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import Footer from 'components/layout/footer';
 import Navbar from 'components/layout/navbar';
 import Loading from 'components/loading';
 import { Suspense } from 'react';
 
+const googleAnalytics = process.env.googleAnalytics;
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      <GoogleAnalytics gaId={googleAnalytics || ''} />
       <div className="flex h-screen flex-col overflow-hidden">
         <Suspense
           fallback={
