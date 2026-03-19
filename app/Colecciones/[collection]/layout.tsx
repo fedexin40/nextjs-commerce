@@ -1,3 +1,4 @@
+import Brevo from '#/components/brevo/page';
 import Footer from 'components/layout/footer';
 import Navbar from 'components/layout/navbar';
 import Loading from 'components/loading';
@@ -23,6 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <div className="bg-white text-[13px] tracking-widest lg:text-[14.3px]">{children}</div>
             <div className="text-[13px] tracking-widest lg:text-[14.3px]">
               <Footer />
+              <Brevo />
             </div>
           </div>
         </Suspense>

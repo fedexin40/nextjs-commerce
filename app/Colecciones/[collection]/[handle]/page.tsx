@@ -1,3 +1,4 @@
+import { InternetAccreditedBadge } from '#/components/internetaccredited/page';
 import Reviews from '#/components/prisma';
 import { ProductView } from 'components/FacebookPixel';
 import { GridTileImage } from 'components/grid/tile';
@@ -5,8 +6,9 @@ import { PageItem } from 'components/htmlParser/page';
 import { Gallery } from 'components/product/gallery';
 import { ProductDescription } from 'components/product/product-description';
 import { getCollectionProducts, getProduct, Me } from 'lib/saleor';
-import { Image, Product as productType, ProductVariant } from 'lib/types';
+import { Image as ImageType, Product as productType, ProductVariant } from 'lib/types';
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -138,7 +140,7 @@ export default async function Product(props: {
           <div className="flex flex-col md:grid md:grid-cols-3">
             <div className="md:col-span-2">
               <Gallery
-                images={product.images.map((image: Image) => ({
+                images={product.images.map((image: ImageType) => ({
                   src: image.url,
                   altText: image.altText,
                 }))}
@@ -147,6 +149,33 @@ export default async function Product(props: {
             </div>
             <div>
               <ProductDescription product={product} variant={variant} />
+            </div>
+            <div className="flex w-full flex-col pt-10 md:col-span-2">
+              <div className="text-[15px] font-semibold">Tienda acreditada por</div>
+              <div className="w-2/3 pt-3 md:w-1/2">
+                <InternetAccreditedBadge />
+              </div>
+              <div className="flex w-full flex-col pt-8 text-left text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
+                <div className="text-[15px] font-semibold">Compra protegida por PayPal</div>
+                <div className="py-5 text-gray-600">
+                  Si compras con PayPal, PayPal garantiza que recibas tu compra o te devuelven tu
+                  dinero
+                </div>
+                <Link href={'https://www.paypal.com/es/digital-wallet/buyer-purchase-protection'}>
+                  <div className="cursor-pointer pb-5 text-blue-600 transition-colors duration-200 hover:text-blue-800 hover:underline">
+                    Da click aca para conocer mas del programa PayPal Buyer Protection...
+                  </div>
+                </Link>
+                <div className="place-self-left relative h-[150px] w-[150px]">
+                  <Image
+                    className="object-contain"
+                    src={'/Buyer.jpg'}
+                    alt="Compra protegida con Paypal"
+                    fill
+                    sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div className="flex flex-col">

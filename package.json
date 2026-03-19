@@ -83,6 +83,7 @@
     "zustand": "^5.0.9"
   },
   "devDependencies": {
+    "@builder.io/partytown": "^0.10.3",
     "@graphql-codegen/cli": "6.1.0",
     "@graphql-codegen/client-preset": "5.2.1",
     "@next/env": "16.0.10",

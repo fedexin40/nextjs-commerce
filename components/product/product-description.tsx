@@ -3,8 +3,6 @@ import { BuyNow } from 'components/cart/buy-now';
 import Price from 'components/price';
 import { Product, ProductVariant } from 'lib/types';
 import Image from 'next/image';
-import Link from 'next/link';
-import { InternetAccreditedBadge } from '../internetaccredited/page';
 import { Rating } from '../prisma';
 import { VariantSelector } from './variant-selector';
 
@@ -100,9 +98,6 @@ export async function ProductDescription({
           currentUser={currentUser}
         />
       </div>
-      <div className="w-full pt-3">
-        <InternetAccreditedBadge />
-      </div>
       <div className="flex flex-col gap-y-1 pt-5 text-left text-[12px] leading-[20px] text-gray-800">
         <div>Tiempo de entrega de 2 a 7 dias hábiles</div>
         <div className="font-medium">Envío gratis en compras mayores a $1,000.00</div>
@@ -128,7 +123,6 @@ export async function ProductDescription({
           </div>
         </div>
       </div>
-
       <div className="flex flex-col pt-8 text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
         <div className="text-[15px] font-semibold">Métodos de Pago</div>
         <div className="grid grid-cols-4 pt-5 md:grid-cols-3 md:pt-8 lg:grid-cols-4">
@@ -204,26 +198,6 @@ export async function ProductDescription({
               sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
             />
           </div>
-        </div>
-      </div>
-      <div className="flex flex-col pt-8 text-left text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
-        <div className="text-[15px] font-semibold">Compra protegida por PayPal</div>
-        <div className="py-5 text-gray-600">
-          Si compras con PayPal, PayPal garantiza que recibas tu compra o te devuelven tu dinero
-        </div>
-        <Link href={'https://www.paypal.com/es/digital-wallet/buyer-purchase-protection'}>
-          <div className="cursor-pointer pb-5 text-blue-600 transition-colors duration-200 hover:text-blue-800 hover:underline">
-            Da click aca para conocer mas del programa PayPal Buyer Protection...
-          </div>
-        </Link>
-        <div className="place-self-left relative h-[150px] w-[150px]">
-          <Image
-            className="object-contain"
-            src={'/Buyer.jpg'}
-            alt="Compra protegida con Paypal"
-            fill
-            sizes="(min-width: 1024px) 20vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, (min-width: 475px) 50vw, 100vw"
-          />
         </div>
       </div>
     </div>

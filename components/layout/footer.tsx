@@ -1,9 +1,7 @@
-import Brevo from 'components/brevo/page';
 import FooterMenu from 'components/layout/footer-menu';
 import { getPagesByMenu } from 'lib/saleor';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Suspense } from 'react';
 
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
@@ -57,9 +55,6 @@ export default async function Footer() {
           </div>
         </div>
       </div>
-      <Suspense>
-        <Brevo />
-      </Suspense>
     </footer>
   );
 }
