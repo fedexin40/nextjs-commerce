@@ -5,9 +5,7 @@ import Script from 'next/script';
 import { ReactNode } from 'react';
 import './globals.css';
 
-const baseUrl = process.env.SHOP_PUBLIC_URL
-  ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-  : 'http://localhost:3000';
+const baseUrl = process.env.SHOP_PUBLIC_URL || 'http://localhost:3000';
 
 const defaultOgImage = new URL('/logoNegro.png', baseUrl);
 export const metadata: Metadata = {
@@ -18,9 +16,6 @@ export const metadata: Metadata = {
   },
   description:
     'Venta de broqueles de oro 10k y 14k en Proyecto 705. Envíos gratis en compras mayores a $1,000 MXN y meses sin intereses.',
-  alternates: {
-    canonical: '/',
-  },
   openGraph: {
     type: 'website',
     url: baseUrl,

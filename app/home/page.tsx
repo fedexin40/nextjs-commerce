@@ -3,10 +3,17 @@ import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import LoadMore from 'components/load-more/page';
 import { getCollectionProducts } from 'lib/saleor';
+import { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 
 const googleAnalytics = process.env.googleAnalytics;
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: '/',
+  },
+};
 
 export default async function HomePage() {
   const collection = 'oro';
