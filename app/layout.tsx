@@ -83,7 +83,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
   };
 
   return (
-    <html>
+    <html lang="es">
       <head>
         <Script id="microsoft-clarity" strategy="worker">
           {`

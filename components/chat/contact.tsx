@@ -53,6 +53,7 @@ export default function ContactFloating() {
 
       {/* Botón principal */}
       <button
+        aria-label="Open Chat"
         onClick={() => setOpen(!open)}
         className="flex h-14 w-14 items-center justify-center rounded-full bg-black text-white shadow-xl transition hover:scale-110"
       >

@@ -27,7 +27,7 @@ export default async function HomePage() {
           src="/banner3.avif"
           alt="Banner Proyecto 705"
           fill
-          priority
+          preload={true}
           sizes="100vw"
           className="object-cover object-center"
         />
