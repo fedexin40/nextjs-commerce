@@ -1,9 +1,6 @@
 import type { MetadataRoute } from 'next';
 
-const siteUrl = (process.env.NEXT_PUBLIC_VERCEL_URL ?? 'https://proyecto705.com.mx').replace(
-  /\/$/,
-  '',
-);
+const siteUrl = (process.env.SHOP_PUBLIC_URL ?? 'https://proyecto705.com.mx').replace(/\/$/, '');
 
 export default function robots(): MetadataRoute.Robots {
   return {
