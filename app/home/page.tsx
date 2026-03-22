@@ -35,6 +35,7 @@ export default async function HomePage() {
           alt="Banner Proyecto 705"
           fill
           preload={true}
+          loading="eager"
           sizes="100vw"
           className="object-cover object-center"
         />
