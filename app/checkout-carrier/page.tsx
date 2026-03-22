@@ -59,7 +59,7 @@ export default async function Checkout(props: {
     );
   }
 
-  if (Number(cart.cost.totalAmount.amount) >= 1000) {
+  if (Number(cart.cost.subtotalAmount.amount) >= 1000) {
     deliveryMethodUpdate({
       checkoutId: checkout,
       deliveryMethodId: shippingMethods[0]?.id || '',
@@ -72,7 +72,7 @@ export default async function Checkout(props: {
   return (
     <>
       <InitiateCheckout
-        value={cart.cost.totalAmount.amount}
+        value={cart.cost.subtotalAmount.amount}
         email={cart.userEmail || undefined}
         phone={cart.shippingAddress?.phone || undefined}
         products={cart.lines.map((x) => ({
