@@ -101,7 +101,9 @@ export default async function CheckoutPayment(props: {
               checkoutId={cart.id}
             />
           </div>
-          <Paypal TotalAmount={value} checkoutID={cart.id} />
+          <div className="z-40">
+            <Paypal TotalAmount={value} checkoutID={cart.id} />
+          </div>
         </div>
         <div className="hidden border-[#acacac] bg-[#d4d4d4] px-10 py-16 md:flex md:basis-[48%] md:border-l-2 lg:px-10">
           <div className="w-full">
