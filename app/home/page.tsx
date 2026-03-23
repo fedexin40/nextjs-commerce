@@ -1,4 +1,4 @@
-import { GoogleAnalytics } from '@next/third-parties/google';
+import GoogleAnalyticsPartytown from '#/components/google-analytics/page';
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import LoadMore from 'components/load-more/page';
@@ -28,7 +28,7 @@ export default async function HomePage() {
 
   return (
     <div>
-      <GoogleAnalytics gaId={googleAnalytics || ''} />
+      <GoogleAnalyticsPartytown />
       <div className="relative h-96 w-full overflow-hidden">
         <Image
           src="/banner3.avif"

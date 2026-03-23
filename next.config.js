@@ -1,8 +1,5 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  experimental: {
-    nextScriptWorkers: true,
-  },
   cacheComponents: true,
   turbopack: {
     resolveAlias: {

@@ -45,20 +45,19 @@ export function BuyNow({
       : undefined;
 
   function Pixel() {
-    if (typeof window === 'undefined' || typeof (window as any)?.fbq !== 'function') return;
-    window.fbq(
-      'track',
-      'AddToCart',
-      {
-        content_ids: [product.handle],
-        content_type: 'product',
-        currency: 'MXN',
-        value: variant?.price.amount || product.priceRange.maxVariantPrice.amount,
-      },
-      {
-        eventID: event_id,
-      },
-    );
+    if (typeof window === 'undefined') return;
+
+    const fbq = window.fbq;
+    if (typeof fbq !== 'function') return;
+
+    console.log('llegue aca');
+    fbq('track', 'AddToCart', {
+      content_ids: [product.handle],
+      content_type: 'product',
+      currency: 'MXN',
+      value: Number(variant?.price.amount ?? product.priceRange.maxVariantPrice.amount),
+      eventID: event_id,
+    });
   }
 
   return (
