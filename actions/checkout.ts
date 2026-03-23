@@ -8,6 +8,7 @@ import {
   updateDeliveryMethod,
 } from 'lib/saleor';
 import { CountryCode } from 'lib/saleor/generated/graphql';
+import { revalidatePath } from 'next/cache';
 import { permanentRedirect } from 'next/navigation';
 
 export async function deliveryMethodUpdate({
@@ -36,6 +37,7 @@ export async function deliveryMethodUpdate({
       }
     }
     setCarrierDetails({ checkoutId, carrierName, shippingCost });
+    revalidatePath('/checkout-payment');
   } catch (error: any) {
     return error.message;
   }
