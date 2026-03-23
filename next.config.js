@@ -16,7 +16,7 @@ module.exports = {
     remotePatterns: [
       { protocol: 'https', hostname: 'api.proyecto705.com.mx' },
       { protocol: 'http', hostname: 'localhost' },
-      { protocol: 'https', hostname: 'api.proyecto705.com' },
+      { protocol: 'https', hostname: 'www.internetaccredited.com' },
     ],
   },
 
