@@ -24,6 +24,13 @@ function Cart({
   shippingAmount: number;
   totalAmount: number;
 }) {
+  // I believe it is impossible to get until here without
+  // a cart, so it is ok just to pass, I am doing the below to make
+  // happy typescript
+  if (!cart) {
+    return;
+  }
+
   // TODO: Below logic is becuase shippingAmount is not reloaded. It is like it were cached
   // but I could not find where
   const subTotal = shippingAmount > 0 ? (totalAmount - shippingAmount) / 1.16 : totalAmount / 1.16;
