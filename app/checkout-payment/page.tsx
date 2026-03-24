@@ -15,16 +15,18 @@ type MerchandiseSearchParams = {
   [key: string]: string;
 };
 
-function Cart({ cart }: { cart: CartType | null }) {
-  // It is impossible to be here without a car, or at least I think
-  // that's why I am only returning
-  if (!cart) {
-    return <div />;
-  }
-  let deliveryPrice = Number(cart.cost.totalAmount.amount);
-  cart.lines.map((item) => {
-    deliveryPrice -= Number(item.cost.totalAmount.amount) * item.quantity;
-  });
+function Cart({
+  cart,
+  shippingAmount,
+  totalAmount,
+}: {
+  cart: CartType | null;
+  shippingAmount: number;
+  totalAmount: number;
+}) {
+  // TODO: Below logic is becuase shippingAmount is not reloaded. It is like it were cached
+  // but I could not find where
+  const subTotal = shippingAmount > 0 ? (totalAmount - shippingAmount) / 1.16 : totalAmount / 1.16;
 
   return (
     <>
@@ -93,32 +95,32 @@ function Cart({ cart }: { cart: CartType | null }) {
             <p>Subtotal</p>
             <Price
               className="text-black"
-              amountMax={cart.cost.subtotalAmountBeforeTaxes.amount}
-              currencyCode={cart.cost.subtotalAmountBeforeTaxes.currencyCode}
+              amountMax={subTotal.toFixed(2).toString()}
+              currencyCode="MXN"
             />
           </div>
           <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 uppercase text-black">
             <p>Iva (16%)</p>
             <Price
               className="text-black"
-              amountMax={cart.cost.totalTaxAmount.amount}
-              currencyCode={cart.cost.totalTaxAmount.currencyCode}
+              amountMax={(totalAmount - (subTotal + shippingAmount)).toFixed(2).toString()}
+              currencyCode="MXN"
             />
           </div>
           <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 capitalize text-black">
             <p>Envío</p>
             <Price
               className="text-black"
-              amountMax={cart.cost.totalShippingAmount.amount}
-              currencyCode={cart.cost.totalShippingAmount.currencyCode}
+              amountMax={shippingAmount.toString()}
+              currencyCode="MXN"
             />
           </div>
           <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 capitalize text-black">
             <p>Total</p>
             <Price
               className="text-black"
-              amountMax={cart.cost.totalAmount.amount}
-              currencyCode={cart.cost.totalAmount.currencyCode}
+              amountMax={totalAmount.toFixed(2).toString()}
+              currencyCode="MXN"
             />
           </div>
         </div>
@@ -169,6 +171,18 @@ export default async function CheckoutPayment(props: {
   if (!cart) {
     return;
   }
+
+  // TODO: Below logic is becuase shippingAmount is not updated when setting the free voucher discount in the cart
+  // It is like it were cached, and it fails randomly but I could not find why
+  const shippingAmount =
+    Number(cart.cost.subtotalAmount.amount) >= 1000
+      ? 0.0
+      : Number(cart.cost.totalShippingAmount.amount);
+  const totalAmount =
+    Number(cart.cost.subtotalAmount.amount) >= 1000
+      ? Number(cart.cost.subtotalAmount.amount)
+      : Number(cart.cost.subtotalAmount.amount) + shippingAmount;
+
   const transaction = await transactionInitialize({
     paymentGateway: 'app.saleor.stripe',
     checkoutId: cart.id,
@@ -193,7 +207,7 @@ export default async function CheckoutPayment(props: {
 
   // Used for facebook pixel
   const content_ids = cart.lines.map((x) => x.merchandise.product.handle);
-  const value = cart.cost.totalAmount.amount;
+  const value = totalAmount.toFixed(2).toString();
   return (
     <>
       <UpdateMetadata cart={cart} />
@@ -201,7 +215,7 @@ export default async function CheckoutPayment(props: {
         <div className="mx-10 mb-16 flex flex-col pt-6 md:mb-24 md:basis-[52%] md:pt-16 lg:mb-40 lg:px-10">
           <div className="md:hidden">
             <CartMobile>
-              <Cart cart={cart} />
+              <Cart cart={cart} shippingAmount={shippingAmount} totalAmount={totalAmount} />
             </CartMobile>
           </div>
           <div className="relative mb-5 h-[50px] w-[180px] hover:cursor-pointer">
@@ -211,7 +225,7 @@ export default async function CheckoutPayment(props: {
           </div>
           <div className="flex flex-row space-x-3 bg-[#e4c0b2] p-5">
             <span className="capitalize">Proyecto 705:</span>
-            <span className="uppercase">${cart?.cost.totalAmount.amount}</span>
+            <span className="uppercase">${value}</span>
           </div>
           <div className="border-2 border-[#acacac] px-5 py-3 pb-20">
             <StripeComponent
@@ -229,7 +243,7 @@ export default async function CheckoutPayment(props: {
         </div>
         <div className="hidden border-[#acacac] bg-[#d4d4d4] px-10 py-16 md:flex md:basis-[48%] md:border-l-2 lg:px-10">
           <div className="w-full">
-            <Cart cart={cart} />
+            <Cart cart={cart} shippingAmount={shippingAmount} totalAmount={totalAmount} />
           </div>
         </div>
       </div>

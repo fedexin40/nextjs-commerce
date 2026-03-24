@@ -1,7 +1,7 @@
 import { InitiateCheckout } from '#/components/FacebookPixel';
 import { deliveryMethodUpdate } from 'actions/checkout';
 import ShippingMethods from 'components/shipping/shipping';
-import { getCart, getShippingMethods, Me } from 'lib/saleor';
+import { getCart, getShippingMethods } from 'lib/saleor';
 import { shippingMethod } from 'lib/types';
 import { cookies } from 'next/headers';
 import { permanentRedirect, redirect } from 'next/navigation';
@@ -35,8 +35,6 @@ export default async function Checkout(props: {
     permanentRedirect(cart?.checkoutUrlPayment || '');
   }
 
-  const currentUser = await Me();
-
   let shippingMethods: shippingMethod[] = [];
   let startTime = new Date();
   const targetTime = new Date(startTime.getTime() + 30000);
@@ -66,7 +64,8 @@ export default async function Checkout(props: {
       carrierName: shippingMethods[0]?.name || '',
       shippingCost: shippingMethods[0]?.price || 0,
     });
-    redirect(cart.checkoutUrlPayment);
+    const cart = await getCart(checkout);
+    redirect(cart?.checkoutUrlPayment || '');
   }
 
   return (
