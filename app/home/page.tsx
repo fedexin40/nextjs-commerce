@@ -1,4 +1,4 @@
-import GoogleAnalyticsPartytown from '#/components/google-analytics/page';
+import { GoogleAnalytics } from '@next/third-parties/google';
 import Grid from 'components/grid';
 import ProductGridItems from 'components/layout/product-grid-items';
 import LoadMore from 'components/load-more/page';
@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   },
 };
 
+const googleAnalytics = process.env.googleAnalytics;
+
 export default async function HomePage() {
   const collection = 'oro';
   const first = 24;
@@ -26,7 +28,7 @@ export default async function HomePage() {
 
   return (
     <div>
-      <GoogleAnalyticsPartytown />
+      <GoogleAnalytics gaId={googleAnalytics || ''} />
       <div className="relative h-96 w-full overflow-hidden">
         <Image
           src="/banner3.avif"
