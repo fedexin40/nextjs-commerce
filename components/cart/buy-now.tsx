@@ -50,7 +50,6 @@ export function BuyNow({
     const fbq = window.fbq;
     if (typeof fbq !== 'function') return;
 
-    console.log('llegue aca');
     fbq('track', 'AddToCart', {
       content_ids: [product.handle],
       content_type: 'product',
