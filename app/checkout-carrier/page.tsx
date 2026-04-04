@@ -1,3 +1,4 @@
+import { sendMetaCapiEvent } from '#/actions/facebook';
 import { InitiateCheckout } from '#/components/FacebookPixel';
 import { deliveryMethodUpdate } from 'actions/checkout';
 import ShippingMethods from 'components/shipping/shipping';
@@ -6,12 +7,18 @@ import { shippingMethod } from 'lib/types';
 import { cookies } from 'next/headers';
 import { permanentRedirect, redirect } from 'next/navigation';
 
+export function generateEventId(): string {
+  const bytes = new Uint8Array(5);
+  crypto.getRandomValues(bytes);
+  return Array.from(bytes, (b) => b.toString(16).padStart(2, '0')).join('');
+}
+
 export default async function Checkout(props: {
   searchParams?: Promise<{ [key: string]: string | undefined }>;
 }) {
   const searchParams = await props.searchParams;
   let checkout;
-  let fbclid;
+  let fbclid: string | undefined;
 
   if (searchParams) {
     checkout = searchParams['checkout'] || '';
@@ -57,6 +64,32 @@ export default async function Checkout(props: {
     );
   }
 
+  const date = Date.now();
+  const current_timestamp = Math.floor(date / 1000);
+  const event_id = `${generateEventId()}_'AddToCart'_${current_timestamp}`;
+
+  function Pixel() {
+    try {
+      const products = cart?.lines.map((line) => ({
+        handle: line.merchandise.product.handle,
+        quantity: line.quantity,
+      }));
+      sendMetaCapiEvent({
+        event_name: 'InitiateCheckout',
+        fbclid: fbclid,
+        value: cart?.cost.subtotalAmount.amount || '0.0',
+        event_id: event_id,
+        email: cart?.userEmail || undefined,
+        phone: cart?.shippingAddress?.phone || undefined,
+        current_timestamp: current_timestamp,
+        current_timestamp_miliseconds: date,
+        products: products || [],
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   if (Number(cart.cost.subtotalAmount.amount) >= 1000) {
     deliveryMethodUpdate({
       checkoutId: checkout,
@@ -64,6 +97,7 @@ export default async function Checkout(props: {
       carrierName: shippingMethods[0]?.name || '',
       shippingCost: shippingMethods[0]?.price || 0,
     });
+    Pixel();
     const cart = await getCart(checkout);
     redirect(cart?.checkoutUrlPayment || '');
   }
