@@ -225,9 +225,6 @@ export default async function CheckoutPayment(props: {
               <Cart cart={cart} shippingAmount={shippingAmount} totalAmount={totalAmount} />
             </CartMobile>
           </div>
-          <div className="z-40">
-            <Paypal TotalAmount={value} checkoutID={cart.id} />
-          </div>
           <div className="pt-5">
             <StripeComponent
               clientSecret={stripeData.paymentIntent.client_secret}
@@ -237,6 +234,9 @@ export default async function CheckoutPayment(props: {
               value={value}
               checkoutId={cart.id}
             />
+          </div>
+          <div className="z-40">
+            <Paypal TotalAmount={value} checkoutID={cart.id} />
           </div>
         </div>
         <div className="hidden border-[#acacac] bg-[#d4d4d4] px-10 py-16 md:flex md:basis-[48%] md:border-l-2 lg:px-10">

@@ -88,7 +88,7 @@ export default function CheckoutForm({
   const paymentElementOptions = {
     layout: {
       type: 'accordion',
-      defaultCollapsed: false,
+      defaultCollapsed: true,
       radios: false,
       spacedAccordionItems: true,
     },
