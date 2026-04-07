@@ -29,7 +29,7 @@ export const StripeComponent = ({
           options={{
             locale: 'es-419',
             clientSecret,
-            appearance: { theme: 'stripe', variables: { fontLineHeight: '16px' } },
+            appearance: { theme: 'flat', variables: { fontLineHeight: '16px' } },
           }}
           stripe={stripePromise}
         >

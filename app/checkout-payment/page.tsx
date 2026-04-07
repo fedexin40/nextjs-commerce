@@ -225,19 +225,10 @@ export default async function CheckoutPayment(props: {
               <Cart cart={cart} shippingAmount={shippingAmount} totalAmount={totalAmount} />
             </CartMobile>
           </div>
-          <div className="relative mb-5 h-[50px] w-[180px] hover:cursor-pointer">
-            <Link href="https://stripe.com/mx/newsroom/information">
-              <Image className="object-contain" src={'/stripe.png'} alt="" fill />
-            </Link>
-          </div>
-          <div className="flex flex-row space-x-3 bg-[#e4c0b2] p-5">
-            <span className="capitalize">Proyecto 705:</span>
-            <span className="uppercase">${value}</span>
-          </div>
           <div className="z-40">
             <Paypal TotalAmount={value} checkoutID={cart.id} />
           </div>
-          <div className="border-2 border-[#acacac] px-5 py-3 pb-20">
+          <div className="pt-5">
             <StripeComponent
               clientSecret={stripeData.paymentIntent.client_secret}
               publishableKey={stripeData.publishableKey}
