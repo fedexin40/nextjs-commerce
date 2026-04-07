@@ -88,16 +88,28 @@ export async function ProductDescription({
           </a>
         </div>
       </div>
-      <div className="flex flex-col border-b pb-6">
-        <VariantSelector options={product.options} variants={product.variants} />
-      </div>
-      <div className="mt-6 flex flex-col gap-5 border-b pb-6 uppercase">
-        <BuyNow
-          product={product}
-          availableForSale={product.availableForSale}
-          currentUser={currentUser}
-        />
-      </div>
+      <>
+        {availableVariants.length > 0 ? (
+          <>
+            <div className="flex flex-col border-b pb-6">
+              <VariantSelector options={product.options} variants={product.variants} />
+            </div>
+            <div className="mt-6 flex flex-col gap-5 border-b pb-6 uppercase">
+              <BuyNow
+                product={product}
+                availableForSale={product.availableForSale}
+                currentUser={currentUser}
+              />
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="relative flex h-[60px] w-full items-center justify-center bg-red-600 text-sm tracking-wider text-white">
+              Producto no disponible por el momento
+            </div>
+          </>
+        )}
+      </>
       <div className="flex flex-col gap-y-1 pt-5 text-left text-[12px] leading-[20px] text-gray-800">
         <div>Tiempo de entrega de 2 a 7 dias hábiles</div>
         <div className="font-medium">Envío gratis en compras mayores a $1,000.00</div>
