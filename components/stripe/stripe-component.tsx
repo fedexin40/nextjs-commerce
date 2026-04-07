@@ -12,6 +12,8 @@ export const StripeComponent = ({
   content_ids,
   value,
   checkoutId,
+  email,
+  name,
 }: {
   clientSecret: string;
   publishableKey: string;
@@ -19,6 +21,8 @@ export const StripeComponent = ({
   content_ids: string[];
   value: string;
   checkoutId: string;
+  email: string | undefined | null;
+  name: string;
 }) => {
   const stripePromise = useMemo(() => loadStripe(publishableKey), [publishableKey]);
 
@@ -29,7 +33,7 @@ export const StripeComponent = ({
           options={{
             locale: 'es-419',
             clientSecret,
-            appearance: { theme: 'flat', variables: { fontLineHeight: '16px' } },
+            appearance: { theme: 'stripe' },
           }}
           stripe={stripePromise}
         >
@@ -39,6 +43,8 @@ export const StripeComponent = ({
             value={value}
             clientSecret={clientSecret}
             checkoutId={checkoutId}
+            email={email}
+            name={name}
           />
         </Elements>
       </div>

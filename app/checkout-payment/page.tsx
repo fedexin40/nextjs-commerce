@@ -152,8 +152,8 @@ export default async function CheckoutPayment(props: {
   const checkoutPayment = new URL('cart/processing', process.env.SHOP_PUBLIC_URL || '');
   checkoutPayment.searchParams.append('checkout', cart.id);
   const userEmail = cart?.userEmail;
-  const firstName = cart?.firstName;
-  const lastName = cart?.lastName;
+  const firstName = cart.shippingAddress?.firstName;
+  const lastName = cart.shippingAddress?.lastName;
   const stripe_secret_key = process.env.STRIPE_SECRET_KEY;
   const stripe = require('stripe')(stripe_secret_key);
   let user = await stripe.customers.search({
@@ -233,6 +233,8 @@ export default async function CheckoutPayment(props: {
               content_ids={content_ids}
               value={value}
               checkoutId={cart.id}
+              email={userEmail}
+              name={firstName + ' ' + lastName}
             />
           </div>
           <div className="z-40">

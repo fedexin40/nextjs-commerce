@@ -10,12 +10,16 @@ export default function CheckoutForm({
   value,
   clientSecret,
   checkoutId,
+  email,
+  name,
 }: {
   returnUrl: string;
   content_ids: string[];
   value: string;
   clientSecret: string;
   checkoutId: string;
+  email: string | undefined | null;
+  name: string;
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -91,6 +95,12 @@ export default function CheckoutForm({
       defaultCollapsed: true,
       radios: false,
       spacedAccordionItems: true,
+    },
+    defaultValues: {
+      billingDetails: {
+        name: name || '',
+        email: email || '',
+      },
     },
   };
 
