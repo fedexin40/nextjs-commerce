@@ -6,20 +6,18 @@ import { useState } from 'react';
 
 export default function CheckoutForm({
   returnUrl,
-  content_ids,
-  value,
   clientSecret,
   checkoutId,
   email,
   name,
+  phone,
 }: {
   returnUrl: string;
-  content_ids: string[];
-  value: string;
   clientSecret: string;
   checkoutId: string;
   email: string | undefined | null;
   name: string;
+  phone: string;
 }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -91,7 +89,7 @@ export default function CheckoutForm({
 
   const paymentElementOptions = {
     layout: {
-      type: 'accordion',
+      type: 'tabs',
       defaultCollapsed: true,
       radios: false,
       spacedAccordionItems: true,
@@ -100,6 +98,7 @@ export default function CheckoutForm({
       billingDetails: {
         name: name || '',
         email: email || '',
+        phone: phone || '',
       },
     },
   };
@@ -110,7 +109,7 @@ export default function CheckoutForm({
         <PaymentElement className="payment-element" options={paymentElementOptions} />
 
         <button
-          className="mt-10 h-[60px] w-full items-center justify-center bg-[#e4c0b2] px-5 md:w-1/2 lg:w-1/3 lg:py-1"
+          className="mt-10 h-[45px] w-full items-center justify-center rounded-sm bg-[#e4c0b2] px-5 md:h-[55px] md:w-1/2 lg:w-1/3 lg:py-1"
           disabled={isLoading || !stripe || !elements}
           id="submit"
         >

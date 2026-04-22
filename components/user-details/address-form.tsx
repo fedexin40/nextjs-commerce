@@ -1,5 +1,6 @@
 'use client';
 
+import { setGuestCheckoutEmail, setGuestFirstName, setGuestSecondName } from '#/actions/cart';
 import { emailCheckoutUpdate, shippingAddressUpdate } from 'actions/shipping';
 import { accountRegister } from 'actions/user';
 import clsx from 'clsx';
@@ -38,10 +39,16 @@ export default function AddressInput({
   cart,
   user,
   countryAreaChoices,
+  cacheValues,
 }: {
   cart?: Cart;
   user: CurrentPerson;
   countryAreaChoices: countryAreaChoicesType;
+  cacheValues: {
+    guestEmail: string;
+    guestFirstName: string;
+    guestSecondName: string;
+  };
 }) {
   const { setUserDetails } = useUserDetailsActions();
   const [isPending, startTransition] = useTransition();
@@ -51,12 +58,14 @@ export default function AddressInput({
 
   function getInitialData(): UserDetailsState {
     return {
-      firstName: cart?.shippingAddress?.firstName || user.firstName || '',
-      lastName: cart?.shippingAddress?.lastName || user.lastName || '',
+      firstName:
+        cart?.shippingAddress?.firstName || user.firstName || cacheValues.guestFirstName || '',
+      lastName:
+        cart?.shippingAddress?.lastName || user.lastName || cacheValues.guestSecondName || '',
       streetAddress1: cart?.shippingAddress?.streetAddress1 || user.address.streetAddress1 || '',
       streetAddress2: cart?.shippingAddress?.streetAddress2 || user.address.streetAddress2 || '',
       city: cart?.shippingAddress?.city || user.address.city || '',
-      email: cart?.userEmail || user.email || '',
+      email: cart?.userEmail || user.email || cacheValues.guestEmail || '',
       phone: cart?.shippingAddress?.phone || user.address.phone || '',
       postalCode: cart?.shippingAddress?.postalCode || user.address.postalCode || '',
       countryArea: cart?.shippingAddress?.countryArea || user.address.countryArea || '',
@@ -224,6 +233,17 @@ export default function AddressInput({
         }
       }
 
+      if (cacheValues.guestEmail != formData.email) {
+        setGuestCheckoutEmail({ email: formData.email });
+      }
+
+      if (cacheValues.guestFirstName != formData.firstName) {
+        setGuestFirstName({ firstName: formData.firstName });
+      }
+
+      if (cacheValues.guestSecondName != formData.lastName) {
+        setGuestSecondName({ secondName: formData.lastName });
+      }
       router.push(cart.checkoutCarrier || '');
     });
   }

@@ -10,19 +10,23 @@ export default async function Checkout(props: {
   let checkout;
   const states = await countryArea();
   const me = await Me();
+  const cookieStore = await cookies();
 
   if (searchParams) {
     checkout = searchParams['checkout'] || '';
   }
 
   if (!checkout) {
-    const cookieStore = await cookies();
     checkout = cookieStore.get('saleorCartId')?.value;
   }
 
   if (!checkout) {
     permanentRedirect('/');
   }
+
+  const guestEmail = cookieStore.get('guest_checkout_email')?.value;
+  const guestFirstName = cookieStore.get('guest_checkout_first_name')?.value;
+  const guestSecondName = cookieStore.get('guest_checkout_second_name')?.value;
 
   const cart = await getCart(checkout);
   if (!cart) {
@@ -37,7 +41,16 @@ export default async function Checkout(props: {
       <div className="l:basis-2/4 basis-full bg-white px-10 py-10 md:basis-2/3 md:px-14 md:py-16">
         <div className="font-medium uppercase">Detalles de entrega</div>
         <div className="flex flex-col pt-5">
-          <AddressInput cart={cart} user={me} countryAreaChoices={states} />
+          <AddressInput
+            cart={cart}
+            user={me}
+            countryAreaChoices={states}
+            cacheValues={{
+              guestEmail: guestEmail || '',
+              guestFirstName: guestFirstName || '',
+              guestSecondName: guestSecondName || '',
+            }}
+          />
         </div>
       </div>
     </div>

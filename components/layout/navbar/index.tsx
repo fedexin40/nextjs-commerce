@@ -16,6 +16,7 @@ export default function Navbar() {
             <div className="mr-28">3 y 6 Meses sin intereses</div>
             <div className="mr-28">Envíos desde $85 MXN</div>
             <div className="mr-28">Aretes de 10 y 14 kilates</div>
+            <div className="mr-28">Compras a Mayoreo y mas</div>
           </div>
         </MarqueeText>
       </div>

@@ -6,6 +6,7 @@ import Paypal from 'components/paypal/page';
 import { StripeComponent } from 'components/stripe/stripe-component';
 import { getCart, transactionInitialize } from 'lib/saleor';
 import type { Cart as CartType } from 'lib/types';
+import { CartItem } from 'lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { permanentRedirect } from 'next/navigation';
@@ -15,15 +16,7 @@ type MerchandiseSearchParams = {
   [key: string]: string;
 };
 
-function Cart({
-  cart,
-  shippingAmount,
-  totalAmount,
-}: {
-  cart: CartType | null;
-  shippingAmount: number;
-  totalAmount: number;
-}) {
+function Cart({ cart }: { cart: CartType | null }) {
   // I believe it is impossible to get until here without
   // a cart, so it is ok just to pass, I am doing the below to make
   // happy typescript
@@ -31,9 +24,12 @@ function Cart({
     return;
   }
 
-  // TODO: Below logic is becuase shippingAmount is not reloaded. It is like it were cached
-  // but I could not find where
-  const subTotal = shippingAmount > 0 ? (totalAmount - shippingAmount) / 1.16 : totalAmount / 1.16;
+  const checkoutTotal =
+    cart.lines.reduce((acc: any, line: CartItem) => {
+      const amount = Number(line.cost.totalAmount.amount) ?? 0;
+      return acc + amount * line.quantity;
+    }, 0) ?? 0;
+  const discount = Number(checkoutTotal.toFixed(2)) - Number(cart.cost.subtotalAmount.amount);
 
   return (
     <>
@@ -102,15 +98,26 @@ function Cart({
             <p>Subtotal</p>
             <Price
               className="text-black"
-              amountMax={subTotal.toFixed(2).toString()}
+              amountMax={checkoutTotal.toFixed(2).toString()}
               currencyCode="MXN"
             />
           </div>
+          {discount != 0 && (
+            <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 capitalize text-black">
+              <p>Descuento</p>
+              <Price
+                className="text-black"
+                amountMax={Math.abs(discount).toString()}
+                currencyCode="MXN"
+              />
+            </div>
+          )}
+
           <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 uppercase text-black">
             <p>Iva (16%)</p>
             <Price
               className="text-black"
-              amountMax={(totalAmount - (subTotal + shippingAmount)).toFixed(2).toString()}
+              amountMax={cart.cost.totalTaxAmount.amount}
               currencyCode="MXN"
             />
           </div>
@@ -118,7 +125,7 @@ function Cart({
             <p>Envío</p>
             <Price
               className="text-black"
-              amountMax={shippingAmount.toString()}
+              amountMax={cart.cost.totalShippingAmount.amount}
               currencyCode="MXN"
             />
           </div>
@@ -126,7 +133,7 @@ function Cart({
             <p>Total</p>
             <Price
               className="text-black"
-              amountMax={totalAmount.toFixed(2).toString()}
+              amountMax={cart.cost.subtotalAmount.amount}
               currencyCode="MXN"
             />
           </div>
@@ -154,6 +161,7 @@ export default async function CheckoutPayment(props: {
   const userEmail = cart?.userEmail;
   const firstName = cart.shippingAddress?.firstName;
   const lastName = cart.shippingAddress?.lastName;
+  const phone = cart.shippingAddress?.phone;
   const stripe_secret_key = process.env.STRIPE_SECRET_KEY;
   const stripe = require('stripe')(stripe_secret_key);
   let user = await stripe.customers.search({
@@ -179,17 +187,6 @@ export default async function CheckoutPayment(props: {
     return;
   }
 
-  // TODO: Below logic is becuase shippingAmount is not updated when setting the free voucher discount in the cart
-  // It is like it were cached, and it fails randomly but I could not find why
-  const shippingAmount =
-    Number(cart.cost.subtotalAmount.amount) >= 1000
-      ? 0.0
-      : Number(cart.cost.totalShippingAmount.amount);
-  const totalAmount =
-    Number(cart.cost.subtotalAmount.amount) >= 1000
-      ? Number(cart.cost.subtotalAmount.amount)
-      : Number(cart.cost.subtotalAmount.amount) + shippingAmount;
-
   const transaction = await transactionInitialize({
     paymentGateway: 'app.saleor.stripe',
     checkoutId: cart.id,
@@ -212,17 +209,14 @@ export default async function CheckoutPayment(props: {
     );
   }
 
-  // Used for facebook pixel
-  const content_ids = cart.lines.map((x) => x.merchandise.product.handle);
-  const value = totalAmount.toFixed(2).toString();
   return (
     <>
       <UpdateMetadata cart={cart} />
-      <div className="flex flex-col text-[16.5px] tracking-[1.4px] md:flex-row lg:text-[14.3px]">
+      <div className="flex flex-col tracking-[1.4px] md:flex-row">
         <div className="mx-10 mb-16 flex flex-col pt-6 md:mb-24 md:basis-[52%] md:pt-16 lg:mb-40 lg:px-10">
           <div className="md:hidden">
             <CartMobile>
-              <Cart cart={cart} shippingAmount={shippingAmount} totalAmount={totalAmount} />
+              <Cart cart={cart} />
             </CartMobile>
           </div>
           <div className="pt-5">
@@ -230,20 +224,19 @@ export default async function CheckoutPayment(props: {
               clientSecret={stripeData.paymentIntent.client_secret}
               publishableKey={stripeData.publishableKey}
               returnUrl={checkoutPayment.toString()}
-              content_ids={content_ids}
-              value={value}
               checkoutId={cart.id}
               email={userEmail}
               name={firstName + ' ' + lastName}
+              phone={phone || ''}
             />
           </div>
           <div className="z-40">
-            <Paypal TotalAmount={value} checkoutID={cart.id} />
+            <Paypal TotalAmount={cart.cost.totalAmount.amount} checkoutID={cart.id} />
           </div>
         </div>
         <div className="hidden border-[#acacac] bg-[#d4d4d4] px-10 py-16 md:flex md:basis-[48%] md:border-l-2 lg:px-10">
           <div className="w-full">
-            <Cart cart={cart} shippingAmount={shippingAmount} totalAmount={totalAmount} />
+            <Cart cart={cart} />
           </div>
         </div>
       </div>

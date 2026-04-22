@@ -30256,7 +30256,7 @@ export type CheckoutFragment = {
       }>;
       pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
     };
-    totalPrice: { gross: { amount: number } };
+    totalPrice: { gross: { amount: number }; tax: { currency: string; amount: number } };
   }>;
   shippingAddress?: {
     city: string;
@@ -30532,7 +30532,7 @@ export type CheckoutAddLineMutation = {
           }>;
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         };
-        totalPrice: { gross: { amount: number } };
+        totalPrice: { gross: { amount: number }; tax: { currency: string; amount: number } };
       }>;
       shippingAddress?: {
         city: string;
@@ -30669,7 +30669,7 @@ export type CheckoutDeleteLineMutation = {
           }>;
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         };
-        totalPrice: { gross: { amount: number } };
+        totalPrice: { gross: { amount: number }; tax: { currency: string; amount: number } };
       }>;
       shippingAddress?: {
         city: string;
@@ -30815,7 +30815,7 @@ export type CheckoutUpdateLineMutation = {
           }>;
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         };
-        totalPrice: { gross: { amount: number } };
+        totalPrice: { gross: { amount: number }; tax: { currency: string; amount: number } };
       }>;
       shippingAddress?: {
         city: string;
@@ -30926,7 +30926,7 @@ export type CreateCheckoutMutation = {
           }>;
           pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
         };
-        totalPrice: { gross: { amount: number } };
+        totalPrice: { gross: { amount: number }; tax: { currency: string; amount: number } };
       }>;
       shippingAddress?: {
         city: string;
@@ -31230,7 +31230,7 @@ export type GetCheckoutByIdQuery = {
         }>;
         pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
       };
-      totalPrice: { gross: { amount: number } };
+      totalPrice: { gross: { amount: number }; tax: { currency: string; amount: number } };
     }>;
     shippingAddress?: {
       city: string;
@@ -31508,7 +31508,7 @@ export type GetMeQuery = {
               }>;
               pricing?: { price?: { gross: { currency: string; amount: number } } | null } | null;
             };
-            totalPrice: { gross: { amount: number } };
+            totalPrice: { gross: { amount: number }; tax: { currency: string; amount: number } };
           }>;
           shippingAddress?: {
             city: string;
@@ -31969,6 +31969,10 @@ export const CheckoutFragmentDoc = new TypedDocumentString(
       gross {
         amount
       }
+      tax {
+        currency
+        amount
+      }
     }
   }
   chargeStatus
@@ -32363,6 +32367,10 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
       gross {
         amount
       }
+      tax {
+        currency
+        amount
+      }
     }
   }
   chargeStatus
@@ -32594,6 +32602,10 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
     }
     totalPrice {
       gross {
+        amount
+      }
+      tax {
+        currency
         amount
       }
     }
@@ -32846,6 +32858,10 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
       gross {
         amount
       }
+      tax {
+        currency
+        amount
+      }
     }
   }
   chargeStatus
@@ -33039,6 +33055,10 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
     }
     totalPrice {
       gross {
+        amount
+      }
+      tax {
+        currency
         amount
       }
     }
@@ -33502,6 +33522,10 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
       gross {
         amount
       }
+      tax {
+        currency
+        amount
+      }
     }
   }
   chargeStatus
@@ -33913,6 +33937,10 @@ export const GetMeDocument = new TypedDocumentString(`
     }
     totalPrice {
       gross {
+        amount
+      }
+      tax {
+        currency
         amount
       }
     }

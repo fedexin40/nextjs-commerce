@@ -46,6 +46,10 @@ fragment Checkout on Checkout {
       gross {
         amount
       }
+      tax {
+        currency
+        amount
+      }
     }
   }
   chargeStatus

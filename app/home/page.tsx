@@ -29,18 +29,31 @@ export default async function HomePage() {
   return (
     <div>
       <GoogleAnalytics gaId={googleAnalytics || ''} />
-      <div className="relative h-96 w-full overflow-hidden">
-        <Image
-          src="/banner3.avif"
-          alt="Banner Proyecto 705"
-          fill
-          preload={true}
-          loading="eager"
-          sizes="100vw"
-          className="object-cover object-center"
-        />
-        <div className="relative z-10 grid h-full w-full grid-cols-2 grid-rows-3 gap-5 md:grid-cols-3 md:grid-rows-2 lg:grid-cols-4">
-          <div className="col-start-1 row-start-3 mx-5 my-10 flex place-content-center items-center rounded bg-[#f7e7da] py-8 text-[15px] shadow-md md:col-span-1 md:col-start-1 md:row-start-2 md:mx-10 md:my-14 md:text-[18px]">
+      <div className="relative aspect-[5/5] w-full overflow-hidden md:aspect-[19/9] lg:aspect-[25/9]">
+        <div className="hidden md:block">
+          <Image
+            src="/descuento_pc.avif"
+            alt="Banner Proyecto 705"
+            fill
+            preload={true}
+            loading="eager"
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
+        <div className="block md:hidden">
+          <Image
+            src="/discount.avif"
+            alt="Banner Proyecto 705"
+            fill
+            preload={true}
+            loading="eager"
+            sizes="100vw"
+            className="object-cover object-center"
+          />
+        </div>
+        <div className="pointer-events-none absolute inset-0 z-10 grid h-full w-full grid-cols-2 grid-rows-3 gap-5 md:grid-cols-3 md:grid-rows-2 lg:grid-cols-4">
+          <div className="pointer-events-auto col-start-1 row-start-3 mx-5 my-8 flex items-center justify-center rounded bg-[#f7e7da] py-5 text-[15px] shadow-md md:col-span-1 md:col-start-1 md:row-start-2 md:mx-10 md:my-14 md:py-3 md:text-[18px] lg:h-[68px] lg:py-0">
             <Link href="/search">Ver catálogo</Link>
           </div>
         </div>

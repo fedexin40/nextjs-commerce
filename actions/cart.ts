@@ -27,8 +27,14 @@ export const addItem = async (variantId: string | undefined): Promise<String | u
       await customerCheckoutAttach({ checkoutId: checkout, customerId: user.id });
       revalidateTag(TAGS.user, 'max');
     } else {
-      checkout = (await createCart()).id;
       const cookieStore = await cookies();
+      const guest_checkout_contact = cookieStore.get('guest_checkout_email')?.value || '';
+      const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(guest_checkout_contact);
+      if (guest_checkout_contact && isValidEmail) {
+        checkout = (await createCart(guest_checkout_contact)).id;
+      } else {
+        checkout = (await createCart()).id;
+      }
       cookieStore.set({
         name: 'saleorCheckout',
         value: checkout,
@@ -109,3 +115,48 @@ export const lastCheckout = async () => {
   }
   return null;
 };
+
+export async function setGuestCheckoutEmail({ email }: { email: string }) {
+  const cookieStore = await cookies();
+  cookieStore.set({
+    name: 'guest_checkout_email',
+    value: email,
+    httpOnly: true,
+    maxAge: 864000,
+  });
+}
+
+export async function setGuestFirstName({ firstName }: { firstName: string }) {
+  const cookieStore = await cookies();
+  cookieStore.set({
+    name: 'guest_checkout_first_name',
+    value: firstName,
+    httpOnly: true,
+    maxAge: 864000,
+  });
+}
+
+export async function setGuestSecondName({ secondName }: { secondName: string }) {
+  const cookieStore = await cookies();
+  cookieStore.set({
+    name: 'guest_checkout_second_name',
+    value: secondName,
+    httpOnly: true,
+    maxAge: 864000,
+  });
+}
+
+export async function getGuestCheckoutEmail() {
+  const cookieStore = await cookies();
+  return cookieStore.get('guest_checkout_email')?.value;
+}
+
+export async function getGuestFirstName() {
+  const cookieStore = await cookies();
+  return cookieStore.get('guest_checkout_first_name')?.value;
+}
+
+export async function getGuestSecondName() {
+  const cookieStore = await cookies();
+  return cookieStore.get('guest_checkout_second_name')?.value;
+}

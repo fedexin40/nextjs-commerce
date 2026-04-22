@@ -38,7 +38,9 @@ export default function Paypal({
     <div className="relative flex">
       <div className="container mx-auto max-w-screen-lg">
         {/* PayPal Payment */}
-        <div className="w-full pt-10 text-center"> Tambien puedes pagar con PayPal </div>
+        <div className="w-full pt-10 text-center text-[14.3px] text-sm tracking-[1.4px]">
+          También puedes pagar con PayPal{' '}
+        </div>
         <div className="mt-6 text-center">
           <PayPalScriptProvider
             options={{

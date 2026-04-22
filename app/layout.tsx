@@ -1,4 +1,5 @@
 import ContactFloating from '#/components/chat/contact';
+import AutoOpenModal from '#/components/promotions/first-shopping/page';
 import { FacebookPixelEvents } from 'components/FacebookPixel';
 import type { Metadata } from 'next';
 import Script from 'next/script';
@@ -81,6 +82,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     <html lang="es">
       <body className="select-none bg-white text-black">
         <main>{children}</main>
+        <AutoOpenModal />
         <FacebookPixelEvents />
         <ContactFloating />
         {/* Schema.org (Organization) */}

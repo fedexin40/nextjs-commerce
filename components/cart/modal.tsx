@@ -20,7 +20,7 @@ type MerchandiseSearchParams = {
   [key: string]: string;
 };
 
-export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
+export default function CartModal({ cart }: { cart: Cart | null }) {
   const isOpen = useCartOpen();
   const { closeMenu } = cartActions();
   const { openMenu } = cartActions();
@@ -31,6 +31,14 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
     router.push(cart?.checkoutUrl || '/');
   }
 
+  const checkoutTotal =
+    cart?.lines?.reduce((acc, line) => {
+      const amount = Number(line.cost.totalAmount.amount) ?? 0;
+      return acc + amount * line.quantity;
+    }, 0) ?? 0;
+
+  const discount =
+    Number(checkoutTotal.toFixed(2)) - Number(Number(cart?.cost.subtotalAmount.amount).toFixed(2));
   return (
     <div className="z-50">
       <div onClick={() => openMenu()}>
@@ -140,12 +148,43 @@ export default function CartModal({ cart }: { cart: Cart | null | undefined }) {
                     })}
                   </ul>
                   <div className="mb-3 flex items-center justify-between border-b border-neutral-200 py-1">
-                    <p>Total</p>
-                    <Price
-                      className="text-right text-black"
-                      amountMax={cart.cost.subtotalAmount.amount}
-                      currencyCode={cart.cost.subtotalAmount.currencyCode}
-                    />
+                    {discount > 0 ? (
+                      <div className="flex w-full flex-col">
+                        <div className="flex w-full flex-row justify-between">
+                          <p>Sub-total</p>
+                          <Price
+                            className="text-right text-black"
+                            amountMax={checkoutTotal.toString()}
+                            currencyCode={cart.cost.subtotalAmount.currencyCode}
+                          />
+                        </div>
+                        <div className="flex flex-row justify-between">
+                          <p>Descuento</p>
+                          <Price
+                            className="text-right text-black"
+                            amountMax={String(discount)}
+                            currencyCode={cart.cost.subtotalAmount.currencyCode}
+                          />
+                        </div>
+                        <div className="flex flex-row justify-between">
+                          <p>Total</p>
+                          <Price
+                            className="text-right text-black"
+                            amountMax={cart.cost.subtotalAmount.amount}
+                            currencyCode={cart.cost.subtotalAmount.currencyCode}
+                          />
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <p>Total</p>
+                        <Price
+                          className="text-right text-black"
+                          amountMax={cart.cost.subtotalAmount.amount}
+                          currencyCode={cart.cost.subtotalAmount.currencyCode}
+                        />
+                      </>
+                    )}
                   </div>
                   <div className="py-4">
                     <div className="mb-3 flex items-center justify-between border-b border-neutral-200 py-1">

@@ -9,20 +9,18 @@ export const StripeComponent = ({
   clientSecret,
   publishableKey,
   returnUrl,
-  content_ids,
-  value,
   checkoutId,
   email,
   name,
+  phone,
 }: {
   clientSecret: string;
   publishableKey: string;
   returnUrl: string;
-  content_ids: string[];
-  value: string;
   checkoutId: string;
   email: string | undefined | null;
   name: string;
+  phone: string;
 }) => {
   const stripePromise = useMemo(() => loadStripe(publishableKey), [publishableKey]);
 
@@ -39,12 +37,11 @@ export const StripeComponent = ({
         >
           <CheckoutForm
             returnUrl={returnUrl}
-            content_ids={content_ids}
-            value={value}
             clientSecret={clientSecret}
             checkoutId={checkoutId}
             email={email}
             name={name}
+            phone={phone}
           />
         </Elements>
       </div>

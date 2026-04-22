@@ -2,7 +2,7 @@ import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import MyImage from '../image';
 
-const responsive = {
+export const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
     items: 3,
