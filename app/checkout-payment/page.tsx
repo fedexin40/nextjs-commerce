@@ -6,7 +6,6 @@ import Paypal from 'components/paypal/page';
 import { StripeComponent } from 'components/stripe/stripe-component';
 import { getCart, transactionInitialize } from 'lib/saleor';
 import type { Cart as CartType } from 'lib/types';
-import { CartItem } from 'lib/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { permanentRedirect } from 'next/navigation';
@@ -23,13 +22,6 @@ function Cart({ cart }: { cart: CartType | null }) {
   if (!cart) {
     return;
   }
-
-  const checkoutTotal =
-    cart.lines.reduce((acc: any, line: CartItem) => {
-      const amount = Number(line.cost.totalAmount.amount) ?? 0;
-      return acc + amount * line.quantity;
-    }, 0) ?? 0;
-  const discount = Number(checkoutTotal.toFixed(2)) - Number(cart.cost.subtotalAmount.amount);
 
   return (
     <>
@@ -98,18 +90,16 @@ function Cart({ cart }: { cart: CartType | null }) {
             <p>Subtotal</p>
             <Price
               className="text-black"
-              amountMax={checkoutTotal.toFixed(2).toString()}
+              amountMax={(
+                Number(cart.cost.subtotalAmount.amount) + Number(cart.discount.amount)
+              ).toFixed(2)}
               currencyCode="MXN"
             />
           </div>
-          {discount != 0 && (
+          {Number(cart.discount.amount) > 0 && (
             <div className="mb-2 flex items-center justify-between border-t-2 border-[#acacac] pb-1 pt-5 capitalize text-black">
               <p>Descuento</p>
-              <Price
-                className="text-black"
-                amountMax={Math.abs(discount).toString()}
-                currencyCode="MXN"
-              />
+              <Price className="text-black" amountMax={cart.discount.amount} currencyCode="MXN" />
             </div>
           )}
 
@@ -133,7 +123,7 @@ function Cart({ cart }: { cart: CartType | null }) {
             <p>Total</p>
             <Price
               className="text-black"
-              amountMax={cart.cost.subtotalAmount.amount}
+              amountMax={cart.cost.totalAmount.amount}
               currencyCode="MXN"
             />
           </div>

@@ -1,29 +1,49 @@
 'use server';
 
+import { Cart } from '#/lib/types';
 import { TAGS } from 'lib/constants';
 import { refresh } from 'next/cache';
 
 import {
   Me,
+  addPromoCode,
   addToCart,
   createCart,
   customerCheckoutAttach,
   getCart,
   getLastCheckout,
   removeFromCart,
+  removePromoCode,
   updateCart,
 } from 'lib/saleor';
 import { revalidateTag } from 'next/cache';
 import { cookies } from 'next/headers';
 
+const firstShopping = async (cart: Cart) => {
+  try {
+    if (cart.voucherCode == 'first-shopping' && Number(cart.cost.subtotalAmount.amount) > 5000) {
+      await removePromoCode({ checkoutId: cart.id, promoCode: 'first-shopping' });
+    } else if (
+      cart.voucherCode != 'first-shopping' &&
+      Number(cart.cost.subtotalAmount.amount) < 5000
+    ) {
+      await addPromoCode({ checkoutId: cart.id, promoCode: 'first-shopping' });
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
 export const addItem = async (variantId: string | undefined): Promise<String | undefined> => {
   const user = await Me();
   let checkout;
+  let cart;
 
   checkout = await getLastCheckout();
   if (!checkout) {
     if (user?.id) {
-      checkout = (await createCart(user.email)).id;
+      cart = await createCart(user.email);
+      checkout = cart.id;
       await customerCheckoutAttach({ checkoutId: checkout, customerId: user.id });
       revalidateTag(TAGS.user, 'max');
     } else {
@@ -53,7 +73,8 @@ export const addItem = async (variantId: string | undefined): Promise<String | u
   }
 
   try {
-    await addToCart(checkout, [{ merchandiseId: variantId, quantity: 1 }]);
+    const newCart = await addToCart(checkout, [{ merchandiseId: variantId, quantity: 1 }]);
+    firstShopping(newCart);
     refresh();
   } catch (error: any) {
     const field: string = error.message;
@@ -74,7 +95,8 @@ export const removeItem = async (lineId: string): Promise<String | undefined> =>
     return 'Missing cart ID';
   }
   try {
-    await removeFromCart(cart.id, [lineId]);
+    const newCart = await removeFromCart(cart.id, [lineId]);
+    firstShopping(newCart);
   } catch (e) {
     return 'Error removing item from cart';
   }
@@ -95,13 +117,14 @@ export const updateItemQuantity = async ({
     return 'Missing cart';
   }
   try {
-    await updateCart(cart.id, [
+    const newCart = await updateCart(cart.id, [
       {
         id: lineId,
         merchandiseId: variantId,
         quantity,
       },
     ]);
+    firstShopping(newCart);
   } catch (e) {
     console.log(e);
     return 'Error updating item quantity';

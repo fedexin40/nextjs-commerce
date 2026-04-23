@@ -1,0 +1,9 @@
+query OrdersByEmail($email: String!) {
+  orders(first: 1, where: { userEmail: { eq: $email } }) {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}

@@ -305,7 +305,9 @@ export enum AccountErrorCode {
   DeleteOwnAccount = 'DELETE_OWN_ACCOUNT',
   DeleteStaffAccount = 'DELETE_STAFF_ACCOUNT',
   DeleteSuperuserAccount = 'DELETE_SUPERUSER_ACCOUNT',
+  DisabledAuthenticationMethod = 'DISABLED_AUTHENTICATION_METHOD',
   DuplicatedInputItem = 'DUPLICATED_INPUT_ITEM',
+  FileSizeLimitExceeded = 'FILE_SIZE_LIMIT_EXCEEDED',
   GraphqlError = 'GRAPHQL_ERROR',
   Inactive = 'INACTIVE',
   Invalid = 'INVALID',
@@ -879,6 +881,14 @@ export type App = Node &
     privateMetafield?: Maybe<Scalars['String']['output']>;
     /** Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything. */
     privateMetafields?: Maybe<Scalars['Metadata']['output']>;
+    /**
+     * List of problems associated with this app.
+     *
+     * Added in Saleor 3.22.
+     *
+     * Requires one of the following permissions: AUTHENTICATED_APP, MANAGE_APPS.
+     */
+    problems?: Maybe<Array<AppProblem>>;
     /** Support page for the app. */
     supportUrl?: Maybe<Scalars['String']['output']>;
     /**
@@ -917,6 +927,11 @@ export type AppPrivateMetafieldArgs = {
 /** Represents app data. */
 export type AppPrivateMetafieldsArgs = {
   keys?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** Represents app data. */
+export type AppProblemsArgs = {
+  limit?: InputMaybe<Scalars['PositiveInt']['input']>;
 };
 
 /**
@@ -1077,18 +1092,26 @@ export type AppExtension = Node & {
   id: Scalars['ID']['output'];
   /** Label of the extension to show in the dashboard. */
   label: Scalars['String']['output'];
-  /** Place where given extension will be mounted. */
-  mount: AppExtensionMountEnum;
   /**
-   * App extension options.
+   * Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
    *
    * Added in Saleor 3.22.
    */
-  options?: Maybe<AppExtensionPossibleOptions>;
+  mountName: Scalars['String']['output'];
   /** List of the app extension's permissions. */
   permissions: Array<Permission>;
-  /** Type of way how app extension will be opened. */
-  target: AppExtensionTargetEnum;
+  /**
+   * App extension settings.
+   *
+   * Added in Saleor 3.22.
+   */
+  settings: Scalars['JSON']['output'];
+  /**
+   * Name of the extension target in the dashboard. Value returned in UPPERCASE.
+   *
+   * Added in Saleor 3.22.
+   */
+  targetName: Scalars['String']['output'];
   /** URL of a view where extension's iframe is placed. */
   url: Scalars['String']['output'];
 };
@@ -1109,90 +1132,19 @@ export type AppExtensionCountableEdge = {
 };
 
 export type AppExtensionFilterInput = {
-  mount?: InputMaybe<Array<AppExtensionMountEnum>>;
-  target?: InputMaybe<AppExtensionTargetEnum>;
+  /**
+   * Plain-text mount name (case insensitive)
+   *
+   * Added in Saleor 3.22.
+   */
+  mountName?: InputMaybe<Array<Scalars['String']['input']>>;
+  /**
+   * Plain-text target name (case insensitive)
+   *
+   * Added in Saleor 3.22.
+   */
+  targetName?: InputMaybe<Scalars['String']['input']>;
 };
-
-/** All places where app extension can be mounted. */
-export enum AppExtensionMountEnum {
-  CategoryDetailsMoreActions = 'CATEGORY_DETAILS_MORE_ACTIONS',
-  CategoryOverviewCreate = 'CATEGORY_OVERVIEW_CREATE',
-  CategoryOverviewMoreActions = 'CATEGORY_OVERVIEW_MORE_ACTIONS',
-  CollectionDetailsMoreActions = 'COLLECTION_DETAILS_MORE_ACTIONS',
-  CollectionDetailsWidgets = 'COLLECTION_DETAILS_WIDGETS',
-  CollectionOverviewCreate = 'COLLECTION_OVERVIEW_CREATE',
-  CollectionOverviewMoreActions = 'COLLECTION_OVERVIEW_MORE_ACTIONS',
-  CustomerDetailsMoreActions = 'CUSTOMER_DETAILS_MORE_ACTIONS',
-  CustomerDetailsWidgets = 'CUSTOMER_DETAILS_WIDGETS',
-  CustomerOverviewCreate = 'CUSTOMER_OVERVIEW_CREATE',
-  CustomerOverviewMoreActions = 'CUSTOMER_OVERVIEW_MORE_ACTIONS',
-  DiscountDetailsMoreActions = 'DISCOUNT_DETAILS_MORE_ACTIONS',
-  DiscountOverviewCreate = 'DISCOUNT_OVERVIEW_CREATE',
-  DiscountOverviewMoreActions = 'DISCOUNT_OVERVIEW_MORE_ACTIONS',
-  DraftOrderDetailsMoreActions = 'DRAFT_ORDER_DETAILS_MORE_ACTIONS',
-  DraftOrderDetailsWidgets = 'DRAFT_ORDER_DETAILS_WIDGETS',
-  DraftOrderOverviewCreate = 'DRAFT_ORDER_OVERVIEW_CREATE',
-  DraftOrderOverviewMoreActions = 'DRAFT_ORDER_OVERVIEW_MORE_ACTIONS',
-  GiftCardDetailsMoreActions = 'GIFT_CARD_DETAILS_MORE_ACTIONS',
-  GiftCardDetailsWidgets = 'GIFT_CARD_DETAILS_WIDGETS',
-  GiftCardOverviewCreate = 'GIFT_CARD_OVERVIEW_CREATE',
-  GiftCardOverviewMoreActions = 'GIFT_CARD_OVERVIEW_MORE_ACTIONS',
-  MenuDetailsMoreActions = 'MENU_DETAILS_MORE_ACTIONS',
-  MenuOverviewCreate = 'MENU_OVERVIEW_CREATE',
-  MenuOverviewMoreActions = 'MENU_OVERVIEW_MORE_ACTIONS',
-  NavigationCatalog = 'NAVIGATION_CATALOG',
-  NavigationCustomers = 'NAVIGATION_CUSTOMERS',
-  NavigationDiscounts = 'NAVIGATION_DISCOUNTS',
-  NavigationOrders = 'NAVIGATION_ORDERS',
-  NavigationPages = 'NAVIGATION_PAGES',
-  NavigationTranslations = 'NAVIGATION_TRANSLATIONS',
-  OrderDetailsMoreActions = 'ORDER_DETAILS_MORE_ACTIONS',
-  OrderDetailsWidgets = 'ORDER_DETAILS_WIDGETS',
-  OrderOverviewCreate = 'ORDER_OVERVIEW_CREATE',
-  OrderOverviewMoreActions = 'ORDER_OVERVIEW_MORE_ACTIONS',
-  PageDetailsMoreActions = 'PAGE_DETAILS_MORE_ACTIONS',
-  PageOverviewCreate = 'PAGE_OVERVIEW_CREATE',
-  PageOverviewMoreActions = 'PAGE_OVERVIEW_MORE_ACTIONS',
-  PageTypeDetailsMoreActions = 'PAGE_TYPE_DETAILS_MORE_ACTIONS',
-  PageTypeOverviewCreate = 'PAGE_TYPE_OVERVIEW_CREATE',
-  PageTypeOverviewMoreActions = 'PAGE_TYPE_OVERVIEW_MORE_ACTIONS',
-  ProductDetailsMoreActions = 'PRODUCT_DETAILS_MORE_ACTIONS',
-  ProductDetailsWidgets = 'PRODUCT_DETAILS_WIDGETS',
-  ProductOverviewCreate = 'PRODUCT_OVERVIEW_CREATE',
-  ProductOverviewMoreActions = 'PRODUCT_OVERVIEW_MORE_ACTIONS',
-  VoucherDetailsMoreActions = 'VOUCHER_DETAILS_MORE_ACTIONS',
-  VoucherDetailsWidgets = 'VOUCHER_DETAILS_WIDGETS',
-  VoucherOverviewCreate = 'VOUCHER_OVERVIEW_CREATE',
-  VoucherOverviewMoreActions = 'VOUCHER_OVERVIEW_MORE_ACTIONS',
-}
-
-/** Represents the options for an app extension. */
-export type AppExtensionOptionsNewTab = {
-  /** Options controlling behavior of the NEW_TAB extension target */
-  newTabTarget?: Maybe<NewTabTargetOptions>;
-};
-
-/** Represents the options for an app extension. */
-export type AppExtensionOptionsWidget = {
-  /** Options for displaying a Widget */
-  widgetTarget?: Maybe<WidgetTargetOptions>;
-};
-
-export type AppExtensionPossibleOptions = AppExtensionOptionsNewTab | AppExtensionOptionsWidget;
-
-/**
- * All available ways of opening an app extension.
- *
- *     POPUP - app's extension will be mounted as a popup window
- *     APP_PAGE - redirect to app's page
- *
- */
-export enum AppExtensionTargetEnum {
-  AppPage = 'APP_PAGE',
-  NewTab = 'NEW_TAB',
-  Popup = 'POPUP',
-  Widget = 'WIDGET',
-}
 
 /**
  * Fetch and validate manifest.
@@ -1238,9 +1190,9 @@ export type AppInstallInput = {
   /** Determine if app will be set active or not. */
   activateAfterInstallation?: InputMaybe<Scalars['Boolean']['input']>;
   /** Name of the app to install. */
-  appName?: InputMaybe<Scalars['String']['input']>;
+  appName: Scalars['String']['input'];
   /** URL to app's manifest in JSON format. */
-  manifestUrl?: InputMaybe<Scalars['String']['input']>;
+  manifestUrl: Scalars['String']['input'];
   /** List of permission code names to assign to this app. */
   permissions?: InputMaybe<Array<PermissionEnum>>;
 };
@@ -1301,12 +1253,26 @@ export type AppManifestBrandLogoDefaultArgs = {
 export type AppManifestExtension = {
   /** Label of the extension to show in the dashboard. */
   label: Scalars['String']['output'];
-  /** Place where given extension will be mounted. */
-  mount: AppExtensionMountEnum;
+  /**
+   * Name of the extension mount point in the dashboard. Value returned in UPPERCASE.
+   *
+   * Added in Saleor 3.22.
+   */
+  mountName: Scalars['String']['output'];
   /** List of the app extension's permissions. */
   permissions: Array<Permission>;
-  /** Type of way how app extension will be opened. */
-  target: AppExtensionTargetEnum;
+  /**
+   * App extension settings.
+   *
+   * Added in Saleor 3.22.
+   */
+  settings: Scalars['JSON']['output'];
+  /**
+   * Name of the extension target in the dashboard. Value returned in UPPERCASE.
+   *
+   * Added in Saleor 3.22.
+   */
+  targetName: Scalars['String']['output'];
   /** URL of a view where extension's iframe is placed. */
   url: Scalars['String']['output'];
 };
@@ -1330,6 +1296,199 @@ export type AppManifestWebhook = {
   /** The url to receive the payload. */
   targetUrl: Scalars['String']['output'];
 };
+
+/**
+ * Represents a problem associated with an app.
+ *
+ * Added in Saleor 3.22.
+ */
+export type AppProblem = Node & {
+  /**
+   * Number of occurrences.
+   *
+   * Added in Saleor 3.22.
+   */
+  count: Scalars['Int']['output'];
+  /**
+   * The date and time when the problem was created.
+   *
+   * Added in Saleor 3.22.
+   */
+  createdAt: Scalars['DateTime']['output'];
+  /**
+   * Dismissal information. Null if the problem has not been dismissed.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: AUTHENTICATED_APP, MANAGE_APPS.
+   */
+  dismissed?: Maybe<AppProblemDismissed>;
+  /**
+   * The ID of the app problem.
+   *
+   * Added in Saleor 3.22.
+   */
+  id: Scalars['ID']['output'];
+  /**
+   * Whether the problem has reached critical threshold.
+   *
+   * Added in Saleor 3.22.
+   */
+  isCritical: Scalars['Boolean']['output'];
+  /**
+   * Key identifying the type of problem.
+   *
+   * Added in Saleor 3.22.
+   */
+  key: Scalars['String']['output'];
+  /**
+   * The problem message.
+   *
+   * Added in Saleor 3.22.
+   */
+  message: Scalars['String']['output'];
+  /**
+   * The date and time when the problem was last updated.
+   *
+   * Added in Saleor 3.22.
+   */
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+/**
+ * Add a problem to the calling app.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: AUTHENTICATED_APP.
+ */
+export type AppProblemCreate = {
+  /** The created or updated app problem. */
+  appProblem?: Maybe<AppProblem>;
+  errors: Array<AppProblemCreateError>;
+};
+
+export type AppProblemCreateError = {
+  /** The error code. */
+  code: AppProblemCreateErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: Maybe<Scalars['String']['output']>;
+  /** The error message. */
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export enum AppProblemCreateErrorCode {
+  GraphqlError = 'GRAPHQL_ERROR',
+  Invalid = 'INVALID',
+  NotFound = 'NOT_FOUND',
+  Required = 'REQUIRED',
+}
+
+export type AppProblemCreateInput = {
+  /** Time window in minutes for aggregating problems with the same key. Defaults to 60. If 0, a new problem is always created. */
+  aggregationPeriod?: InputMaybe<Scalars['Minute']['input']>;
+  /** If set, the problem becomes critical when count reaches this value. If sent again with higher value than already counted, problem can be de-escalated. */
+  criticalThreshold?: InputMaybe<Scalars['PositiveInt']['input']>;
+  /** Key identifying the type of problem. App can add multiple problems under the same key, to merge them together or delete them in batch. Must be between 3 and 128 characters. */
+  key: Scalars['String']['input'];
+  /** The problem message to display. Must be at least 3 characters. Messages longer than 2048 characters will be truncated to 2048 characters with '...' suffix. */
+  message: Scalars['String']['input'];
+};
+
+/**
+ * Dismiss problems for an app.
+ *
+ * Added in Saleor 3.22.
+ *
+ * Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
+ */
+export type AppProblemDismiss = {
+  errors: Array<AppProblemDismissError>;
+};
+
+/** Input for app callers to dismiss their own problems. */
+export type AppProblemDismissByAppInput = {
+  /** List of problem IDs to dismiss. Cannot be combined with keys. Max 100. */
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  /** List of problem keys to dismiss. Cannot be combined with ids. Max 100. */
+  keys?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+/** Input for staff callers to dismiss problems by IDs. */
+export type AppProblemDismissByStaffWithIdsInput = {
+  /** List of problem IDs to dismiss. Max 100. */
+  ids: Array<Scalars['ID']['input']>;
+};
+
+/** Input for staff callers to dismiss problems by keys. */
+export type AppProblemDismissByStaffWithKeysInput = {
+  /** ID of the app whose problems to dismiss. */
+  app: Scalars['ID']['input'];
+  /** List of problem keys to dismiss. Max 100. */
+  keys: Array<Scalars['String']['input']>;
+};
+
+export type AppProblemDismissError = {
+  /** The error code. */
+  code: AppProblemDismissErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: Maybe<Scalars['String']['output']>;
+  /** The error message. */
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export enum AppProblemDismissErrorCode {
+  GraphqlError = 'GRAPHQL_ERROR',
+  Invalid = 'INVALID',
+  NotFound = 'NOT_FOUND',
+  OutOfScopeApp = 'OUT_OF_SCOPE_APP',
+  Required = 'REQUIRED',
+}
+
+/** Input for dismissing app problems. Only one can be specified. */
+export type AppProblemDismissInput = {
+  /** For app callers only - dismiss own problems. */
+  byApp?: InputMaybe<AppProblemDismissByAppInput>;
+  /** For staff callers - dismiss problems by IDs. */
+  byStaffWithIds?: InputMaybe<AppProblemDismissByStaffWithIdsInput>;
+  /** For staff callers - dismiss problems by keys for specified app. */
+  byStaffWithKeys?: InputMaybe<AppProblemDismissByStaffWithKeysInput>;
+};
+
+/**
+ * Dismissal information for an app problem.
+ *
+ * Added in Saleor 3.22.
+ */
+export type AppProblemDismissed = {
+  /**
+   * Whether the problem was dismissed by an App or a User.
+   *
+   * Added in Saleor 3.22.
+   */
+  by: AppProblemDismissedByEnum;
+  /**
+   * The user who dismissed this problem. Null if dismissed by an app or the user was deleted.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: MANAGE_STAFF.
+   */
+  user?: Maybe<User>;
+  /**
+   * Email of the user who dismissed this problem. Preserved even if the user is deleted.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+   */
+  userEmail?: Maybe<Scalars['String']['output']>;
+};
+
+export enum AppProblemDismissedByEnum {
+  App = 'APP',
+  User = 'USER',
+}
 
 /**
  * Re-enable sync webhooks for provided app. Can be used to manually re-enable sync webhooks for the app before the cooldown period ends.
@@ -1950,7 +2109,7 @@ export type Attribute = Node &
     /** Public metadata. Use `keys` to control which fields you want to include. The default is to include everything. */
     metafields?: Maybe<Scalars['Metadata']['output']>;
     /** Name of an attribute displayed in the interface. */
-    name?: Maybe<Scalars['String']['output']>;
+    name: Scalars['String']['output'];
     /** List of private metadata items. Requires staff permissions to access. */
     privateMetadata: Array<MetadataItem>;
     /**
@@ -1972,7 +2131,7 @@ export type Attribute = Node &
      */
     referenceTypes?: Maybe<Array<ReferenceType>>;
     /** Internal representation of an attribute name. */
-    slug?: Maybe<Scalars['String']['output']>;
+    slug: Scalars['String']['output'];
     /**
      * The position of the attribute in the storefront navigation (0 by default). Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
      * @deprecated No longer supported
@@ -1981,7 +2140,7 @@ export type Attribute = Node &
     /** Returns translated attribute fields for the given language code. */
     translation?: Maybe<AttributeTranslation>;
     /** The attribute type. */
-    type?: Maybe<AttributeTypeEnum>;
+    type: AttributeTypeEnum;
     /** The unit of attribute values. */
     unit?: Maybe<MeasurementUnitsEnum>;
     /** Whether the attribute requires values to be passed or not. Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES, MANAGE_PRODUCTS, MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES. */
@@ -4107,9 +4266,16 @@ export type Checkout = Node &
     /**
      * The delivery method selected for this checkout.
      *
+     * Added in Saleor 3.23.
+     */
+    delivery?: Maybe<Delivery>;
+    /**
+     * The delivery method selected for this checkout.
+     *
      * Triggers the following webhook events:
      * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
      * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
+     * @deprecated Use `delivery` instead.
      */
     deliveryMethod?: Maybe<DeliveryMethod>;
     /** The total discount applied to the checkout. Note: Only discount created via voucher are included in this field. */
@@ -4169,7 +4335,7 @@ export type Checkout = Node &
      * Triggers the following webhook events:
      * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
      * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
-     * @deprecated Use `deliveryMethod` instead.
+     * @deprecated Use `delivery` instead.
      */
     shippingMethod?: Maybe<ShippingMethod>;
     /**
@@ -4304,6 +4470,15 @@ export enum CheckoutAuthorizeStatusEnum {
   None = 'NONE',
   Partial = 'PARTIAL',
 }
+
+export type CheckoutAutoCompleteInput = {
+  /** Specifies the earliest date on which fully paid checkouts can begin to be automatically completed. Fully paid checkouts dated before this cut-off will not be automatically completed. Must be less than the threshold of the oldest modified checkout eligible for automatic completion. Default is current date time. */
+  cutOffDate?: InputMaybe<Scalars['DateTime']['input']>;
+  /** The time in minutes after which the fully paid checkout will be automatically completed. Default is 30. Set to 0 for immediate completion. Should be less than the threshold for the oldest modified checkout eligible for automatic completion. */
+  delay?: InputMaybe<Scalars['Minute']['input']>;
+  /** Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount. */
+  enabled: Scalars['Boolean']['input'];
+};
 
 /**
  * Updates billing address in the existing checkout.
@@ -4565,6 +4740,7 @@ export type CheckoutCustomerNoteUpdate = {
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
 export type CheckoutDeliveryMethodUpdate = {
@@ -4965,7 +5141,27 @@ export type CheckoutPaymentCreate = {
 /** Represents an problem in the checkout. */
 export type CheckoutProblem =
   | CheckoutLineProblemInsufficientStock
-  | CheckoutLineProblemVariantNotAvailable;
+  | CheckoutLineProblemVariantNotAvailable
+  | CheckoutProblemDeliveryMethodInvalid
+  | CheckoutProblemDeliveryMethodStale;
+
+/**
+ * Indicates that the selected delivery method is invalid.
+ *
+ * Added in Saleor 3.23.
+ */
+export type CheckoutProblemDeliveryMethodInvalid = {
+  delivery: Delivery;
+};
+
+/**
+ * Indicates that the delivery methods are stale.
+ *
+ * Added in Saleor 3.23.
+ */
+export type CheckoutProblemDeliveryMethodStale = {
+  delivery: Delivery;
+};
 
 /**
  * Remove a gift card or a voucher from a checkout.
@@ -4984,6 +5180,24 @@ export type CheckoutRemovePromoCode = {
 /** Represents the channel-specific checkout settings. */
 export type CheckoutSettings = {
   /**
+   * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
+   *
+   * Added in Saleor 3.23.
+   */
+  allowLegacyGiftCardUse: Scalars['Boolean']['output'];
+  /**
+   * The date time defines the earliest checkout creation date on which fully paid checkouts can begin to be automatically completed.
+   *
+   * Added in Saleor 3.22.
+   */
+  automaticCompletionCutOffDate?: Maybe<Scalars['DateTime']['output']>;
+  /**
+   * The time in minutes to wait after a checkout is fully paid before automatically completing it.
+   *
+   * Added in Saleor 3.22.
+   */
+  automaticCompletionDelay?: Maybe<Scalars['Minute']['output']>;
+  /**
    * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
    *
    * Added in Saleor 3.20.
@@ -4999,9 +5213,23 @@ export type CheckoutSettings = {
 
 export type CheckoutSettingsInput = {
   /**
-   * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `charge_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
+   * Default to `true`. Determines whether gift cards can be attached to a Checkout via `addPromoCode` mutation. Usage of this mutation with gift cards is deprecated.
+   *
+   * Added in Saleor 3.23.
+   */
+  allowLegacyGiftCardUse?: InputMaybe<Scalars['Boolean']['input']>;
+  /**
+   * Settings for automatic completion of fully paid checkouts.
+   *
+   * Added in Saleor 3.22.
+   */
+  automaticCompletion?: InputMaybe<CheckoutAutoCompleteInput>;
+  /**
+   * Default `false`. Determines if the paid checkouts should be automatically completed. This setting applies only to checkouts where payment was processed through transactions.When enabled, the checkout will be automatically completed once the checkout `authorize_status` reaches `FULL`. This occurs when the total sum of charged and authorized transaction amounts equals or exceeds the checkout's total amount.
    *
    * Added in Saleor 3.20.
+   *
+   * DEPRECATED: this field will be removed. Use `automatic_completion` instead.
    */
   automaticallyCompleteFullyPaidCheckouts?: InputMaybe<Scalars['Boolean']['input']>;
   /**
@@ -5031,6 +5259,7 @@ export type CheckoutShippingAddressUpdate = {
  *
  * Triggers the following webhook events:
  * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
  * - CHECKOUT_UPDATED (async): A checkout was updated.
  */
 export type CheckoutShippingMethodUpdate = {
@@ -5048,6 +5277,8 @@ export enum CheckoutSortField {
   Customer = 'CUSTOMER',
   /** Sort checkouts by payment. */
   Payment = 'PAYMENT',
+  /** Sort checkouts by rank. Note: This option is available only with the `search` filter. */
+  Rank = 'RANK',
 }
 
 export type CheckoutSortingInput = {
@@ -5406,8 +5637,10 @@ export type CollectionError = {
 };
 
 export enum CollectionErrorCode {
+  /** @deprecated Products without variants can now be assigned to collections. This error will never be returned. */
   CannotManageProductWithoutVariant = 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT',
   DuplicatedInputItem = 'DUPLICATED_INPUT_ITEM',
+  FileSizeLimitExceeded = 'FILE_SIZE_LIMIT_EXCEEDED',
   GraphqlError = 'GRAPHQL_ERROR',
   Invalid = 'INVALID',
   NotFound = 'NOT_FOUND',
@@ -5766,256 +5999,507 @@ export type ContainsFilterInput = {
  * The `EU` value is DEPRECATED and will be removed in Saleor 3.21.
  */
 export enum CountryCode {
+  /** Andorra */
   Ad = 'AD',
+  /** United Arab Emirates */
   Ae = 'AE',
+  /** Afghanistan */
   Af = 'AF',
+  /** Antigua and Barbuda */
   Ag = 'AG',
+  /** Anguilla */
   Ai = 'AI',
+  /** Albania */
   Al = 'AL',
+  /** Armenia */
   Am = 'AM',
+  /** Angola */
   Ao = 'AO',
+  /** Antarctica */
   Aq = 'AQ',
+  /** Argentina */
   Ar = 'AR',
+  /** American Samoa */
   As = 'AS',
+  /** Austria */
   At = 'AT',
+  /** Australia */
   Au = 'AU',
+  /** Aruba */
   Aw = 'AW',
+  /** Åland Islands */
   Ax = 'AX',
+  /** Azerbaijan */
   Az = 'AZ',
+  /** Bosnia and Herzegovina */
   Ba = 'BA',
+  /** Barbados */
   Bb = 'BB',
+  /** Bangladesh */
   Bd = 'BD',
+  /** Belgium */
   Be = 'BE',
+  /** Burkina Faso */
   Bf = 'BF',
+  /** Bulgaria */
   Bg = 'BG',
+  /** Bahrain */
   Bh = 'BH',
+  /** Burundi */
   Bi = 'BI',
+  /** Benin */
   Bj = 'BJ',
+  /** Saint Barthélemy */
   Bl = 'BL',
+  /** Bermuda */
   Bm = 'BM',
+  /** Brunei */
   Bn = 'BN',
+  /** Bolivia */
   Bo = 'BO',
+  /** Bonaire, Sint Eustatius and Saba */
   Bq = 'BQ',
+  /** Brazil */
   Br = 'BR',
+  /** Bahamas */
   Bs = 'BS',
+  /** Bhutan */
   Bt = 'BT',
+  /** Bouvet Island */
   Bv = 'BV',
+  /** Botswana */
   Bw = 'BW',
+  /** Belarus */
   By = 'BY',
+  /** Belize */
   Bz = 'BZ',
+  /** Canada */
   Ca = 'CA',
+  /** Cocos (Keeling) Islands */
   Cc = 'CC',
+  /** Congo (the Democratic Republic of the) */
   Cd = 'CD',
+  /** Central African Republic */
   Cf = 'CF',
+  /** Congo */
   Cg = 'CG',
+  /** Switzerland */
   Ch = 'CH',
+  /** Côte d'Ivoire */
   Ci = 'CI',
+  /** Cook Islands */
   Ck = 'CK',
+  /** Chile */
   Cl = 'CL',
+  /** Cameroon */
   Cm = 'CM',
+  /** China */
   Cn = 'CN',
+  /** Colombia */
   Co = 'CO',
+  /** Costa Rica */
   Cr = 'CR',
+  /** Cuba */
   Cu = 'CU',
+  /** Cabo Verde */
   Cv = 'CV',
+  /** Curaçao */
   Cw = 'CW',
+  /** Christmas Island */
   Cx = 'CX',
+  /** Cyprus */
   Cy = 'CY',
+  /** Czechia */
   Cz = 'CZ',
+  /** Germany */
   De = 'DE',
+  /** Djibouti */
   Dj = 'DJ',
+  /** Denmark */
   Dk = 'DK',
+  /** Dominica */
   Dm = 'DM',
+  /** Dominican Republic */
   Do = 'DO',
+  /** Algeria */
   Dz = 'DZ',
+  /** Ecuador */
   Ec = 'EC',
+  /** Estonia */
   Ee = 'EE',
+  /** Egypt */
   Eg = 'EG',
+  /** Western Sahara */
   Eh = 'EH',
+  /** Eritrea */
   Er = 'ER',
+  /** Spain */
   Es = 'ES',
+  /** Ethiopia */
   Et = 'ET',
+  /** European Union */
   Eu = 'EU',
+  /** Finland */
   Fi = 'FI',
+  /** Fiji */
   Fj = 'FJ',
+  /** Falkland Islands (Malvinas) */
   Fk = 'FK',
+  /** Micronesia */
   Fm = 'FM',
+  /** Faroe Islands */
   Fo = 'FO',
+  /** France */
   Fr = 'FR',
+  /** Gabon */
   Ga = 'GA',
+  /** United Kingdom */
   Gb = 'GB',
+  /** Grenada */
   Gd = 'GD',
+  /** Georgia */
   Ge = 'GE',
+  /** French Guiana */
   Gf = 'GF',
+  /** Guernsey */
   Gg = 'GG',
+  /** Ghana */
   Gh = 'GH',
+  /** Gibraltar */
   Gi = 'GI',
+  /** Greenland */
   Gl = 'GL',
+  /** Gambia */
   Gm = 'GM',
+  /** Guinea */
   Gn = 'GN',
+  /** Guadeloupe */
   Gp = 'GP',
+  /** Equatorial Guinea */
   Gq = 'GQ',
+  /** Greece */
   Gr = 'GR',
+  /** South Georgia and the South Sandwich Islands */
   Gs = 'GS',
+  /** Guatemala */
   Gt = 'GT',
+  /** Guam */
   Gu = 'GU',
+  /** Guinea-Bissau */
   Gw = 'GW',
+  /** Guyana */
   Gy = 'GY',
+  /** Hong Kong */
   Hk = 'HK',
+  /** Heard Island and McDonald Islands */
   Hm = 'HM',
+  /** Honduras */
   Hn = 'HN',
+  /** Croatia */
   Hr = 'HR',
+  /** Haiti */
   Ht = 'HT',
+  /** Hungary */
   Hu = 'HU',
+  /** Indonesia */
   Id = 'ID',
+  /** Ireland */
   Ie = 'IE',
+  /** Israel */
   Il = 'IL',
+  /** Isle of Man */
   Im = 'IM',
+  /** India */
   In = 'IN',
+  /** British Indian Ocean Territory */
   Io = 'IO',
+  /** Iraq */
   Iq = 'IQ',
+  /** Iran */
   Ir = 'IR',
+  /** Iceland */
   Is = 'IS',
+  /** Italy */
   It = 'IT',
+  /** Jersey */
   Je = 'JE',
+  /** Jamaica */
   Jm = 'JM',
+  /** Jordan */
   Jo = 'JO',
+  /** Japan */
   Jp = 'JP',
+  /** Kenya */
   Ke = 'KE',
+  /** Kyrgyzstan */
   Kg = 'KG',
+  /** Cambodia */
   Kh = 'KH',
+  /** Kiribati */
   Ki = 'KI',
+  /** Comoros */
   Km = 'KM',
+  /** Saint Kitts and Nevis */
   Kn = 'KN',
+  /** North Korea */
   Kp = 'KP',
+  /** South Korea */
   Kr = 'KR',
+  /** Kuwait */
   Kw = 'KW',
+  /** Cayman Islands */
   Ky = 'KY',
+  /** Kazakhstan */
   Kz = 'KZ',
+  /** Laos */
   La = 'LA',
+  /** Lebanon */
   Lb = 'LB',
+  /** Saint Lucia */
   Lc = 'LC',
+  /** Liechtenstein */
   Li = 'LI',
+  /** Sri Lanka */
   Lk = 'LK',
+  /** Liberia */
   Lr = 'LR',
+  /** Lesotho */
   Ls = 'LS',
+  /** Lithuania */
   Lt = 'LT',
+  /** Luxembourg */
   Lu = 'LU',
+  /** Latvia */
   Lv = 'LV',
+  /** Libya */
   Ly = 'LY',
+  /** Morocco */
   Ma = 'MA',
+  /** Monaco */
   Mc = 'MC',
+  /** Moldova */
   Md = 'MD',
+  /** Montenegro */
   Me = 'ME',
+  /** Saint Martin (French part) */
   Mf = 'MF',
+  /** Madagascar */
   Mg = 'MG',
+  /** Marshall Islands */
   Mh = 'MH',
+  /** North Macedonia */
   Mk = 'MK',
+  /** Mali */
   Ml = 'ML',
+  /** Myanmar */
   Mm = 'MM',
+  /** Mongolia */
   Mn = 'MN',
+  /** Macao */
   Mo = 'MO',
+  /** Northern Mariana Islands */
   Mp = 'MP',
+  /** Martinique */
   Mq = 'MQ',
+  /** Mauritania */
   Mr = 'MR',
+  /** Montserrat */
   Ms = 'MS',
+  /** Malta */
   Mt = 'MT',
+  /** Mauritius */
   Mu = 'MU',
+  /** Maldives */
   Mv = 'MV',
+  /** Malawi */
   Mw = 'MW',
+  /** Mexico */
   Mx = 'MX',
+  /** Malaysia */
   My = 'MY',
+  /** Mozambique */
   Mz = 'MZ',
+  /** Namibia */
   Na = 'NA',
+  /** New Caledonia */
   Nc = 'NC',
+  /** Niger */
   Ne = 'NE',
+  /** Norfolk Island */
   Nf = 'NF',
+  /** Nigeria */
   Ng = 'NG',
+  /** Nicaragua */
   Ni = 'NI',
+  /** Netherlands */
   Nl = 'NL',
+  /** Norway */
   No = 'NO',
+  /** Nepal */
   Np = 'NP',
+  /** Nauru */
   Nr = 'NR',
+  /** Niue */
   Nu = 'NU',
+  /** New Zealand */
   Nz = 'NZ',
+  /** Oman */
   Om = 'OM',
+  /** Panama */
   Pa = 'PA',
+  /** Peru */
   Pe = 'PE',
+  /** French Polynesia */
   Pf = 'PF',
+  /** Papua New Guinea */
   Pg = 'PG',
+  /** Philippines */
   Ph = 'PH',
+  /** Pakistan */
   Pk = 'PK',
+  /** Poland */
   Pl = 'PL',
+  /** Saint Pierre and Miquelon */
   Pm = 'PM',
+  /** Pitcairn */
   Pn = 'PN',
+  /** Puerto Rico */
   Pr = 'PR',
+  /** Palestine, State of */
   Ps = 'PS',
+  /** Portugal */
   Pt = 'PT',
+  /** Palau */
   Pw = 'PW',
+  /** Paraguay */
   Py = 'PY',
+  /** Qatar */
   Qa = 'QA',
+  /** Réunion */
   Re = 'RE',
+  /** Romania */
   Ro = 'RO',
+  /** Serbia */
   Rs = 'RS',
+  /** Russia */
   Ru = 'RU',
+  /** Rwanda */
   Rw = 'RW',
+  /** Saudi Arabia */
   Sa = 'SA',
+  /** Solomon Islands */
   Sb = 'SB',
+  /** Seychelles */
   Sc = 'SC',
+  /** Sudan */
   Sd = 'SD',
+  /** Sweden */
   Se = 'SE',
+  /** Singapore */
   Sg = 'SG',
+  /** Saint Helena, Ascension and Tristan da Cunha */
   Sh = 'SH',
+  /** Slovenia */
   Si = 'SI',
+  /** Svalbard and Jan Mayen */
   Sj = 'SJ',
+  /** Slovakia */
   Sk = 'SK',
+  /** Sierra Leone */
   Sl = 'SL',
+  /** San Marino */
   Sm = 'SM',
+  /** Senegal */
   Sn = 'SN',
+  /** Somalia */
   So = 'SO',
+  /** Suriname */
   Sr = 'SR',
+  /** South Sudan */
   Ss = 'SS',
+  /** Sao Tome and Principe */
   St = 'ST',
+  /** El Salvador */
   Sv = 'SV',
+  /** Sint Maarten (Dutch part) */
   Sx = 'SX',
+  /** Syria */
   Sy = 'SY',
+  /** Eswatini */
   Sz = 'SZ',
+  /** Turks and Caicos Islands */
   Tc = 'TC',
+  /** Chad */
   Td = 'TD',
+  /** French Southern Territories */
   Tf = 'TF',
+  /** Togo */
   Tg = 'TG',
+  /** Thailand */
   Th = 'TH',
+  /** Tajikistan */
   Tj = 'TJ',
+  /** Tokelau */
   Tk = 'TK',
+  /** Timor-Leste */
   Tl = 'TL',
+  /** Turkmenistan */
   Tm = 'TM',
+  /** Tunisia */
   Tn = 'TN',
+  /** Tonga */
   To = 'TO',
+  /** Türkiye */
   Tr = 'TR',
+  /** Trinidad and Tobago */
   Tt = 'TT',
+  /** Tuvalu */
   Tv = 'TV',
+  /** Taiwan */
   Tw = 'TW',
+  /** Tanzania */
   Tz = 'TZ',
+  /** Ukraine */
   Ua = 'UA',
+  /** Uganda */
   Ug = 'UG',
+  /** United States Minor Outlying Islands */
   Um = 'UM',
+  /** United States of America */
   Us = 'US',
+  /** Uruguay */
   Uy = 'UY',
+  /** Uzbekistan */
   Uz = 'UZ',
+  /** Holy See */
   Va = 'VA',
+  /** Saint Vincent and the Grenadines */
   Vc = 'VC',
+  /** Venezuela */
   Ve = 'VE',
+  /** Virgin Islands (British) */
   Vg = 'VG',
+  /** Virgin Islands (U.S.) */
   Vi = 'VI',
+  /** Vietnam */
   Vn = 'VN',
+  /** Vanuatu */
   Vu = 'VU',
+  /** Wallis and Futuna */
   Wf = 'WF',
+  /** Samoa */
   Ws = 'WS',
+  /** Kosovo */
   Xk = 'XK',
+  /** Yemen */
   Ye = 'YE',
+  /** Mayotte */
   Yt = 'YT',
+  /** South Africa */
   Za = 'ZA',
+  /** Zambia */
   Zm = 'ZM',
+  /** Zimbabwe */
   Zw = 'ZW',
 }
 
@@ -6218,8 +6702,6 @@ export type CustomerEvent = Node & {
   message?: Maybe<Scalars['String']['output']>;
   /** The concerned order. */
   order?: Maybe<Order>;
-  /** The concerned order line. */
-  orderLine?: Maybe<OrderLine>;
   /** Customer event type. */
   type?: Maybe<CustomerEventsEnum>;
   /** User who performed the action. */
@@ -6302,6 +6784,62 @@ export type CustomerMetadataUpdated = Event & {
   user?: Maybe<User>;
   /** Saleor version that triggered the event. */
   version?: Maybe<Scalars['String']['output']>;
+};
+
+export type CustomerOrderWhereInput = {
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<CustomerOrderWhereInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<CustomerOrderWhereInput>>;
+  /** Filter by authorize status. */
+  authorizeStatus?: InputMaybe<OrderAuthorizeStatusEnumFilterInput>;
+  /** Filter by billing address of the order. */
+  billingAddress?: InputMaybe<AddressFilterInput>;
+  /** Filter by channel. */
+  channelId?: InputMaybe<GlobalIdFilterInput>;
+  /** Filter by charge status. */
+  chargeStatus?: InputMaybe<OrderChargeStatusEnumFilterInput>;
+  /** Filter by checkout id. */
+  checkoutId?: InputMaybe<GlobalIdFilterInput>;
+  /** Filter by checkout token. */
+  checkoutToken?: InputMaybe<UuidFilterInput>;
+  /** Filter order by created at date. */
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+  /** Filter by whether the order has any fulfillments. */
+  hasFulfillments?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by whether the order has any invoices. */
+  hasInvoices?: InputMaybe<Scalars['Boolean']['input']>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  /** Filter by invoice data associated with the order. Each list item represents conditions that must be satisfied by a single object. The filter matches orders that have related objects meeting all specified groups of conditions. */
+  invoices?: InputMaybe<Array<InvoiceFilterInput>>;
+  /** Filter by whether the order uses the click and collect delivery method. */
+  isClickAndCollect?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter based on whether the order includes a gift card purchase. */
+  isGiftCardBought?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter based on whether a gift card was used in the order. */
+  isGiftCardUsed?: InputMaybe<Scalars['Boolean']['input']>;
+  /** Filter by number of lines in the order. */
+  linesCount?: InputMaybe<IntFilterInput>;
+  /** Filter by metadata fields. */
+  metadata?: InputMaybe<MetadataFilterInput>;
+  /** Filter by order number. */
+  number?: InputMaybe<IntFilterInput>;
+  /** Filter by the product type of related order lines. */
+  productTypeId?: InputMaybe<GlobalIdFilterInput>;
+  /** Filter by shipping address of the order. */
+  shippingAddress?: InputMaybe<AddressFilterInput>;
+  /** Filter by order status. */
+  status?: InputMaybe<OrderStatusEnumFilterInput>;
+  /** Filter by total gross amount of the order. */
+  totalGross?: InputMaybe<PriceFilterInput>;
+  /** Filter by total net amount of the order. */
+  totalNet?: InputMaybe<PriceFilterInput>;
+  /** Filter order by updated at date. */
+  updatedAt?: InputMaybe<DateTimeRangeInput>;
+  /** Filter by user email. */
+  userEmail?: InputMaybe<StringFilterInput>;
+  /** Filter by voucher code used in the order. */
+  voucherCode?: InputMaybe<StringFilterInput>;
 };
 
 /**
@@ -6430,204 +6968,50 @@ export type DeletePrivateMetadata = {
   metadataErrors: Array<MetadataError>;
 };
 
+/**
+ * Represents a delivery option for the checkout.
+ *
+ * Added in Saleor 3.23.
+ */
+export type Delivery = {
+  /** The ID of the delivery. */
+  id: Scalars['ID']['output'];
+  /** Shipping method represented by the delivery. */
+  shippingMethod?: Maybe<ShippingMethod>;
+};
+
 /** Represents a delivery method chosen for the checkout. `Warehouse` type is used when checkout is marked as "click and collect" and `ShippingMethod` otherwise. */
 export type DeliveryMethod = ShippingMethod | Warehouse;
 
-/** Represents digital content associated with a product variant. */
-export type DigitalContent = Node &
-  ObjectWithMetadata & {
-    /** Indicator for automatic fulfillment of digital content. */
-    automaticFulfillment: Scalars['Boolean']['output'];
-    /** File associated with digital content. */
-    contentFile: Scalars['String']['output'];
-    /** The ID of the digital content. */
-    id: Scalars['ID']['output'];
-    /** Maximum number of allowed downloads for the digital content. */
-    maxDownloads?: Maybe<Scalars['Int']['output']>;
-    /** List of public metadata items. Can be accessed without permissions. */
-    metadata: Array<MetadataItem>;
-    /**
-     * A single key from public metadata.
-     *
-     * Tip: Use GraphQL aliases to fetch multiple keys.
-     */
-    metafield?: Maybe<Scalars['String']['output']>;
-    /** Public metadata. Use `keys` to control which fields you want to include. The default is to include everything. */
-    metafields?: Maybe<Scalars['Metadata']['output']>;
-    /** List of private metadata items. Requires staff permissions to access. */
-    privateMetadata: Array<MetadataItem>;
-    /**
-     * A single key from private metadata. Requires staff permissions to access.
-     *
-     * Tip: Use GraphQL aliases to fetch multiple keys.
-     */
-    privateMetafield?: Maybe<Scalars['String']['output']>;
-    /** Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything. */
-    privateMetafields?: Maybe<Scalars['Metadata']['output']>;
-    /** Product variant assigned to digital content. */
-    productVariant: ProductVariant;
-    /** Number of days the URL for the digital content remains valid. */
-    urlValidDays?: Maybe<Scalars['Int']['output']>;
-    /** List of URLs for the digital variant. */
-    urls?: Maybe<Array<DigitalContentUrl>>;
-    /** Default settings indicator for digital content. */
-    useDefaultSettings: Scalars['Boolean']['output'];
-  };
-
-/** Represents digital content associated with a product variant. */
-export type DigitalContentMetafieldArgs = {
-  key: Scalars['String']['input'];
-};
-
-/** Represents digital content associated with a product variant. */
-export type DigitalContentMetafieldsArgs = {
-  keys?: InputMaybe<Array<Scalars['String']['input']>>;
-};
-
-/** Represents digital content associated with a product variant. */
-export type DigitalContentPrivateMetafieldArgs = {
-  key: Scalars['String']['input'];
-};
-
-/** Represents digital content associated with a product variant. */
-export type DigitalContentPrivateMetafieldsArgs = {
-  keys?: InputMaybe<Array<Scalars['String']['input']>>;
-};
-
-/** A connection to a list of digital content items. */
-export type DigitalContentCountableConnection = {
-  edges: Array<DigitalContentCountableEdge>;
-  /** Pagination data for this connection. */
-  pageInfo: PageInfo;
-  /** A total count of items in the collection. */
-  totalCount?: Maybe<Scalars['Int']['output']>;
-};
-
-export type DigitalContentCountableEdge = {
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String']['output'];
-  /** The item at the end of the edge. */
-  node: DigitalContent;
-};
-
 /**
- * Create new digital content. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec
+ * Calculates available delivery options for a checkout.
  *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
- */
-export type DigitalContentCreate = {
-  content?: Maybe<DigitalContent>;
-  errors: Array<ProductError>;
-  /** @deprecated Use `errors` field instead. */
-  productErrors: Array<ProductError>;
-  variant?: Maybe<ProductVariant>;
-};
-
-/**
- * Remove digital content assigned to given variant.
+ * Added in Saleor 3.23.
  *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
+ * Triggers the following webhook events:
+ * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
+ * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
  */
-export type DigitalContentDelete = {
-  errors: Array<ProductError>;
-  /** @deprecated Use `errors` field instead. */
-  productErrors: Array<ProductError>;
-  variant?: Maybe<ProductVariant>;
+export type DeliveryOptionsCalculate = {
+  /** List of the available deliveries. */
+  deliveries: Array<Delivery>;
+  errors: Array<DeliveryOptionsCalculateError>;
 };
 
-export type DigitalContentInput = {
-  /** Overwrite default automatic_fulfillment setting for variant. */
-  automaticFulfillment?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Determines how many times a download link can be accessed by a customer. */
-  maxDownloads?: InputMaybe<Scalars['Int']['input']>;
-  /**
-   * Fields required to update the digital content metadata. Can be read by any API client authorized to read the object it's attached to.
-   *
-   * Warning: never store sensitive information, including financial data such as credit card details.
-   */
-  metadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Fields required to update the digital content private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
-   *
-   * Warning: never store sensitive information, including financial data such as credit card details.
-   */
-  privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /** Determines for how many days a download link is active since it was generated. */
-  urlValidDays?: InputMaybe<Scalars['Int']['input']>;
-  /** Use default digital content settings for this product. */
-  useDefaultSettings: Scalars['Boolean']['input'];
+export type DeliveryOptionsCalculateError = {
+  /** The error code. */
+  code: DeliveryOptionsCalculateErrorCode;
+  /** Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field. */
+  field?: Maybe<Scalars['String']['output']>;
+  /** The error message. */
+  message?: Maybe<Scalars['String']['output']>;
 };
 
-/**
- * Updates digital content.
- *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
- */
-export type DigitalContentUpdate = {
-  content?: Maybe<DigitalContent>;
-  errors: Array<ProductError>;
-  /** @deprecated Use `errors` field instead. */
-  productErrors: Array<ProductError>;
-  variant?: Maybe<ProductVariant>;
-};
-
-export type DigitalContentUploadInput = {
-  /** Overwrite default automatic_fulfillment setting for variant. */
-  automaticFulfillment?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Represents an file in a multipart request. */
-  contentFile: Scalars['Upload']['input'];
-  /** Determines how many times a download link can be accessed by a customer. */
-  maxDownloads?: InputMaybe<Scalars['Int']['input']>;
-  /**
-   * Fields required to update the digital content metadata. Can be read by any API client authorized to read the object it's attached to.
-   *
-   * Warning: never store sensitive information, including financial data such as credit card details.
-   */
-  metadata?: InputMaybe<Array<MetadataInput>>;
-  /**
-   * Fields required to update the digital content private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
-   *
-   * Warning: never store sensitive information, including financial data such as credit card details.
-   */
-  privateMetadata?: InputMaybe<Array<MetadataInput>>;
-  /** Determines for how many days a download link is active since it was generated. */
-  urlValidDays?: InputMaybe<Scalars['Int']['input']>;
-  /** Use default digital content settings for this product. */
-  useDefaultSettings: Scalars['Boolean']['input'];
-};
-
-/** Represents a URL for digital content. */
-export type DigitalContentUrl = Node & {
-  /** Digital content associated with the URL. */
-  content: DigitalContent;
-  /** Date and time when the digital content URL was created. */
-  created: Scalars['DateTime']['output'];
-  /** Number of times digital content has been downloaded. */
-  downloadNum: Scalars['Int']['output'];
-  /** The ID of the digital content URL. */
-  id: Scalars['ID']['output'];
-  /** UUID of digital content. */
-  token: Scalars['UUID']['output'];
-  /** URL for digital content. */
-  url?: Maybe<Scalars['String']['output']>;
-};
-
-/**
- * Generate new URL to digital content.
- *
- * Requires one of the following permissions: MANAGE_PRODUCTS.
- */
-export type DigitalContentUrlCreate = {
-  digitalContentUrl?: Maybe<DigitalContentUrl>;
-  errors: Array<ProductError>;
-  /** @deprecated Use `errors` field instead. */
-  productErrors: Array<ProductError>;
-};
-
-export type DigitalContentUrlCreateInput = {
-  /** Digital content ID which URL will belong to. */
-  content: Scalars['ID']['input'];
-};
+export enum DeliveryOptionsCalculateErrorCode {
+  GraphqlError = 'GRAPHQL_ERROR',
+  Invalid = 'INVALID',
+  NotFound = 'NOT_FOUND',
+}
 
 export type DiscountError = {
   /** List of channels IDs which causes the error. */
@@ -6802,7 +7186,11 @@ export type DraftOrderCreateInput = {
   user?: InputMaybe<Scalars['ID']['input']>;
   /** Email address of the customer. */
   userEmail?: InputMaybe<Scalars['String']['input']>;
-  /** ID of the voucher associated with the order. */
+  /**
+   * ID of the voucher associated with the order.
+   *
+   * DEPRECATED: this field will be removed. Use `voucherCode` instead.
+   */
   voucher?: InputMaybe<Scalars['ID']['input']>;
   /**
    * A code of the voucher associated with the order.
@@ -6911,7 +7299,11 @@ export type DraftOrderInput = {
   user?: InputMaybe<Scalars['ID']['input']>;
   /** Email address of the customer. */
   userEmail?: InputMaybe<Scalars['String']['input']>;
-  /** ID of the voucher associated with the order. */
+  /**
+   * ID of the voucher associated with the order.
+   *
+   * DEPRECATED: this field will be removed. Use `voucherCode` instead.
+   */
   voucher?: InputMaybe<Scalars['ID']['input']>;
   /**
    * A code of the voucher associated with the order.
@@ -7333,8 +7725,6 @@ export enum ExportScope {
  * Export voucher codes to csv/xlsx file.
  *
  * Added in Saleor 3.18.
- *
- * Note: this API is currently in Feature Preview and can be subject to changes at later point.
  *
  * Requires one of the following permissions: MANAGE_DISCOUNTS.
  *
@@ -7817,9 +8207,9 @@ export type GiftCard = Node &
      */
     endDate?: Maybe<Scalars['DateTime']['output']>;
     /**
-     * List of events associated with the gift card.
+     * List of events associated with the gift card. Requires MANAGE_GIFT_CARD permission to access all events. Users with MANAGE_ORDERS permission can access only USED_IN_ORDER and REFUNDED_IN_ORDER events.
      *
-     * Requires one of the following permissions: MANAGE_GIFT_CARD.
+     * Requires one of the following permissions: MANAGE_GIFT_CARD, MANAGE_ORDERS.
      */
     events: Array<GiftCardEvent>;
     /** Expiry date of the gift card. */
@@ -8235,6 +8625,7 @@ export enum GiftCardEventsEnum {
   ExpiryDateUpdated = 'EXPIRY_DATE_UPDATED',
   Issued = 'ISSUED',
   NoteAdded = 'NOTE_ADDED',
+  RefundedInOrder = 'REFUNDED_IN_ORDER',
   Resent = 'RESENT',
   SentToCustomer = 'SENT_TO_CUSTOMER',
   TagsUpdated = 'TAGS_UPDATED',
@@ -8282,6 +8673,55 @@ export type GiftCardMetadataUpdated = Event & {
   recipient?: Maybe<App>;
   /** Saleor version that triggered the event. */
   version?: Maybe<Scalars['String']['output']>;
+};
+
+/**
+ * Represents a gift card payment method used for a transaction.
+ *
+ * Added in Saleor 3.23.
+ */
+export type GiftCardPaymentMethodDetails = PaymentMethodDetails & {
+  /**
+   * Brand of the gift card.
+   *
+   * Added in Saleor 3.23.
+   */
+  brand?: Maybe<Scalars['String']['output']>;
+  /**
+   * Indicates whether the gift card is a built-in Saleor gift card.
+   *
+   * Added in Saleor 3.23.
+   */
+  isSaleorGiftcard: Scalars['Boolean']['output'];
+  /**
+   * Last characters of the gift card code. Max 4 characters.
+   *
+   * Added in Saleor 3.23.
+   */
+  lastChars?: Maybe<Scalars['String']['output']>;
+  /** Name of the gift card. */
+  name: Scalars['String']['output'];
+};
+
+export type GiftCardPaymentMethodDetailsInput = {
+  /**
+   * Brand of the gift card used for the transaction. Max length is 40 characters.
+   *
+   * Added in Saleor 3.23.
+   */
+  brand?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * Last characters of the gift card used for the transaction. Max length is 4 characters.
+   *
+   * Added in Saleor 3.23.
+   */
+  lastChars?: InputMaybe<Scalars['String']['input']>;
+  /**
+   * Name of the payment method used for the transaction. Max length is 256 characters.
+   *
+   * Added in Saleor 3.23.
+   */
+  name: Scalars['String']['input'];
 };
 
 /**
@@ -8378,6 +8818,8 @@ export enum GiftCardSortField {
   CurrentBalance = 'CURRENT_BALANCE',
   /** Sort gift cards by product. */
   Product = 'PRODUCT',
+  /** Sort gift cards by rank. Note: This option is available only with the `search` filter. */
+  Rank = 'RANK',
   /** Sort gift cards by used by. */
   UsedBy = 'USED_BY',
 }
@@ -8542,11 +8984,6 @@ export type GroupCountableEdge = {
   /** The item at the end of the edge. */
   node: Group;
 };
-
-export enum HttpMethod {
-  Get = 'GET',
-  Post = 'POST',
-}
 
 /** Thumbnail formats for icon images. */
 export enum IconThumbnailFormatEnum {
@@ -8843,785 +9280,1565 @@ export enum JobStatusEnum {
   Success = 'SUCCESS',
 }
 
+/** Language code enum. It contains all the languages supported by Saleor. */
 export enum LanguageCodeEnum {
+  /** Afrikaans */
   Af = 'AF',
+  /** Afrikaans (Namibia) */
   AfNa = 'AF_NA',
+  /** Afrikaans (South Africa) */
   AfZa = 'AF_ZA',
+  /** Aghem */
   Agq = 'AGQ',
+  /** Aghem (Cameroon) */
   AgqCm = 'AGQ_CM',
+  /** Akan */
   Ak = 'AK',
+  /** Akan (Ghana) */
   AkGh = 'AK_GH',
+  /** Amharic */
   Am = 'AM',
+  /** Amharic (Ethiopia) */
   AmEt = 'AM_ET',
+  /** Arabic */
   Ar = 'AR',
+  /** Arabic (United Arab Emirates) */
   ArAe = 'AR_AE',
+  /** Arabic (Bahrain) */
   ArBh = 'AR_BH',
+  /** Arabic (Djibouti) */
   ArDj = 'AR_DJ',
+  /** Arabic (Algeria) */
   ArDz = 'AR_DZ',
+  /** Arabic (Egypt) */
   ArEg = 'AR_EG',
+  /** Arabic (Western Sahara) */
   ArEh = 'AR_EH',
+  /** Arabic (Eritrea) */
   ArEr = 'AR_ER',
+  /** Arabic (Israel) */
   ArIl = 'AR_IL',
+  /** Arabic (Iraq) */
   ArIq = 'AR_IQ',
+  /** Arabic (Jordan) */
   ArJo = 'AR_JO',
+  /** Arabic (Comoros) */
   ArKm = 'AR_KM',
+  /** Arabic (Kuwait) */
   ArKw = 'AR_KW',
+  /** Arabic (Lebanon) */
   ArLb = 'AR_LB',
+  /** Arabic (Libya) */
   ArLy = 'AR_LY',
+  /** Arabic (Morocco) */
   ArMa = 'AR_MA',
+  /** Arabic (Mauritania) */
   ArMr = 'AR_MR',
+  /** Arabic (Oman) */
   ArOm = 'AR_OM',
+  /** Arabic (Palestinian Territories) */
   ArPs = 'AR_PS',
+  /** Arabic (Qatar) */
   ArQa = 'AR_QA',
+  /** Arabic (Saudi Arabia) */
   ArSa = 'AR_SA',
+  /** Arabic (Sudan) */
   ArSd = 'AR_SD',
+  /** Arabic (Somalia) */
   ArSo = 'AR_SO',
+  /** Arabic (South Sudan) */
   ArSs = 'AR_SS',
+  /** Arabic (Syria) */
   ArSy = 'AR_SY',
+  /** Arabic (Chad) */
   ArTd = 'AR_TD',
+  /** Arabic (Tunisia) */
   ArTn = 'AR_TN',
+  /** Arabic (Yemen) */
   ArYe = 'AR_YE',
+  /** Assamese */
   As = 'AS',
+  /** Asu */
   Asa = 'ASA',
+  /** Asu (Tanzania) */
   AsaTz = 'ASA_TZ',
+  /** Asturian */
   Ast = 'AST',
+  /** Asturian (Spain) */
   AstEs = 'AST_ES',
+  /** Assamese (India) */
   AsIn = 'AS_IN',
+  /** Azerbaijani */
   Az = 'AZ',
+  /** Azerbaijani (Cyrillic) */
   AzCyrl = 'AZ_CYRL',
+  /** Azerbaijani (Cyrillic, Azerbaijan) */
   AzCyrlAz = 'AZ_CYRL_AZ',
+  /** Azerbaijani (Latin) */
   AzLatn = 'AZ_LATN',
+  /** Azerbaijani (Latin, Azerbaijan) */
   AzLatnAz = 'AZ_LATN_AZ',
+  /** Basaa */
   Bas = 'BAS',
+  /** Basaa (Cameroon) */
   BasCm = 'BAS_CM',
+  /** Belarusian */
   Be = 'BE',
+  /** Bemba */
   Bem = 'BEM',
+  /** Bemba (Zambia) */
   BemZm = 'BEM_ZM',
+  /** Bena */
   Bez = 'BEZ',
+  /** Bena (Tanzania) */
   BezTz = 'BEZ_TZ',
+  /** Belarusian (Belarus) */
   BeBy = 'BE_BY',
+  /** Bulgarian */
   Bg = 'BG',
+  /** Bulgarian (Bulgaria) */
   BgBg = 'BG_BG',
+  /** Bambara */
   Bm = 'BM',
+  /** Bambara (Mali) */
   BmMl = 'BM_ML',
+  /** Bangla */
   Bn = 'BN',
+  /** Bangla (Bangladesh) */
   BnBd = 'BN_BD',
+  /** Bangla (India) */
   BnIn = 'BN_IN',
+  /** Tibetan */
   Bo = 'BO',
+  /** Tibetan (China) */
   BoCn = 'BO_CN',
+  /** Tibetan (India) */
   BoIn = 'BO_IN',
+  /** Breton */
   Br = 'BR',
+  /** Bodo */
   Brx = 'BRX',
+  /** Bodo (India) */
   BrxIn = 'BRX_IN',
+  /** Breton (France) */
   BrFr = 'BR_FR',
+  /** Bosnian */
   Bs = 'BS',
+  /** Bosnian (Cyrillic) */
   BsCyrl = 'BS_CYRL',
+  /** Bosnian (Cyrillic, Bosnia & Herzegovina) */
   BsCyrlBa = 'BS_CYRL_BA',
+  /** Bosnian (Latin) */
   BsLatn = 'BS_LATN',
+  /** Bosnian (Latin, Bosnia & Herzegovina) */
   BsLatnBa = 'BS_LATN_BA',
+  /** Catalan */
   Ca = 'CA',
+  /** Catalan (Andorra) */
   CaAd = 'CA_AD',
+  /** Catalan (Spain) */
   CaEs = 'CA_ES',
+  /** Catalan (Spain, Valencian) */
   CaEsValencia = 'CA_ES_VALENCIA',
+  /** Catalan (France) */
   CaFr = 'CA_FR',
+  /** Catalan (Italy) */
   CaIt = 'CA_IT',
+  /** Chakma */
   Ccp = 'CCP',
+  /** Chakma (Bangladesh) */
   CcpBd = 'CCP_BD',
+  /** Chakma (India) */
   CcpIn = 'CCP_IN',
+  /** Chechen */
   Ce = 'CE',
+  /** Cebuano */
   Ceb = 'CEB',
+  /** Cebuano (Philippines) */
   CebPh = 'CEB_PH',
+  /** Chechen (Russia) */
   CeRu = 'CE_RU',
+  /** Chiga */
   Cgg = 'CGG',
+  /** Chiga (Uganda) */
   CggUg = 'CGG_UG',
+  /** Cherokee */
   Chr = 'CHR',
+  /** Cherokee (United States) */
   ChrUs = 'CHR_US',
+  /** Central Kurdish */
   Ckb = 'CKB',
+  /** Central Kurdish (Iraq) */
   CkbIq = 'CKB_IQ',
+  /** Central Kurdish (Iran) */
   CkbIr = 'CKB_IR',
+  /** Czech */
   Cs = 'CS',
+  /** Czech (Czechia) */
   CsCz = 'CS_CZ',
+  /** Church Slavic */
   Cu = 'CU',
+  /** Church Slavic (Russia) */
   CuRu = 'CU_RU',
+  /** Welsh */
   Cy = 'CY',
+  /** Welsh (United Kingdom) */
   CyGb = 'CY_GB',
+  /** Danish */
   Da = 'DA',
+  /** Taita */
   Dav = 'DAV',
+  /** Taita (Kenya) */
   DavKe = 'DAV_KE',
+  /** Danish (Denmark) */
   DaDk = 'DA_DK',
+  /** Danish (Greenland) */
   DaGl = 'DA_GL',
+  /** German */
   De = 'DE',
+  /** German (Austria) */
   DeAt = 'DE_AT',
+  /** German (Belgium) */
   DeBe = 'DE_BE',
+  /** German (Switzerland) */
   DeCh = 'DE_CH',
+  /** German (Germany) */
   DeDe = 'DE_DE',
+  /** German (Italy) */
   DeIt = 'DE_IT',
+  /** German (Liechtenstein) */
   DeLi = 'DE_LI',
+  /** German (Luxembourg) */
   DeLu = 'DE_LU',
+  /** Zarma */
   Dje = 'DJE',
+  /** Zarma (Niger) */
   DjeNe = 'DJE_NE',
+  /** Lower Sorbian */
   Dsb = 'DSB',
+  /** Lower Sorbian (Germany) */
   DsbDe = 'DSB_DE',
+  /** Duala */
   Dua = 'DUA',
+  /** Duala (Cameroon) */
   DuaCm = 'DUA_CM',
+  /** Jola-Fonyi */
   Dyo = 'DYO',
+  /** Jola-Fonyi (Senegal) */
   DyoSn = 'DYO_SN',
+  /** Dzongkha */
   Dz = 'DZ',
+  /** Dzongkha (Bhutan) */
   DzBt = 'DZ_BT',
+  /** Embu */
   Ebu = 'EBU',
+  /** Embu (Kenya) */
   EbuKe = 'EBU_KE',
+  /** Ewe */
   Ee = 'EE',
+  /** Ewe (Ghana) */
   EeGh = 'EE_GH',
+  /** Ewe (Togo) */
   EeTg = 'EE_TG',
+  /** Greek */
   El = 'EL',
+  /** Greek (Cyprus) */
   ElCy = 'EL_CY',
+  /** Greek (Greece) */
   ElGr = 'EL_GR',
+  /** English */
   En = 'EN',
+  /** English (United Arab Emirates) */
   EnAe = 'EN_AE',
+  /** English (Antigua & Barbuda) */
   EnAg = 'EN_AG',
+  /** English (Anguilla) */
   EnAi = 'EN_AI',
+  /** English (American Samoa) */
   EnAs = 'EN_AS',
+  /** English (Austria) */
   EnAt = 'EN_AT',
+  /** English (Australia) */
   EnAu = 'EN_AU',
+  /** English (Barbados) */
   EnBb = 'EN_BB',
+  /** English (Belgium) */
   EnBe = 'EN_BE',
+  /** English (Burundi) */
   EnBi = 'EN_BI',
+  /** English (Bermuda) */
   EnBm = 'EN_BM',
+  /** English (Bahamas) */
   EnBs = 'EN_BS',
+  /** English (Botswana) */
   EnBw = 'EN_BW',
+  /** English (Belize) */
   EnBz = 'EN_BZ',
+  /** English (Canada) */
   EnCa = 'EN_CA',
+  /** English (Cocos (Keeling) Islands) */
   EnCc = 'EN_CC',
+  /** English (Switzerland) */
   EnCh = 'EN_CH',
+  /** English (Cook Islands) */
   EnCk = 'EN_CK',
+  /** English (Cameroon) */
   EnCm = 'EN_CM',
+  /** English (Christmas Island) */
   EnCx = 'EN_CX',
+  /** English (Cyprus) */
   EnCy = 'EN_CY',
+  /** English (Germany) */
   EnDe = 'EN_DE',
+  /** English (Diego Garcia) */
   EnDg = 'EN_DG',
+  /** English (Denmark) */
   EnDk = 'EN_DK',
+  /** English (Dominica) */
   EnDm = 'EN_DM',
+  /** English (Eritrea) */
   EnEr = 'EN_ER',
+  /** English (Finland) */
   EnFi = 'EN_FI',
+  /** English (Fiji) */
   EnFj = 'EN_FJ',
+  /** English (Falkland Islands) */
   EnFk = 'EN_FK',
+  /** English (Micronesia) */
   EnFm = 'EN_FM',
+  /** English (United Kingdom) */
   EnGb = 'EN_GB',
+  /** English (Grenada) */
   EnGd = 'EN_GD',
+  /** English (Guernsey) */
   EnGg = 'EN_GG',
+  /** English (Ghana) */
   EnGh = 'EN_GH',
+  /** English (Gibraltar) */
   EnGi = 'EN_GI',
+  /** English (Gambia) */
   EnGm = 'EN_GM',
+  /** English (Guam) */
   EnGu = 'EN_GU',
+  /** English (Guyana) */
   EnGy = 'EN_GY',
+  /** English (Hong Kong SAR China) */
   EnHk = 'EN_HK',
+  /** English (Ireland) */
   EnIe = 'EN_IE',
+  /** English (Israel) */
   EnIl = 'EN_IL',
+  /** English (Isle of Man) */
   EnIm = 'EN_IM',
+  /** English (India) */
   EnIn = 'EN_IN',
+  /** English (British Indian Ocean Territory) */
   EnIo = 'EN_IO',
+  /** English (Jersey) */
   EnJe = 'EN_JE',
+  /** English (Jamaica) */
   EnJm = 'EN_JM',
+  /** English (Kenya) */
   EnKe = 'EN_KE',
+  /** English (Kiribati) */
   EnKi = 'EN_KI',
+  /** English (St. Kitts & Nevis) */
   EnKn = 'EN_KN',
+  /** English (Cayman Islands) */
   EnKy = 'EN_KY',
+  /** English (St. Lucia) */
   EnLc = 'EN_LC',
+  /** English (Liberia) */
   EnLr = 'EN_LR',
+  /** English (Lesotho) */
   EnLs = 'EN_LS',
+  /** English (Madagascar) */
   EnMg = 'EN_MG',
+  /** English (Marshall Islands) */
   EnMh = 'EN_MH',
+  /** English (Macao SAR China) */
   EnMo = 'EN_MO',
+  /** English (Northern Mariana Islands) */
   EnMp = 'EN_MP',
+  /** English (Montserrat) */
   EnMs = 'EN_MS',
+  /** English (Malta) */
   EnMt = 'EN_MT',
+  /** English (Mauritius) */
   EnMu = 'EN_MU',
+  /** English (Malawi) */
   EnMw = 'EN_MW',
+  /** English (Malaysia) */
   EnMy = 'EN_MY',
+  /** English (Namibia) */
   EnNa = 'EN_NA',
+  /** English (Norfolk Island) */
   EnNf = 'EN_NF',
+  /** English (Nigeria) */
   EnNg = 'EN_NG',
+  /** English (Netherlands) */
   EnNl = 'EN_NL',
+  /** English (Nauru) */
   EnNr = 'EN_NR',
+  /** English (Niue) */
   EnNu = 'EN_NU',
+  /** English (New Zealand) */
   EnNz = 'EN_NZ',
+  /** English (Papua New Guinea) */
   EnPg = 'EN_PG',
+  /** English (Philippines) */
   EnPh = 'EN_PH',
+  /** English (Pakistan) */
   EnPk = 'EN_PK',
+  /** English (Pitcairn Islands) */
   EnPn = 'EN_PN',
+  /** English (Puerto Rico) */
   EnPr = 'EN_PR',
+  /** English (Palau) */
   EnPw = 'EN_PW',
+  /** English (Rwanda) */
   EnRw = 'EN_RW',
+  /** English (Solomon Islands) */
   EnSb = 'EN_SB',
+  /** English (Seychelles) */
   EnSc = 'EN_SC',
+  /** English (Sudan) */
   EnSd = 'EN_SD',
+  /** English (Sweden) */
   EnSe = 'EN_SE',
+  /** English (Singapore) */
   EnSg = 'EN_SG',
+  /** English (St. Helena) */
   EnSh = 'EN_SH',
+  /** English (Slovenia) */
   EnSi = 'EN_SI',
+  /** English (Sierra Leone) */
   EnSl = 'EN_SL',
+  /** English (South Sudan) */
   EnSs = 'EN_SS',
+  /** English (Sint Maarten) */
   EnSx = 'EN_SX',
+  /** English (Eswatini) */
   EnSz = 'EN_SZ',
+  /** English (Turks & Caicos Islands) */
   EnTc = 'EN_TC',
+  /** English (Tokelau) */
   EnTk = 'EN_TK',
+  /** English (Tonga) */
   EnTo = 'EN_TO',
+  /** English (Trinidad & Tobago) */
   EnTt = 'EN_TT',
+  /** English (Tuvalu) */
   EnTv = 'EN_TV',
+  /** English (Tanzania) */
   EnTz = 'EN_TZ',
+  /** English (Uganda) */
   EnUg = 'EN_UG',
+  /** English (U.S. Outlying Islands) */
   EnUm = 'EN_UM',
+  /** English (United States) */
   EnUs = 'EN_US',
+  /** English (St. Vincent & Grenadines) */
   EnVc = 'EN_VC',
+  /** English (British Virgin Islands) */
   EnVg = 'EN_VG',
+  /** English (U.S. Virgin Islands) */
   EnVi = 'EN_VI',
+  /** English (Vanuatu) */
   EnVu = 'EN_VU',
+  /** English (Samoa) */
   EnWs = 'EN_WS',
+  /** English (South Africa) */
   EnZa = 'EN_ZA',
+  /** English (Zambia) */
   EnZm = 'EN_ZM',
+  /** English (Zimbabwe) */
   EnZw = 'EN_ZW',
+  /** Esperanto */
   Eo = 'EO',
+  /** Spanish */
   Es = 'ES',
+  /** Spanish (Argentina) */
   EsAr = 'ES_AR',
+  /** Spanish (Bolivia) */
   EsBo = 'ES_BO',
+  /** Spanish (Brazil) */
   EsBr = 'ES_BR',
+  /** Spanish (Belize) */
   EsBz = 'ES_BZ',
+  /** Spanish (Chile) */
   EsCl = 'ES_CL',
+  /** Spanish (Colombia) */
   EsCo = 'ES_CO',
+  /** Spanish (Costa Rica) */
   EsCr = 'ES_CR',
+  /** Spanish (Cuba) */
   EsCu = 'ES_CU',
+  /** Spanish (Dominican Republic) */
   EsDo = 'ES_DO',
+  /** Spanish (Ceuta & Melilla) */
   EsEa = 'ES_EA',
+  /** Spanish (Ecuador) */
   EsEc = 'ES_EC',
+  /** Spanish (Spain) */
   EsEs = 'ES_ES',
+  /** Spanish (Equatorial Guinea) */
   EsGq = 'ES_GQ',
+  /** Spanish (Guatemala) */
   EsGt = 'ES_GT',
+  /** Spanish (Honduras) */
   EsHn = 'ES_HN',
+  /** Spanish (Canary Islands) */
   EsIc = 'ES_IC',
+  /** Spanish (Mexico) */
   EsMx = 'ES_MX',
+  /** Spanish (Nicaragua) */
   EsNi = 'ES_NI',
+  /** Spanish (Panama) */
   EsPa = 'ES_PA',
+  /** Spanish (Peru) */
   EsPe = 'ES_PE',
+  /** Spanish (Philippines) */
   EsPh = 'ES_PH',
+  /** Spanish (Puerto Rico) */
   EsPr = 'ES_PR',
+  /** Spanish (Paraguay) */
   EsPy = 'ES_PY',
+  /** Spanish (El Salvador) */
   EsSv = 'ES_SV',
+  /** Spanish (United States) */
   EsUs = 'ES_US',
+  /** Spanish (Uruguay) */
   EsUy = 'ES_UY',
+  /** Spanish (Venezuela) */
   EsVe = 'ES_VE',
+  /** Estonian */
   Et = 'ET',
+  /** Estonian (Estonia) */
   EtEe = 'ET_EE',
+  /** Basque */
   Eu = 'EU',
+  /** Basque (Spain) */
   EuEs = 'EU_ES',
+  /** Ewondo */
   Ewo = 'EWO',
+  /** Ewondo (Cameroon) */
   EwoCm = 'EWO_CM',
+  /** Persian */
   Fa = 'FA',
+  /** Persian (Afghanistan) */
   FaAf = 'FA_AF',
+  /** Persian (Iran) */
   FaIr = 'FA_IR',
+  /** Fulah */
   Ff = 'FF',
+  /** Fulah (Adlam) */
   FfAdlm = 'FF_ADLM',
+  /** Fulah (Adlam, Burkina Faso) */
   FfAdlmBf = 'FF_ADLM_BF',
+  /** Fulah (Adlam, Cameroon) */
   FfAdlmCm = 'FF_ADLM_CM',
+  /** Fulah (Adlam, Ghana) */
   FfAdlmGh = 'FF_ADLM_GH',
+  /** Fulah (Adlam, Gambia) */
   FfAdlmGm = 'FF_ADLM_GM',
+  /** Fulah (Adlam, Guinea) */
   FfAdlmGn = 'FF_ADLM_GN',
+  /** Fulah (Adlam, Guinea-Bissau) */
   FfAdlmGw = 'FF_ADLM_GW',
+  /** Fulah (Adlam, Liberia) */
   FfAdlmLr = 'FF_ADLM_LR',
+  /** Fulah (Adlam, Mauritania) */
   FfAdlmMr = 'FF_ADLM_MR',
+  /** Fulah (Adlam, Niger) */
   FfAdlmNe = 'FF_ADLM_NE',
+  /** Fulah (Adlam, Nigeria) */
   FfAdlmNg = 'FF_ADLM_NG',
+  /** Fulah (Adlam, Sierra Leone) */
   FfAdlmSl = 'FF_ADLM_SL',
+  /** Fulah (Adlam, Senegal) */
   FfAdlmSn = 'FF_ADLM_SN',
+  /** Fulah (Latin) */
   FfLatn = 'FF_LATN',
+  /** Fulah (Latin, Burkina Faso) */
   FfLatnBf = 'FF_LATN_BF',
+  /** Fulah (Latin, Cameroon) */
   FfLatnCm = 'FF_LATN_CM',
+  /** Fulah (Latin, Ghana) */
   FfLatnGh = 'FF_LATN_GH',
+  /** Fulah (Latin, Gambia) */
   FfLatnGm = 'FF_LATN_GM',
+  /** Fulah (Latin, Guinea) */
   FfLatnGn = 'FF_LATN_GN',
+  /** Fulah (Latin, Guinea-Bissau) */
   FfLatnGw = 'FF_LATN_GW',
+  /** Fulah (Latin, Liberia) */
   FfLatnLr = 'FF_LATN_LR',
+  /** Fulah (Latin, Mauritania) */
   FfLatnMr = 'FF_LATN_MR',
+  /** Fulah (Latin, Niger) */
   FfLatnNe = 'FF_LATN_NE',
+  /** Fulah (Latin, Nigeria) */
   FfLatnNg = 'FF_LATN_NG',
+  /** Fulah (Latin, Sierra Leone) */
   FfLatnSl = 'FF_LATN_SL',
+  /** Fulah (Latin, Senegal) */
   FfLatnSn = 'FF_LATN_SN',
+  /** Finnish */
   Fi = 'FI',
+  /** Filipino */
   Fil = 'FIL',
+  /** Filipino (Philippines) */
   FilPh = 'FIL_PH',
+  /** Finnish (Finland) */
   FiFi = 'FI_FI',
+  /** Faroese */
   Fo = 'FO',
+  /** Faroese (Denmark) */
   FoDk = 'FO_DK',
+  /** Faroese (Faroe Islands) */
   FoFo = 'FO_FO',
+  /** French */
   Fr = 'FR',
+  /** French (Belgium) */
   FrBe = 'FR_BE',
+  /** French (Burkina Faso) */
   FrBf = 'FR_BF',
+  /** French (Burundi) */
   FrBi = 'FR_BI',
+  /** French (Benin) */
   FrBj = 'FR_BJ',
+  /** French (St. Barthélemy) */
   FrBl = 'FR_BL',
+  /** French (Canada) */
   FrCa = 'FR_CA',
+  /** French (Congo - Kinshasa) */
   FrCd = 'FR_CD',
+  /** French (Central African Republic) */
   FrCf = 'FR_CF',
+  /** French (Congo - Brazzaville) */
   FrCg = 'FR_CG',
+  /** French (Switzerland) */
   FrCh = 'FR_CH',
+  /** French (Côte d’Ivoire) */
   FrCi = 'FR_CI',
+  /** French (Cameroon) */
   FrCm = 'FR_CM',
+  /** French (Djibouti) */
   FrDj = 'FR_DJ',
+  /** French (Algeria) */
   FrDz = 'FR_DZ',
+  /** French (France) */
   FrFr = 'FR_FR',
+  /** French (Gabon) */
   FrGa = 'FR_GA',
+  /** French (French Guiana) */
   FrGf = 'FR_GF',
+  /** French (Guinea) */
   FrGn = 'FR_GN',
+  /** French (Guadeloupe) */
   FrGp = 'FR_GP',
+  /** French (Equatorial Guinea) */
   FrGq = 'FR_GQ',
+  /** French (Haiti) */
   FrHt = 'FR_HT',
+  /** French (Comoros) */
   FrKm = 'FR_KM',
+  /** French (Luxembourg) */
   FrLu = 'FR_LU',
+  /** French (Morocco) */
   FrMa = 'FR_MA',
+  /** French (Monaco) */
   FrMc = 'FR_MC',
+  /** French (St. Martin) */
   FrMf = 'FR_MF',
+  /** French (Madagascar) */
   FrMg = 'FR_MG',
+  /** French (Mali) */
   FrMl = 'FR_ML',
+  /** French (Martinique) */
   FrMq = 'FR_MQ',
+  /** French (Mauritania) */
   FrMr = 'FR_MR',
+  /** French (Mauritius) */
   FrMu = 'FR_MU',
+  /** French (New Caledonia) */
   FrNc = 'FR_NC',
+  /** French (Niger) */
   FrNe = 'FR_NE',
+  /** French (French Polynesia) */
   FrPf = 'FR_PF',
+  /** French (St. Pierre & Miquelon) */
   FrPm = 'FR_PM',
+  /** French (Réunion) */
   FrRe = 'FR_RE',
+  /** French (Rwanda) */
   FrRw = 'FR_RW',
+  /** French (Seychelles) */
   FrSc = 'FR_SC',
+  /** French (Senegal) */
   FrSn = 'FR_SN',
+  /** French (Syria) */
   FrSy = 'FR_SY',
+  /** French (Chad) */
   FrTd = 'FR_TD',
+  /** French (Togo) */
   FrTg = 'FR_TG',
+  /** French (Tunisia) */
   FrTn = 'FR_TN',
+  /** French (Vanuatu) */
   FrVu = 'FR_VU',
+  /** French (Wallis & Futuna) */
   FrWf = 'FR_WF',
+  /** French (Mayotte) */
   FrYt = 'FR_YT',
+  /** Friulian */
   Fur = 'FUR',
+  /** Friulian (Italy) */
   FurIt = 'FUR_IT',
+  /** Western Frisian */
   Fy = 'FY',
+  /** Western Frisian (Netherlands) */
   FyNl = 'FY_NL',
+  /** Irish */
   Ga = 'GA',
+  /** Irish (United Kingdom) */
   GaGb = 'GA_GB',
+  /** Irish (Ireland) */
   GaIe = 'GA_IE',
+  /** Scottish Gaelic */
   Gd = 'GD',
+  /** Scottish Gaelic (United Kingdom) */
   GdGb = 'GD_GB',
+  /** Galician */
   Gl = 'GL',
+  /** Galician (Spain) */
   GlEs = 'GL_ES',
+  /** Swiss German */
   Gsw = 'GSW',
+  /** Swiss German (Switzerland) */
   GswCh = 'GSW_CH',
+  /** Swiss German (France) */
   GswFr = 'GSW_FR',
+  /** Swiss German (Liechtenstein) */
   GswLi = 'GSW_LI',
+  /** Gujarati */
   Gu = 'GU',
+  /** Gusii */
   Guz = 'GUZ',
+  /** Gusii (Kenya) */
   GuzKe = 'GUZ_KE',
+  /** Gujarati (India) */
   GuIn = 'GU_IN',
+  /** Manx */
   Gv = 'GV',
+  /** Manx (Isle of Man) */
   GvIm = 'GV_IM',
+  /** Hausa */
   Ha = 'HA',
+  /** Hawaiian */
   Haw = 'HAW',
+  /** Hawaiian (United States) */
   HawUs = 'HAW_US',
+  /** Hausa (Ghana) */
   HaGh = 'HA_GH',
+  /** Hausa (Niger) */
   HaNe = 'HA_NE',
+  /** Hausa (Nigeria) */
   HaNg = 'HA_NG',
+  /** Hebrew */
   He = 'HE',
+  /** Hebrew (Israel) */
   HeIl = 'HE_IL',
+  /** Hindi */
   Hi = 'HI',
+  /** Hindi (India) */
   HiIn = 'HI_IN',
+  /** Croatian */
   Hr = 'HR',
+  /** Croatian (Bosnia & Herzegovina) */
   HrBa = 'HR_BA',
+  /** Croatian (Croatia) */
   HrHr = 'HR_HR',
+  /** Upper Sorbian */
   Hsb = 'HSB',
+  /** Upper Sorbian (Germany) */
   HsbDe = 'HSB_DE',
+  /** Hungarian */
   Hu = 'HU',
+  /** Hungarian (Hungary) */
   HuHu = 'HU_HU',
+  /** Armenian */
   Hy = 'HY',
+  /** Armenian (Armenia) */
   HyAm = 'HY_AM',
+  /** Interlingua */
   Ia = 'IA',
+  /** Indonesian */
   Id = 'ID',
+  /** Indonesian (Indonesia) */
   IdId = 'ID_ID',
+  /** Igbo */
   Ig = 'IG',
+  /** Igbo (Nigeria) */
   IgNg = 'IG_NG',
+  /** Sichuan Yi */
   Ii = 'II',
+  /** Sichuan Yi (China) */
   IiCn = 'II_CN',
+  /** Icelandic */
   Is = 'IS',
+  /** Icelandic (Iceland) */
   IsIs = 'IS_IS',
+  /** Italian */
   It = 'IT',
+  /** Italian (Switzerland) */
   ItCh = 'IT_CH',
+  /** Italian (Italy) */
   ItIt = 'IT_IT',
+  /** Italian (San Marino) */
   ItSm = 'IT_SM',
+  /** Italian (Vatican City) */
   ItVa = 'IT_VA',
+  /** Japanese */
   Ja = 'JA',
+  /** Japanese (Japan) */
   JaJp = 'JA_JP',
+  /** Ngomba */
   Jgo = 'JGO',
+  /** Ngomba (Cameroon) */
   JgoCm = 'JGO_CM',
+  /** Machame */
   Jmc = 'JMC',
+  /** Machame (Tanzania) */
   JmcTz = 'JMC_TZ',
+  /** Javanese */
   Jv = 'JV',
+  /** Javanese (Indonesia) */
   JvId = 'JV_ID',
+  /** Georgian */
   Ka = 'KA',
+  /** Kabyle */
   Kab = 'KAB',
+  /** Kabyle (Algeria) */
   KabDz = 'KAB_DZ',
+  /** Kamba */
   Kam = 'KAM',
+  /** Kamba (Kenya) */
   KamKe = 'KAM_KE',
+  /** Georgian (Georgia) */
   KaGe = 'KA_GE',
+  /** Makonde */
   Kde = 'KDE',
+  /** Makonde (Tanzania) */
   KdeTz = 'KDE_TZ',
+  /** Kabuverdianu */
   Kea = 'KEA',
+  /** Kabuverdianu (Cape Verde) */
   KeaCv = 'KEA_CV',
+  /** Koyra Chiini */
   Khq = 'KHQ',
+  /** Koyra Chiini (Mali) */
   KhqMl = 'KHQ_ML',
+  /** Kikuyu */
   Ki = 'KI',
+  /** Kikuyu (Kenya) */
   KiKe = 'KI_KE',
+  /** Kazakh */
   Kk = 'KK',
+  /** Kako */
   Kkj = 'KKJ',
+  /** Kako (Cameroon) */
   KkjCm = 'KKJ_CM',
+  /** Kazakh (Kazakhstan) */
   KkKz = 'KK_KZ',
+  /** Kalaallisut */
   Kl = 'KL',
+  /** Kalenjin */
   Kln = 'KLN',
+  /** Kalenjin (Kenya) */
   KlnKe = 'KLN_KE',
+  /** Kalaallisut (Greenland) */
   KlGl = 'KL_GL',
+  /** Khmer */
   Km = 'KM',
+  /** Khmer (Cambodia) */
   KmKh = 'KM_KH',
+  /** Kannada */
   Kn = 'KN',
+  /** Kannada (India) */
   KnIn = 'KN_IN',
+  /** Korean */
   Ko = 'KO',
+  /** Konkani */
   Kok = 'KOK',
+  /** Konkani (India) */
   KokIn = 'KOK_IN',
+  /** Korean (North Korea) */
   KoKp = 'KO_KP',
+  /** Korean (South Korea) */
   KoKr = 'KO_KR',
+  /** Kashmiri */
   Ks = 'KS',
+  /** Shambala */
   Ksb = 'KSB',
+  /** Shambala (Tanzania) */
   KsbTz = 'KSB_TZ',
+  /** Bafia */
   Ksf = 'KSF',
+  /** Bafia (Cameroon) */
   KsfCm = 'KSF_CM',
+  /** Colognian */
   Ksh = 'KSH',
+  /** Colognian (Germany) */
   KshDe = 'KSH_DE',
+  /** Kashmiri (Arabic) */
   KsArab = 'KS_ARAB',
+  /** Kashmiri (Arabic, India) */
   KsArabIn = 'KS_ARAB_IN',
+  /** Kurdish */
   Ku = 'KU',
+  /** Kurdish (Turkey) */
   KuTr = 'KU_TR',
+  /** Cornish */
   Kw = 'KW',
+  /** Cornish (United Kingdom) */
   KwGb = 'KW_GB',
+  /** Kyrgyz */
   Ky = 'KY',
+  /** Kyrgyz (Kyrgyzstan) */
   KyKg = 'KY_KG',
+  /** Langi */
   Lag = 'LAG',
+  /** Langi (Tanzania) */
   LagTz = 'LAG_TZ',
+  /** Luxembourgish */
   Lb = 'LB',
+  /** Luxembourgish (Luxembourg) */
   LbLu = 'LB_LU',
+  /** Ganda */
   Lg = 'LG',
+  /** Ganda (Uganda) */
   LgUg = 'LG_UG',
+  /** Lakota */
   Lkt = 'LKT',
+  /** Lakota (United States) */
   LktUs = 'LKT_US',
+  /** Lingala */
   Ln = 'LN',
+  /** Lingala (Angola) */
   LnAo = 'LN_AO',
+  /** Lingala (Congo - Kinshasa) */
   LnCd = 'LN_CD',
+  /** Lingala (Central African Republic) */
   LnCf = 'LN_CF',
+  /** Lingala (Congo - Brazzaville) */
   LnCg = 'LN_CG',
+  /** Lao */
   Lo = 'LO',
+  /** Lao (Laos) */
   LoLa = 'LO_LA',
+  /** Northern Luri */
   Lrc = 'LRC',
+  /** Northern Luri (Iraq) */
   LrcIq = 'LRC_IQ',
+  /** Northern Luri (Iran) */
   LrcIr = 'LRC_IR',
+  /** Lithuanian */
   Lt = 'LT',
+  /** Lithuanian (Lithuania) */
   LtLt = 'LT_LT',
+  /** Luba-Katanga */
   Lu = 'LU',
+  /** Luo */
   Luo = 'LUO',
+  /** Luo (Kenya) */
   LuoKe = 'LUO_KE',
+  /** Luyia */
   Luy = 'LUY',
+  /** Luyia (Kenya) */
   LuyKe = 'LUY_KE',
+  /** Luba-Katanga (Congo - Kinshasa) */
   LuCd = 'LU_CD',
+  /** Latvian */
   Lv = 'LV',
+  /** Latvian (Latvia) */
   LvLv = 'LV_LV',
+  /** Maithili */
   Mai = 'MAI',
+  /** Maithili (India) */
   MaiIn = 'MAI_IN',
+  /** Masai */
   Mas = 'MAS',
+  /** Masai (Kenya) */
   MasKe = 'MAS_KE',
+  /** Masai (Tanzania) */
   MasTz = 'MAS_TZ',
+  /** Meru */
   Mer = 'MER',
+  /** Meru (Kenya) */
   MerKe = 'MER_KE',
+  /** Morisyen */
   Mfe = 'MFE',
+  /** Morisyen (Mauritius) */
   MfeMu = 'MFE_MU',
+  /** Malagasy */
   Mg = 'MG',
+  /** Makhuwa-Meetto */
   Mgh = 'MGH',
+  /** Makhuwa-Meetto (Mozambique) */
   MghMz = 'MGH_MZ',
+  /** Metaʼ */
   Mgo = 'MGO',
+  /** Metaʼ (Cameroon) */
   MgoCm = 'MGO_CM',
+  /** Malagasy (Madagascar) */
   MgMg = 'MG_MG',
+  /** Maori */
   Mi = 'MI',
+  /** Maori (New Zealand) */
   MiNz = 'MI_NZ',
+  /** Macedonian */
   Mk = 'MK',
+  /** Macedonian (North Macedonia) */
   MkMk = 'MK_MK',
+  /** Malayalam */
   Ml = 'ML',
+  /** Malayalam (India) */
   MlIn = 'ML_IN',
+  /** Mongolian */
   Mn = 'MN',
+  /** Manipuri */
   Mni = 'MNI',
+  /** Manipuri (Bangla) */
   MniBeng = 'MNI_BENG',
+  /** Manipuri (Bangla, India) */
   MniBengIn = 'MNI_BENG_IN',
+  /** Mongolian (Mongolia) */
   MnMn = 'MN_MN',
+  /** Marathi */
   Mr = 'MR',
+  /** Marathi (India) */
   MrIn = 'MR_IN',
+  /** Malay */
   Ms = 'MS',
+  /** Malay (Brunei) */
   MsBn = 'MS_BN',
+  /** Malay (Indonesia) */
   MsId = 'MS_ID',
+  /** Malay (Malaysia) */
   MsMy = 'MS_MY',
+  /** Malay (Singapore) */
   MsSg = 'MS_SG',
+  /** Maltese */
   Mt = 'MT',
+  /** Maltese (Malta) */
   MtMt = 'MT_MT',
+  /** Mundang */
   Mua = 'MUA',
+  /** Mundang (Cameroon) */
   MuaCm = 'MUA_CM',
+  /** Burmese */
   My = 'MY',
+  /** Burmese (Myanmar (Burma)) */
   MyMm = 'MY_MM',
+  /** Mazanderani */
   Mzn = 'MZN',
+  /** Mazanderani (Iran) */
   MznIr = 'MZN_IR',
+  /** Nama */
   Naq = 'NAQ',
+  /** Nama (Namibia) */
   NaqNa = 'NAQ_NA',
+  /** Norwegian Bokmål */
   Nb = 'NB',
+  /** Norwegian Bokmål (Norway) */
   NbNo = 'NB_NO',
+  /** Norwegian Bokmål (Svalbard & Jan Mayen) */
   NbSj = 'NB_SJ',
+  /** North Ndebele */
   Nd = 'ND',
+  /** Low German */
   Nds = 'NDS',
+  /** Low German (Germany) */
   NdsDe = 'NDS_DE',
+  /** Low German (Netherlands) */
   NdsNl = 'NDS_NL',
+  /** North Ndebele (Zimbabwe) */
   NdZw = 'ND_ZW',
+  /** Nepali */
   Ne = 'NE',
+  /** Nepali (India) */
   NeIn = 'NE_IN',
+  /** Nepali (Nepal) */
   NeNp = 'NE_NP',
+  /** Dutch */
   Nl = 'NL',
+  /** Dutch (Aruba) */
   NlAw = 'NL_AW',
+  /** Dutch (Belgium) */
   NlBe = 'NL_BE',
+  /** Dutch (Caribbean Netherlands) */
   NlBq = 'NL_BQ',
+  /** Dutch (Curaçao) */
   NlCw = 'NL_CW',
+  /** Dutch (Netherlands) */
   NlNl = 'NL_NL',
+  /** Dutch (Suriname) */
   NlSr = 'NL_SR',
+  /** Dutch (Sint Maarten) */
   NlSx = 'NL_SX',
+  /** Kwasio */
   Nmg = 'NMG',
+  /** Kwasio (Cameroon) */
   NmgCm = 'NMG_CM',
+  /** Norwegian Nynorsk */
   Nn = 'NN',
+  /** Ngiemboon */
   Nnh = 'NNH',
+  /** Ngiemboon (Cameroon) */
   NnhCm = 'NNH_CM',
+  /** Norwegian Nynorsk (Norway) */
   NnNo = 'NN_NO',
+  /** Nuer */
   Nus = 'NUS',
+  /** Nuer (South Sudan) */
   NusSs = 'NUS_SS',
+  /** Nyankole */
   Nyn = 'NYN',
+  /** Nyankole (Uganda) */
   NynUg = 'NYN_UG',
+  /** Oromo */
   Om = 'OM',
+  /** Oromo (Ethiopia) */
   OmEt = 'OM_ET',
+  /** Oromo (Kenya) */
   OmKe = 'OM_KE',
+  /** Odia */
   Or = 'OR',
+  /** Odia (India) */
   OrIn = 'OR_IN',
+  /** Ossetic */
   Os = 'OS',
+  /** Ossetic (Georgia) */
   OsGe = 'OS_GE',
+  /** Ossetic (Russia) */
   OsRu = 'OS_RU',
+  /** Punjabi */
   Pa = 'PA',
+  /** Punjabi (Arabic) */
   PaArab = 'PA_ARAB',
+  /** Punjabi (Arabic, Pakistan) */
   PaArabPk = 'PA_ARAB_PK',
+  /** Punjabi (Gurmukhi) */
   PaGuru = 'PA_GURU',
+  /** Punjabi (Gurmukhi, India) */
   PaGuruIn = 'PA_GURU_IN',
+  /** Nigerian Pidgin */
   Pcm = 'PCM',
+  /** Nigerian Pidgin (Nigeria) */
   PcmNg = 'PCM_NG',
+  /** Polish */
   Pl = 'PL',
+  /** Polish (Poland) */
   PlPl = 'PL_PL',
+  /** Prussian */
   Prg = 'PRG',
+  /** Pashto */
   Ps = 'PS',
+  /** Pashto (Afghanistan) */
   PsAf = 'PS_AF',
+  /** Pashto (Pakistan) */
   PsPk = 'PS_PK',
+  /** Portuguese */
   Pt = 'PT',
+  /** Portuguese (Angola) */
   PtAo = 'PT_AO',
+  /** Portuguese (Brazil) */
   PtBr = 'PT_BR',
+  /** Portuguese (Switzerland) */
   PtCh = 'PT_CH',
+  /** Portuguese (Cape Verde) */
   PtCv = 'PT_CV',
+  /** Portuguese (Equatorial Guinea) */
   PtGq = 'PT_GQ',
+  /** Portuguese (Guinea-Bissau) */
   PtGw = 'PT_GW',
+  /** Portuguese (Luxembourg) */
   PtLu = 'PT_LU',
+  /** Portuguese (Macao SAR China) */
   PtMo = 'PT_MO',
+  /** Portuguese (Mozambique) */
   PtMz = 'PT_MZ',
+  /** Portuguese (Portugal) */
   PtPt = 'PT_PT',
+  /** Portuguese (São Tomé & Príncipe) */
   PtSt = 'PT_ST',
+  /** Portuguese (Timor-Leste) */
   PtTl = 'PT_TL',
+  /** Quechua */
   Qu = 'QU',
+  /** Quechua (Bolivia) */
   QuBo = 'QU_BO',
+  /** Quechua (Ecuador) */
   QuEc = 'QU_EC',
+  /** Quechua (Peru) */
   QuPe = 'QU_PE',
+  /** Romansh */
   Rm = 'RM',
+  /** Romansh (Switzerland) */
   RmCh = 'RM_CH',
+  /** Rundi */
   Rn = 'RN',
+  /** Rundi (Burundi) */
   RnBi = 'RN_BI',
+  /** Romanian */
   Ro = 'RO',
+  /** Rombo */
   Rof = 'ROF',
+  /** Rombo (Tanzania) */
   RofTz = 'ROF_TZ',
+  /** Romanian (Moldova) */
   RoMd = 'RO_MD',
+  /** Romanian (Romania) */
   RoRo = 'RO_RO',
+  /** Russian */
   Ru = 'RU',
+  /** Russian (Belarus) */
   RuBy = 'RU_BY',
+  /** Russian (Kyrgyzstan) */
   RuKg = 'RU_KG',
+  /** Russian (Kazakhstan) */
   RuKz = 'RU_KZ',
+  /** Russian (Moldova) */
   RuMd = 'RU_MD',
+  /** Russian (Russia) */
   RuRu = 'RU_RU',
+  /** Russian (Ukraine) */
   RuUa = 'RU_UA',
+  /** Kinyarwanda */
   Rw = 'RW',
+  /** Rwa */
   Rwk = 'RWK',
+  /** Rwa (Tanzania) */
   RwkTz = 'RWK_TZ',
+  /** Kinyarwanda (Rwanda) */
   RwRw = 'RW_RW',
+  /** Sakha */
   Sah = 'SAH',
+  /** Sakha (Russia) */
   SahRu = 'SAH_RU',
+  /** Samburu */
   Saq = 'SAQ',
+  /** Samburu (Kenya) */
   SaqKe = 'SAQ_KE',
+  /** Santali */
   Sat = 'SAT',
+  /** Santali (Ol Chiki) */
   SatOlck = 'SAT_OLCK',
+  /** Santali (Ol Chiki, India) */
   SatOlckIn = 'SAT_OLCK_IN',
+  /** Sangu */
   Sbp = 'SBP',
+  /** Sangu (Tanzania) */
   SbpTz = 'SBP_TZ',
+  /** Sindhi */
   Sd = 'SD',
+  /** Sindhi (Arabic) */
   SdArab = 'SD_ARAB',
+  /** Sindhi (Arabic, Pakistan) */
   SdArabPk = 'SD_ARAB_PK',
+  /** Sindhi (Devanagari) */
   SdDeva = 'SD_DEVA',
+  /** Sindhi (Devanagari, India) */
   SdDevaIn = 'SD_DEVA_IN',
+  /** Northern Sami */
   Se = 'SE',
+  /** Sena */
   Seh = 'SEH',
+  /** Sena (Mozambique) */
   SehMz = 'SEH_MZ',
+  /** Koyraboro Senni */
   Ses = 'SES',
+  /** Koyraboro Senni (Mali) */
   SesMl = 'SES_ML',
+  /** Northern Sami (Finland) */
   SeFi = 'SE_FI',
+  /** Northern Sami (Norway) */
   SeNo = 'SE_NO',
+  /** Northern Sami (Sweden) */
   SeSe = 'SE_SE',
+  /** Sango */
   Sg = 'SG',
+  /** Sango (Central African Republic) */
   SgCf = 'SG_CF',
+  /** Tachelhit */
   Shi = 'SHI',
+  /** Tachelhit (Latin) */
   ShiLatn = 'SHI_LATN',
+  /** Tachelhit (Latin, Morocco) */
   ShiLatnMa = 'SHI_LATN_MA',
+  /** Tachelhit (Tifinagh) */
   ShiTfng = 'SHI_TFNG',
+  /** Tachelhit (Tifinagh, Morocco) */
   ShiTfngMa = 'SHI_TFNG_MA',
+  /** Sinhala */
   Si = 'SI',
+  /** Sinhala (Sri Lanka) */
   SiLk = 'SI_LK',
+  /** Slovak */
   Sk = 'SK',
+  /** Slovak (Slovakia) */
   SkSk = 'SK_SK',
+  /** Slovenian */
   Sl = 'SL',
+  /** Slovenian (Slovenia) */
   SlSi = 'SL_SI',
+  /** Inari Sami */
   Smn = 'SMN',
+  /** Inari Sami (Finland) */
   SmnFi = 'SMN_FI',
+  /** Shona */
   Sn = 'SN',
+  /** Shona (Zimbabwe) */
   SnZw = 'SN_ZW',
+  /** Somali */
   So = 'SO',
+  /** Somali (Djibouti) */
   SoDj = 'SO_DJ',
+  /** Somali (Ethiopia) */
   SoEt = 'SO_ET',
+  /** Somali (Kenya) */
   SoKe = 'SO_KE',
+  /** Somali (Somalia) */
   SoSo = 'SO_SO',
+  /** Albanian */
   Sq = 'SQ',
+  /** Albanian (Albania) */
   SqAl = 'SQ_AL',
+  /** Albanian (North Macedonia) */
   SqMk = 'SQ_MK',
+  /** Albanian (Kosovo) */
   SqXk = 'SQ_XK',
+  /** Serbian */
   Sr = 'SR',
+  /** Serbian (Cyrillic) */
   SrCyrl = 'SR_CYRL',
+  /** Serbian (Cyrillic, Bosnia & Herzegovina) */
   SrCyrlBa = 'SR_CYRL_BA',
+  /** Serbian (Cyrillic, Montenegro) */
   SrCyrlMe = 'SR_CYRL_ME',
+  /** Serbian (Cyrillic, Serbia) */
   SrCyrlRs = 'SR_CYRL_RS',
+  /** Serbian (Cyrillic, Kosovo) */
   SrCyrlXk = 'SR_CYRL_XK',
+  /** Serbian (Latin) */
   SrLatn = 'SR_LATN',
+  /** Serbian (Latin, Bosnia & Herzegovina) */
   SrLatnBa = 'SR_LATN_BA',
+  /** Serbian (Latin, Montenegro) */
   SrLatnMe = 'SR_LATN_ME',
+  /** Serbian (Latin, Serbia) */
   SrLatnRs = 'SR_LATN_RS',
+  /** Serbian (Latin, Kosovo) */
   SrLatnXk = 'SR_LATN_XK',
+  /** Sundanese */
   Su = 'SU',
+  /** Sundanese (Latin) */
   SuLatn = 'SU_LATN',
+  /** Sundanese (Latin, Indonesia) */
   SuLatnId = 'SU_LATN_ID',
+  /** Swedish */
   Sv = 'SV',
+  /** Swedish (Åland Islands) */
   SvAx = 'SV_AX',
+  /** Swedish (Finland) */
   SvFi = 'SV_FI',
+  /** Swedish (Sweden) */
   SvSe = 'SV_SE',
+  /** Swahili */
   Sw = 'SW',
+  /** Swahili (Congo - Kinshasa) */
   SwCd = 'SW_CD',
+  /** Swahili (Kenya) */
   SwKe = 'SW_KE',
+  /** Swahili (Tanzania) */
   SwTz = 'SW_TZ',
+  /** Swahili (Uganda) */
   SwUg = 'SW_UG',
+  /** Tamil */
   Ta = 'TA',
+  /** Tamil (India) */
   TaIn = 'TA_IN',
+  /** Tamil (Sri Lanka) */
   TaLk = 'TA_LK',
+  /** Tamil (Malaysia) */
   TaMy = 'TA_MY',
+  /** Tamil (Singapore) */
   TaSg = 'TA_SG',
+  /** Telugu */
   Te = 'TE',
+  /** Teso */
   Teo = 'TEO',
+  /** Teso (Kenya) */
   TeoKe = 'TEO_KE',
+  /** Teso (Uganda) */
   TeoUg = 'TEO_UG',
+  /** Telugu (India) */
   TeIn = 'TE_IN',
+  /** Tajik */
   Tg = 'TG',
+  /** Tajik (Tajikistan) */
   TgTj = 'TG_TJ',
+  /** Thai */
   Th = 'TH',
+  /** Thai (Thailand) */
   ThTh = 'TH_TH',
+  /** Tigrinya */
   Ti = 'TI',
+  /** Tigrinya (Eritrea) */
   TiEr = 'TI_ER',
+  /** Tigrinya (Ethiopia) */
   TiEt = 'TI_ET',
+  /** Turkmen */
   Tk = 'TK',
+  /** Turkmen (Turkmenistan) */
   TkTm = 'TK_TM',
+  /** Tongan */
   To = 'TO',
+  /** Tongan (Tonga) */
   ToTo = 'TO_TO',
+  /** Turkish */
   Tr = 'TR',
+  /** Turkish (Cyprus) */
   TrCy = 'TR_CY',
+  /** Turkish (Turkey) */
   TrTr = 'TR_TR',
+  /** Tatar */
   Tt = 'TT',
+  /** Tatar (Russia) */
   TtRu = 'TT_RU',
+  /** Tasawaq */
   Twq = 'TWQ',
+  /** Tasawaq (Niger) */
   TwqNe = 'TWQ_NE',
+  /** Central Atlas Tamazight */
   Tzm = 'TZM',
+  /** Central Atlas Tamazight (Morocco) */
   TzmMa = 'TZM_MA',
+  /** Uyghur */
   Ug = 'UG',
+  /** Uyghur (China) */
   UgCn = 'UG_CN',
+  /** Ukrainian */
   Uk = 'UK',
+  /** Ukrainian (Ukraine) */
   UkUa = 'UK_UA',
+  /** Urdu */
   Ur = 'UR',
+  /** Urdu (India) */
   UrIn = 'UR_IN',
+  /** Urdu (Pakistan) */
   UrPk = 'UR_PK',
+  /** Uzbek */
   Uz = 'UZ',
+  /** Uzbek (Arabic) */
   UzArab = 'UZ_ARAB',
+  /** Uzbek (Arabic, Afghanistan) */
   UzArabAf = 'UZ_ARAB_AF',
+  /** Uzbek (Cyrillic) */
   UzCyrl = 'UZ_CYRL',
+  /** Uzbek (Cyrillic, Uzbekistan) */
   UzCyrlUz = 'UZ_CYRL_UZ',
+  /** Uzbek (Latin) */
   UzLatn = 'UZ_LATN',
+  /** Uzbek (Latin, Uzbekistan) */
   UzLatnUz = 'UZ_LATN_UZ',
+  /** Vai */
   Vai = 'VAI',
+  /** Vai (Latin) */
   VaiLatn = 'VAI_LATN',
+  /** Vai (Latin, Liberia) */
   VaiLatnLr = 'VAI_LATN_LR',
+  /** Vai (Vai) */
   VaiVaii = 'VAI_VAII',
+  /** Vai (Vai, Liberia) */
   VaiVaiiLr = 'VAI_VAII_LR',
+  /** Vietnamese */
   Vi = 'VI',
+  /** Vietnamese (Vietnam) */
   ViVn = 'VI_VN',
+  /** Volapük */
   Vo = 'VO',
+  /** Vunjo */
   Vun = 'VUN',
+  /** Vunjo (Tanzania) */
   VunTz = 'VUN_TZ',
+  /** Walser */
   Wae = 'WAE',
+  /** Walser (Switzerland) */
   WaeCh = 'WAE_CH',
+  /** Wolof */
   Wo = 'WO',
+  /** Wolof (Senegal) */
   WoSn = 'WO_SN',
+  /** Xhosa */
   Xh = 'XH',
+  /** Xhosa (South Africa) */
   XhZa = 'XH_ZA',
+  /** Soga */
   Xog = 'XOG',
+  /** Soga (Uganda) */
   XogUg = 'XOG_UG',
+  /** Yangben */
   Yav = 'YAV',
+  /** Yangben (Cameroon) */
   YavCm = 'YAV_CM',
+  /** Yiddish */
   Yi = 'YI',
+  /** Yoruba */
   Yo = 'YO',
+  /** Yoruba (Benin) */
   YoBj = 'YO_BJ',
+  /** Yoruba (Nigeria) */
   YoNg = 'YO_NG',
+  /** Cantonese */
   Yue = 'YUE',
+  /** Cantonese (Simplified) */
   YueHans = 'YUE_HANS',
+  /** Cantonese (Simplified, China) */
   YueHansCn = 'YUE_HANS_CN',
+  /** Cantonese (Traditional) */
   YueHant = 'YUE_HANT',
+  /** Cantonese (Traditional, Hong Kong SAR China) */
   YueHantHk = 'YUE_HANT_HK',
+  /** Standard Moroccan Tamazight */
   Zgh = 'ZGH',
+  /** Standard Moroccan Tamazight (Morocco) */
   ZghMa = 'ZGH_MA',
+  /** Chinese */
   Zh = 'ZH',
+  /** Chinese (Simplified) */
   ZhHans = 'ZH_HANS',
+  /** Chinese (Simplified, China) */
   ZhHansCn = 'ZH_HANS_CN',
+  /** Chinese (Simplified, Hong Kong SAR China) */
   ZhHansHk = 'ZH_HANS_HK',
+  /** Chinese (Simplified, Macao SAR China) */
   ZhHansMo = 'ZH_HANS_MO',
+  /** Chinese (Simplified, Singapore) */
   ZhHansSg = 'ZH_HANS_SG',
+  /** Chinese (Traditional) */
   ZhHant = 'ZH_HANT',
+  /** Chinese (Traditional, Hong Kong SAR China) */
   ZhHantHk = 'ZH_HANT_HK',
+  /** Chinese (Traditional, Macao SAR China) */
   ZhHantMo = 'ZH_HANT_MO',
+  /** Chinese (Traditional, Taiwan) */
   ZhHantTw = 'ZH_HANT_TW',
+  /** Zulu */
   Zu = 'ZU',
+  /** Zulu (South Africa) */
   ZuZa = 'ZU_ZA',
 }
 
@@ -10637,6 +11854,22 @@ export type Mutation = {
   /** Install new app by using app manifest. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS. */
   appInstall?: Maybe<AppInstall>;
   /**
+   * Add a problem to the calling app.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: AUTHENTICATED_APP.
+   */
+  appProblemCreate?: Maybe<AppProblemCreate>;
+  /**
+   * Dismiss problems for an app.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
+   */
+  appProblemDismiss?: Maybe<AppProblemDismiss>;
+  /**
    * Re-enable sync webhooks for provided app. Can be used to manually re-enable sync webhooks for the app before the cooldown period ends.
    *
    * Added in Saleor 3.21.
@@ -10970,6 +12203,7 @@ export type Mutation = {
    *
    * Triggers the following webhook events:
    * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
+   * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
    * - CHECKOUT_UPDATED (async): A checkout was updated.
    */
   checkoutDeliveryMethodUpdate?: Maybe<CheckoutDeliveryMethodUpdate>;
@@ -11037,6 +12271,7 @@ export type Mutation = {
    *
    * Triggers the following webhook events:
    * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
+   * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
    * - CHECKOUT_UPDATED (async): A checkout was updated.
    * @deprecated Use `checkoutDeliveryMethodUpdate` instead.
    */
@@ -11180,29 +12415,15 @@ export type Mutation = {
    */
   deleteWarehouse?: Maybe<WarehouseDelete>;
   /**
-   * Create new digital content. This mutation must be sent as a `multipart` request. More detailed specs of the upload format can be found here: https://github.com/jaydenseric/graphql-multipart-request-spec
+   * Calculates available delivery options for a checkout.
    *
-   * Requires one of the following permissions: MANAGE_PRODUCTS.
-   */
-  digitalContentCreate?: Maybe<DigitalContentCreate>;
-  /**
-   * Remove digital content assigned to given variant.
+   * Added in Saleor 3.23.
    *
-   * Requires one of the following permissions: MANAGE_PRODUCTS.
+   * Triggers the following webhook events:
+   * - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered to fetch external shipping methods.
+   * - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Triggered to filter shipping methods.
    */
-  digitalContentDelete?: Maybe<DigitalContentDelete>;
-  /**
-   * Updates digital content.
-   *
-   * Requires one of the following permissions: MANAGE_PRODUCTS.
-   */
-  digitalContentUpdate?: Maybe<DigitalContentUpdate>;
-  /**
-   * Generate new URL to digital content.
-   *
-   * Requires one of the following permissions: MANAGE_PRODUCTS.
-   */
-  digitalContentUrlCreate?: Maybe<DigitalContentUrlCreate>;
+  deliveryOptionsCalculate?: Maybe<DeliveryOptionsCalculate>;
   /**
    * Deletes draft orders.
    *
@@ -11254,6 +12475,7 @@ export type Mutation = {
    * Triggers the following webhook events:
    * - NOTIFY_USER (async): A notification for the exported file.
    * - GIFT_CARD_EXPORT_COMPLETED (async): A notification for the exported file.
+   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
    */
   exportGiftCards?: Maybe<ExportGiftCards>;
   /**
@@ -11264,6 +12486,7 @@ export type Mutation = {
    * Triggers the following webhook events:
    * - NOTIFY_USER (async): A notification for the exported file.
    * - PRODUCT_EXPORT_COMPLETED (async): A notification for the exported file.
+   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
    */
   exportProducts?: Maybe<ExportProducts>;
   /**
@@ -11271,12 +12494,11 @@ export type Mutation = {
    *
    * Added in Saleor 3.18.
    *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
-   *
    * Requires one of the following permissions: MANAGE_DISCOUNTS.
    *
    * Triggers the following webhook events:
    * - VOUCHER_CODE_EXPORT_COMPLETED (async): A notification for the exported file.
+   * @deprecated Export functionality is deprecated and will be removed. All data can be fetched via the GraphQL API and parsed into the desired format by apps or external tools.
    */
   exportVoucherCodes?: Maybe<ExportVoucherCodes>;
   /** Prepare external authentication URL for user by custom plugin. */
@@ -12887,6 +14109,14 @@ export type MutationAppInstallArgs = {
   input: AppInstallInput;
 };
 
+export type MutationAppProblemCreateArgs = {
+  input: AppProblemCreateInput;
+};
+
+export type MutationAppProblemDismissArgs = {
+  input: AppProblemDismissInput;
+};
+
 export type MutationAppReenableSyncWebhooksArgs = {
   appId: Scalars['ID']['input'];
 };
@@ -13275,22 +14505,8 @@ export type MutationDeleteWarehouseArgs = {
   id: Scalars['ID']['input'];
 };
 
-export type MutationDigitalContentCreateArgs = {
-  input: DigitalContentUploadInput;
-  variantId: Scalars['ID']['input'];
-};
-
-export type MutationDigitalContentDeleteArgs = {
-  variantId: Scalars['ID']['input'];
-};
-
-export type MutationDigitalContentUpdateArgs = {
-  input: DigitalContentInput;
-  variantId: Scalars['ID']['input'];
-};
-
-export type MutationDigitalContentUrlCreateArgs = {
-  input: DigitalContentUrlCreateInput;
+export type MutationDeliveryOptionsCalculateArgs = {
+  id: Scalars['ID']['input'];
 };
 
 export type MutationDraftOrderBulkDeleteArgs = {
@@ -14419,12 +15635,6 @@ export enum NavigationType {
   /** Secondary storefront navigation. */
   Secondary = 'SECONDARY',
 }
-
-/** Represents the NEW_TAB target options for an app extension. */
-export type NewTabTargetOptions = {
-  /** HTTP method for New Tab target (GET or POST) */
-  method: HttpMethod;
-};
 
 /** An object with an ID */
 export type Node = {
@@ -16075,7 +17285,6 @@ export type OrderLine = Node &
      * Requires one of the following permissions: MANAGE_PRODUCTS, MANAGE_ORDERS.
      */
     allocations?: Maybe<Array<Allocation>>;
-    digitalContentUrl?: Maybe<DigitalContentUrl>;
     /**
      * List of applied discounts
      *
@@ -17249,6 +18458,8 @@ export enum PageSortField {
   PublicationDate = 'PUBLICATION_DATE',
   /** Sort pages by publication date. */
   PublishedAt = 'PUBLISHED_AT',
+  /** Sort pages by rank. Note: This option is available only with the `search` filter. */
+  Rank = 'RANK',
   /** Sort pages by slug. */
   Slug = 'SLUG',
   /** Sort pages by title. */
@@ -17585,7 +18796,7 @@ export type PageTypeUpdateInput = {
   addAttributes?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Name of the page type. */
   name?: InputMaybe<Scalars['String']['input']>;
-  /** List of attribute IDs to be assigned to the page type. */
+  /** List of attribute IDs to be unassigned from the page type. */
   removeAttributes?: InputMaybe<Array<Scalars['ID']['input']>>;
   /** Page type slug. */
   slug?: InputMaybe<Scalars['String']['input']>;
@@ -17660,6 +18871,22 @@ export type PasswordChange = {
   user?: Maybe<User>;
 };
 
+/**
+ * Controls whether password-based authentication is allowed.
+ *
+ *     ENABLED - any user can log in with a password. This is the default behavior.
+ *     CUSTOMERS_ONLY - only customer users can log in with a password.
+ *         If a staff user logs in with a password, they will be treated as a customer
+ *         — the issued token will not contain any staff permissions.
+ *     DISABLED - no user can log in with a password.
+ *
+ */
+export enum PasswordLoginModeEnum {
+  CustomersOnly = 'CUSTOMERS_ONLY',
+  Disabled = 'DISABLED',
+  Enabled = 'ENABLED',
+}
+
 /** Represents a payment of a given type. */
 export type Payment = Node &
   ObjectWithMetadata & {
@@ -17717,8 +18944,6 @@ export type Payment = Node &
     modified: Scalars['DateTime']['output'];
     /** Order associated with a payment. */
     order?: Maybe<Order>;
-    /** Informs whether this is a partial payment. */
-    partial: Scalars['Boolean']['output'];
     /** Type of method used for payment. */
     paymentMethodType: Scalars['String']['output'];
     /** List of private metadata items. Requires staff permissions to access. */
@@ -18128,13 +19353,19 @@ export type PaymentMethodDetailsFilterInput = {
 };
 
 /**
- * Details of the payment method used for the transaction. One of `card` or `other` is required.
+ * Details of the payment method used for the transaction. One of `card`, `other`, or `giftCard` is required.
  *
  * Added in Saleor 3.22.
  */
 export type PaymentMethodDetailsInput = {
   /** Details of the card payment method used for the transaction. */
   card?: InputMaybe<CardPaymentMethodDetailsInput>;
+  /**
+   * Details of the gift card payment method used for the transaction.
+   *
+   * Added in Saleor 3.23.
+   */
+  giftCard?: InputMaybe<GiftCardPaymentMethodDetailsInput>;
   /** Details of the non-card payment method used for this transaction. */
   other?: InputMaybe<OtherPaymentMethodDetailsInput>;
 };
@@ -18283,11 +19514,13 @@ export enum PaymentMethodTokenizationResult {
  *     The following types are possible:
  *     CARD - represents a card payment method.
  *     OTHER - represents any payment method that is not a card payment.
+ *     GIFT_CARD - represents a gift card payment method.
  *
  *
  */
 export enum PaymentMethodTypeEnum {
   Card = 'CARD',
+  GiftCard = 'GIFT_CARD',
   Other = 'OTHER',
 }
 
@@ -18964,7 +20197,7 @@ export type ProductAttributeArgs = {
 
 /** Represents an individual item for sale in the storefront. */
 export type ProductImageByIdArgs = {
-  id?: InputMaybe<Scalars['ID']['input']>;
+  id: Scalars['ID']['input'];
 };
 
 /** Represents an individual item for sale in the storefront. */
@@ -18979,7 +20212,7 @@ export type ProductMediaArgs = {
 
 /** Represents an individual item for sale in the storefront. */
 export type ProductMediaByIdArgs = {
-  id?: InputMaybe<Scalars['ID']['input']>;
+  id: Scalars['ID']['input'];
 };
 
 /** Represents an individual item for sale in the storefront. */
@@ -19131,6 +20364,7 @@ export enum ProductBulkCreateErrorCode {
   AttributeVariantsDisabled = 'ATTRIBUTE_VARIANTS_DISABLED',
   Blank = 'BLANK',
   DuplicatedInputItem = 'DUPLICATED_INPUT_ITEM',
+  FileSizeLimitExceeded = 'FILE_SIZE_LIMIT_EXCEEDED',
   GraphqlError = 'GRAPHQL_ERROR',
   Invalid = 'INVALID',
   InvalidPrice = 'INVALID_PRICE',
@@ -19550,8 +20784,10 @@ export enum ProductErrorCode {
   AttributeVariantsDisabled = 'ATTRIBUTE_VARIANTS_DISABLED',
   CannotManageProductWithoutVariant = 'CANNOT_MANAGE_PRODUCT_WITHOUT_VARIANT',
   DuplicatedInputItem = 'DUPLICATED_INPUT_ITEM',
+  FileSizeLimitExceeded = 'FILE_SIZE_LIMIT_EXCEEDED',
   GraphqlError = 'GRAPHQL_ERROR',
   Invalid = 'INVALID',
+  InvalidFileType = 'INVALID_FILE_TYPE',
   InvalidPrice = 'INVALID_PRICE',
   MediaAlreadyAssigned = 'MEDIA_ALREADY_ASSIGNED',
   NotFound = 'NOT_FOUND',
@@ -19563,7 +20799,7 @@ export enum ProductErrorCode {
   Required = 'REQUIRED',
   Unique = 'UNIQUE',
   UnsupportedMediaProvider = 'UNSUPPORTED_MEDIA_PROVIDER',
-  VariantNoDigitalContent = 'VARIANT_NO_DIGITAL_CONTENT',
+  UnsupportedMimeType = 'UNSUPPORTED_MIME_TYPE',
 }
 
 /** Event sent when product export is completed. */
@@ -20164,11 +21400,17 @@ export type ProductType = Node &
      * Requires one of the following permissions: MANAGE_PRODUCTS.
      */
     availableAttributes?: Maybe<AttributeCountableConnection>;
-    /** Whether the product type has variants. */
+    /**
+     * Whether the product type has variants.
+     * @deprecated This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
+     */
     hasVariants: Scalars['Boolean']['output'];
     /** The ID of the product type. */
     id: Scalars['ID']['output'];
-    /** Whether the product type is digital. */
+    /**
+     * Whether the product type is digital - doesn't have any effect, it's present for backward-compatibility.
+     * @deprecated Will be removed in v3.24.0, use metadata or attributes instead.
+     */
     isDigital: Scalars['Boolean']['output'];
     /** Whether shipping is required for this product type. */
     isShippingRequired: Scalars['Boolean']['output'];
@@ -20333,11 +21575,17 @@ export type ProductTypeDelete = {
 };
 
 export enum ProductTypeEnum {
+  /** @deprecated DIGITAL will removed in Saleor 3.24.0, use metadata or attributes instead. */
   Digital = 'DIGITAL',
   Shippable = 'SHIPPABLE',
 }
 
 export type ProductTypeFilterInput = {
+  /**
+   *
+   *
+   * DEPRECATED: this field will be removed. The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
+   */
   configurable?: InputMaybe<ProductTypeConfigurable>;
   ids?: InputMaybe<Array<Scalars['ID']['input']>>;
   kind?: InputMaybe<ProductTypeKindEnum>;
@@ -20348,9 +21596,13 @@ export type ProductTypeFilterInput = {
 };
 
 export type ProductTypeInput = {
-  /** Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood. */
+  /**
+   * Determines if product of this type has multiple variants. This option mainly simplifies product management in the dashboard. There is always at least one variant created under the hood.
+   *
+   * DEPRECATED: this field will be removed. The field has no effect on the API behavior. This is a leftover from the past Simple/Configurable product distinction. Products can have multiple variants regardless of this setting.
+   */
   hasVariants?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Determines if products are digital. */
+  /** Determines if products are digital - doesn't have any effect, it's present for backward-compatibility. */
   isDigital?: InputMaybe<Scalars['Boolean']['input']>;
   /** Determines if shipping is required for products of this variant. */
   isShippingRequired?: InputMaybe<Scalars['Boolean']['input']>;
@@ -20395,7 +21647,10 @@ export type ProductTypeReorderAttributes = {
 };
 
 export enum ProductTypeSortField {
-  /** Sort products by type. */
+  /**
+   * Sort products by type.
+   * @deprecated DIGITAL will removed in Saleor 3.24.0. Use SHIPPING_REQUIRED instead.
+   */
   Digital = 'DIGITAL',
   /** Sort products by name. */
   Name = 'NAME',
@@ -20486,12 +21741,6 @@ export type ProductVariant = Node &
     channelListings?: Maybe<Array<ProductVariantChannelListing>>;
     /** The date and time when the product variant was created. */
     created: Scalars['DateTime']['output'];
-    /**
-     * Digital content for the product variant.
-     *
-     * Requires one of the following permissions: MANAGE_PRODUCTS.
-     */
-    digitalContent?: Maybe<DigitalContent>;
     /** External ID of this product. */
     externalReference?: Maybe<Scalars['String']['output']>;
     /** The ID of the product variant. */
@@ -20648,6 +21897,50 @@ export type ProductVariantBackInStock = Event & {
 /** Event sent when product variant is back in stock. */
 export type ProductVariantBackInStockProductVariantArgs = {
   channel?: InputMaybe<Scalars['String']['input']>;
+};
+
+/**
+ * Event sent when a product variant becomes available again across click-and-collect warehouses in a channel.
+ *
+ * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductVariantBackInStockForClickAndCollect = Event & {
+  /** The channel the stock availability changed in. */
+  channel: Channel;
+  /** Time of the event. */
+  issuedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<IssuingPrincipal>;
+  /** The product variant the event relates to. */
+  productVariant: ProductVariant;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<App>;
+  /** Saleor version that triggered the event. */
+  version?: Maybe<Scalars['String']['output']>;
+};
+
+/**
+ * Event sent when a product variant becomes available again across non click-and-collect warehouses in a channel.
+ *
+ * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductVariantBackInStockInChannel = Event & {
+  /** The channel the stock availability changed in. */
+  channel: Channel;
+  /** Time of the event. */
+  issuedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<IssuingPrincipal>;
+  /** The product variant the event relates to. */
+  productVariant: ProductVariant;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<App>;
+  /** Saleor version that triggered the event. */
+  version?: Maybe<Scalars['String']['output']>;
 };
 
 /**
@@ -20879,7 +22172,9 @@ export type ProductVariantChannelListing = Node & {
   /** The price of the variant. */
   price?: Maybe<Money>;
   /**
-   * Prior price of the variant used for discount calculations.
+   * Previous price of the variant in channel. Useful for providing promotion information required by customer protection laws such as EU Omnibus directive.
+   *
+   *  Warning: This field is not updated automatically. Use Channel Listings mutation to update it manually.
    *
    * Added in Saleor 3.21.
    */
@@ -21037,6 +22332,30 @@ export type ProductVariantDeletedProductVariantArgs = {
   channel?: InputMaybe<Scalars['String']['input']>;
 };
 
+/**
+ * Event sent when product variant discounted price is recalculated.
+ *
+ * Added in Saleor 3.22.
+ */
+export type ProductVariantDiscountedPriceUpdated = Event & {
+  /** The channel where the price changed. */
+  channel: Channel;
+  /** Time of the event. */
+  issuedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<IssuingPrincipal>;
+  /** The new discounted price. */
+  newPrice: Money;
+  /** The previous discounted price. */
+  previousPrice: Money;
+  /** The product variant the event relates to. */
+  productVariant: ProductVariant;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<App>;
+  /** Saleor version that triggered the event. */
+  version?: Maybe<Scalars['String']['output']>;
+};
+
 export type ProductVariantFilterInput = {
   isPreorder?: InputMaybe<Scalars['Boolean']['input']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
@@ -21114,6 +22433,50 @@ export type ProductVariantOutOfStock = Event & {
 /** Event sent when product variant is out of stock. */
 export type ProductVariantOutOfStockProductVariantArgs = {
   channel?: InputMaybe<Scalars['String']['input']>;
+};
+
+/**
+ * Event sent when a product variant becomes out of stock across all click-and-collect warehouses in a channel.
+ *
+ * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductVariantOutOfStockForClickAndCollect = Event & {
+  /** The channel the stock availability changed in. */
+  channel: Channel;
+  /** Time of the event. */
+  issuedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<IssuingPrincipal>;
+  /** The product variant the event relates to. */
+  productVariant: ProductVariant;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<App>;
+  /** Saleor version that triggered the event. */
+  version?: Maybe<Scalars['String']['output']>;
+};
+
+/**
+ * Event sent when a product variant becomes out of stock across all non click-and-collect warehouses in a channel.
+ *
+ * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+ *
+ * Added in Saleor 3.23.
+ */
+export type ProductVariantOutOfStockInChannel = Event & {
+  /** The channel the stock availability changed in. */
+  channel: Channel;
+  /** Time of the event. */
+  issuedAt?: Maybe<Scalars['DateTime']['output']>;
+  /** The user or application that triggered the event. */
+  issuingPrincipal?: Maybe<IssuingPrincipal>;
+  /** The product variant the event relates to. */
+  productVariant: ProductVariant;
+  /** The application receiving the webhook. */
+  recipient?: Maybe<App>;
+  /** Saleor version that triggered the event. */
+  version?: Maybe<Scalars['String']['output']>;
 };
 
 /**
@@ -22495,18 +23858,6 @@ export type Query = {
    */
   customers?: Maybe<UserCountableConnection>;
   /**
-   * Look up digital content by ID.
-   *
-   * Requires one of the following permissions: MANAGE_PRODUCTS.
-   */
-  digitalContent?: Maybe<DigitalContent>;
-  /**
-   * List of digital content.
-   *
-   * Requires one of the following permissions: MANAGE_PRODUCTS.
-   */
-  digitalContents?: Maybe<DigitalContentCountableConnection>;
-  /**
    * List of draft orders. The query will not initiate any external requests, including filtering available shipping methods, or performing external tax calculations.
    *
    * Requires one of the following permissions: MANAGE_ORDERS.
@@ -22765,9 +24116,17 @@ export type Query = {
   /**
    * Look up a transaction by ID.
    *
-   * Requires one of the following permissions: HANDLE_PAYMENTS.
+   * Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.
    */
   transaction?: Maybe<TransactionItem>;
+  /**
+   * List of transactions. For apps with `MANAGE_ORDERS` permission, returns all transactions. For apps with just `HANDLE_PAYMENTS` permission, returns only transactions created by that app. For staff users, returns transactions from orders and checkouts in channels they have access to.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: HANDLE_PAYMENTS, MANAGE_ORDERS.
+   */
+  transactions?: Maybe<TransactionCountableConnection>;
   /**
    * Lookup a translatable item by ID.
    *
@@ -22824,7 +24183,7 @@ export type Query = {
 };
 
 export type Query_EntitiesArgs = {
-  representations?: InputMaybe<Array<InputMaybe<Scalars['_Any']['input']>>>;
+  representations: Array<Scalars['_Any']['input']>;
 };
 
 export type QueryAddressArgs = {
@@ -22952,17 +24311,6 @@ export type QueryCustomersArgs = {
   search?: InputMaybe<Scalars['String']['input']>;
   sortBy?: InputMaybe<UserSortingInput>;
   where?: InputMaybe<CustomerWhereInput>;
-};
-
-export type QueryDigitalContentArgs = {
-  id: Scalars['ID']['input'];
-};
-
-export type QueryDigitalContentsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type QueryDraftOrdersArgs = {
@@ -23306,6 +24654,15 @@ export type QueryTransactionArgs = {
   token?: InputMaybe<Scalars['UUID']['input']>;
 };
 
+export type QueryTransactionsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  sortBy?: InputMaybe<TransactionSortingInput>;
+  where?: InputMaybe<TransactionWhereInput>;
+};
+
 export type QueryTranslationArgs = {
   id: Scalars['ID']['input'];
   kind: TranslatableKinds;
@@ -23439,7 +24796,7 @@ export enum RefundSettingsErrorCode {
 export type RefundSettingsUpdate = {
   errors: Array<RefundSettingsUpdateError>;
   /** Refund settings. */
-  refundSettings: RefundSettings;
+  refundSettings?: Maybe<RefundSettings>;
   /** @deprecated Use `errors` field instead. */
   refundSettingsErrors: Array<RefundSettingsUpdateError>;
 };
@@ -24185,7 +25542,10 @@ export type ShippingMethod = Node &
     id: Scalars['ID']['output'];
     /** Maximum delivery days for this shipping method. */
     maximumDeliveryDays?: Maybe<Scalars['Int']['output']>;
-    /** Maximum order price for this shipping method. */
+    /**
+     * Maximum order price for this shipping method.
+     * @deprecated No longer supported
+     */
     maximumOrderPrice?: Maybe<Money>;
     /**
      * Maximum order weight for this shipping method.
@@ -24206,7 +25566,10 @@ export type ShippingMethod = Node &
     metafields?: Maybe<Scalars['Metadata']['output']>;
     /** Minimum delivery days for this shipping method. */
     minimumDeliveryDays?: Maybe<Scalars['Int']['output']>;
-    /** Minimal order price for this shipping method. */
+    /**
+     * Minimal order price for this shipping method.
+     * @deprecated No longer supported
+     */
     minimumOrderPrice?: Maybe<Money>;
     /**
      * Minimum order weight for this shipping method.
@@ -24954,12 +26317,6 @@ export type Shop = ObjectWithMetadata & {
    * Requires one of the following permissions: MANAGE_SETTINGS.
    */
   allowLoginWithoutConfirmation?: Maybe<Scalars['Boolean']['output']>;
-  /**
-   * Enable automatic fulfillment for all digital products.
-   *
-   * Requires one of the following permissions: MANAGE_SETTINGS.
-   */
-  automaticFulfillmentDigitalProducts?: Maybe<Scalars['Boolean']['output']>;
   /** List of available external authentications. */
   availableExternalAuthentications: Array<ExternalAuthentication>;
   /** List of available payment gateways. */
@@ -24993,18 +26350,6 @@ export type Shop = ObjectWithMetadata & {
   customerSetPasswordUrl?: Maybe<Scalars['String']['output']>;
   /** Shop's default country. */
   defaultCountry?: Maybe<CountryDisplay>;
-  /**
-   * Default number of max downloads per digital content URL.
-   *
-   * Requires one of the following permissions: MANAGE_SETTINGS.
-   */
-  defaultDigitalMaxDownloads?: Maybe<Scalars['Int']['output']>;
-  /**
-   * Default number of days which digital content URL will be valid.
-   *
-   * Requires one of the following permissions: MANAGE_SETTINGS.
-   */
-  defaultDigitalUrlValidDays?: Maybe<Scalars['Int']['output']>;
   /**
    * Default shop's email sender's address.
    *
@@ -25074,10 +26419,24 @@ export type Shop = ObjectWithMetadata & {
   metafields?: Maybe<Scalars['Metadata']['output']>;
   /** Shop's name. */
   name: Scalars['String']['output'];
+  /**
+   * Controls whether password-based authentication is allowed.
+   *
+   * Added in Saleor 3.23.
+   */
+  passwordLoginMode: PasswordLoginModeEnum;
   /** List of available permissions. */
   permissions: Array<Permission>;
   /** List of possible phone prefixes. */
   phonePrefixes: Array<Scalars['String']['output']>;
+  /**
+   * When enabled, address fields that are not valid for a given country (according to Google's i18n address data) will be preserved instead of being removed during validation. Validation errors are still returned.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Requires one of the following permissions: MANAGE_SETTINGS.
+   */
+  preserveAllAddressFields: Scalars['Boolean']['output'];
   /** List of private metadata items. Requires staff permissions to access. */
   privateMetadata: Array<MetadataItem>;
   /**
@@ -25112,6 +26471,19 @@ export type Shop = ObjectWithMetadata & {
   trackInventoryByDefault?: Maybe<Scalars['Boolean']['output']>;
   /** Returns translated shop fields for the given language code. */
   translation?: Maybe<ShopTranslation>;
+  /**
+   * When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, stock availability is determined only by the direct warehouse-channel link, ignoring shipping zones.
+   *
+   * Added in Saleor 3.23.
+   */
+  useLegacyShippingZoneStockAvailability: Scalars['Boolean']['output'];
+  /**
+   * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
+   *
+   * Added in Saleor 3.22.
+   * @deprecated No longer supported
+   */
+  useLegacyUpdateWebhookEmission?: Maybe<Scalars['Boolean']['output']>;
   /**
    * Saleor API version.
    *
@@ -25204,6 +26576,7 @@ export enum ShopErrorCode {
   GraphqlError = 'GRAPHQL_ERROR',
   Invalid = 'INVALID',
   NotFound = 'NOT_FOUND',
+  PasswordAuthRestriction = 'PASSWORD_AUTH_RESTRICTION',
   Required = 'REQUIRED',
   Unique = 'UNIQUE',
 }
@@ -25238,8 +26611,6 @@ export type ShopMetadataUpdated = Event & {
 export type ShopSettingsInput = {
   /** Enable possibility to login without account confirmation. */
   allowLoginWithoutConfirmation?: InputMaybe<Scalars['Boolean']['input']>;
-  /** Enable automatic fulfillment for all digital products. */
-  automaticFulfillmentDigitalProducts?: InputMaybe<Scalars['Boolean']['input']>;
   /**
    * Charge taxes on shipping.
    *
@@ -25248,10 +26619,6 @@ export type ShopSettingsInput = {
   chargeTaxesOnShipping?: InputMaybe<Scalars['Boolean']['input']>;
   /** URL of a view where customers can set their password. */
   customerSetPasswordUrl?: InputMaybe<Scalars['String']['input']>;
-  /** Default number of max downloads per digital content URL. */
-  defaultDigitalMaxDownloads?: InputMaybe<Scalars['Int']['input']>;
-  /** Default number of days which digital content URL will be valid. */
-  defaultDigitalUrlValidDays?: InputMaybe<Scalars['Int']['input']>;
   /** Default email sender's address. */
   defaultMailSenderAddress?: InputMaybe<Scalars['String']['input']>;
   /** Default email sender's name. */
@@ -25289,6 +26656,18 @@ export type ShopSettingsInput = {
    */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /**
+   * Controls whether password-based authentication is allowed.
+   *
+   * Added in Saleor 3.23.
+   */
+  passwordLoginMode?: InputMaybe<PasswordLoginModeEnum>;
+  /**
+   * When enabled, address fields that are not valid for a given country (according to Google's i18n address data) will be preserved instead of being removed during validation. Validation errors are still returned.
+   *
+   * Added in Saleor 3.22.
+   */
+  preserveAllAddressFields?: InputMaybe<Scalars['Boolean']['input']>;
+  /**
    * Shop private metadata. Requires permissions to modify and to read the metadata of the object it's attached to.
    *
    * Warning: never store sensitive information, including financial data such as credit card details.
@@ -25300,6 +26679,20 @@ export type ShopSettingsInput = {
   reserveStockDurationAuthenticatedUser?: InputMaybe<Scalars['Int']['input']>;
   /** This field is used as a default value for `ProductVariant.trackInventory`. */
   trackInventoryByDefault?: InputMaybe<Scalars['Boolean']['input']>;
+  /**
+   * When enabled, stock availability is filtered by shipping zones and the destination address (legacy behavior). When disabled, stock availability is determined only by the direct warehouse-channel link, ignoring shipping zones.
+   *
+   * Added in Saleor 3.23.
+   */
+  useLegacyShippingZoneStockAvailability?: InputMaybe<Scalars['Boolean']['input']>;
+  /**
+   * Use legacy update webhook emission. When enabled, update webhooks (e.g. `customerUpdated`,`productVariantUpdated`) are sent even when only metadata changes. When disabled, update webhooks are not sent for metadata-only changes; only metadata-specific webhooks (e.g., `customerMetadataUpdated`, `productVariantMetadataUpdated`) are sent.
+   *
+   * Added in Saleor 3.22.
+   *
+   * DEPRECATED: this field will be removed.
+   */
+  useLegacyUpdateWebhookEmission?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /**
@@ -26048,6 +27441,54 @@ export type Subscription = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   orderUpdated?: Maybe<OrderUpdated>;
+  /**
+   * Event sent when a product variant becomes available again across click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  productVariantBackInStockForClickAndCollect?: Maybe<ProductVariantBackInStockForClickAndCollect>;
+  /**
+   * Event sent when a product variant becomes available again across non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  productVariantBackInStockInChannel?: Maybe<ProductVariantBackInStockInChannel>;
+  /**
+   * Event sent when product variant discounted price is recalculated.
+   *
+   * Added in Saleor 3.22.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  productVariantDiscountedPriceUpdated?: Maybe<ProductVariantDiscountedPriceUpdated>;
+  /**
+   * Event sent when a product variant becomes out of stock across all click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  productVariantOutOfStockForClickAndCollect?: Maybe<ProductVariantOutOfStockForClickAndCollect>;
+  /**
+   * Event sent when a product variant becomes out of stock across all non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   *
+   * Added in Saleor 3.23.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  productVariantOutOfStockInChannel?: Maybe<ProductVariantOutOfStockInChannel>;
 };
 
 export type SubscriptionCheckoutCreatedArgs = {
@@ -26127,6 +27568,26 @@ export type SubscriptionOrderRefundedArgs = {
 };
 
 export type SubscriptionOrderUpdatedArgs = {
+  channels?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+export type SubscriptionProductVariantBackInStockForClickAndCollectArgs = {
+  channels?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+export type SubscriptionProductVariantBackInStockInChannelArgs = {
+  channels?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+export type SubscriptionProductVariantDiscountedPriceUpdatedArgs = {
+  channels?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+export type SubscriptionProductVariantOutOfStockForClickAndCollectArgs = {
+  channels?: InputMaybe<Array<Scalars['String']['input']>>;
+};
+
+export type SubscriptionProductVariantOutOfStockInChannelArgs = {
   channels?: InputMaybe<Array<Scalars['String']['input']>>;
 };
 
@@ -26848,6 +28309,21 @@ export type TransactionChargeRequested = Event & {
   version?: Maybe<Scalars['String']['output']>;
 };
 
+export type TransactionCountableConnection = {
+  edges: Array<TransactionCountableEdge>;
+  /** Pagination data for this connection. */
+  pageInfo: PageInfo;
+  /** A total count of items in the collection. */
+  totalCount?: Maybe<Scalars['Int']['output']>;
+};
+
+export type TransactionCountableEdge = {
+  /** A cursor for use in pagination. */
+  cursor: Scalars['String']['output'];
+  /** The item at the end of the edge. */
+  node: TransactionItem;
+};
+
 /**
  * Creates transaction for checkout or order.
  *
@@ -26941,6 +28417,26 @@ export type TransactionEvent = Node & {
   reasonReference?: Maybe<Page>;
   /** The type of action related to this event. */
   type?: Maybe<TransactionEventTypeEnum>;
+};
+
+/**
+ * Filter input for transaction events data.
+ *
+ * Added in Saleor 3.23.
+ */
+export type TransactionEventFilterInput = {
+  /**
+   * Filter transaction events by created at date.
+   *
+   * Added in Saleor 3.23.
+   */
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+  /**
+   * Filter transaction events by type.
+   *
+   * Added in Saleor 3.23.
+   */
+  type?: InputMaybe<TransactionEventTypeEnumFilterInput>;
 };
 
 export type TransactionEventInput = {
@@ -27037,12 +28533,25 @@ export enum TransactionEventTypeEnum {
   RefundSuccess = 'REFUND_SUCCESS',
 }
 
+export type TransactionEventTypeEnumFilterInput = {
+  /** The value equal to. */
+  eq?: InputMaybe<TransactionEventTypeEnum>;
+  /** The value included in. */
+  oneOf?: InputMaybe<Array<TransactionEventTypeEnum>>;
+};
+
 /** Filter input for transactions. */
 export type TransactionFilterInput = {
   /** Filter by metadata fields of transactions. */
   metadata?: InputMaybe<MetadataFilterInput>;
   /** Filter by payment method details used to pay for the order. */
   paymentMethodDetails?: InputMaybe<PaymentMethodDetailsFilterInput>;
+  /**
+   * Filter by PSP reference of transactions.
+   *
+   * Added in Saleor 3.22.
+   */
+  pspReference?: InputMaybe<StringFilterInput>;
 };
 
 /**
@@ -27383,6 +28892,28 @@ export enum TransactionRequestRefundForGrantedRefundErrorCode {
   RefundIsPending = 'REFUND_IS_PENDING',
 }
 
+export enum TransactionSortField {
+  /**
+   * Sort transactions by creation date.
+   *
+   * Added in Saleor 3.23.
+   */
+  CreatedAt = 'CREATED_AT',
+  /**
+   * Sort transactions by modification date.
+   *
+   * Added in Saleor 3.23.
+   */
+  ModifiedAt = 'MODIFIED_AT',
+}
+
+export type TransactionSortingInput = {
+  /** Specifies the direction in which to sort transactions. */
+  direction: OrderDirection;
+  /** Sort transactions by the selected field. */
+  field: TransactionSortField;
+};
+
 /**
  * Update transaction.
  *
@@ -27448,6 +28979,36 @@ export type TransactionUpdateInput = {
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** PSP Reference of the transaction. */
   pspReference?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type TransactionWhereInput = {
+  /** List of conditions that must be met. */
+  AND?: InputMaybe<Array<TransactionWhereInput>>;
+  /** A list of conditions of which at least one must be met. */
+  OR?: InputMaybe<Array<TransactionWhereInput>>;
+  /** Filter by app identifier. */
+  appIdentifier?: InputMaybe<StringFilterInput>;
+  /**
+   * Filter transactions by created at date.
+   *
+   * Added in Saleor 3.23.
+   */
+  createdAt?: InputMaybe<DateTimeRangeInput>;
+  /**
+   * Filter by transaction events. Each list item represents conditions that must be satisfied by a single event. The filter matches transactions that have related events meeting all specified groups of conditions.
+   *
+   * Added in Saleor 3.23.
+   */
+  events?: InputMaybe<Array<TransactionEventFilterInput>>;
+  ids?: InputMaybe<Array<Scalars['ID']['input']>>;
+  /**
+   * Filter transactions by modified at date.
+   *
+   * Added in Saleor 3.23.
+   */
+  modifiedAt?: InputMaybe<DateTimeRangeInput>;
+  /** Filter by PSP reference. */
+  pspReference?: InputMaybe<StringFilterInput>;
 };
 
 export type TranslatableItem =
@@ -27631,6 +29192,8 @@ export type UploadError = {
 
 export enum UploadErrorCode {
   GraphqlError = 'GRAPHQL_ERROR',
+  InvalidFileType = 'INVALID_FILE_TYPE',
+  UnsupportedMimeType = 'UNSUPPORTED_MIME_TYPE',
 }
 
 /** Represents user data. */
@@ -27783,6 +29346,7 @@ export type UserOrdersArgs = {
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<CustomerOrderWhereInput>;
 };
 
 /** Represents user data. */
@@ -27934,6 +29498,8 @@ export enum UserSortField {
   LastName = 'LAST_NAME',
   /** Sort users by order count. */
   OrderCount = 'ORDER_COUNT',
+  /** Sort users by rank. Note: This option is available only with the `search` filter. */
+  Rank = 'RANK',
 }
 
 export type UserSortingInput = {
@@ -29443,14 +31009,39 @@ export enum WebhookEventTypeAsyncEnum {
   ProductUpdated = 'PRODUCT_UPDATED',
   /** A product variant is back in stock. */
   ProductVariantBackInStock = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /**
+   * A product variant becomes available again across click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  ProductVariantBackInStockForClickAndCollect = 'PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes available again across non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  ProductVariantBackInStockInChannel = 'PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL',
   /** A new product variant is created. */
   ProductVariantCreated = 'PRODUCT_VARIANT_CREATED',
   /** A product variant is deleted. Warning: this event will not be executed when parent product has been deleted. Check PRODUCT_DELETED. */
   ProductVariantDeleted = 'PRODUCT_VARIANT_DELETED',
+  ProductVariantDiscountedPriceUpdated = 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED',
   /** A product variant metadata is updated. */
   ProductVariantMetadataUpdated = 'PRODUCT_VARIANT_METADATA_UPDATED',
   /** A product variant is out of stock. */
   ProductVariantOutOfStock = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  /**
+   * A product variant becomes out of stock across all click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  ProductVariantOutOfStockForClickAndCollect = 'PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes out of stock across all non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  ProductVariantOutOfStockInChannel = 'PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL',
   /** A product variant stock is updated */
   ProductVariantStockUpdated = 'PRODUCT_VARIANT_STOCK_UPDATED',
   /** A product variant is updated. */
@@ -29775,14 +31366,39 @@ export enum WebhookEventTypeEnum {
   ProductUpdated = 'PRODUCT_UPDATED',
   /** A product variant is back in stock. */
   ProductVariantBackInStock = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  /**
+   * A product variant becomes available again across click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  ProductVariantBackInStockForClickAndCollect = 'PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes available again across non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  ProductVariantBackInStockInChannel = 'PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL',
   /** A new product variant is created. */
   ProductVariantCreated = 'PRODUCT_VARIANT_CREATED',
   /** A product variant is deleted. Warning: this event will not be executed when parent product has been deleted. Check PRODUCT_DELETED. */
   ProductVariantDeleted = 'PRODUCT_VARIANT_DELETED',
+  ProductVariantDiscountedPriceUpdated = 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED',
   /** A product variant metadata is updated. */
   ProductVariantMetadataUpdated = 'PRODUCT_VARIANT_METADATA_UPDATED',
   /** A product variant is out of stock. */
   ProductVariantOutOfStock = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  /**
+   * A product variant becomes out of stock across all click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  ProductVariantOutOfStockForClickAndCollect = 'PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT',
+  /**
+   * A product variant becomes out of stock across all non click-and-collect warehouses in a channel.
+   *
+   * Note: Only triggered when the `useLegacyShippingZoneStockAvailability` shop setting is disabled.
+   */
+  ProductVariantOutOfStockInChannel = 'PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL',
   /** A product variant stock is updated */
   ProductVariantStockUpdated = 'PRODUCT_VARIANT_STOCK_UPDATED',
   /** A product variant is updated. */
@@ -30020,10 +31636,15 @@ export enum WebhookSampleEventTypeEnum {
   ProductMetadataUpdated = 'PRODUCT_METADATA_UPDATED',
   ProductUpdated = 'PRODUCT_UPDATED',
   ProductVariantBackInStock = 'PRODUCT_VARIANT_BACK_IN_STOCK',
+  ProductVariantBackInStockForClickAndCollect = 'PRODUCT_VARIANT_BACK_IN_STOCK_FOR_CLICK_AND_COLLECT',
+  ProductVariantBackInStockInChannel = 'PRODUCT_VARIANT_BACK_IN_STOCK_IN_CHANNEL',
   ProductVariantCreated = 'PRODUCT_VARIANT_CREATED',
   ProductVariantDeleted = 'PRODUCT_VARIANT_DELETED',
+  ProductVariantDiscountedPriceUpdated = 'PRODUCT_VARIANT_DISCOUNTED_PRICE_UPDATED',
   ProductVariantMetadataUpdated = 'PRODUCT_VARIANT_METADATA_UPDATED',
   ProductVariantOutOfStock = 'PRODUCT_VARIANT_OUT_OF_STOCK',
+  ProductVariantOutOfStockForClickAndCollect = 'PRODUCT_VARIANT_OUT_OF_STOCK_FOR_CLICK_AND_COLLECT',
+  ProductVariantOutOfStockInChannel = 'PRODUCT_VARIANT_OUT_OF_STOCK_IN_CHANNEL',
   ProductVariantStockUpdated = 'PRODUCT_VARIANT_STOCK_UPDATED',
   ProductVariantUpdated = 'PRODUCT_VARIANT_UPDATED',
   PromotionCreated = 'PROMOTION_CREATED',
@@ -30158,12 +31779,6 @@ export enum WeightUnitsEnum {
   Tonne = 'TONNE',
 }
 
-/** Represents the WIDGET target options for an app extension. */
-export type WidgetTargetOptions = {
-  /** HTTP method for Widget target (GET or POST) */
-  method: HttpMethod;
-};
-
 /** _Entity union as defined by Federation spec. */
 export type _Entity =
   | Address
@@ -30187,6 +31802,7 @@ export type _Service = {
 export type CheckoutFragment = {
   id: string;
   token: string;
+  voucherCode?: string | null;
   updatedAt: string;
   created: string;
   email?: string | null;
@@ -30234,8 +31850,8 @@ export type CheckoutFragment = {
           quantityAvailable?: number | null;
           attributes: Array<{
             attribute: {
-              slug?: string | null;
-              name?: string | null;
+              slug: string;
+              name: string;
               choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
             };
             values: Array<{ name?: string | null }>;
@@ -30248,8 +31864,8 @@ export type CheckoutFragment = {
       };
       attributes: Array<{
         attribute: {
-          slug?: string | null;
-          name?: string | null;
+          slug: string;
+          name: string;
           choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
         };
         values: Array<{ name?: string | null }>;
@@ -30358,8 +31974,8 @@ export type ProductDetailsFragment = {
     quantityAvailable?: number | null;
     attributes: Array<{
       attribute: {
-        slug?: string | null;
-        name?: string | null;
+        slug: string;
+        name: string;
         choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
       };
       values: Array<{ name?: string | null }>;
@@ -30377,8 +31993,8 @@ export type VariantFragment = {
   quantityAvailable?: number | null;
   attributes: Array<{
     attribute: {
-      slug?: string | null;
-      name?: string | null;
+      slug: string;
+      name: string;
       choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
     };
     values: Array<{ name?: string | null }>;
@@ -30463,6 +32079,7 @@ export type CheckoutAddLineMutation = {
     checkout?: {
       id: string;
       token: string;
+      voucherCode?: string | null;
       updatedAt: string;
       created: string;
       email?: string | null;
@@ -30510,8 +32127,8 @@ export type CheckoutAddLineMutation = {
               quantityAvailable?: number | null;
               attributes: Array<{
                 attribute: {
-                  slug?: string | null;
-                  name?: string | null;
+                  slug: string;
+                  name: string;
                   choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
                 };
                 values: Array<{ name?: string | null }>;
@@ -30524,8 +32141,8 @@ export type CheckoutAddLineMutation = {
           };
           attributes: Array<{
             attribute: {
-              slug?: string | null;
-              name?: string | null;
+              slug: string;
+              name: string;
               choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
             };
             values: Array<{ name?: string | null }>;
@@ -30600,6 +32217,7 @@ export type CheckoutDeleteLineMutation = {
     checkout?: {
       id: string;
       token: string;
+      voucherCode?: string | null;
       updatedAt: string;
       created: string;
       email?: string | null;
@@ -30647,8 +32265,8 @@ export type CheckoutDeleteLineMutation = {
               quantityAvailable?: number | null;
               attributes: Array<{
                 attribute: {
-                  slug?: string | null;
-                  name?: string | null;
+                  slug: string;
+                  name: string;
                   choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
                 };
                 values: Array<{ name?: string | null }>;
@@ -30661,8 +32279,8 @@ export type CheckoutDeleteLineMutation = {
           };
           attributes: Array<{
             attribute: {
-              slug?: string | null;
-              name?: string | null;
+              slug: string;
+              name: string;
               choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
             };
             values: Array<{ name?: string | null }>;
@@ -30724,6 +32342,17 @@ export type CheckoutAddPromoCodeMutation = {
   } | null;
 };
 
+export type CheckoutRemovePromoCodeMutationVariables = Exact<{
+  id: Scalars['ID']['input'];
+  promoCode: Scalars['String']['input'];
+}>;
+
+export type CheckoutRemovePromoCodeMutation = {
+  checkoutRemovePromoCode?: {
+    errors: Array<{ code: CheckoutErrorCode; field?: string | null; message?: string | null }>;
+  } | null;
+};
+
 export type CheckoutShippingAddressUpdateMutationVariables = Exact<{
   checkoutId: Scalars['ID']['input'];
   shippingAddress: AddressInput;
@@ -30746,6 +32375,7 @@ export type CheckoutUpdateLineMutation = {
     checkout?: {
       id: string;
       token: string;
+      voucherCode?: string | null;
       updatedAt: string;
       created: string;
       email?: string | null;
@@ -30793,8 +32423,8 @@ export type CheckoutUpdateLineMutation = {
               quantityAvailable?: number | null;
               attributes: Array<{
                 attribute: {
-                  slug?: string | null;
-                  name?: string | null;
+                  slug: string;
+                  name: string;
                   choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
                 };
                 values: Array<{ name?: string | null }>;
@@ -30807,8 +32437,8 @@ export type CheckoutUpdateLineMutation = {
           };
           attributes: Array<{
             attribute: {
-              slug?: string | null;
-              name?: string | null;
+              slug: string;
+              name: string;
               choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
             };
             values: Array<{ name?: string | null }>;
@@ -30857,6 +32487,7 @@ export type CreateCheckoutMutation = {
     checkout?: {
       id: string;
       token: string;
+      voucherCode?: string | null;
       updatedAt: string;
       created: string;
       email?: string | null;
@@ -30904,8 +32535,8 @@ export type CreateCheckoutMutation = {
               quantityAvailable?: number | null;
               attributes: Array<{
                 attribute: {
-                  slug?: string | null;
-                  name?: string | null;
+                  slug: string;
+                  name: string;
                   choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
                 };
                 values: Array<{ name?: string | null }>;
@@ -30918,8 +32549,8 @@ export type CreateCheckoutMutation = {
           };
           attributes: Array<{
             attribute: {
-              slug?: string | null;
-              name?: string | null;
+              slug: string;
+              name: string;
               choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
             };
             values: Array<{ name?: string | null }>;
@@ -31137,8 +32768,8 @@ export type GetCategoryProductsBySlugQuery = {
             quantityAvailable?: number | null;
             attributes: Array<{
               attribute: {
-                slug?: string | null;
-                name?: string | null;
+                slug: string;
+                name: string;
                 choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
               };
               values: Array<{ name?: string | null }>;
@@ -31161,6 +32792,7 @@ export type GetCheckoutByIdQuery = {
   checkout?: {
     id: string;
     token: string;
+    voucherCode?: string | null;
     updatedAt: string;
     created: string;
     email?: string | null;
@@ -31208,8 +32840,8 @@ export type GetCheckoutByIdQuery = {
             quantityAvailable?: number | null;
             attributes: Array<{
               attribute: {
-                slug?: string | null;
-                name?: string | null;
+                slug: string;
+                name: string;
                 choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
               };
               values: Array<{ name?: string | null }>;
@@ -31222,8 +32854,8 @@ export type GetCheckoutByIdQuery = {
         };
         attributes: Array<{
           attribute: {
-            slug?: string | null;
-            name?: string | null;
+            slug: string;
+            name: string;
             choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
           };
           values: Array<{ name?: string | null }>;
@@ -31304,8 +32936,8 @@ export type GetCollectionProductsBySlugQuery = {
             quantityAvailable?: number | null;
             attributes: Array<{
               attribute: {
-                slug?: string | null;
-                name?: string | null;
+                slug: string;
+                name: string;
                 choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
               };
               values: Array<{ name?: string | null }>;
@@ -31437,6 +33069,7 @@ export type GetMeQuery = {
         node: {
           id: string;
           token: string;
+          voucherCode?: string | null;
           updatedAt: string;
           created: string;
           email?: string | null;
@@ -31484,8 +33117,8 @@ export type GetMeQuery = {
                   quantityAvailable?: number | null;
                   attributes: Array<{
                     attribute: {
-                      slug?: string | null;
-                      name?: string | null;
+                      slug: string;
+                      name: string;
                       choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
                     };
                     values: Array<{ name?: string | null }>;
@@ -31500,8 +33133,8 @@ export type GetMeQuery = {
               };
               attributes: Array<{
                 attribute: {
-                  slug?: string | null;
-                  name?: string | null;
+                  slug: string;
+                  name: string;
                   choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
                 };
                 values: Array<{ name?: string | null }>;
@@ -31597,6 +33230,12 @@ export type GetOrderByIdQuery = {
   } | null;
 };
 
+export type OrdersByEmailQueryVariables = Exact<{
+  email: Scalars['String']['input'];
+}>;
+
+export type OrdersByEmailQuery = { orders?: { edges: Array<{ node: { id: string } }> } | null };
+
 export type GetPageBySlugQueryVariables = Exact<{
   slug: Scalars['String']['input'];
 }>;
@@ -31660,8 +33299,8 @@ export type GetProductBySlugQuery = {
       quantityAvailable?: number | null;
       attributes: Array<{
         attribute: {
-          slug?: string | null;
-          name?: string | null;
+          slug: string;
+          name: string;
           choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
         };
         values: Array<{ name?: string | null }>;
@@ -31738,8 +33377,8 @@ export type SearchProductsQuery = {
           quantityAvailable?: number | null;
           attributes: Array<{
             attribute: {
-              slug?: string | null;
-              name?: string | null;
+              slug: string;
+              name: string;
               choices?: { edges: Array<{ node: { name?: string | null } }> } | null;
             };
             values: Array<{ name?: string | null }>;
@@ -31924,6 +33563,7 @@ export const CheckoutFragmentDoc = new TypedDocumentString(
     fragment Checkout on Checkout {
   id
   token
+  voucherCode
   updatedAt
   created
   email
@@ -32322,6 +33962,7 @@ export const CheckoutAddLineDocument = new TypedDocumentString(`
     fragment Checkout on Checkout {
   id
   token
+  voucherCode
   updatedAt
   created
   email
@@ -32559,6 +34200,7 @@ export const CheckoutDeleteLineDocument = new TypedDocumentString(`
     fragment Checkout on Checkout {
   id
   token
+  voucherCode
   updatedAt
   created
   email
@@ -32780,6 +34422,20 @@ export const CheckoutAddPromoCodeDocument = new TypedDocumentString(`
   CheckoutAddPromoCodeMutation,
   CheckoutAddPromoCodeMutationVariables
 >;
+export const CheckoutRemovePromoCodeDocument = new TypedDocumentString(`
+    mutation CheckoutRemovePromoCode($id: ID!, $promoCode: String!) {
+  checkoutRemovePromoCode(promoCode: $promoCode, id: $id) {
+    errors {
+      code
+      field
+      message
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<
+  CheckoutRemovePromoCodeMutation,
+  CheckoutRemovePromoCodeMutationVariables
+>;
 export const CheckoutShippingAddressUpdateDocument = new TypedDocumentString(`
     mutation checkoutShippingAddressUpdate($checkoutId: ID!, $shippingAddress: AddressInput!) {
   checkoutShippingAddressUpdate(
@@ -32813,6 +34469,7 @@ export const CheckoutUpdateLineDocument = new TypedDocumentString(`
     fragment Checkout on Checkout {
   id
   token
+  voucherCode
   updatedAt
   created
   email
@@ -33012,6 +34669,7 @@ export const CreateCheckoutDocument = new TypedDocumentString(`
     fragment Checkout on Checkout {
   id
   token
+  voucherCode
   updatedAt
   created
   email
@@ -33477,6 +35135,7 @@ export const GetCheckoutByIdDocument = new TypedDocumentString(`
     fragment Checkout on Checkout {
   id
   token
+  voucherCode
   updatedAt
   created
   email
@@ -33894,6 +35553,7 @@ export const GetMeDocument = new TypedDocumentString(`
     fragment Checkout on Checkout {
   id
   token
+  voucherCode
   updatedAt
   created
   email
@@ -34207,6 +35867,17 @@ export const GetOrderByIdDocument = new TypedDocumentString(`
     trackingNumber
   }
 }`) as unknown as TypedDocumentString<GetOrderByIdQuery, GetOrderByIdQueryVariables>;
+export const OrdersByEmailDocument = new TypedDocumentString(`
+    query OrdersByEmail($email: String!) {
+  orders(first: 1, where: {userEmail: {eq: $email}}) {
+    edges {
+      node {
+        id
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<OrdersByEmailQuery, OrdersByEmailQueryVariables>;
 export const GetPageBySlugDocument = new TypedDocumentString(`
     query GetPageBySlug($slug: String!) {
   page(slug: $slug) {

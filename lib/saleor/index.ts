@@ -4,7 +4,9 @@ import { getServerAuthClient } from 'app/login';
 import { TAGS } from 'lib/constants';
 import {
   CheckoutFromCookieDocument,
+  CheckoutRemovePromoCodeDocument,
   LastCheckoutDocument,
+  OrdersByEmailDocument,
   ResetPasswordDocument,
   SetPasswordDocument,
   UpdateMetadataDocument,
@@ -412,8 +414,8 @@ export async function getProducts({
       sortBy: query
         ? sortKey || ProductOrderField.Rank
         : sortKey === ProductOrderField.Rank
-        ? ProductOrderField.Rating
-        : sortKey || ProductOrderField.Rating,
+          ? ProductOrderField.Rating
+          : sortKey || ProductOrderField.Rating,
       sortDirection: reverse ? OrderDirection.Desc : OrderDirection.Asc,
     },
     tags: [TAGS.products],
@@ -1153,31 +1155,43 @@ export async function customerCheckoutAttach({
   }
 }
 
-export async function freeShipping({ checkoutId }: { checkoutId: string }) {
+export async function addPromoCode({
+  checkoutId,
+  promoCode,
+}: {
+  checkoutId: string;
+  promoCode: string;
+}) {
   const checkout = await saleorFetch({
     query: CheckoutAddPromoCodeDocument,
     variables: {
       id: checkoutId,
-      promoCode: 'free-shipping',
+      promoCode: promoCode,
     },
     cache: 'no-store',
   });
   if (checkout.checkoutAddPromoCode?.errors[0]) {
-    throw new Error(checkout.checkoutAddPromoCode?.errors[0]?.message || '');
+    throw new Error(checkout.checkoutAddPromoCode?.errors[0]?.code || '');
   }
 }
 
-export async function discountShopping({ checkoutId }: { checkoutId: string }) {
+export async function removePromoCode({
+  checkoutId,
+  promoCode,
+}: {
+  checkoutId: string;
+  promoCode: string;
+}) {
   const checkout = await saleorFetch({
-    query: CheckoutAddPromoCodeDocument,
+    query: CheckoutRemovePromoCodeDocument,
     variables: {
       id: checkoutId,
-      promoCode: 'primera-compra',
+      promoCode: promoCode,
     },
     cache: 'no-store',
   });
-  if (checkout.checkoutAddPromoCode?.errors[0]) {
-    throw new Error(checkout.checkoutAddPromoCode?.errors[0]?.message || '');
+  if (checkout.checkoutRemovePromoCode?.errors[0]) {
+    throw new Error(checkout.checkoutRemovePromoCode?.errors[0]?.code || '');
   }
 }
 
@@ -1329,6 +1343,16 @@ export async function checkoutEmailUpdate(email: string, checkoutId: string) {
   if (result.checkoutEmailUpdate?.errors[0]) {
     throw new Error(result.checkoutEmailUpdate?.errors[0]?.message || '');
   }
+}
+
+export async function ordersByEmail(userEmail: string) {
+  const result = await saleorFetch({
+    query: OrdersByEmailDocument,
+    variables: {
+      email: userEmail,
+    },
+  });
+  return result.orders;
 }
 
 // eslint-disable-next-line no-unused-vars

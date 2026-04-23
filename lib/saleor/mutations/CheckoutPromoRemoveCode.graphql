@@ -1,0 +1,9 @@
+mutation CheckoutRemovePromoCode($id: ID!, $promoCode: String!) {
+  checkoutRemovePromoCode(promoCode: $promoCode, id: $id) {
+    errors {
+      code
+      field
+      message
+    }
+  }
+}

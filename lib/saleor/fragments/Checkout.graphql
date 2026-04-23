@@ -1,6 +1,7 @@
 fragment Checkout on Checkout {
   id
   token
+  voucherCode
   updatedAt
   created
   email

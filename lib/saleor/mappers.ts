@@ -150,6 +150,7 @@ export function saleorCheckoutToVercelCart(checkout: CheckoutFragment): Cart {
     checkoutCarrier: checkoutCarrier.toString(),
     checkoutUrlPayment: checkoutUrlPayment.toString(),
     updatedAt: checkout.updatedAt,
+    voucherCode: checkout.voucherCode,
     cost: {
       subtotalAmountBeforeTaxes: {
         amount: checkout.subtotalPrice.net.amount.toString(),

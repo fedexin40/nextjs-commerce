@@ -128,6 +128,7 @@ export type VercelCommerceCart = {
   checkoutUrl: string;
   checkoutCarrier: string;
   checkoutUrlPayment: string;
+  voucherCode: string | null | undefined;
   cost: {
     subtotalAmount: Money;
     totalAmount: Money;
