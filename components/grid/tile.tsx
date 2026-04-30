@@ -1,4 +1,3 @@
-import clsx from 'clsx';
 import MyImage from 'components/image';
 import Image from 'next/image';
 import Label from '../label';
@@ -14,15 +13,18 @@ export function GridTileImage({
     category?: string;
     amountMax: string;
     amountMin: string;
+    discount?: string;
     currencyCode: string;
   };
 } & React.ComponentProps<typeof Image>) {
+  const discount = label?.discount ?? '0';
   return (
-    <div
-      className={clsx('flex h-full w-full items-center justify-center rounded-lg bg-white', {
-        relative: label,
-      })}
-    >
+    <div className="relative flex h-full w-full items-center justify-center rounded-lg bg-white">
+      {label?.discount != '0' && (
+        <span className="absolute right-2 top-2 z-50 text-nowrap rounded-sm bg-red-700 px-3 py-1 text-white">
+          On sale
+        </span>
+      )}
       {props.src ? (
         <div className="relative h-full w-full">
           <MyImage src={props.src} />
@@ -32,6 +34,7 @@ export function GridTileImage({
         <Label
           amountMax={label.amountMax}
           amountMin={label.amountMin}
+          discount={discount}
           currencyCode={label.currencyCode}
         />
       ) : null}

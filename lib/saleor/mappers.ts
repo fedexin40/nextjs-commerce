@@ -43,6 +43,10 @@ export function saleorProductToVercelProduct(
       name: product.category?.name,
       slug: product.category?.slug,
     },
+    discount: {
+      amount: product.pricing?.discount?.gross.amount.toString() || '0',
+      currencyCode: product.pricing?.discount?.gross.currency || '',
+    },
     priceRange: {
       maxVariantPrice: {
         amount: product.pricing?.priceRange?.stop?.gross.amount.toString() || '0',

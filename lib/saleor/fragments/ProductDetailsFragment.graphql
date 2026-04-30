@@ -25,6 +25,12 @@ fragment ProductDetails on Product {
         }
       }
     }
+    discount {
+      gross {
+        amount
+        currency
+      }
+    }
   }
   media {
     url(size: 1080)

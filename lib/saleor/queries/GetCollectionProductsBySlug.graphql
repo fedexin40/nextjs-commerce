@@ -46,6 +46,12 @@ query GetCollectionProductsBySlug(
                 }
               }
             }
+            discount {
+              gross {
+                amount
+                currency
+              }
+            }
           }
           media {
             url(size: 2160)

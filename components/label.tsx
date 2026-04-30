@@ -3,10 +3,12 @@ import Price from './price';
 const Label = ({
   amountMax,
   amountMin,
+  discount,
   currencyCode,
 }: {
   amountMax: string;
   amountMin: string;
+  discount: string;
   currencyCode: string;
 }) => {
   return (
@@ -17,6 +19,7 @@ const Label = ({
           amountMax={amountMax}
           amountMin={amountMin}
           currencyCode={currencyCode}
+          discount={discount}
           currencyCodeClassName="hidden @[275px]/label:inline"
         />
       </div>

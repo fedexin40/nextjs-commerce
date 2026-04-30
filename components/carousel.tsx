@@ -13,7 +13,7 @@ export async function Carousel() {
   const carouselProducts = [...products, ...products, ...products];
 
   return (
-    <div className=" w-full overflow-x-auto pb-6 pt-1">
+    <div className="w-full overflow-x-auto pb-6 pt-1">
       <ul className="flex animate-carousel gap-4">
         {carouselProducts.map((product, i) => (
           <li
@@ -28,6 +28,7 @@ export async function Carousel() {
                   amountMax: product.priceRange.maxVariantPrice.amount,
                   amountMin: product.priceRange.minVariantPrice.amount,
                   currencyCode: product.priceRange.minVariantPrice.currencyCode,
+                  discount: product.discount.amount,
                 }}
                 src={product.featuredImage?.url}
                 fill

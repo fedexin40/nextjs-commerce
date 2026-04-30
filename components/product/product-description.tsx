@@ -41,6 +41,7 @@ export async function ProductDescription({
             <Price
               amountMax={variant.price.amount}
               currencyCode={product.priceRange.minVariantPrice.currencyCode}
+              discount={product.discount.amount || '0'}
             />
           )}
           {!variant && availableVariants.length > 1 && (
@@ -48,12 +49,14 @@ export async function ProductDescription({
               amountMax={availableVariants[availableVariants.length - 1]?.price.amount || '00.00'}
               amountMin={availableVariants[0]?.price.amount || '00.00'}
               currencyCode={product.priceRange.minVariantPrice.currencyCode}
+              discount={product.discount.amount || '0'}
             />
           )}
           {!variant && availableVariants.length == 1 && (
             <Price
               amountMax={availableVariants[0]?.price.amount || '00.00'}
               currencyCode={product.priceRange.minVariantPrice.currencyCode}
+              discount={product.discount.amount || '0'}
             />
           )}
           <a href="#customer-reviews">
@@ -68,6 +71,7 @@ export async function ProductDescription({
             <Price
               amountMax={variant.price.amount}
               currencyCode={product.priceRange.minVariantPrice.currencyCode}
+              discount={product.discount.amount || '0'}
             />
           )}
           {!variant && availableVariants.length > 1 && (
@@ -75,12 +79,14 @@ export async function ProductDescription({
               amountMax={availableVariants[availableVariants.length - 1]?.price.amount || '00.00'}
               amountMin={availableVariants[0]?.price.amount || '00.00'}
               currencyCode={product.priceRange.minVariantPrice.currencyCode}
+              discount={product.discount.amount || '0'}
             />
           )}
           {!variant && availableVariants.length == 1 && (
             <Price
               amountMax={availableVariants[0]?.price.amount || '00.00'}
               currencyCode={product.priceRange.minVariantPrice.currencyCode}
+              discount={product.discount.amount || '0'}
             />
           )}
           <a href="#customer-reviews">

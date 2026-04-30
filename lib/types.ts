@@ -198,6 +198,7 @@ export type VercelCommerceProduct = {
     name: string | undefined;
     slug: string | undefined;
   };
+  discount: Money;
   priceRange: {
     maxVariantPrice: Money;
     minVariantPrice: Money;

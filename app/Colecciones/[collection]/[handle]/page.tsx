@@ -234,6 +234,7 @@ async function RelatedProducts({ product }: { product: productType }) {
                     amountMax: product.priceRange.maxVariantPrice.amount,
                     amountMin: product.priceRange.minVariantPrice.amount,
                     currencyCode: product.priceRange.minVariantPrice.currencyCode,
+                    discount: product.discount.amount,
                   }}
                   src={product.featuredImage?.url}
                   fill

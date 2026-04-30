@@ -31841,6 +31841,7 @@ export type CheckoutFragment = {
             start?: { gross: { currency: string; amount: number } } | null;
             stop?: { gross: { currency: string; amount: number } } | null;
           } | null;
+          discount?: { gross: { amount: number; currency: string } } | null;
         } | null;
         media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
         collections?: Array<{ name: string; slug: string }> | null;
@@ -31965,6 +31966,7 @@ export type ProductDetailsFragment = {
       start?: { gross: { currency: string; amount: number } } | null;
       stop?: { gross: { currency: string; amount: number } } | null;
     } | null;
+    discount?: { gross: { amount: number; currency: string } } | null;
   } | null;
   media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
   collections?: Array<{ name: string; slug: string }> | null;
@@ -32118,6 +32120,7 @@ export type CheckoutAddLineMutation = {
                 start?: { gross: { currency: string; amount: number } } | null;
                 stop?: { gross: { currency: string; amount: number } } | null;
               } | null;
+              discount?: { gross: { amount: number; currency: string } } | null;
             } | null;
             media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
             collections?: Array<{ name: string; slug: string }> | null;
@@ -32256,6 +32259,7 @@ export type CheckoutDeleteLineMutation = {
                 start?: { gross: { currency: string; amount: number } } | null;
                 stop?: { gross: { currency: string; amount: number } } | null;
               } | null;
+              discount?: { gross: { amount: number; currency: string } } | null;
             } | null;
             media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
             collections?: Array<{ name: string; slug: string }> | null;
@@ -32414,6 +32418,7 @@ export type CheckoutUpdateLineMutation = {
                 start?: { gross: { currency: string; amount: number } } | null;
                 stop?: { gross: { currency: string; amount: number } } | null;
               } | null;
+              discount?: { gross: { amount: number; currency: string } } | null;
             } | null;
             media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
             collections?: Array<{ name: string; slug: string }> | null;
@@ -32526,6 +32531,7 @@ export type CreateCheckoutMutation = {
                 start?: { gross: { currency: string; amount: number } } | null;
                 stop?: { gross: { currency: string; amount: number } } | null;
               } | null;
+              discount?: { gross: { amount: number; currency: string } } | null;
             } | null;
             media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
             collections?: Array<{ name: string; slug: string }> | null;
@@ -32759,6 +32765,7 @@ export type GetCategoryProductsBySlugQuery = {
               start?: { gross: { currency: string; amount: number } } | null;
               stop?: { gross: { currency: string; amount: number } } | null;
             } | null;
+            discount?: { gross: { amount: number; currency: string } } | null;
           } | null;
           media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
           collections?: Array<{ name: string; slug: string }> | null;
@@ -32831,6 +32838,7 @@ export type GetCheckoutByIdQuery = {
               start?: { gross: { currency: string; amount: number } } | null;
               stop?: { gross: { currency: string; amount: number } } | null;
             } | null;
+            discount?: { gross: { amount: number; currency: string } } | null;
           } | null;
           media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
           collections?: Array<{ name: string; slug: string }> | null;
@@ -32927,6 +32935,7 @@ export type GetCollectionProductsBySlugQuery = {
               start?: { gross: { currency: string; amount: number } } | null;
               stop?: { gross: { currency: string; amount: number } } | null;
             } | null;
+            discount?: { gross: { amount: number; currency: string } } | null;
           } | null;
           media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
           collections?: Array<{ name: string; slug: string }> | null;
@@ -33108,6 +33117,7 @@ export type GetMeQuery = {
                     start?: { gross: { currency: string; amount: number } } | null;
                     stop?: { gross: { currency: string; amount: number } } | null;
                   } | null;
+                  discount?: { gross: { amount: number; currency: string } } | null;
                 } | null;
                 media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
                 collections?: Array<{ name: string; slug: string }> | null;
@@ -33290,6 +33300,7 @@ export type GetProductBySlugQuery = {
         start?: { gross: { currency: string; amount: number } } | null;
         stop?: { gross: { currency: string; amount: number } } | null;
       } | null;
+      discount?: { gross: { amount: number; currency: string } } | null;
     } | null;
     media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
     collections?: Array<{ name: string; slug: string }> | null;
@@ -33502,6 +33513,12 @@ export const ProductDetailsFragmentDoc = new TypedDocumentString(
         }
       }
     }
+    discount {
+      gross {
+        amount
+        currency
+      }
+    }
   }
   media {
     url(size: 1080)
@@ -33677,6 +33694,12 @@ export const CheckoutFragmentDoc = new TypedDocumentString(
           currency
           amount
         }
+      }
+    }
+    discount {
+      gross {
+        amount
+        currency
       }
     }
   }
@@ -34078,6 +34101,12 @@ fragment ProductDetails on Product {
         }
       }
     }
+    discount {
+      gross {
+        amount
+        currency
+      }
+    }
   }
   media {
     url(size: 1080)
@@ -34314,6 +34343,12 @@ fragment ProductDetails on Product {
           currency
           amount
         }
+      }
+    }
+    discount {
+      gross {
+        amount
+        currency
       }
     }
   }
@@ -34585,6 +34620,12 @@ fragment ProductDetails on Product {
         }
       }
     }
+    discount {
+      gross {
+        amount
+        currency
+      }
+    }
   }
   media {
     url(size: 1080)
@@ -34783,6 +34824,12 @@ fragment ProductDetails on Product {
           currency
           amount
         }
+      }
+    }
+    discount {
+      gross {
+        amount
+        currency
       }
     }
   }
@@ -35068,6 +35115,12 @@ export const GetCategoryProductsBySlugDocument = new TypedDocumentString(`
                 }
               }
             }
+            discount {
+              gross {
+                amount
+                currency
+              }
+            }
           }
           media {
             url(size: 2160)
@@ -35251,6 +35304,12 @@ fragment ProductDetails on Product {
         }
       }
     }
+    discount {
+      gross {
+        amount
+        currency
+      }
+    }
   }
   media {
     url(size: 1080)
@@ -35368,6 +35427,12 @@ export const GetCollectionProductsBySlugDocument = new TypedDocumentString(`
                   currency
                   amount
                 }
+              }
+            }
+            discount {
+              gross {
+                amount
+                currency
               }
             }
           }
@@ -35727,6 +35792,12 @@ fragment ProductDetails on Product {
         }
       }
     }
+    discount {
+      gross {
+        amount
+        currency
+      }
+    }
   }
   media {
     url(size: 1080)
@@ -35939,6 +36010,12 @@ export const GetProductBySlugDocument = new TypedDocumentString(`
           currency
           amount
         }
+      }
+    }
+    discount {
+      gross {
+        amount
+        currency
       }
     }
   }

@@ -26,6 +26,7 @@ function Variants({ product }: { product: Product }) {
               amountMax: availableVariants[availableVariants.length - 1]?.price.amount || '00.00',
               amountMin: availableVariants[0]?.price.amount || '00.00',
               currencyCode: product.priceRange.minVariantPrice.currencyCode,
+              discount: product.discount.amount || '0',
             }}
             src={product.featuredImage?.url}
             fill
@@ -49,6 +50,7 @@ function Variants({ product }: { product: Product }) {
               amountMax: availableVariants[availableVariants.length - 1]?.price.amount || '00.00',
               amountMin: availableVariants[availableVariants.length - 1]?.price.amount || '00.00',
               currencyCode: product.priceRange.minVariantPrice.currencyCode,
+              discount: product.discount.amount || '0',
             }}
             src={product.featuredImage?.url}
             fill
