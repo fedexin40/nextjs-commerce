@@ -35,7 +35,6 @@ export default function Price({
     );
   } else {
     if (discount != '0') {
-      console.log(amountMax, amountTotal, amountMin, discount);
       return (
         <p suppressHydrationWarning={true} className={className}>
           <div className="flex flex-row space-x-2">
