@@ -22,7 +22,7 @@ export function GridTileImage({
     <div className="relative flex h-full w-full items-center justify-center rounded-lg bg-white">
       {label?.discount != '0' && (
         <span className="absolute right-2 top-2 z-50 text-nowrap rounded-sm bg-red-700 px-3 py-1 text-white">
-          On sale
+          Off
         </span>
       )}
       {props.src ? (
