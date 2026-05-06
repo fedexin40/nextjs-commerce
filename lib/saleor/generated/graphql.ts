@@ -33379,6 +33379,7 @@ export type SearchProductsQuery = {
             start?: { gross: { currency: string; amount: number } } | null;
             stop?: { gross: { currency: string; amount: number } } | null;
           } | null;
+          discount?: { gross: { amount: number; currency: string } } | null;
         } | null;
         media?: Array<{ url: string; type: ProductMediaType; alt: string }> | null;
         collections?: Array<{ name: string; slug: string }> | null;
@@ -36147,6 +36148,12 @@ export const SearchProductsDocument = new TypedDocumentString(`
                 currency
                 amount
               }
+            }
+          }
+          discount {
+            gross {
+              amount
+              currency
             }
           }
         }

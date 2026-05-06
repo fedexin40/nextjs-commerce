@@ -152,7 +152,7 @@ export default async function Product(props: {
             </div>
             <div className="flex w-full flex-col pt-10 md:col-span-2">
               <div className="text-[15px] font-semibold">Tienda acreditada por</div>
-              <div className="w-2/3 pt-3 md:w-1/2">
+              <div className="w-full pt-3 md:w-1/2">
                 <InternetAccreditedBadge />
               </div>
               <div className="flex w-full flex-col pt-8 text-left text-[13.5px] tracking-[1.4px] lg:text-[14.3px]">
@@ -162,7 +162,7 @@ export default async function Product(props: {
                   dinero
                 </div>
                 <Link href={'https://www.paypal.com/es/digital-wallet/buyer-purchase-protection'}>
-                  <div className="cursor-pointer pb-5 text-blue-600 transition-colors duration-200 hover:text-blue-800 hover:underline">
+                  <div className="cursor-pointer pb-5 transition-colors duration-200 hover:text-blue-800 hover:underline">
                     Da click aca para conocer mas del programa PayPal Buyer Protection...
                   </div>
                 </Link>
