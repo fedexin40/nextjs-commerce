@@ -44,21 +44,6 @@ export function BuyNow({
       ? 'Please select options'
       : undefined;
 
-  function Pixel() {
-    if (typeof window === 'undefined') return;
-
-    const fbq = window.fbq;
-    if (typeof fbq !== 'function') return;
-
-    fbq('track', 'AddToCart', {
-      content_ids: [product.handle],
-      content_type: 'product',
-      currency: 'MXN',
-      value: Number(variant?.price.amount ?? product.priceRange.maxVariantPrice.amount),
-      eventID: event_id,
-    });
-  }
-
   return (
     <>
       <div>
@@ -90,7 +75,6 @@ export function BuyNow({
                 });
                 return;
               }
-              Pixel();
               const products = {
                 handle: product.handle,
                 quantity: 1,
@@ -162,7 +146,6 @@ export function BuyNow({
                 });
                 return;
               }
-              Pixel();
               const products = {
                 handle: product.handle,
                 quantity: 1,
@@ -182,7 +165,6 @@ export function BuyNow({
               } catch (error) {
                 console.log(error);
               }
-              router.refresh();
               startTransitionAdd2Cart(() => {
                 openMenu();
               });

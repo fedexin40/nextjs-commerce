@@ -2,7 +2,6 @@
 
 import { Cart } from '#/lib/types';
 import { TAGS } from 'lib/constants';
-import { refresh } from 'next/cache';
 
 import {
   Me,
@@ -75,7 +74,6 @@ export const addItem = async (variantId: string | undefined): Promise<String | u
   try {
     const newCart = await addToCart(checkout, [{ merchandiseId: variantId, quantity: 1 }]);
     firstShopping(newCart);
-    refresh();
   } catch (error: any) {
     const field: string = error.message;
     let error_message: string = 'Hubo un error al añadir el producto';
