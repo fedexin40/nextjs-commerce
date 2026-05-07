@@ -165,6 +165,7 @@ export function BuyNow({
               } catch (error) {
                 console.log(error);
               }
+              router.refresh();
               startTransitionAdd2Cart(() => {
                 openMenu();
               });
