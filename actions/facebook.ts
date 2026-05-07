@@ -2,6 +2,7 @@
 import { Me, updateMetaData } from '#/lib/saleor';
 import { Cart } from '#/lib/types';
 import { cookies, headers } from 'next/headers';
+import { after } from 'next/server';
 
 type ProductItem = {
   handle: string;
@@ -73,25 +74,27 @@ export const sendMetaCapiEvent = async ({
     cookieStore.set('_fbc', fbc, { httpOnly: true, maxAge: 25920000 });
   }
 
-  const facebookApi = `${baseUrl}/api/facebook`;
-  const body = {
-    ip: ip,
-    userAgent: userAgent,
-    fbc: fbc,
-    fbp: fbp,
-    eventName: event_name,
-    eventId: event_id,
-    email: email,
-    phone: phone,
-    products: products,
-    value: value,
-    eventURL: eventURL,
-    external_id: f_external_id_me || f_external_id_cookie || f_external_id,
-    current_timestamp: current_timestamp,
-  };
-  await fetch(facebookApi, {
-    method: 'POST',
-    body: JSON.stringify(body),
+  after(async () => {
+    const facebookApi = `${baseUrl}/api/facebook`;
+    const body = {
+      ip: ip,
+      userAgent: userAgent,
+      fbc: fbc,
+      fbp: fbp,
+      eventName: event_name,
+      eventId: event_id,
+      email: email,
+      phone: phone,
+      products: products,
+      value: value,
+      eventURL: eventURL,
+      external_id: f_external_id_me || f_external_id_cookie || f_external_id,
+      current_timestamp: current_timestamp,
+    };
+    await fetch(facebookApi, {
+      method: 'POST',
+      body: JSON.stringify(body),
+    });
   });
 };
 
